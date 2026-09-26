@@ -7,6 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <script src="config.js"></script>
+
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;
+  var ttq=w[t]=w[t]||[];
+  ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
+  ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+  for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+  ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+  ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+    ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;ttq._o=ttq._o||{};
+    var o=document.createElement("script");o.type="text/javascript";o.async=!0;o.src=i+"?sdkid="+e+"&lib="+t;
+    var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a);
+  };
+}(window, document, 'ttq');
+</script>
+<script>
+(function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)})(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
 <style>
 /* ═══════════════════════════════════════════════════════════
    1) RESET + DESIGN TOKENS
@@ -65,13 +85,9 @@
 
   --font:'Cairo',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
 
-  /* ✅ ارتفاع الهيدر — يُحدَّث تلقائيًا من JavaScript */
   --header-h:60px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   2) GLOBAL
-   ═══════════════════════════════════════════════════════════ */
 html,body{min-height:100%;direction:rtl;text-align:right}
 body{
   font-family:var(--font);
@@ -107,9 +123,6 @@ a{color:inherit;text-decoration:none}
 body.wholesale-active{background:var(--vip-light)}
 body.wholesale-active .current-price{color:var(--vip) !important}
 
-/* ═══════════════════════════════════════════════════════════
-   3) LOADING / NOTICE
-   ═══════════════════════════════════════════════════════════ */
 #loadingScreen{
   position:fixed;inset:0;z-index:9999;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -147,9 +160,6 @@ body.wholesale-active .current-price{color:var(--vip) !important}
   border:1px solid var(--border);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   4) HEADER (Glass effect)
-   ═══════════════════════════════════════════════════════════ */
 header{
   position:sticky;top:0;z-index:1100;
   background:rgba(255,255,255,.85);
@@ -215,9 +225,6 @@ header{
 }
 .lang-btn i{font-size:.85rem}
 
-/* ═══════════════════════════════════════════════════════════
-   5) SEARCH
-   ═══════════════════════════════════════════════════════════ */
 #searchContainer{
   padding:12px 20px;
   background:#fff;
@@ -250,9 +257,6 @@ header{
 }
 #searchInput::placeholder{color:var(--text-3)}
 
-/* ═══════════════════════════════════════════════════════════
-   6) STORE HERO
-   ═══════════════════════════════════════════════════════════ */
 .store-hero{
   position:relative;
   width:100%;
@@ -325,9 +329,6 @@ header{
   .store-hero-tagline{font-size:.75rem}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   7) CATEGORIES BAR
-   ═══════════════════════════════════════════════════════════ */
 .categories-wrapper{
   background:rgba(255,255,255,.92);
   backdrop-filter:saturate(180%) blur(12px);
@@ -438,9 +439,6 @@ header{
 .cat-clear-btn.show{display:inline-flex}
 .cat-clear-btn:hover{background:#fee2e2}
 
-/* ═══════════════════════════════════════════════════════════
-   8) WHOLESALE BOX
-   ═══════════════════════════════════════════════════════════ */
 .wholesale-box{
   background:linear-gradient(135deg,var(--vip-light),#faf5ff);
   margin:14px 16px 8px;
@@ -537,9 +535,6 @@ header{
   border-color:#fecaca;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   9) PRODUCTS GRID
-   ═══════════════════════════════════════════════════════════ */
 .products-container{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -556,9 +551,6 @@ header{
   .products-container{grid-template-columns:repeat(5,1fr)}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   10) PRODUCT CARD
-   ═══════════════════════════════════════════════════════════ */
 .product-card{
   background:var(--card-bg);
   border-radius:var(--radius-lg);
@@ -839,9 +831,6 @@ header{
   color:var(--border-strong);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   11) PAGINATION
-   ═══════════════════════════════════════════════════════════ */
 #pagination{
   text-align:center;
   margin:16px 0 24px;
@@ -879,9 +868,6 @@ header{
 }
 #pagination button:disabled{opacity:.35;cursor:not-allowed}
 
-/* ═══════════════════════════════════════════════════════════
-   12) FLOATING CART BUTTON
-   ═══════════════════════════════════════════════════════════ */
 #cartBtn{
   position:fixed;
   bottom:24px;
@@ -927,9 +913,6 @@ header{
   font-variant-numeric:tabular-nums;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   13) MODALS
-   ═══════════════════════════════════════════════════════════ */
 .modal{
   display:none;
   position:fixed;
@@ -1130,9 +1113,6 @@ header{
   box-shadow:var(--shadow-xl);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   14) TOAST
-   ═══════════════════════════════════════════════════════════ */
 .toast{
   position:fixed;
   bottom:80px;
@@ -1159,9 +1139,6 @@ header{
   to{opacity:1;transform:translate(-50%,0)}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   15) FOOTER
-   ═══════════════════════════════════════════════════════════ */
 footer{
   text-align:center;
   padding:24px 16px;
@@ -1182,9 +1159,6 @@ footer a{
 footer a:hover{color:var(--primary-dark);text-decoration:underline}
 footer i{color:var(--primary);margin-inline-end:4px}
 
-/* ═══════════════════════════════════════════════════════════
-   16) RESPONSIVE — MOBILE
-   ═══════════════════════════════════════════════════════════ */
 @media(max-width:640px){
   body{padding-bottom:80px}
 
@@ -1245,9 +1219,6 @@ footer i{color:var(--primary);margin-inline-end:4px}
   .qty-btn{width:28px;height:28px}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   17) ACCESSIBILITY
-   ═══════════════════════════════════════════════════════════ */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.001ms !important;
@@ -1580,6 +1551,66 @@ let storeFeatures = {
 };
 
 let storeConfigured = false;
+
+/* ═══════════════════════════════════════════════════════════
+   🎯 بيكسل — Facebook + TikTok
+   ═══════════════════════════════════════════════════════════ */
+let activePixelId = null;
+let activeTiktokPixelId = null;
+let initiateCheckoutTracked = false;
+
+function pixelCurrency() {
+  const c = storeInfo.currency || 'DZD';
+  if (c === 'دج' || c === 'دينار' || c === 'DA' || c === 'DZD') return 'DZD';
+  return c;
+}
+
+function initPixel(pixelId) {
+  if (!pixelId || activePixelId) return;
+  activePixelId = pixelId;
+  try { fbq('init', pixelId); fbq('track', 'PageView'); } catch(e) {}
+}
+function initTiktokPixel(pixelId) {
+  if (!pixelId || activeTiktokPixelId) return;
+  activeTiktokPixelId = pixelId;
+  try { ttq.load(pixelId); ttq.page(); } catch(e) {}
+}
+
+function trackAddToCart(product, totalValue, qty) {
+  const cur = pixelCurrency();
+  if (typeof fbq !== 'undefined' && activePixelId) {
+    try { fbq('track', 'AddToCart', { content_name: product.name, content_ids: [String(product.id)], content_type: 'product', value: totalValue, quantity: qty, currency: cur }); } catch(e) {}
+  }
+  if (typeof ttq !== 'undefined' && activeTiktokPixelId) {
+    try { ttq.track('AddToCart', { content_id: String(product.id), content_type: 'product', content_name: product.name, value: totalValue, quantity: qty, currency: cur }); } catch(e) {}
+  }
+}
+
+function trackInitiateCheckout(items, totalValue) {
+  if (initiateCheckoutTracked) return;
+  initiateCheckoutTracked = true;
+  const cur = pixelCurrency();
+  const ids = items.map(i => String(i.id));
+  if (typeof fbq !== 'undefined' && activePixelId) {
+    try { fbq('track', 'InitiateCheckout', { content_ids: ids, content_type: 'product', value: totalValue, num_items: items.length, currency: cur }); } catch(e) {}
+  }
+  if (typeof ttq !== 'undefined' && activeTiktokPixelId) {
+    try { ttq.track('InitiateCheckout', { content_id: ids[0] || '', content_type: 'product', value: totalValue, quantity: items.length, currency: cur }); } catch(e) {}
+  }
+}
+
+function trackPurchase(items, totalValue) {
+  const cur = pixelCurrency();
+  const ids = items.map(i => String(i.id));
+  if (typeof fbq !== 'undefined' && activePixelId) {
+    try { fbq('track', 'Purchase', { content_ids: ids, content_type: 'product', value: totalValue, num_items: items.length, currency: cur }); } catch(e) {}
+  }
+  if (typeof ttq !== 'undefined' && activeTiktokPixelId) {
+    try { ttq.track('CompletePayment', { content_id: ids[0] || '', content_type: 'product', value: totalValue, quantity: items.length, currency: cur }); } catch(e) {}
+  }
+}
+/* ═══════════════════════════════════════════════════════════ */
+
 let wholesaleCode = null;
 let allProducts = [];
 let allDiscounts = {};
@@ -1737,6 +1768,12 @@ onValue(ref(db, 'store/features'), (snap) => {
   updateFamilyCounts();
   refreshCartPrices();
   updateCartBadge();
+});
+
+onValue(ref(db, 'store/landing'), (snap) => {
+  const d = snap.val() || {};
+  if (d.enablePixel && d.pixelId) initPixel(d.pixelId);
+  if (d.enableTiktokPixel && d.tiktokPixelId) initTiktokPixel(d.tiktokPixelId);
 });
 
 onValue(ref(db, 'store/cover'), (snap) => {
@@ -1985,6 +2022,7 @@ function updateQty(id, change) {
   else {
     const item = { id, name: p.name, price, quantityBoxes: boxes, quantity: boxes * qpb, qtyPerBox: qpb };
     if (idx > -1) cart[idx] = item; else cart.push(item);
+    if (change > 0) trackAddToCart(p, price * boxes * qpb, boxes * qpb);
   }
   saveCart();
 }
@@ -2025,6 +2063,10 @@ function updateCartBadge() {
 
 $("cartBtn").addEventListener('click', () => {
   refreshCartPrices();
+  if (cart.length) {
+    const total = cart.reduce((a, b) => a + b.price * b.quantity, 0);
+    trackInitiateCheckout(cart, total);
+  }
   const list = $("cartItemsList");
   list.innerHTML = '';
   let total = 0;
@@ -2140,6 +2182,7 @@ $("sendOrderBtn").addEventListener('click', async () => {
 
   refreshCartPrices();
   const total = cart.reduce((a, b) => a + b.price * b.quantity, 0);
+  const cartSnapshot = cart.map(i => ({ ...i }));
 
   try {
     await push(ref(db, 'whatsappOrders'), {
@@ -2196,6 +2239,9 @@ $("sendOrderBtn").addEventListener('click', async () => {
       window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
+    trackPurchase(cartSnapshot, total);
+    initiateCheckoutTracked = false;
+
     showToast(t('orderSuccess'));
     cart = []; saveCart();
     $("custName").value = ''; $("custPhone").value = ''; $("custAddress").value = '';
@@ -2245,7 +2291,7 @@ function bootApp() {
 </script>
 
 <script>
-  /* ✅ قياس ارتفاع الهيدر تلقائيًا وضبط --header-h */
+  /* قياس ارتفاع الهيدر تلقائيًا وضبط --header-h */
   (function() {
     function updateHeaderHeight() {
       var header = document.querySelector('header');
