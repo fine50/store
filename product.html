@@ -793,7 +793,7 @@ body[data-theme="navy"] .bundle-progress strong{color:var(--primary-light)}
 .bundle-progress .free-hint i{font-size:.72rem}
 
 .bundle-selection-pill{
-  flex:1;
+  flex:1 1 0;
   display:flex;align-items:center;justify-content:center;gap:8px;
   background:linear-gradient(135deg,var(--soft-bg-2),var(--soft-bg));
   border:1.5px solid var(--primary);
@@ -801,40 +801,29 @@ body[data-theme="navy"] .bundle-progress strong{color:var(--primary-light)}
   border-radius:var(--radius-pill);
   padding:0 16px;
   font-weight:800;
-  font-size:.82rem;
+  font-size:.9rem;
   height:52px;
   min-width:0;
+  cursor:pointer;
+  font-family:var(--font);
   box-shadow:0 4px 14px rgba(0,0,0,.08),
              inset 0 1px 0 rgba(255,255,255,.4);
   animation:popIn .3s var(--ease);
   letter-spacing:-.01em;
+  transition:background var(--dur) var(--ease),
+             transform var(--dur-fast) var(--ease);
+}
+.bundle-selection-pill:hover{
+  background:linear-gradient(135deg,var(--soft-bg),var(--soft-bg-2));
+}
+.bundle-selection-pill:active{
+  transform:scale(.98);
 }
 @keyframes popIn{
   from{transform:scale(.95);opacity:0}
   to{transform:scale(1);opacity:1}
 }
 .bundle-selection-pill i{color:var(--primary);font-size:1.05rem;flex-shrink:0}
-.bundle-selection-pill .pill-text{
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.bundle-selection-pill .change-btn{
-  background:var(--card);
-  color:var(--primary);
-  border:none;
-  border-radius:var(--radius-pill);
-  padding:6px 12px;
-  font-family:var(--font);
-  font-weight:800;
-  font-size:.7rem;
-  cursor:pointer;
-  flex-shrink:0;
-  transition:all var(--dur) var(--ease);
-  box-shadow:var(--shadow-xs);
-}
-.bundle-selection-pill .change-btn:hover{
-  background:var(--primary);
-  color:#fff;
-}
 
 .field-group{margin-bottom:10px;position:relative}
 .field-group label{
@@ -1080,9 +1069,10 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
   color:var(--text);
   font-variant-numeric:tabular-nums;
 }
-.submit-btn{
-  flex-grow:1;
-  height:52px;
+.submit-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 52px;
   background:linear-gradient(135deg,var(--primary),var(--primary-light));
   color:#fff;
   border:none;
@@ -1119,7 +1109,7 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
   .qty-stepper{width:100%;justify-content:space-between}
   .qty-stepper span{flex:1;text-align:center}
   .submit-btn{width:100%}
-  .bundle-selection-pill{width:100%;height:52px}
+  .bundle-selection-pill{width:100%;min-width:0;height:52px}
 }
 
 .modal{
@@ -1799,11 +1789,10 @@ footer a:hover{
             <span id="qtyNumber">1</span>
             <button type="button" id="qtyPlus">+</button>
           </div>
-          <div class="bundle-selection-pill" id="bundleSelectionPill" style="display:none;">
-            <i class="fas fa-check-circle"></i>
-            <span class="pill-text" id="bundleSelectionText"></span>
-            <button type="button" class="change-btn" id="bundleChangeBtn">تغيير</button>
-          </div>
+          <button type="button" class="bundle-selection-pill" id="bundleSelectionPill" style="display:none;">
+  <i class="fas fa-check-circle"></i>
+  <span>تغيير العرض</span>
+</button>
           <button type="button" class="submit-btn" id="submitBtn">
             <i class="fas fa-shopping-bag"></i>
             <span>إتمام الطلب</span>
@@ -2221,7 +2210,6 @@ function selectTier(tier) {
   $("qtyNumber").textContent = qty;
   $("qtyStepper").style.display = "none";
   $("bundleSelectionPill").style.display = "flex";
-  $("bundleSelectionText").textContent = `${getQtyLabel(tier.qty)} — ${fmt(tier.totalPrice)} ${storeInfo.currency}`;
   renderBundleBox();
   updateTotals();
   trackAddToCart({ id: product.id, name: product.landing?.productName || product.name, value: tier.totalPrice });
@@ -2237,7 +2225,7 @@ function clearTierSelection() {
   updateTotals();
 }
 
-$("bundleChangeBtn").addEventListener('click', clearTierSelection);
+$("bundleSelectionPill").addEventListener('click', clearTierSelection);
 
 function renderPage(landingSettings) {
   const landing = product.landing || {};
