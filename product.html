@@ -18,7 +18,7 @@
   for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
   ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
   ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
-    ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;ttq._o=ttq._o||{};ttq._o[e]=n||{};
+    ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;ttq._o=ttq._o||{};
     var o=document.createElement("script");o.type="text/javascript";o.async=!0;o.src=i+"?sdkid="+e+"&lib="+t;
     var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a);
   };
@@ -36,20 +36,17 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 :root{
-  /* Brand (default theme) */
   --primary:#0b6e4f;--primary-light:#1a8a6a;--primary-dark:#064e3b;
   --danger:#dc2626;--warning:#d97706;--success:#10b981;--gold:#f59e0b;
   --bg:#f7f8fa;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e5e8ec;
   --soft-bg:#ecfdf5;--soft-bg-2:#d1fae5;--soft-border:#a7f3d0;--soft-accent:#34d399;
 
-  /* Extended neutrals */
   --bg-2:#f1f3f5;
   --text-2:#475569;
   --text-3:#94a3b8;
   --border-strong:#d5dae0;
   --hover:#f3f5f8;
 
-  /* Shadows — layered, subtle */
   --shadow-xs:0 1px 2px rgba(15,23,42,.04);
   --shadow-sm:0 1px 2px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
   --shadow-md:0 2px 4px rgba(15,23,42,.04),0 4px 12px rgba(15,23,42,.06);
@@ -57,7 +54,6 @@
   --shadow-xl:0 24px 48px rgba(15,23,42,.12);
   --shadow-focus:0 0 0 3px rgba(11,110,79,.15);
 
-  /* Radius scale */
   --radius-xs:8px;
   --radius-sm:10px;
   --radius:14px;
@@ -66,11 +62,9 @@
   --radius-xl:24px;
   --radius-pill:9999px;
 
-  /* Spacing */
   --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;
   --sp-5:20px;--sp-6:24px;--sp-8:32px;
 
-  /* Motion */
   --ease:cubic-bezier(.22,1,.36,1);
   --dur-fast:120ms;
   --dur:200ms;
@@ -86,7 +80,6 @@ body[data-theme="white"]{
   --text:#0f172a;--muted:#64748b;--border:#e2e8f0;
   --soft-bg:#f8fafc;--soft-bg-2:#f1f5f9;--soft-border:#e2e8f0;--soft-accent:#0b6e4f;
 }
-/* ═══ Theme: dark ═══ */
 body[data-theme="dark"]{
   --bg:#0b1220;--card:#111a2c;
   --primary:#10b981;--primary-light:#34d399;--primary-dark:#059669;
@@ -109,14 +102,12 @@ body[data-theme="dark"] .summary-panel .breakdown-row{color:var(--text);}
 body[data-theme="dark"] .desc-card h3,
 body[data-theme="dark"] .subsection-title{border-bottom-color:#1f2a3d;}
 
-/* ═══ Theme: pink ═══ */
 body[data-theme="pink"]{
   --bg:#fdf2f8;--card:#ffffff;
   --primary:#db2777;--primary-light:#ec4899;--primary-dark:#9d174d;
   --text:#500724;--muted:#9ca3af;--border:#fbcfe8;
   --soft-bg:#fdf2f8;--soft-bg-2:#fce7f3;--soft-border:#fbcfe8;--soft-accent:#ec4899;
 }
-/* ═══ Theme: gold ═══ */
 body[data-theme="gold"]{
   --bg:#141416;--card:#1f1f23;
   --primary:#d4af37;--primary-light:#e5c65c;--primary-dark:#a8862a;
@@ -137,49 +128,42 @@ body[data-theme="gold"] .summary-panel .breakdown-row{color:var(--text);}
 body[data-theme="gold"] .desc-card h3,
 body[data-theme="gold"] .subsection-title{border-bottom-color:#2f2f36;}
 
-/* ═══ Theme: blue ═══ */
 body[data-theme="blue"]{
   --bg:#eff6ff;--card:#ffffff;
   --primary:#2563eb;--primary-light:#3b82f6;--primary-dark:#1d4ed8;
   --text:#0f172a;--muted:#64748b;--border:#bfdbfe;
   --soft-bg:#eff6ff;--soft-bg-2:#dbeafe;--soft-border:#bfdbfe;--soft-accent:#3b82f6;
 }
-/* ═══ Theme: gray ═══ */
 body[data-theme="gray"]{
   --bg:#f1f5f9;--card:#ffffff;
   --primary:#475569;--primary-light:#64748b;--primary-dark:#334155;
   --text:#0f172a;--muted:#64748b;--border:#cbd5e1;
   --soft-bg:#f8fafc;--soft-bg-2:#f1f5f9;--soft-border:#cbd5e1;--soft-accent:#64748b;
 }
-/* ═══ Theme: teal ═══ */
 body[data-theme="teal"]{
   --bg:#f0fdfa;--card:#ffffff;
   --primary:#0d9488;--primary-light:#14b8a6;--primary-dark:#0f766e;
   --text:#0f172a;--muted:#64748b;--border:#99f6e4;
   --soft-bg:#f0fdfa;--soft-bg-2:#ccfbf1;--soft-border:#99f6e4;--soft-accent:#14b8a6;
 }
-/* ═══ Theme: purple ═══ */
 body[data-theme="purple"]{
   --bg:#faf5ff;--card:#ffffff;
   --primary:#7c3aed;--primary-light:#a855f7;--primary-dark:#6d28d9;
   --text:#0f172a;--muted:#64748b;--border:#e9d5ff;
   --soft-bg:#faf5ff;--soft-bg-2:#f3e8ff;--soft-border:#e9d5ff;--soft-accent:#a855f7;
 }
-/* ═══ Theme: orange ═══ */
 body[data-theme="orange"]{
   --bg:#fff7ed;--card:#ffffff;
   --primary:#ea580c;--primary-light:#f97316;--primary-dark:#c2410c;
   --text:#0f172a;--muted:#64748b;--border:#fed7aa;
   --soft-bg:#fff7ed;--soft-bg-2:#ffedd5;--soft-border:#fed7aa;--soft-accent:#f97316;
 }
-/* ═══ Theme: red ═══ */
 body[data-theme="red"]{
   --bg:#fef2f2;--card:#ffffff;
   --primary:#dc2626;--primary-light:#ef4444;--primary-dark:#b91c1c;
   --text:#0f172a;--muted:#64748b;--border:#fecaca;
   --soft-bg:#fef2f2;--soft-bg-2:#fee2e2;--soft-border:#fecaca;--soft-accent:#ef4444;
 }
-/* ═══ Theme: navy ═══ */
 body[data-theme="navy"]{
   --bg:#0f172a;--card:#1e293b;
   --primary:#38bdf8;--primary-light:#7dd3fc;--primary-dark:#0284c7;
@@ -200,21 +184,18 @@ body[data-theme="navy"] .summary-panel .breakdown-row{color:var(--text);}
 body[data-theme="navy"] .desc-card h3,
 body[data-theme="navy"] .subsection-title{border-bottom-color:#334155;}
 
-/* ═══ Theme: cream ═══ */
 body[data-theme="cream"]{
   --bg:#fefce8;--card:#ffffff;
   --primary:#a16207;--primary-light:#ca8a04;--primary-dark:#854d0e;
   --text:#0f172a;--muted:#64748b;--border:#fde68a;
   --soft-bg:#fefce8;--soft-bg-2:#fef9c3;--soft-border:#fde68a;--soft-accent:#ca8a04;
 }
-/* ═══ Theme: lime ═══ */
 body[data-theme="lime"]{
   --bg:#f7fee7;--card:#ffffff;
   --primary:#65a30d;--primary-light:#84cc16;--primary-dark:#4d7c0f;
   --text:#0f172a;--muted:#64748b;--border:#d9f99d;
   --soft-bg:#f7fee7;--soft-bg-2:#ecfccb;--soft-border:#d9f99d;--soft-accent:#84cc16;
 }
-/* ═══ Theme: brown ═══ */
 body[data-theme="brown"]{
   --bg:#faf5f0;--card:#ffffff;
   --primary:#78350f;--primary-light:#92400e;--primary-dark:#451a03;
@@ -222,9 +203,6 @@ body[data-theme="brown"]{
   --soft-bg:#faf5f0;--soft-bg-2:#f5e6d3;--soft-border:#e7d4c3;--soft-accent:#92400e;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   2) GLOBAL
-   ═══════════════════════════════════════════════════════════ */
 html,body{
   direction:rtl;
   text-align:right;
@@ -259,9 +237,6 @@ a{color:inherit;text-decoration:none}
 
 :focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
 
-/* ═══════════════════════════════════════════════════════════
-   3) LOADING / NOTICE
-   ═══════════════════════════════════════════════════════════ */
 #loadingScreen{
   position:fixed;inset:0;z-index:9999;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -288,9 +263,6 @@ a{color:inherit;text-decoration:none}
 }
 #noticeScreen p{font-size:.9rem;max-width:400px}
 
-/* ═══════════════════════════════════════════════════════════
-   4) ANNOUNCEMENT BAR
-   ═══════════════════════════════════════════════════════════ */
 .announcement{
   background:linear-gradient(135deg,var(--primary-dark),var(--primary));
   color:#fff;
@@ -322,9 +294,6 @@ a{color:inherit;text-decoration:none}
 @keyframes marqueeScrollLTR{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes marqueeScrollRTL{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
 
-/* ═══════════════════════════════════════════════════════════
-   5) HEADER
-   ═══════════════════════════════════════════════════════════ */
 header.store-header{
   position:sticky;
   top:0;
@@ -388,9 +357,6 @@ body[data-theme="gold"] header.store-header{background:rgba(20,20,22,.85);}
 .header-phone:hover{background:var(--soft-bg-2);}
 .header-phone i{color:var(--primary)}
 
-/* ═══════════════════════════════════════════════════════════
-   6) LAYOUT
-   ═══════════════════════════════════════════════════════════ */
 .layout{
   max-width:1140px;
   margin:0 auto;
@@ -404,9 +370,6 @@ body[data-theme="gold"] header.store-header{background:rgba(20,20,22,.85);}
   .layout{grid-template-columns:1fr;gap:16px;padding:14px}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   7) GALLERY
-   ═══════════════════════════════════════════════════════════ */
 .gallery-card{
   background:var(--card);
   border-radius:var(--radius-lg);
@@ -446,9 +409,6 @@ body[data-theme="gold"] header.store-header{background:rgba(20,20,22,.85);}
   display:flex;flex-direction:column;gap:16px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   8) TITLE CARD
-   ═══════════════════════════════════════════════════════════ */
 .title-card{
   background:var(--card);
   padding:24px 22px;
@@ -571,9 +531,6 @@ body[data-theme="gold"] header.store-header{background:rgba(20,20,22,.85);}
   letter-spacing:.02em;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   9) CHECKOUT CARD
-   ═══════════════════════════════════════════════════════════ */
 .checkout-card{
   background:linear-gradient(180deg,var(--card),var(--soft-bg));
   padding:26px 22px 22px;
@@ -604,9 +561,6 @@ body[data-theme="gold"] header.store-header{background:rgba(20,20,22,.85);}
 }
 .checkout-heading .title-row i{color:var(--primary);font-size:1rem}
 
-/* ═══════════════════════════════════════════════════════════
-   10) BUNDLE OFFER BOX
-   ═══════════════════════════════════════════════════════════ */
 .bundle-offer-box{
   background:linear-gradient(135deg,var(--soft-bg),var(--soft-bg-2));
   border:1.5px dashed var(--soft-accent);
@@ -882,9 +836,6 @@ body[data-theme="navy"] .bundle-progress strong{color:var(--primary-light)}
   color:#fff;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   11) FORM FIELDS
-   ═══════════════════════════════════════════════════════════ */
 .field-group{margin-bottom:10px;position:relative}
 .field-group label{
   display:flex;align-items:center;gap:6px;
@@ -948,9 +899,6 @@ body[data-theme="navy"] .bundle-progress strong{color:var(--primary-light)}
 .field-row-2 .field-group{margin-bottom:0}
 @media(max-width:520px){.field-row-2{grid-template-columns:1fr;gap:10px}}
 
-/* ═══════════════════════════════════════════════════════════
-   12) DELIVERY OPTIONS
-   ═══════════════════════════════════════════════════════════ */
 .delivery-type-group{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1000,9 +948,6 @@ body[data-theme="navy"] .bundle-progress strong{color:var(--primary-light)}
   box-shadow:var(--shadow-focus);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   13) SUMMARY PANEL
-   ═══════════════════════════════════════════════════════════ */
 .summary-panel{
   background:linear-gradient(135deg,var(--soft-bg),var(--soft-bg-2));
   border:1.5px solid var(--soft-border);
@@ -1094,9 +1039,6 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
 .summary-panel .bundle-savings i{color:#d97706;font-size:.85rem}
 .summary-panel .bundle-savings strong{color:#dc2626}
 
-/* ═══════════════════════════════════════════════════════════
-   14) ACTION ROW (QTY + SUBMIT)
-   ═══════════════════════════════════════════════════════════ */
 .action-row{display:flex;gap:12px;align-items:center}
 .qty-stepper{
   display:flex;align-items:center;
@@ -1180,9 +1122,6 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
   .bundle-selection-pill{width:100%;height:52px}
 }
 
-/* ═══════════════════════════════════════════════════════════
-   15) MODAL
-   ═══════════════════════════════════════════════════════════ */
 .modal{
   display:none;
   position:fixed;inset:0;
@@ -1270,9 +1209,6 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
   box-shadow:0 10px 24px rgba(0,0,0,.2);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   16) DESC CARD / FEATURES / POLICIES
-   ═══════════════════════════════════════════════════════════ */
 .desc-card{
   background:var(--card);
   padding:24px 22px;
@@ -1410,9 +1346,6 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
   white-space:pre-wrap;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   17) REVIEWS
-   ═══════════════════════════════════════════════════════════ */
 .reviews-list{margin-top:8px}
 .review-item{
   border-bottom:1px solid var(--border-2);
@@ -1513,9 +1446,6 @@ body[data-theme="navy"] .summary-panel .breakdown-row.total span:first-child{col
   box-shadow:0 10px 22px rgba(0,0,0,.18);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   18) FLOATING BAR
-   ═══════════════════════════════════════════════════════════ */
 .floating-bar{
   position:fixed;
   bottom:0;left:0;right:0;
@@ -1572,9 +1502,6 @@ body[data-theme="gold"] .floating-bar{background:rgba(20,20,22,.92);}
 .floating-btn:hover{transform:translateY(-1px)}
 @media(min-width:850px){.floating-bar{display:none}}
 
-/* ═══════════════════════════════════════════════════════════
-   19) FOOTER
-   ═══════════════════════════════════════════════════════════ */
 footer{
   text-align:center;
   margin:36px 16px 24px;
@@ -1599,9 +1526,6 @@ footer a:hover{
   box-shadow:var(--shadow-md);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   20) RESPONSIVE — MOBILE
-   ═══════════════════════════════════════════════════════════ */
 @media(max-width:640px){
   body{padding-bottom:78px;font-size:14px}
 
@@ -1993,7 +1917,6 @@ if (!productId) {
 
 let storeInfo = { name:"", logoUrl:"", phoneInvoice:"", whatsappNumber:"", enableWhatsapp:false, currency:"دج", address:"" };
 
-/* 🆕 الميزات المُفعَّلة من الأدمن */
 let storeFeatures = {
   costPrice: true, inventory: true, quantityPerBox: true, wholesale: true,
   discounts: true, landing: true, reviews: true, shipping: true
@@ -2020,6 +1943,15 @@ const fmt = n => Number(n || 0).toLocaleString('fr-FR');
 
 const WILAYAS = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تيميمون","برج باجي مختار","أولاد جلال","بني عباس","إن صالح","إن قزام","تقرت","جانت","المغير","المنيعة"];
 
+/* ═══════════════════════════════════════════════════════════
+   🎯 بيكسل — Facebook + TikTok (مع تحويل العملة)
+   ═══════════════════════════════════════════════════════════ */
+function pixelCurrency() {
+  const c = storeInfo.currency || 'DZD';
+  if (c === 'دج' || c === 'دينار' || c === 'DA' || c === 'DZD') return 'DZD';
+  return c;
+}
+
 function initPixel(pixelId) {
   if (!pixelId || activePixelId) return;
   activePixelId = pixelId;
@@ -2033,7 +1965,7 @@ function initTiktokPixel(pixelId) {
 function trackViewContent(data) {
   if (viewContentTracked) return;
   viewContentTracked = true;
-  const cur = storeInfo.currency || 'DZD';
+  const cur = pixelCurrency();
   if (typeof fbq !== 'undefined' && activePixelId) {
     try { fbq('track', 'ViewContent', { content_name: data.name, content_ids: [data.id], content_type: 'product', value: data.value, currency: cur }); } catch(e) {}
   }
@@ -2044,7 +1976,7 @@ function trackViewContent(data) {
 function trackAddToCart(data) {
   if (addToCartTimer) clearTimeout(addToCartTimer);
   addToCartTimer = setTimeout(() => {
-    const cur = storeInfo.currency || 'DZD';
+    const cur = pixelCurrency();
     if (typeof fbq !== 'undefined' && activePixelId) {
       try { fbq('track', 'AddToCart', { content_name: data.name, content_ids: [data.id], content_type: 'product', value: data.value, currency: cur }); } catch(e) {}
     }
@@ -2056,7 +1988,7 @@ function trackAddToCart(data) {
 function trackInitiateCheckout(data) {
   if (initiateCheckoutTracked) return;
   initiateCheckoutTracked = true;
-  const cur = storeInfo.currency || 'DZD';
+  const cur = pixelCurrency();
   if (typeof fbq !== 'undefined' && activePixelId) {
     try { fbq('track', 'InitiateCheckout', { content_ids: [data.id], content_type: 'product', content_name: data.name, value: data.value, num_items: data.qty, currency: cur }); } catch(e) {}
   }
@@ -2065,7 +1997,7 @@ function trackInitiateCheckout(data) {
   }
 }
 function trackPurchase(data) {
-  const cur = storeInfo.currency || 'DZD';
+  const cur = pixelCurrency();
   if (typeof fbq !== 'undefined' && activePixelId) {
     try { fbq('track', 'Purchase', { value: data.value, currency: cur, content_name: data.name, content_ids: [data.id], content_type: 'product', num_items: data.qty }); } catch(e) {}
   }
@@ -2073,6 +2005,7 @@ function trackPurchase(data) {
     try { ttq.track('CompletePayment', { content_id: String(data.id), content_type: 'product', content_name: data.name, value: data.value, quantity: data.qty, currency: cur }); } catch(e) {}
   }
 }
+/* ═══════════════════════════════════════════════════════════ */
 
 async function loadAll() {
   try {
@@ -2091,7 +2024,6 @@ async function loadAll() {
     }
     if (!storeInfo.name) { showNotice("🏪","المتجر قيد الإعداد","لم يتم ضبط معلومات المتجر بعد."); return; }
 
-    /* 🆕 قراءة الميزات المُفعَّلة من الأدمن */
     try {
       const featSnap = await get(ref(db, 'store/features'));
       if (featSnap.exists()) {
@@ -2109,7 +2041,6 @@ async function loadAll() {
       }
     } catch(e) { console.warn('features load:', e); }
 
-    /* 🆕 إذا ميزة الترويج معطّلة → الصفحة غير متاحة */
     if (!storeFeatures.landing) {
       showNotice("🔒", "الصفحة غير متاحة", "صفحات الترويج معطّلة من الإدارة.");
       return;
@@ -2497,7 +2428,6 @@ function renderPage(landingSettings) {
   if (hasFeatures || hasPolicies) $("featuresAndPoliciesCard").style.display = "block";
   if (hasFeatures && hasPolicies) $("featuresPoliciesDivider").style.display = "block";
 
-  /* 🆕 يتحقق من ميزة التقييمات */
   const reviewsEnabled = storeFeatures.reviews && landing.showReviews !== false && landingSettings.enableReviews !== false;
   if (reviewsEnabled) { $("reviewsCard").style.display = "block"; loadReviews(); setupReviewForm(); }
 
@@ -2566,7 +2496,6 @@ function updateTotals() {
 
   const wilaya = $("inputWilaya").value;
   const dtype = getDeliveryType();
-  /* 🆕 يحترم ميزة الشحن */
   const baseShipping = storeFeatures.shipping ? findShippingFor(wilaya, dtype) : 0;
   const freeActive = isFreeShippingActive(currentQty);
   activeShippingCost = freeActive ? 0 : baseShipping;
@@ -2775,7 +2704,6 @@ async function executeOrder() {
       quantity: currentQty,
       quantityBoxes: currentQty,
       qtyPerBox: 1,
-      /* 🆕 حفظ ثمن الشراء للتقارير */
       costPrice: (product.costPrice !== undefined && product.costPrice !== null) ? Number(product.costPrice) : 0
     }],
     subtotal,
@@ -2796,7 +2724,6 @@ async function executeOrder() {
     const newRef = push(ref(db, 'whatsappOrders'));
     await set(newRef, orderData);
 
-    /* 🆕 خصم المخزون — فقط إذا كانت ميزة تتبع المخزون مفعّلة */
     if (storeFeatures.inventory && product.trackStock === true) {
       try {
         const prodSnap = await get(ref(db, 'products/' + product.id));
@@ -2881,10 +2808,6 @@ function loadReviews() {
   });
 }
 
-/* ═══════════════════════════════════════════════════════
-   ✅ عدّاد الزوار — مُصحّح ليكون مستقلاً لكل منتج
-   ═══════════════════════════════════════════════════════ */
-
 function startPresence() {
   const presenceRef = ref(db, "site_presence");
   const myRef = push(presenceRef);
@@ -2897,18 +2820,15 @@ function startPresence() {
     }).catch(() => {});
   };
 
-  // كتابة أولية + نبضة كل 30 ثانية للحفاظ على السجل حيًّا
   writePresence();
   if (presenceHeartbeat) clearInterval(presenceHeartbeat);
   presenceHeartbeat = setInterval(writePresence, 30000);
 
-  // إزالة السجل عند قطع الاتصال أو إغلاق الصفحة
   onDisconnect(myRef).remove();
   window.addEventListener("beforeunload", () => {
     try { remove(myRef); } catch(e) {}
   });
 
-  // الاستماع للعداد وفلترة حسب productId الحالي فقط
   onValue(presenceRef, snap => {
     let count = 0;
     if (snap.exists()) {
@@ -2920,7 +2840,6 @@ function startPresence() {
   });
 }
 
-/* ✅ تنظيف السجلات القديمة (أكثر من دقيقتين بدون تحديث) */
 function cleanupStalePresence() {
   const presenceRef = ref(db, "site_presence");
   onValue(presenceRef, snap => {
