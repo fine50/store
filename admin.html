@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <script src="config.js"></script>
 <link rel="stylesheet" href="admin.css" />
+<link rel="stylesheet" href="admin-desktop.css" />
 </head>
 <body>
 
@@ -35,7 +36,8 @@
 
 <nav class="main-nav" id="mainNav">
   <button class="nav-btn active" data-page="products" data-perm="nav.products">المنتجات</button>
-  <button class="nav-btn" data-page="orders" data-perm="nav.orders">الطلبات <span class="badge" id="ordersBadge" style="display:none;">0</span></button>
+<button class="nav-btn" data-page="families" data-perm="nav.products">العائلات</button>
+<button class="nav-btn" data-page="orders" data-perm="nav.orders">الطلبات <span class="badge" id="ordersBadge" style="display:none;">0</span></button>
   <button class="nav-btn" data-page="inventory" data-perm="nav.inventory" data-feature="inventory">المخزون</button>
   <button class="nav-btn" data-page="reviews" data-perm="nav.reviews" data-feature="reviews">التقييمات <span class="badge" id="reviewsBadge" style="display:none;">0</span></button>
   <button class="nav-btn" data-page="landing" data-perm="nav.landing" data-feature="landing">الترويج</button>
@@ -51,16 +53,36 @@
       <p class="admin-hero-tagline" id="productsHeroTagline"></p>
     </div>
   </div>
+  <div class="products-toolbar">
   <div class="filter-section" id="familyFilterSection">
     <button class="filter-btn active" data-family="الكل" id="filterAll"><i class="fas fa-th-list"></i> الكل <span class="filter-count" id="countAll">0</span></button>
     <button class="filter-btn discount-filter" data-family="__discounts__" id="filterDiscounts" data-perm="product.discount"><i class="fas fa-tags"></i> التخفيضات <span class="filter-count" id="countDiscounts">0</span></button>
     <button class="filter-btn hidden-filter" data-family="__hidden__" id="filterHidden" data-perm="product.delete"><i class="fas fa-eye-slash"></i> المخفية <span class="filter-count" id="countHidden">0</span></button>
     <button class="filter-clear" id="clearFilterBtn"><i class="fas fa-times"></i> إلغاء</button>
   </div>
+  <button class="add-fab" id="addProductBtn" style="display:none;">
+    <i class="fas fa-plus"></i>
+    <span class="add-fab-text">إضافة منتج</span>
+  </button>
+</div>
   <div class="search-box"><input type="text" id="searchInput" placeholder="بحث..." /></div>
   <div class="products-grid" id="productsContainer"></div>
   <div id="pagination"></div>
-</section>
+  </section>
+  
+  <section id="page-families" class="page">
+    <div class="families-header">
+      <div class="families-header-info">
+        <h2><i class="fas fa-tags"></i> العائلات</h2>
+        <p>أضف، عدّل، أو احذف عائلات المنتجات</p>
+      </div>
+      <button class="btn-primary add-family-main-btn" id="addFamilyMainBtn" type="button">
+        <i class="fas fa-plus"></i>
+        <span>إضافة عائلة جديدة</span>
+      </button>
+    </div>
+    <div class="families-grid" id="familiesGrid"></div>
+  </section>
 
 <section id="page-orders" class="page">
   <div class="orders-chips">
@@ -450,8 +472,6 @@
   </div>
 </section>
 
-<button class="add-fab" id="addProductBtn" style="display:none;">+</button>
-
 <div id="loginModal" class="modal show">
   <div class="modal-content" style="text-align:center;">
     <img id="loginLogo" style="width:80px;margin-bottom:16px;display:none;" />
@@ -822,8 +842,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const PERMS = {
-  owner: {
-    nav: { products: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
+    owner: {
+      nav: { products: true, families: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
     settings: { general: true, cover: true, features: true, landingSettings: true, policies: true, pixels: true, shipping: true, users: true, owner: true, advanced: true },
     product: { add: true, edit: true, delete: true, discount: true, promote: true, viewCost: true },
     orders: { viewNew: true, viewConfirmed: true, confirm: true, delete: true, deleteAll: true },
@@ -831,7 +851,7 @@ const PERMS = {
     landing: { view: true, edit: true }
   },
   admin: {
-    nav: { products: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
+    nav: { products: true, families: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
     settings: { general: true, cover: true, features: true, landingSettings: true, policies: true, pixels: true, shipping: true, users: false, owner: false, advanced: false },
     product: { add: true, edit: true, delete: true, discount: true, promote: true, viewCost: true },
     orders: { viewNew: true, viewConfirmed: true, confirm: true, delete: true, deleteAll: false },
@@ -839,7 +859,7 @@ const PERMS = {
     landing: { view: true, edit: true }
   },
   seller: {
-    nav: { products: true, orders: true, inventory: false, reviews: false, landing: false, settings: false },
+    nav: { products: true, families: true, orders: true, inventory: false, reviews: false, landing: false, settings: false },
     settings: { general: false, cover: false, features: false, landingSettings: false, policies: false, pixels: false, shipping: false, users: false, owner: false, advanced: false },
     product: { add: false, edit: false, delete: false, discount: false, promote: false, viewCost: false },
     orders: { viewNew: true, viewConfirmed: true, confirm: true, delete: false, deleteAll: false },
@@ -916,6 +936,7 @@ function switchPage(pageName) {
   if (pageName === 'reviews') renderReviewsSection();
   if (pageName === 'landing') renderLandingList();
   if (pageName === 'products') applyFiltersAndRender();
+if (pageName === 'families') renderFamiliesPage();
   if (pageName === 'settings') {
     const firstTab = Array.from(document.querySelectorAll('.settings-tab')).find(tab => {
       const p = tab.getAttribute('data-perm');
@@ -1159,27 +1180,50 @@ function populateFamilySelect() {
 function renderFamilyFilters() {
   const sec = $("familyFilterSection"); if (!sec) return;
   sec.querySelectorAll('.family-item-wrapper').forEach(el => el.remove());
-  const canManage = can('product.edit');
-  familiesList.forEach(({ key, name }) => {
-    const w = document.createElement('div'); w.className = 'family-item-wrapper';
-    const b = document.createElement('button'); b.className = 'filter-btn';
+  familiesList.forEach(({ name }) => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn';
     if (currentFamilyFilter === name) b.classList.add('active');
     b.dataset.family = name;
     b.innerHTML = `<i class="fas fa-tag"></i> ${escapeHtml(name)} <span class="filter-count" id="count_${CSS.escape(name)}">0</span>`;
     b.addEventListener('click', () => filterByFamily(name));
-    w.appendChild(b);
-    if (canManage) {
-      const a = document.createElement('div'); a.className = 'family-actions';
-      const eb = document.createElement('button'); eb.className = 'family-action-btn edit-btn'; eb.innerHTML = '<i class="fas fa-pen"></i>';
-      eb.addEventListener('click', e => { e.stopPropagation(); editFamilyName(key, name); });
-      const db2 = document.createElement('button'); db2.className = 'family-action-btn delete-btn'; db2.innerHTML = '<i class="fas fa-trash"></i>';
-      db2.addEventListener('click', e => { e.stopPropagation(); deleteFamily(key, name); });
-      a.appendChild(eb); a.appendChild(db2); w.appendChild(a);
-    }
-    sec.insertBefore(w, $("clearFilterBtn"));
+    sec.insertBefore(b, $("clearFilterBtn"));
   });
   updateFamilyCounts();
+  renderFamiliesPage();
 }
+
+function renderFamiliesPage() {
+  const grid = $("familiesGrid"); if (!grid) return;
+  if (!familiesList.length) {
+    grid.innerHTML = `<div class="no-data" style="padding:60px 20px;"><i class="fas fa-tags"></i><h3 style="font-weight:700;margin:8px 0;font-size:15px;">لا توجد عائلات بعد</h3><p style="font-size:13px;color:var(--text-2);">اضغط "إضافة عائلة جديدة" للبدء</p></div>`;
+    return;
+  }
+  const canManage = can('product.edit');
+  grid.innerHTML = familiesList.map(({ key, name }) => {
+    const count = Object.values(allProducts).filter(p => !p.hidden && p.family === name).length;
+    const hiddenCount = Object.values(allProducts).filter(p => p.hidden && p.family === name).length;
+    const total = count + hiddenCount;
+    return `<div class="family-card" data-key="${key}">
+      <div class="family-card-icon"><i class="fas fa-tag"></i></div>
+      <div class="family-card-body">
+        <h3 class="family-card-name">${escapeHtml(name)}</h3>
+        <p class="family-card-meta">${total} منتج${hiddenCount > 0 ? ` <span style="color:var(--muted);">(منها ${hiddenCount} مخفي)</span>` : ''}</p>
+      </div>
+      ${canManage ? `<div class="family-card-actions">
+        <button class="family-card-btn edit" data-fam-edit="${key}" title="تعديل">
+          <i class="fas fa-pen"></i> <span>تعديل</span>
+        </button>
+        <button class="family-card-btn delete" data-fam-del="${key}" title="حذف">
+          <i class="fas fa-trash"></i> <span>حذف</span>
+        </button>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('[data-fam-edit]').forEach(b => b.addEventListener('click', () => editFamilyName(b.dataset.famEdit, familiesList.find(f => f.key === b.dataset.famEdit)?.name || '')));
+  grid.querySelectorAll('[data-fam-del]').forEach(b => b.addEventListener('click', () => deleteFamily(b.dataset.famDel, familiesList.find(f => f.key === b.dataset.famDel)?.name || '')));
+}
+
 
 async function editFamilyName(key, oldName) {
   if (!can('product.edit')) return showToast(t('notAllowed'));
@@ -1239,6 +1283,18 @@ function filterByFamily(f) {
   }
   applyFiltersAndRender();
 }
+$("addFamilyMainBtn").addEventListener('click', async () => {
+  if (!can('product.edit')) return showToast(t('notAllowed'));
+  const n = prompt("اسم العائلة الجديدة:");
+  if (!n || !n.trim()) return;
+  const name = n.trim();
+  if (familiesList.some(f => f.name === name)) return showToast("العائلة موجودة مسبقاً");
+  try {
+    await set(push(familiesRef), name);
+    showToast(`تمت إضافة "${name}"`);
+  } catch (e) { showToast("خطأ: " + e.message); }
+});
+
 $("filterAll").addEventListener('click', () => filterByFamily("الكل"));
 $("filterDiscounts").addEventListener('click', () => filterByFamily("__discounts__"));
 $("filterHidden").addEventListener('click', () => filterByFamily("__hidden__"));
@@ -1415,7 +1471,8 @@ $("addFamilyBtn").addEventListener('click', async function() {
   const inp = $("newFamilyInput"), btn = this;
   if (inp.style.display === "none") {
     inp.style.display = "block"; inp.focus();
-    btn.innerHTML = '<i class="fas fa-check"></i>'; btn.style.background = "#059669";
+    btn.innerHTML = '<i class="fas fa-check"></i> حفظ';
+    btn.style.background = "#059669";
     return;
   }
   const n = inp.value.trim();
@@ -1424,7 +1481,8 @@ $("addFamilyBtn").addEventListener('click', async function() {
   await set(push(familiesRef), n);
   showToast(`تمت إضافة ${n}`);
   inp.value = ""; inp.style.display = "none";
-  btn.innerHTML = `<i class="fas fa-plus"></i> إضافة`; btn.style.background = "var(--primary)";
+  btn.innerHTML = `<i class="fas fa-plus"></i> إضافة`;
+  btn.style.background = "var(--primary)";
 });
 
 async function uploadImage(file) {
