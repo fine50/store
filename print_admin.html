@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impression</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', Arial, sans-serif;
+      font-size: 12px;
+      background: white;
+      padding: 10px;
+      direction: ltr;
+    }
+    .invoice {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .store-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 55%;
+    }
+    .store-logo img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+    .store-details h2 {
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 3px;
+    }
+    .store-details p {
+      font-size: 10px;
+      margin: 2px 0;
+    }
+    .client-info {
+      width: 40%;
+      border: 1px solid #000;
+      padding: 6px 10px;
+      line-height: 1.4;
+      font-size: 11px;
+      direction: ltr;
+    }
+    .client-info p {
+      margin: 2px 0;
+      text-align: left;
+    }
+    .info-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding: 5px 0;
+      font-size: 11px;
+      font-weight: 600;
+      direction: ltr;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      direction: ltr;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 2px 4px;
+      font-size: 11px;
+    }
+    th {
+      background: #f4f4f4;
+      font-weight: 700;
+      text-align: center;
+    }
+    .summary-line {
+      margin: 8px 0;
+      text-align: right;
+      font-weight: 600;
+      font-size: 11px;
+      direction: ltr;
+    }
+    .footer-wrapper {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-top: 18px;
+    }
+    .bottom-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 3px solid #000;
+      padding-top: 14px;
+      direction: ltr;
+    }
+    .invoice-number {
+      text-align: right;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .total-box {
+      text-align: right;
+      min-width: 260px;
+    }
+    .total-box strong {
+      font-size: 12px;
+    }
+    .total-amount {
+      font-size: 16px;
+      font-weight: 900;
+    }
+    .shipping-line {
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      text-align: right;
+    }
+    .shipping-line .free {
+      color: #059669;
+      font-weight: 700;
+    }
+    .footer-text {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 10px;
+      font-weight: 500;
+      direction: ltr;
+    }
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm 10mm 12mm 10mm;
+      }
+      body { padding: 0; background: white; }
+      .invoice { padding: 0; max-width: 100%; }
+      .no-print { display: none !important; }
+      .shipping-line .free {
+        color: #059669 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .footer-wrapper {
+        margin-top: 15mm;
+      }
+    }
+    td:nth-child(2) { direction: ltr; text-align: left; font-weight: 600; }
+    td:nth-child(4), td:nth-child(5) { direction: ltr; text-align: right; }
+
+    #loading{text-align:center; padding:60px; color:#0b6e4f; font-weight:700; font-family:'Cairo',sans-serif;}
+    #loading .spin{width:40px; height:40px; border:4px solid #e9edf2; border-top-color:#0b6e4f; border-radius:50%; animation:spin .9s linear infinite; margin:0 auto 16px;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    #notice{text-align:center; padding:60px; color:#e74c3c; font-weight:700; font-family:'Cairo',sans-serif;}
+  </style>
+</head>
+<body>
+
+  <div id="loading"><div class="spin"></div><span>Chargement...</span></div>
+  <div id="notice" style="display:none"></div>
+  <div id="invoiceContainer" class="invoice" style="display:none;"></div>
+
+  <div class="no-print" style="text-align:center; margin:20px 0;" id="actionButtons">
+    <button onclick="window.print()" style="padding:10px 25px; font-size:14px; margin:5px; background:#000; color:white; border:none; border-radius:5px; cursor:pointer;">
+      Imprimer
+    </button>
+    <button onclick="window.close()" style="padding:10px 25px; font-size:14px; margin:5px; background:#e5e7eb; border:none; border-radius:5px; cursor:pointer;">
+      Fermer
+    </button>
+  </div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const $ = id => document.getElementById(id);
+const BOOT = window.STORE_BOOTSTRAP;
+
+if (!BOOT || !BOOT.firebaseConfig || String(BOOT.firebaseConfig.apiKey).includes("YOUR_")) {
+  $("loading").style.display = "none";
+  $("notice").style.display = "block";
+  $("notice").textContent = "Fichier config.js manquant ou non configuré";
+  throw new Error("no config");
+}
+
+const app = initializeApp(BOOT.firebaseConfig);
+const db = getDatabase(app);
+
+function esc(s){ return !s ? '' : String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function fmt(n){ return Math.floor(Number(n || 0)).toLocaleString('fr-FR'); }
+function fmtDec(n){ return Number(n || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+/* Suppression défensive des URLs dans les textes */
+function stripUrls(txt){
+  if (!txt) return '';
+  return String(txt)
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/www\.\S+/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+async function init(){
+  let storeInfo = {
+    name: "",
+    logoUrl: "",
+    phoneInvoice: "",
+    address: "",
+    currency: "دج"
+  };
+
+  try {
+    const snap = await get(ref(db, 'store/info'));
+    if (snap.exists()) {
+      const d = snap.val();
+      storeInfo = {
+        name: stripUrls(d.name || ""),
+        logoUrl: d.logoUrl || "",
+        phoneInvoice: d.phoneInvoice || "",
+        address: stripUrls(d.address || ""),
+        currency: d.currency || "دج"
+      };
+    }
+  } catch(e){ console.warn(e); }
+
+  document.title = storeInfo.name ? ("Impression - " + storeInfo.name) : "Impression";
+
+  const stored = sessionStorage.getItem('printOrder');
+  if (!stored) {
+    $("loading").style.display = "none";
+    $("notice").style.display = "block";
+    $("notice").innerHTML = "Aucune donnée à imprimer<br><small>Ouvrez cette page depuis le panneau d'administration</small>";
+    if ($("actionButtons")) $("actionButtons").style.display = "none";
+    return;
+  }
+
+  let data;
+  try { data = JSON.parse(stored); }
+  catch(e){
+    $("loading").style.display = "none";
+    $("notice").style.display = "block";
+    $("notice").textContent = "Erreur dans les données de commande";
+    return;
+  }
+  sessionStorage.removeItem('printOrder');
+
+  const order = data.order || data;
+  const type = data.type || 'confirmed';
+  renderInvoice(order, type, storeInfo);
+}
+
+function renderInvoice(order, type, storeInfo){
+  const container = $("invoiceContainer");
+  const isConfirmed = (type === 'confirmed');
+  const invoiceNumber = order.invoiceNumber ? String(order.invoiceNumber).padStart(4, '0') : '----';
+
+  const currency = storeInfo.currency || 'دج';
+  const cur = (currency === 'دج' || currency === 'DZD' || currency === 'دينار') ? 'DA' : currency;
+
+  /* Champs spécifiques */
+  const wilaya       = stripUrls(order.wilaya || '');
+  const deliveryType = stripUrls(order.deliveryType || '');
+  const isLanding    = order.source === 'landing';
+  const isFreeShip   = order.freeShippingApplied === true;
+  const shipCost     = Number(order.shippingCost || 0);
+  const hasBundle    = order.bundleApplied === true
+                    || (Array.isArray(order.items) && order.items.some(it => it.bundleApplied === true));
+
+  const cleanStoreName    = stripUrls(storeInfo.name);
+  const cleanStoreAddress = stripUrls(storeInfo.address);
+  const cleanOrderAddress = stripUrls(order.address);
+
+  let rows = '';
+  let totalQte = 0;
+  let itemIndex = 1;
+
+  if (order.items && Array.isArray(order.items)) {
+    order.items.forEach((it) => {
+      const qty = Number(it.quantity || 0);
+      const price = Number(it.price || 0);
+      const total = qty * price;
+      totalQte += qty;
+      const bundleMark = it.bundleApplied ? ' [Offre]' : '';
+      rows += `
+        <tr>
+          <td style="text-align:center; border:1px solid #000; padding:2px 4px;">${itemIndex}</td>
+          <td style="border:1px solid #000; padding:2px 4px; text-align:left; direction:ltr; font-weight:600;">${esc(it.name)}${bundleMark}</td>
+          <td style="text-align:center; border:1px solid #000; padding:2px 4px;">${qty}</td>
+          <td style="text-align:right; border:1px solid #000; padding:2px 4px; direction:ltr;">${fmt(price)} ${esc(cur)}</td>
+          <td style="text-align:right; border:1px solid #000; padding:2px 4px; direction:ltr;">${fmt(total)} ${esc(cur)}</td>
+        </tr>
+      `;
+      itemIndex++;
+    });
+  }
+
+  const totalPrice = order.totalPrice || 0;
+  const nbreProduit = order.items ? order.items.length : 0;
+  const sellerName = order.confirmedBy || 'Admin';
+  const now = new Date(order.confirmedAt || Date.now());
+  const dateStr = now.toLocaleDateString('fr-FR');
+  const timeStr = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+  /* Ligne de livraison */
+  const locationSuffix = (wilaya || deliveryType)
+    ? ' - ' + [wilaya, deliveryType].filter(Boolean).join(' / ')
+    : '';
+
+  let shippingLineHtml = '';
+  if (isFreeShip) {
+    shippingLineHtml = `<div class="shipping-line">Frais de livraison : <span class="free">Gratuite</span>${esc(locationSuffix)}</div>`;
+  } else if (shipCost > 0) {
+    shippingLineHtml = `<div class="shipping-line">Frais de livraison : ${fmt(shipCost)} ${esc(cur)}${esc(locationSuffix)}</div>`;
+  } else if (wilaya || deliveryType) {
+    shippingLineHtml = `<div class="shipping-line">Livraison : ${esc([wilaya, deliveryType].filter(Boolean).join(' / '))}</div>`;
+  }
+
+  const logoHtml = storeInfo.logoUrl
+    ? `<div class="store-logo"><img src="${esc(storeInfo.logoUrl)}" alt="Logo" onerror="this.style.display='none'"></div>`
+    : '';
+
+  const phoneHtml = storeInfo.phoneInvoice ? `<p>Télé : ${esc(storeInfo.phoneInvoice)}</p>` : '';
+  const addressHtml = cleanStoreAddress ? `<p>${esc(cleanStoreAddress)}</p>` : '';
+
+  const docTitle = isConfirmed ? 'Bon de livraison (Confirmé)' : 'Bon de livraison';
+
+  container.innerHTML = `
+    <div class="top-header">
+      <div class="store-info">
+        ${logoHtml}
+        <div class="store-details">
+          <h2>${esc(cleanStoreName) || '—'}</h2>
+          ${phoneHtml}
+          ${addressHtml}
+        </div>
+      </div>
+      <div class="client-info">
+        <p><strong>Client :</strong> ${esc(order.customerName || '')}</p>
+        <p><strong>Adresse :</strong> ${esc(cleanOrderAddress)}</p>
+        <p><strong>Télé :</strong> ${esc(order.phone || '')}</p>
+        ${wilaya ? `<p><strong>Wilaya :</strong> ${esc(wilaya)}</p>` : ''}
+        ${deliveryType ? `<p><strong>Type de livraison :</strong> ${esc(deliveryType)}</p>` : ''}
+      </div>
+    </div>
+
+    <div class="info-bar">
+      <span>le ${dateStr} - ${timeStr}</span>
+      <span>Préparé par : ${esc(sellerName)}</span>
+      ${isLanding ? '<span>Commande via page promotion</span>' : ''}
+    </div>
+
+    <div style="text-align:center; margin:10px 0; font-weight:bold; font-size:14px; direction:ltr;">
+      ${docTitle}
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:5%">N°</th>
+          <th style="width:55%">DESIGNATION</th>
+          <th style="width:8%">QTE</th>
+          <th style="width:16%">Prix u</th>
+          <th style="width:16%">Total</th>
+        </tr>
+      </thead>
+      <tbody>${rows || `<tr><td colspan="5" style="text-align:center;padding:10px;">Aucun produit</td></tr>`}</tbody>
+    </table>
+
+    <div class="summary-line">Nbre Produit : ${nbreProduit} &nbsp;&nbsp;&nbsp; Tot Qté : ${totalQte}</div>
+    ${hasBundle ? `<div class="summary-line" style="font-size:10px;">Dont articles avec offre quantité</div>` : ''}
+
+    <div class="footer-wrapper">
+      <div class="bottom-section">
+        <div class="invoice-number">bon de livraison N°: ${invoiceNumber}</div>
+        <div class="total-box">
+          ${shippingLineHtml}
+          <div><strong>net à payer</strong></div>
+          <div class="total-amount">${fmtDec(totalPrice)} ${esc(cur)}</div>
+        </div>
+      </div>
+      <div class="footer-text">Merci pour votre confiance</div>
+    </div>
+  `;
+
+  $("loading").style.display = "none";
+  container.style.display = "block";
+}
+
+init();
+</script>
+</body>
+</html>

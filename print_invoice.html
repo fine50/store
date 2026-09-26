@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+<title>Impression thermique</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="config.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Cairo','Segoe UI',sans-serif;
+  background:#f0f2f5;
+  color:#1e293b;
+  padding:20px;
+  direction:ltr;
+  min-height:100vh;
+}
+.app-header{
+  background:white;
+  padding:18px 24px;
+  border-radius:24px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.app-header .logo{
+  font-size:1.3rem;
+  font-weight:800;
+  color:#10b981;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.app-header .logo img{height:40px;width:auto;object-fit:contain}
+.app-header .actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.btn{
+  padding:10px 22px;
+  border:none;
+  border-radius:40px;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer;
+  font-family:'Cairo',sans-serif;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:all 0.25s ease;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.10)}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:#10b981;color:white}
+.btn-primary:hover{background:#059669}
+.btn-print{background:#1e293b;color:white}
+.btn-print:hover{background:#0f172a}
+.btn-back{background:#e2e8f0;color:#1e293b}
+.btn-back:hover{background:#cbd5e1}
+.btn-bluetooth{background:#2563eb;color:white}
+.btn-bluetooth:hover{background:#1d4ed8}
+.btn-danger{background:#dc2626;color:white}
+.btn-danger:hover{background:#b91c1c}
+.btn-success{background:#10b981;color:white}
+.btn-success:hover{background:#059669}
+.btn-warning{background:#f59e0b;color:white}
+.btn-warning:hover{background:#d97706}
+.btn-outline{background:transparent;border:2px solid #e2e8f0;color:#1e293b}
+.btn-outline:hover{background:#f1f5f9;border-color:#94a3b8}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:30px}
+.btn-icon{
+  width:44px;height:44px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  border:none;
+  cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+.btn-icon:hover{transform:scale(1.08)}
+.btn-icon-edit{background:#dbeafe;color:#2563eb}
+.btn-icon-edit:hover{background:#bfdbfe}
+.btn-icon-delete{background:#fee2e2;color:#dc2626}
+.btn-icon-delete:hover{background:#fecaca}
+
+.panel{
+  background:white;
+  border-radius:24px;
+  padding:20px 24px 24px;
+  margin-bottom:24px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
+.panel-title{
+  font-weight:700;
+  font-size:1.1rem;
+  color:#0f172a;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+.panel-title i{color:#2563eb}
+
+.printer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+  margin-bottom:16px;
+}
+.printer-card{
+  background:#f8fafc;
+  border-radius:20px;
+  padding:16px 18px;
+  border:2px solid transparent;
+  transition:all 0.25s ease;
+  cursor:pointer;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.02);
+}
+.printer-card:hover{
+  background:#f1f5f9;
+  border-color:#cbd5e1;
+}
+.printer-card.active{
+  border-color:#10b981;
+  background:#ecfdf5;
+  box-shadow:0 4px 12px rgba(16,185,129,0.12);
+}
+.printer-card .card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.printer-card .card-name{
+  font-weight:700;
+  font-size:17px;
+  color:#0f172a;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.printer-card .card-name i{color:#64748b;font-size:16px}
+.printer-card .card-actions{display:flex;gap:6px}
+.printer-card .card-badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:4px;
+}
+.badge{
+  font-size:11px;
+  padding:3px 12px;
+  border-radius:40px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:#e2e8f0;
+  color:#1e293b;
+}
+.badge-protocol{background:#64748b;color:white}
+.badge-paper{background:#10b981;color:white}
+.badge-size{background:#8b5cf6;color:white}
+.badge-selected{
+  background:#10b981;
+  color:white;
+  font-size:10px;
+  padding:2px 10px;
+  border-radius:30px;
+  font-weight:700;
+  margin-left:auto;
+}
+.empty-printers{
+  text-align:center;
+  padding:30px 20px;
+  color:#94a3b8;
+}
+.empty-printers i{font-size:40px;display:block;margin-bottom:10px}
+
+#statusMessage{
+  padding:12px 20px;
+  border-radius:16px;
+  margin-bottom:20px;
+  display:none;
+  font-weight:600;
+  font-size:14px;
+}
+#statusMessage.success{background:#d1fae5;color:#065f46;display:block}
+#statusMessage.error{background:#fee2e2;color:#991b1b;display:block}
+#statusMessage.info{background:#dbeafe;color:#1e40af;display:block}
+#statusMessage.warning{background:#fef3c7;color:#92400e;display:block}
+
+.invoice-list{display:flex;flex-direction:column;gap:14px}
+.invoice-card{
+  background:white;
+  border-radius:20px;
+  padding:16px 20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  border-left:5px solid #10b981;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  transition:0.15s;
+}
+.invoice-card:hover{box-shadow:0 4px 14px rgba(0,0,0,0.06)}
+.invoice-card .info{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  font-size:14px;
+  align-items:center;
+}
+.invoice-card .info strong{color:#0f172a}
+.invoice-card .total{
+  font-weight:800;
+  color:#10b981;
+  font-size:1.15rem;
+}
+.invoice-card .actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.no-data{
+  text-align:center;
+  padding:50px 20px;
+  color:#94a3b8;
+  background:white;
+  border-radius:24px;
+}
+.no-data i{font-size:48px;display:block;margin-bottom:12px}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(6px);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal.show{display:flex}
+.modal-content{
+  background:white;
+  width:100%;
+  max-width:440px;
+  border-radius:32px;
+  padding:28px 30px 32px;
+  box-shadow:0 20px 48px rgba(0,0,0,0.18);
+  animation:modalFade 0.25s ease;
+}
+@keyframes modalFade{
+  from{opacity:0;transform:scale(0.94) translateY(10px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+.modal-content h3{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:1.3rem;
+  color:#0f172a;
+}
+.modal-content h3 i{margin-right:8px;color:#2563eb}
+.modal-content label{
+  display:block;
+  font-weight:600;
+  margin-bottom:6px;
+  font-size:14px;
+  color:#1e293b;
+}
+.modal-content select,
+.modal-content input{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  font-family:inherit;
+  font-size:14px;
+  margin-bottom:14px;
+  background:#f8fafc;
+  transition:0.15s;
+}
+.modal-content select:focus,
+.modal-content input:focus{
+  outline:none;
+  border-color:#10b981;
+  box-shadow:0 0 0 3px rgba(16,185,129,0.15);
+}
+.modal-content .hint{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:-8px;
+  margin-bottom:14px;
+}
+.modal-content .btn-group{display:flex;gap:10px;margin-top:6px}
+.modal-content .btn-group button{flex:1}
+
+.slider-group{margin:18px 0 12px}
+.slider-group label{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:600;
+  font-size:14px;
+}
+.slider-group label .slider-value{
+  font-size:22px;
+  font-weight:800;
+  color:#2563eb;
+  min-width:50px;
+  text-align:center;
+}
+.slider-group input[type="range"]{
+  -webkit-appearance:none;
+  width:100%;
+  height:6px;
+  border-radius:10px;
+  background:#e2e8f0;
+  outline:none;
+  margin:10px 0 4px;
+}
+.slider-group input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#2563eb;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(37,99,235,0.25);
+  transition:0.1s;
+}
+.slider-group input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.1)}
+.slider-group input[type="range"]::-moz-range-thumb{
+  width:20px;height:20px;border-radius:50%;background:#2563eb;border:none;cursor:pointer;
+}
+.slider-range-labels{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:#94a3b8;
+}
+
+@media (max-width:640px){
+  body{padding:12px}
+  .app-header{padding:14px 16px;flex-direction:column;align-items:stretch}
+  .app-header .actions{justify-content:center}
+  .printer-grid{grid-template-columns:1fr}
+  .invoice-card{flex-direction:column;align-items:stretch}
+  .invoice-card .actions{justify-content:flex-start}
+  .modal-content{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header no-print">
+  <div class="logo" id="headerLogo">
+    <i class="fas fa-print"></i> <span id="headerStoreName">Chargement...</span>
+  </div>
+  <div class="actions">
+    <a href="admin.html" class="btn btn-back" id="btnBack"><i class="fas fa-arrow-left"></i> <span>Retour</span></a>
+  </div>
+</div>
+
+<div class="panel no-print">
+  <div class="panel-title"><i class="fas fa-bluetooth-b"></i> <span id="panelTitleText">Imprimantes enregistrées</span></div>
+  <div id="printerListContainer" class="printer-grid"><div class="empty-printers"><i class="fas fa-spinner fa-spin"></i> <span id="printerLoadingText">Chargement...</span></div></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;border-top:1px solid #e2e8f0;padding-top:16px;">
+    <button class="btn btn-bluetooth" id="addPrinterBtn"><i class="fas fa-plus-circle"></i> <span id="addPrinterText">Ajouter</span></button>
+    <button class="btn btn-danger" id="clearAllPrintersBtn"><i class="fas fa-trash-alt"></i> <span id="clearAllText">Tout supprimer</span></button>
+  </div>
+  <div style="font-size:12px;color:#94a3b8;margin-top:10px;" id="printerHint">
+    <i class="fas fa-info-circle"></i> <span>Sélectionnez une imprimante, puis "Imprimer" sur la facture.</span>
+  </div>
+</div>
+
+<div id="statusMessage"></div>
+
+<div id="app"></div>
+
+<div id="addPrinterModal" class="modal">
+  <div class="modal-content">
+    <h3><i class="fas fa-plus-circle"></i> <span id="addPrinterTitle">Ajouter une imprimante</span></h3>
+    <label id="paperSizeLabel">Taille du papier</label>
+    <select id="paperSizeSelect">
+      <option value="80" id="opt80">80 mm (standard)</option>
+      <option value="58" id="opt58">58 mm (petit)</option>
+    </select>
+    <p class="hint" id="addPrinterHint">Bluetooth activé, imprimante allumée et en mode appairage.</p>
+    <div class="btn-group">
+      <button class="btn btn-success" id="confirmAddPrinter"><i class="fas fa-search"></i> <span id="searchText">Rechercher</span></button>
+      <button class="btn btn-outline" id="cancelAddPrinter"><i class="fas fa-times"></i> <span id="cancelText">Annuler</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="editPrinterModal" class="modal">
+  <div class="modal-content">
+    <h3><i class="fas fa-sliders-h"></i> <span id="editPrinterTitle">Ajuster la taille</span></h3>
+    <div class="slider-group">
+      <label>
+        <span><i class="fas fa-arrows-alt-h"></i> <span id="widthLabel">Largeur</span></span>
+        <span class="slider-value" id="widthValue">2.0</span>
+      </label>
+      <input type="range" id="widthSlider" min="1.0" max="3.0" step="0.1" value="2.0">
+      <div class="slider-range-labels"><span>1.0</span><span>3.0</span></div>
+    </div>
+    <div class="slider-group">
+      <label>
+        <span><i class="fas fa-arrows-alt-v"></i> <span id="heightLabel">Hauteur</span></span>
+        <span class="slider-value" id="heightValue">2.0</span>
+      </label>
+      <input type="range" id="heightSlider" min="1.0" max="3.0" step="0.1" value="2.0">
+      <div class="slider-range-labels"><span>1.0</span><span>3.0</span></div>
+    </div>
+    <p class="hint" id="editPrinterHint">Ajustez largeur et hauteur (1.0 à 3.0, pas de 0.1).</p>
+    <div class="btn-group">
+      <button class="btn btn-success" id="confirmEditPrinter"><i class="fas fa-check"></i> <span id="saveText">Enregistrer</span></button>
+      <button class="btn btn-outline" id="cancelEditPrinter"><i class="fas fa-times"></i> <span id="cancelText2">Annuler</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════ Impression toujours en français ═══════════════ */
+const PRINT_LANG = 'fr';
+window.PRINT_LANG = PRINT_LANG;
+
+const PRINT_I18N = {
+  fr: {
+    loadingStore: "Chargement...",
+    back: "Retour",
+    printersRegistered: "Imprimantes enregistrées",
+    printerLoading: "Chargement...",
+    add: "Ajouter",
+    clearAll: "Tout supprimer",
+    printerHint: "Sélectionnez une imprimante, puis \"Imprimer\" sur la facture.",
+    noPrinters: "Aucune imprimante",
+    addPrinterTitle: "Ajouter une imprimante",
+    paperSizeLabel: "Taille du papier",
+    opt80: "80 mm (standard)",
+    opt58: "58 mm (petit)",
+    addPrinterHint: "Bluetooth activé, imprimante allumée et en mode appairage.",
+    search: "Rechercher",
+    cancel: "Annuler",
+    editPrinterTitle: "Ajuster la taille",
+    width: "Largeur",
+    height: "Hauteur",
+    editPrinterHint: "Ajustez largeur et hauteur (1.0 à 3.0, pas de 0.1).",
+    save: "Enregistrer",
+    selected: "sélectionnée",
+    deleted: "Supprimée",
+    added: "ajoutée",
+    allDeleted: "Tout supprimé",
+    noInvoice: "Aucune facture",
+    printBtn: "Imprimer",
+    previewBtn: "Aperçu",
+    confirmDeletePrinter: "Supprimer cette imprimante ?",
+    confirmClearAll: "Supprimer toutes les imprimantes ?",
+    previewNoProducts: "Aucun produit",
+    previewArticle: "Article",
+    previewQty: "Qté",
+    previewTotal: "Total",
+    previewSubtotal: "Sous-total",
+    previewTotalBig: "Total",
+    previewCash: "Espèces",
+    previewClient: "Client",
+    previewDate: "Date",
+    previewReceipt: "Reçu",
+    previewPrint: "Imprimer",
+    previewClose: "Fermer",
+    choosePrinter: "Choisissez une imprimante",
+    printerNotFound: "Imprimante introuvable",
+    notFound: "Introuvable",
+    errorGeneric: "Erreur",
+    errorPreview: "Erreur preview",
+    printSuccess: "Impression réussie !",
+    printCancelled: "Annulé",
+    paymentThanks: "Merci pour votre confiance"
+  }
+};
+
+function T(key) {
+  return (PRINT_I18N[PRINT_LANG] && PRINT_I18N[PRINT_LANG][key]) || key;
+}
+window.T = T;
+
+function applyPrintLang() {
+  const t = PRINT_I18N[PRINT_LANG];
+  document.documentElement.lang = 'fr';
+  document.documentElement.dir = 'ltr';
+
+  const ids = {
+    'headerStoreName': 'loadingStore',
+    'panelTitleText': 'printersRegistered',
+    'printerLoadingText': 'printerLoading',
+    'addPrinterText': 'add',
+    'clearAllText': 'clearAll',
+    'addPrinterTitle': 'addPrinterTitle',
+    'paperSizeLabel': 'paperSizeLabel',
+    'opt80': 'opt80',
+    'opt58': 'opt58',
+    'addPrinterHint': 'addPrinterHint',
+    'searchText': 'search',
+    'cancelText': 'cancel',
+    'cancelText2': 'cancel',
+    'editPrinterTitle': 'editPrinterTitle',
+    'widthLabel': 'width',
+    'heightLabel': 'height',
+    'editPrinterHint': 'editPrinterHint',
+    'saveText': 'save'
+  };
+  Object.entries(ids).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t[key];
+  });
+
+  const backBtn = document.querySelector('#btnBack span');
+  if (backBtn) backBtn.textContent = t.back;
+
+  const hint = document.querySelector('#printerHint span');
+  if (hint) hint.textContent = t.printerHint;
+
+  document.title = (window.storeInfo && window.storeInfo.name ? (window.storeInfo.name + " - ") : "") + "Impression";
+}
+window.applyPrintLang = applyPrintLang;
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, onValue, set, remove, push, get, update } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const $ = id => document.getElementById(id);
+const BOOT = window.STORE_BOOTSTRAP;
+
+if (!BOOT || !BOOT.firebaseConfig || String(BOOT.firebaseConfig.apiKey).includes("YOUR_")) {
+  document.body.innerHTML = '<div style="text-align:center;padding:60px;color:#dc2626;font-family:Cairo,sans-serif;font-weight:700">Fichier config.js manquant</div>';
+  throw new Error("no config");
+}
+
+const app = initializeApp(BOOT.firebaseConfig);
+const db = getDatabase(app);
+const currentUser = localStorage.getItem("user") || "default_user";
+const printersRef = ref(db, `users/${currentUser}/printers`);
+
+let printersList = [];
+let selectedPrinterId = null;
+let editingPrinterId = null;
+let storeInfo = { name:"", phoneInvoice:"", logoUrl:"", currency:"DA" };
+
+function esc(s){return !s?'':String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+/* ─── Suppression défensive des URLs dans les textes ─── */
+function stripUrls(txt){
+  if (!txt) return '';
+  return String(txt)
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/www\.\S+/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+function showStatus(msg, type = 'info') {
+  const el = $('statusMessage');
+  el.textContent = msg;
+  el.className = type;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 5500);
+}
+function cleanInvoiceNumber(num) {
+  if (!num) return '----';
+  return String(num).replace(/^[Nn]{3}\s*/, '');
+}
+function cleanPhone(phone) {
+  if (!phone) return '';
+  return String(phone).replace(/^[Tt]1?[lL]1?\s*/, '').replace(/^T[eé]l\s*/, '');
+}
+
+function curLabel(c) {
+  const currency = c || 'دج';
+  if (currency === 'دج' || currency === 'DZD' || currency === 'دينار') return 'DA';
+  return currency;
+}
+
+/* ═══ LOAD STORE INFO ═══ */
+onValue(ref(db, 'store/info'), (snap) => {
+  const d = snap.val() || {};
+  storeInfo = {
+    name: stripUrls(d.name || ""),
+    phoneInvoice: d.phoneInvoice || "",
+    logoUrl: d.logoUrl || "",
+    currency: d.currency || "دج"
+  };
+  window.storeInfo = storeInfo;
+  const hl = $("headerLogo");
+  if (storeInfo.logoUrl) {
+    hl.innerHTML = `<img src="${esc(storeInfo.logoUrl)}" alt="" onerror="this.style.display='none'"> <span>${esc(storeInfo.name) || "—"}</span>`;
+  } else {
+    hl.innerHTML = `<i class="fas fa-print"></i> <span>${esc(storeInfo.name) || "—"}</span>`;
+  }
+  if (window.applyPrintLang) window.applyPrintLang();
+});
+
+/* ═══ LOAD PRINTERS ═══ */
+function loadPrinters() {
+  onValue(printersRef, (snap) => {
+    const data = snap.val();
+    printersList = data ? Object.entries(data).map(([id, p]) => ({ id, ...p })) : [];
+    printersList.sort((a, b) => (b.lastUsed || 0) - (a.lastUsed || 0));
+    if (printersList.length && !selectedPrinterId) selectedPrinterId = printersList[0].id;
+    if (selectedPrinterId && !printersList.find(p => p.id === selectedPrinterId)) {
+      selectedPrinterId = printersList.length ? printersList[0].id : null;
+    }
+    renderPrinters();
+  });
+}
+
+function renderPrinters() {
+  const container = $('printerListContainer');
+  if (!printersList.length) {
+    container.innerHTML = `<div class="empty-printers"><i class="fas fa-print"></i>${T('noPrinters')}</div>`;
+    return;
+  }
+  let html = '';
+  for (const p of printersList) {
+    const active = p.id === selectedPrinterId;
+    const w = p.widthScale ?? 2.0;
+    const h = p.heightScale ?? 2.0;
+    const sizeLabel = `${w.toFixed(1)}x${h.toFixed(1)}`;
+    html += `
+      <div class="printer-card ${active ? 'active' : ''}" data-pid="${p.id}">
+        <div class="card-header">
+          <div class="card-name"><i class="fas fa-print"></i> ${esc(p.name || 'Printer')}</div>
+          <div class="card-actions">
+            ${active ? `<span class="badge-selected"><i class="fas fa-check-circle"></i> ${T('selected')}</span>` : ''}
+            <button class="btn-icon btn-icon-edit" data-edit="${p.id}" title="Modifier">
+              <i class="fas fa-sliders-h"></i>
+            </button>
+            <button class="btn-icon btn-icon-delete" data-del="${p.id}" title="Supprimer">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-badges">
+          <span class="badge badge-protocol"><i class="fas fa-code"></i> ${p.protocol || 'escpos'}</span>
+          <span class="badge badge-paper"><i class="fas fa-ruler"></i> ${p.paperWidth || 80}mm</span>
+          <span class="badge badge-size"><i class="fas fa-arrows-alt"></i> ${sizeLabel}</span>
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+  container.querySelectorAll('[data-pid]').forEach(el => el.addEventListener('click', e => {
+    if (e.target.closest('[data-edit]') || e.target.closest('[data-del]')) return;
+    selectPrinter(el.dataset.pid);
+  }));
+  container.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openEdit(b.dataset.edit); }));
+  container.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); deletePrinter(b.dataset.del); }));
+}
+
+function selectPrinter(id) {
+  selectedPrinterId = id;
+  const p = printersList.find(x => x.id === id);
+  if (p) update(ref(db, `users/${currentUser}/printers/${id}`), { lastUsed: Date.now() });
+  renderPrinters();
+  showStatus(`${p?.name || ''} ${T('selected')}`, 'success');
+}
+
+async function deletePrinter(id) {
+  if (!confirm(T('confirmDeletePrinter'))) return;
+  try {
+    await remove(ref(db, `users/${currentUser}/printers/${id}`));
+    showStatus(T('deleted'), 'success');
+    if (selectedPrinterId === id) selectedPrinterId = printersList.length > 1 ? printersList[0].id : null;
+  } catch { showStatus(T('errorGeneric'), 'error'); }
+}
+
+function openEdit(id) {
+  editingPrinterId = id;
+  const p = printersList.find(x => x.id === id);
+  if (!p) return;
+  const w = p.widthScale ?? 2.0;
+  const h = p.heightScale ?? 2.0;
+  $('widthSlider').value = w;
+  $('heightSlider').value = h;
+  $('widthValue').textContent = w.toFixed(1);
+  $('heightValue').textContent = h.toFixed(1);
+  $('editPrinterModal').classList.add('show');
+}
+
+$('widthSlider').addEventListener('input', function() {
+  $('widthValue').textContent = parseFloat(this.value).toFixed(1);
+});
+$('heightSlider').addEventListener('input', function() {
+  $('heightValue').textContent = parseFloat(this.value).toFixed(1);
+});
+
+/* ═══ ESC/POS ═══ */
+const ESC = 0x1B, GS = 0x1D;
+function escposInit() { return new Uint8Array([ESC, 0x40]); }
+function escposLine(t) { return new TextEncoder().encode(t + '\n'); }
+function escposCut() { return new Uint8Array([GS, 0x56, 0x00]); }
+function escposBoldOff() { return new Uint8Array([ESC, 0x45, 0x00]); }
+function escposAlign(a) { return new Uint8Array([ESC, 0x61, a]); }
+
+function buildFontSizeCmd(w, h) {
+  let w2 = Math.min(3, Math.max(1, Math.round(w)));
+  let h2 = Math.min(3, Math.max(1, Math.round(h)));
+  const n = ((w2 - 1) << 3) | (h2 - 1);
+  return new Uint8Array([GS, 0x21, n]);
+}
+
+/* ═══ BUILD INVOICE ═══ */
+function buildInvoice(order, printer) {
+  const items = order.items || [];
+  const total = items.reduce((s, it) => s + (Number(it.price) * Number(it.quantity)), 0);
+  let invNum = cleanInvoiceNumber(order.invoiceNumber || '----');
+  const customer = order.customerName || 'Client';
+  let phone = cleanPhone(order.phone || '');
+  let address = stripUrls((order.address || '').split('http')[0]);
+  const date = new Date(order.confirmedAt || Date.now()).toLocaleString('fr-FR');
+
+  /* ─── Nouveaux champs ─── */
+  const wilaya       = stripUrls(order.wilaya || '');
+  const deliveryType = stripUrls(order.deliveryType || '');
+  const isLanding    = order.source === 'landing';
+  const isFreeShip   = order.freeShippingApplied === true;
+  const shipCost     = Number(order.shippingCost || 0);
+
+  const w = (printer?.widthScale ?? 2.0);
+  const h = (printer?.heightScale ?? 2.0);
+  const fontCmd = buildFontSizeCmd(w, h);
+
+  const chunks = [];
+  chunks.push(escposInit());
+  const addLine = (txt) => chunks.push(escposLine(txt));
+  const addFont = () => chunks.push(fontCmd);
+
+  chunks.push(escposAlign(0)); addFont(); chunks.push(escposBoldOff()); addLine(stripUrls(storeInfo.name) || '—'); addLine('');
+  chunks.push(escposAlign(0)); addFont(); chunks.push(escposBoldOff());
+  addLine(`Facture : ${invNum}`);
+  addLine(`Date : ${date}`);
+  addLine(`Client : ${customer}`);
+  if (phone) addLine(`Tel : ${phone}`);
+  if (address) addLine(`Adresse : ${address}`);
+  if (wilaya) addLine(`Wilaya : ${wilaya}`);
+  if (deliveryType) addLine(`Livraison : ${deliveryType}`);
+  if (isLanding) addLine(`Source : Page promotion`);
+  addLine('');
+  chunks.push(escposAlign(0)); addFont(); chunks.push(escposBoldOff());
+  addLine('Produit          Qte Prix Total');
+  addLine('');
+  if (items.length) {
+    items.forEach(it => {
+      let name = (it.name || 'Produit');
+      if (it.bundleApplied) {
+        name = name.substring(0, 10) + ' [O]';
+      } else {
+        name = name.substring(0, 14);
+      }
+      const qty = Number(it.quantity) || 0;
+      const price = Number(it.price) || 0;
+      const totalItem = qty * price;
+      const priceStr = price.toFixed(2).replace(/\.00$/, '');
+      const totalStr = totalItem.toFixed(2).replace(/\.00$/, '');
+      const line = name.padEnd(14) + ' ' + String(qty).padStart(3) + ' ' + priceStr.padStart(6) + ' ' + totalStr.padStart(6);
+      addLine(line);
+    });
+  } else addLine('(aucun article)');
+  addLine('');
+  chunks.push(escposAlign(0)); addFont(); chunks.push(escposBoldOff());
+
+  /* ─── Livraison ─── */
+  if (isFreeShip) {
+    addLine('Livraison : Gratuite');
+  } else if (shipCost > 0) {
+    addLine(`Livraison : ${shipCost.toFixed(2).replace(/\.00$/,'')} ${storeInfo.currency}`);
+  }
+
+  const totalFormatted = total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  addLine(`Total : ${totalFormatted} ${storeInfo.currency}`);
+  addLine('');
+  chunks.push(escposAlign(0)); addFont(); chunks.push(escposBoldOff());
+  if (storeInfo.phoneInvoice) addLine(`Tel : ${storeInfo.phoneInvoice}`);
+  addLine('Merci pour votre confiance');
+  addLine('');
+  addLine('');
+  chunks.push(escposCut());
+
+  const totalLen = chunks.reduce((s, arr) => s + arr.length, 0);
+  const all = new Uint8Array(totalLen);
+  let offset = 0;
+  for (const c of chunks) { all.set(c, offset); offset += c.length; }
+  return all;
+}
+
+async function sendChunked(char, data, chunkSize = 150) {
+  let sent = 0;
+  while (sent < data.length) {
+    const end = Math.min(sent + chunkSize, data.length);
+    await char.writeValue(data.slice(sent, end));
+    sent = end;
+    await new Promise(r => setTimeout(r, 30));
+  }
+}
+
+async function detectProtocol(char) {
+  try {
+    await char.writeValue(new Uint8Array([0x1B, 0x40, 0x1B, 0x64, 0x02, 0x1B, 0x4A, 0x0A]));
+    await new Promise(r => setTimeout(r, 300));
+    await char.writeValue(new Uint8Array([...escposInit(), ...escposLine('Test'), ...escposCut()]));
+    return 'escpos';
+  } catch { return 'raw'; }
+}
+
+async function smartPrint(order) {
+  if (!selectedPrinterId) { showStatus(T('choosePrinter'), 'warning'); return false; }
+  const printer = printersList.find(p => p.id === selectedPrinterId);
+  if (!printer) { showStatus(T('printerNotFound'), 'error'); return false; }
+
+  try {
+    if (!navigator.bluetooth) throw new Error('Web Bluetooth non supporté');
+    let device = null;
+    if (printer.deviceId) {
+      try { device = await navigator.bluetooth.getDevice({ id: printer.deviceId }); } catch {}
+    }
+    if (!device) {
+      try { device = await navigator.bluetooth.requestDevice({ filters: [{ name: printer.name }], optionalServices: ['000018f0-0000-1000-8000-00805f9b34fb', '00001101-0000-1000-8000-00805f9b34fb'] }); } catch {}
+    }
+    if (!device) {
+      device = await navigator.bluetooth.requestDevice({ acceptAllDevices: true, optionalServices: ['000018f0-0000-1000-8000-00805f9b34fb', '00001101-0000-1000-8000-00805f9b34fb'] });
+    }
+    if (!device) throw new Error('Aucun appareil');
+
+    await update(ref(db, `users/${currentUser}/printers/${selectedPrinterId}`), { deviceId: device.id });
+    const server = await device.gatt.connect();
+    let characteristic = null;
+    const services = await server.getPrimaryServices();
+    for (const svc of services) {
+      const chars = await svc.getCharacteristics();
+      for (const c of chars) {
+        if (c.properties.write || c.properties.writeWithoutResponse) { characteristic = c; break; }
+      }
+      if (characteristic) break;
+    }
+    if (!characteristic) throw new Error('No write characteristic');
+
+    if (!printer.protocol || printer.protocol === 'unknown') {
+      const proto = await detectProtocol(characteristic);
+      await update(ref(db, `users/${currentUser}/printers/${selectedPrinterId}`), { protocol: proto, detectedAt: Date.now() });
+      printer.protocol = proto;
+    }
+
+    const data = buildInvoice(order, printer);
+    await sendChunked(characteristic, data, 150);
+    await update(ref(db, `users/${currentUser}/printers/${selectedPrinterId}`), { lastUsed: Date.now() });
+    showStatus(T('printSuccess'), 'success');
+    return true;
+  } catch (e) {
+    let msg = e.message || 'Error';
+    if (msg.includes('user cancelled')) msg = T('printCancelled');
+    showStatus(msg, 'error');
+    return false;
+  }
+}
+
+/* ═══ INVOICE LIST ═══ */
+function renderInvoices(snap) {
+  const container = document.getElementById('app');
+  const data = snap.val() || {};
+  const entries = Object.entries(data);
+  if (!entries.length) {
+    container.innerHTML = `<div class="no-data"><i class="fas fa-file-invoice"></i>${T('noInvoice')}</div>`;
+    return;
+  }
+  const sorted = entries.reverse().slice(0, 50);
+  let html = `<div class="invoice-list">`;
+  for (const [key, order] of sorted) {
+    const date = order.confirmedAt ? new Date(order.confirmedAt).toLocaleString('fr-FR') : '---';
+    const total = order.totalPrice || 0;
+    const landingTag = order.source === 'landing' ? ' <span class="badge" style="background:#7c3aed;color:white;">Page promotion</span>' : '';
+    const freeTag = order.freeShippingApplied ? ' <span class="badge" style="background:#10b981;color:white;">Livraison gratuite</span>' : '';
+    const wilayaTag = order.wilaya ? ` <span class="badge" style="background:#64748b;color:white;">${esc(order.wilaya)}</span>` : '';
+    html += `
+      <div class="invoice-card">
+        <div class="info">
+          <strong>#${order.invoiceNumber || '---'}</strong>
+          <span><i class="fas fa-user"></i> ${esc(order.customerName || 'Client')}</span>
+          <span><i class="fas fa-phone"></i> ${esc(order.phone || '')}</span>
+          <span><i class="fas fa-calendar-alt"></i> ${date}</span>
+          ${landingTag}${freeTag}${wilayaTag}
+        </div>
+        <div class="total">${Number(total).toLocaleString('fr-FR')} ${curLabel(storeInfo.currency)}</div>
+        <div class="actions">
+          <button class="btn btn-print btn-sm" data-print="${key}"><i class="fas fa-print"></i> ${T('printBtn')}</button>
+          <button class="btn btn-sm" style="background:#6b7280;color:white;" data-preview="${key}"><i class="fas fa-eye"></i> ${T('previewBtn')}</button>
+        </div>
+      </div>
+    `;
+  }
+  html += `</div>`;
+  container.innerHTML = html;
+
+  container.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', async () => {
+    try {
+      const snap2 = await get(ref(db, `confirmedOrders/${b.dataset.print}`));
+      if (!snap2.exists()) { showStatus(T('notFound'), 'error'); return; }
+      await smartPrint(snap2.val());
+    } catch { showStatus(T('errorGeneric'), 'error'); }
+  }));
+
+  container.querySelectorAll('[data-preview]').forEach(b => b.addEventListener('click', async () => {
+    try {
+      const snap2 = await get(ref(db, `confirmedOrders/${b.dataset.preview}`));
+      if (!snap2.exists()) { alert(T('notFound')); return; }
+      previewInvoice(snap2.val());
+    } catch { alert(T('errorPreview')); }
+  }));
+}
+
+/* ═══ PREVIEW ═══ */
+function previewInvoice(order) {
+  let itemsHTML = '';
+  let total = 0;
+  if (order.items?.length) {
+    order.items.forEach((it, idx) => {
+      const qty = Number(it.quantity) || 0;
+      const price = Number(it.price) || 0;
+      const lineTotal = qty * price;
+      total += lineTotal;
+      const bundleMark = it.bundleApplied ? ' [Offre]' : '';
+      itemsHTML += `
+        <div class="item">
+          <div class="name">${idx+1}. ${esc(it.name)}${bundleMark}</div>
+          <div class="price">${price.toFixed(2).replace('.', ',')}</div>
+          <div class="values"><div></div><div class="qty">${qty}</div><div class="total">${lineTotal.toFixed(2).replace('.', ',')}</div></div>
+        </div>
+      `;
+    });
+  } else itemsHTML = `<p style="text-align:center;">${T('previewNoProducts')}</p>`;
+
+  const totalF = total.toFixed(2).replace('.', ',');
+  const store = stripUrls(storeInfo.name) || '—';
+  const phone = storeInfo.phoneInvoice || '';
+  const date = new Date(order.confirmedAt || Date.now()).toLocaleString('fr-FR');
+  const customer = esc(order.customerName || 'Client');
+  const invNum = cleanInvoiceNumber(order.invoiceNumber || '----');
+  const cur = curLabel(storeInfo.currency);
+
+  /* ─── Nouveaux champs ─── */
+  const wilayaP = stripUrls(order.wilaya || '');
+  const deliveryP = stripUrls(order.deliveryType || '');
+  const isLandingP = order.source === 'landing';
+  const isFreeShipP = order.freeShippingApplied === true;
+  const shipCostP = Number(order.shippingCost || 0);
+
+  const win = window.open('', '_blank', 'width=400,height=700,scrollbars=yes');
+  win.document.write(`
+    <!DOCTYPE html>
+    <html lang="fr" dir="ltr">
+    <head><meta charset="UTF-8"><title>${T('previewReceipt')} #${invNum}</title>
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      body{background:#ddd;font-family:Arial,sans-serif}
+      .receipt{width:80mm;background:#fff;margin:20px auto;padding:8px;color:#000}
+      .center{text-align:center}
+      .line{border-top:2px dotted #000;margin:8px 0}
+      .info{line-height:1.6;font-size:15px}
+      .headerRow{display:grid;grid-template-columns:1fr 50px 80px;font-weight:bold;margin:5px 0}
+      .item{margin-top:8px}
+      .name{font-size:16px;font-weight:bold}
+      .price{font-size:15px;margin-left:18px;margin-top:2px}
+      .values{display:grid;grid-template-columns:1fr 50px 80px;align-items:center;margin-top:-18px}
+      .qty{text-align:center}
+      .total{text-align:right}
+      .summary{margin-top:12px}
+      .summaryRow{display:flex;justify-content:space-between;margin:8px 0;font-size:18px}
+      .totalRow{display:flex;justify-content:space-between;font-size:20px;font-weight:bold;margin:10px 0}
+      .footer{text-align:center;margin-top:15px;font-size:18px}
+      .btn-group{text-align:center;margin-top:15px}
+      .btn-group button{margin:5px;padding:8px 18px;border:none;border-radius:30px;font-weight:600;cursor:pointer;font-size:14px}
+      .btn-print{background:#1e293b;color:white}
+      .btn-close{background:#e2e8f0;color:#1e293b}
+      @media print{body{background:white}.receipt{margin:0;width:80mm;box-shadow:none}.btn-group{display:none}}
+    </style>
+    </head>
+    <body>
+      <div class="receipt">
+        <div class="center"><h2>${esc(store)}</h2><div class="small">${esc(phone)}</div></div>
+        <div class="line"></div>
+        <div class="info">
+          <div>${T('previewReceipt')} : ${invNum}</div>
+          <div>${T('previewClient')} : ${customer}</div>
+          <div>${T('previewDate')} : ${date}</div>
+          ${wilayaP ? `<div>Wilaya : ${esc(wilayaP)}</div>` : ''}
+          ${deliveryP ? `<div>Livraison : ${esc(deliveryP)}</div>` : ''}
+          ${isLandingP ? `<div>Source : Page promotion</div>` : ''}
+        </div>
+        <div class="line"></div>
+        <div class="headerRow"><div>${T('previewArticle')}</div><div style="text-align:center;">${T('previewQty')}</div><div style="text-align:right;">${T('previewTotal')}</div></div>
+        <div class="line"></div>
+        ${itemsHTML}
+        <div class="line"></div>
+        ${isFreeShipP ? '<div style="text-align:right;font-size:14px;font-weight:700;color:#059669;margin-bottom:8px;">Livraison : Gratuite</div>' :
+          (shipCostP > 0 ? `<div style="text-align:right;font-size:14px;font-weight:600;margin-bottom:8px;">Livraison : ${shipCostP.toFixed(2).replace('.',',')} ${cur}</div>` : '')}
+        <div class="summary">
+          <div class="summaryRow"><span>${T('previewSubtotal')}</span><span>${totalF} ${cur}</span></div>
+          <div class="line"></div>
+          <div class="totalRow"><span>${T('previewTotalBig')}</span><span>${totalF} ${cur}</span></div>
+          <div class="line"></div>
+          <div class="summaryRow"><span>${T('previewCash')}</span><span>${totalF} ${cur}</span></div>
+        </div>
+        <div class="line"></div>
+        <div class="footer">${T('previewClient')} : ${phone}</div>
+      </div>
+      <div class="btn-group">
+        <button class="btn-print" onclick="window.print()">${T('previewPrint')}</button>
+        <button class="btn-close" onclick="window.close()">${T('previewClose')}</button>
+      </div>
+    </body>
+    </html>
+  `);
+  win.document.close();
+  setTimeout(() => win.focus(), 300);
+}
+
+/* ═══ MODALS ═══ */
+document.getElementById('addPrinterBtn').onclick = () => document.getElementById('addPrinterModal').classList.add('show');
+document.getElementById('cancelAddPrinter').onclick = () => document.getElementById('addPrinterModal').classList.remove('show');
+document.getElementById('cancelEditPrinter').onclick = () => { document.getElementById('editPrinterModal').classList.remove('show'); editingPrinterId = null; };
+
+document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); }));
+
+document.getElementById('confirmAddPrinter').addEventListener('click', async () => {
+  const paper = parseInt(document.getElementById('paperSizeSelect').value) || 80;
+  document.getElementById('addPrinterModal').classList.remove('show');
+  try {
+    if (!navigator.bluetooth) throw new Error('Bluetooth non supporté');
+    const device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: ['000018f0-0000-1000-8000-00805f9b34fb', '00001101-0000-1000-8000-00805f9b34fb']
+    });
+    const server = await device.gatt.connect();
+    let char = null;
+    for (const svc of await server.getPrimaryServices()) {
+      for (const c of await svc.getCharacteristics()) {
+        if (c.properties.write || c.properties.writeWithoutResponse) { char = c; break; }
+      }
+      if (char) break;
+    }
+    if (!char) throw new Error('No characteristic');
+    const protocol = await detectProtocol(char);
+    const refNew = push(printersRef);
+    const name = device.name || 'Printer';
+    const isRPP = name.toLowerCase().includes('rpp300');
+    await set(refNew, {
+      name, protocol, paperWidth: paper, deviceId: device.id,
+      widthScale: isRPP ? 2.0 : 1.5,
+      heightScale: isRPP ? 2.0 : 1.5,
+      lastUsed: Date.now(), createdAt: Date.now(), detectedAt: Date.now()
+    });
+    selectedPrinterId = refNew.key;
+    showStatus(`${name} ${T('added')}`, 'success');
+  } catch (e) {
+    let msg = e.message || 'Error';
+    if (msg.includes('cancelled')) msg = T('printCancelled');
+    showStatus(msg, 'error');
+  }
+});
+
+document.getElementById('confirmEditPrinter').addEventListener('click', async () => {
+  if (!editingPrinterId) return;
+  const w = parseFloat(document.getElementById('widthSlider').value);
+  const h = parseFloat(document.getElementById('heightSlider').value);
+  try {
+    await update(ref(db, `users/${currentUser}/printers/${editingPrinterId}`), { widthScale: w, heightScale: h, updatedAt: Date.now() });
+    document.getElementById('editPrinterModal').classList.remove('show');
+    showStatus(`${w.toFixed(1)} x ${h.toFixed(1)}`, 'success');
+    editingPrinterId = null;
+  } catch { showStatus(T('errorGeneric'), 'error'); }
+});
+
+document.getElementById('clearAllPrintersBtn').addEventListener('click', async () => {
+  if (!confirm(T('confirmClearAll'))) return;
+  try { await remove(printersRef); selectedPrinterId = null; showStatus(T('allDeleted'), 'success'); } catch { showStatus(T('errorGeneric'), 'error'); }
+});
+
+/* ═══ INIT ═══ */
+applyPrintLang();
+loadPrinters();
+onValue(ref(db, 'confirmedOrders'), (snap) => renderInvoices(snap));
+console.log('Impression thermique prête');
+</script>
+</body>
+</html>

@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>سجل النشاطات</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="config.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --font:'Cairo',system-ui,sans-serif;
+  --mono:'JetBrains Mono','Courier New',monospace;
+  --fs:clamp(9px, 2.3vw, 11.5px);
+  --fs-sm:clamp(8px, 2vw, 10px);
+  --fs-xs:clamp(7px, 1.8vw, 9px);
+  --row-h:clamp(15px, 4vw, 19px);
+  --pad:clamp(4px,1.5vw,10px);
+}
+html,body{-webkit-text-size-adjust:100%;background:#fff;overflow-x:hidden}
+body{
+  font-family:var(--font);
+  background:#e5e7eb;
+  color:#000;
+  font-size:var(--fs);
+  line-height:1.1;
+  margin:0;padding:0;
+}
+body[dir="rtl"]{direction:rtl}
+body[dir="ltr"]{direction:ltr}
+
+.back-btn{
+  position:fixed;
+  top:8px;
+  right:8px;
+  z-index:9997;
+  min-width:clamp(18px,5vw,22px);
+  height:clamp(16px,4.5vw,20px);
+  padding:0 6px;
+  border:1px solid #000;
+  background:#fff;
+  color:#000;
+  border-radius:0;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  font-weight:700;
+  text-decoration:none;
+  transition:.1s;
+}
+body[dir="ltr"] .back-btn{right:auto;left:8px}
+.back-btn:hover{background:#000;color:#fff}
+.back-btn:active{transform:translateY(1px)}
+
+.paper{
+  background:#fff;
+  max-width:1500px;
+  margin:0 auto;
+  padding:var(--pad) calc(var(--pad) + 2px);
+  padding-top:clamp(28px,6vw,44px);
+  box-shadow:0 0 20px rgba(0,0,0,.15);
+  min-height:100vh;
+}
+
+.header{
+  border-bottom:1.5px solid #000;
+  padding-bottom:4px;
+  margin-bottom:4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.header .left{display:flex;align-items:center;gap:6px;min-width:0}
+.header img{height:clamp(18px,5vw,28px);width:auto;object-fit:contain;flex-shrink:0}
+.header .title{font-size:clamp(10px,3vw,14px);font-weight:800}
+.header .subtitle{font-size:var(--fs-xs);color:#444;font-family:var(--mono)}
+.header .right{text-align:left;font-size:var(--fs-xs);font-family:var(--mono);line-height:1.3}
+body[dir="ltr"] .header .right{text-align:right}
+
+.summary{
+  display:flex;
+  gap:clamp(5px,1.5vw,12px);
+  padding:2px 0;
+  border-bottom:1px solid #000;
+  font-size:var(--fs-xs);
+  font-weight:700;
+  font-family:var(--mono);
+  margin-bottom:3px;
+  flex-wrap:wrap;
+}
+
+.toolbar{
+  display:flex;
+  gap:3px;
+  padding:3px 0;
+  flex-wrap:wrap;
+  align-items:center;
+  border-bottom:1px dashed #999;
+  margin-bottom:2px;
+}
+.tb-btn{
+  padding:1px clamp(4px,1.5vw,9px);
+  border:1px solid #000;
+  background:#fff;
+  font-family:var(--font);
+  font-size:var(--fs-xs);
+  font-weight:700;
+  cursor:pointer;
+  color:#000;
+  border-radius:0;
+}
+.tb-btn.active{background:#000;color:#fff}
+.tb-select,.tb-input{
+  padding:1px 5px;
+  border:1px solid #000;
+  font-family:var(--font);
+  font-size:var(--fs-xs);
+  background:#fff;
+  color:#000;
+  outline:none;
+  min-width:70px;
+  border-radius:0;
+}
+.tb-input{min-width:100px;flex:1;max-width:180px}
+
+.logs{
+  border-top:1.5px solid #000;
+  border-bottom:1.5px solid #000;
+  background:#fff;
+}
+.log-line{
+  display:flex;
+  align-items:center;
+  gap:clamp(3px,1vw,8px);
+  padding:0 calc(var(--pad) - 2px) 0 calc(var(--pad) + 2px);
+  height:var(--row-h);
+  border-bottom:1px solid #ececec;
+  font-size:var(--fs-sm);
+  white-space:nowrap;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  transition:background .1s;
+}
+.log-line:hover{background:#f5f5f5}
+.log-line:last-child{border-bottom:none}
+.log-line::before{
+  content:"";
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:3px;
+  background:#000;
+}
+body[dir="ltr"] .log-line::before{right:auto;left:0}
+.log-line.t-add::before{background:#10b981}
+.log-line.t-edit::before{background:#2563eb}
+.log-line.t-delete::before{background:#dc2626}
+.log-line.t-confirm::before{background:#f39c12}
+.log-line.t-settings::before{background:#8e44ad}
+
+.ll-idx{font-family:var(--mono);font-size:var(--fs-xs);color:#999;min-width:18px;flex-shrink:0}
+.ll-time{font-family:var(--mono);font-size:var(--fs-xs);color:#555;flex-shrink:0;min-width:52px}
+.ll-user{font-weight:700;color:#000;flex-shrink:0;max-width:60px;overflow:hidden;text-overflow:ellipsis}
+.ll-role{font-size:var(--fs-xs);color:#666;border:1px solid #ccc;padding:0 3px;line-height:calc(var(--row-h) - 6px);flex-shrink:0}
+.ll-role.owner{background:#000;color:#fff;border-color:#000}
+.ll-role.admin{border-color:#2563eb;color:#2563eb}
+.ll-role.seller{border-color:#999;color:#666}
+.ll-action{font-weight:700;color:#000;flex-shrink:0;max-width:90px;overflow:hidden;text-overflow:ellipsis}
+.ll-target{font-weight:600;color:#000;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;max-width:110px}
+.ll-details{color:#555;font-family:var(--mono);font-size:var(--fs-xs);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ll-details .f{color:#000;font-weight:700}
+.ll-details .from{color:#888;text-decoration:line-through}
+.ll-details .arrow{color:#aaa;padding:0 1px}
+.ll-details .to{color:#000;font-weight:700}
+.ll-details .sep{color:#ccc;padding:0 2px}
+
+.ll-print{
+  flex-shrink:0;
+  width:20px;
+  height:20px;
+  border:1px solid #dc2626;
+  background:#fff;
+  color:#dc2626;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  border-radius:0;
+  padding:0;
+  margin-inline-start:4px;
+  transition:.15s;
+}
+.ll-print:hover{background:#dc2626;color:#fff}
+.ll-print i{font-size:9px}
+
+.no-data{text-align:center;padding:30px 20px;color:#888;font-size:var(--fs-sm);font-family:var(--mono)}
+
+.pages{
+  display:flex;justify-content:center;gap:2px;padding:5px 0;flex-wrap:wrap;
+  border-top:1.5px solid #000;margin-top:3px;
+}
+.pages button{
+  min-width:clamp(18px,5vw,22px);height:clamp(16px,4.5vw,20px);
+  padding:0 4px;border:1px solid #000;background:#fff;color:#000;
+  font-family:var(--mono);font-size:var(--fs-xs);font-weight:700;cursor:pointer;border-radius:0;
+}
+.pages button:hover:not(:disabled){background:#000;color:#fff}
+.pages button.active{background:#000;color:#fff}
+.pages button:disabled{opacity:.3;cursor:default}
+
+.footer{
+  border-top:1px solid #000;margin-top:4px;padding-top:3px;
+  font-size:var(--fs-xs);font-family:var(--mono);color:#555;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;
+}
+
+#loading{
+  position:fixed;inset:0;background:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;z-index:9999;font-family:var(--mono);font-size:12px;color:#000;
+}
+#loading .spin{
+  width:28px;height:28px;border:3px solid #ccc;border-top-color:#000;
+  border-radius:50%;animation:spin .9s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+#denied{display:none;text-align:center;padding:60px 20px;font-family:var(--mono);font-size:12px}
+#denied i{font-size:40px;display:block;margin-bottom:14px;color:#000}
+
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(3px);
+  z-index:9998;display:none;align-items:center;justify-content:center;padding:16px;
+}
+.modal-overlay.show{display:flex}
+.modal{
+  background:#fff;border:2px solid #000;max-width:520px;width:100%;
+  max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,.3);
+}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;border-bottom:1.5px solid #000;background:#f5f5f5;
+  position:sticky;top:0;
+}
+.modal-head h3{font-size:13px;font-weight:800;font-family:var(--font)}
+.modal-close{
+  width:24px;height:24px;border:1px solid #000;background:#fff;
+  cursor:pointer;font-size:14px;line-height:1;font-weight:700;color:#000;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-close:hover{background:#000;color:#fff}
+.modal-body{padding:12px;font-family:var(--font);font-size:12px;line-height:1.6}
+.m-row{display:flex;gap:8px;padding:5px 0;border-bottom:1px dashed #e0e0e0;align-items:flex-start}
+.m-row:last-child{border-bottom:none}
+.m-row .lbl{font-weight:700;min-width:80px;flex-shrink:0;color:#555;font-size:11px}
+.m-row .val{color:#000;flex:1;word-break:break-word;font-size:12px}
+.m-row .val.mono{font-family:var(--mono);font-size:11px}
+.m-changes{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.m-change{
+  background:#f8f8f8;border-right:3px solid #000;padding:5px 8px;
+  font-family:var(--mono);font-size:11px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;
+}
+body[dir="ltr"] .m-change{border-right:none;border-left:3px solid #000}
+.m-change .f{font-weight:700;color:#000}
+.m-change .from{color:#888;text-decoration:line-through}
+.m-change .arrow{color:#999}
+.m-change .to{font-weight:700;color:#000}
+.m-order{background:#f0f9ff;border:1px solid #bae6fd;padding:8px 10px;margin-top:6px}
+.m-order .title{font-weight:800;font-size:11px;margin-bottom:4px;color:#0369a1}
+.m-order .item{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #bae6fd;font-size:11px;gap:8px}
+.m-order .item:last-child{border-bottom:none}
+.m-order .item span{color:#555;flex-shrink:0}
+.m-order .item b{color:#000;text-align:left;word-break:break-word}
+.type-badge{display:inline-block;padding:1px 8px;border:1px solid #000;font-size:10px;font-weight:700;font-family:var(--mono)}
+.type-badge.t-add{background:#10b981;color:#fff;border-color:#10b981}
+.type-badge.t-edit{background:#2563eb;color:#fff;border-color:#2563eb}
+.type-badge.t-delete{background:#dc2626;color:#fff;border-color:#dc2626}
+.type-badge.t-confirm{background:#f39c12;color:#fff;border-color:#f39c12}
+.type-badge.t-settings{background:#8e44ad;color:#fff;border-color:#8e44ad}
+
+.m-print-row{
+  padding:10px 0 4px;
+  border-top:1.5px dashed #000;
+  margin-top:10px;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.m-print-btn{
+  padding:8px 16px;
+  border:1.5px solid #dc2626;
+  background:#dc2626;
+  color:#fff;
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  border-radius:0;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:.15s;
+}
+.m-print-btn:hover{background:#991b1b;border-color:#991b1b;transform:translateY(-1px)}
+.m-print-btn:active{transform:translateY(0)}
+.m-print-btn i{font-size:13px}
+.m-print-hint{
+  font-size:10px;
+  color:#991b1b;
+  font-family:var(--mono);
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-top:6px;
+  padding:4px 8px;
+  background:#fef2f2;
+  border-right:3px solid #dc2626;
+}
+body[dir="ltr"] .m-print-hint{border-right:none;border-left:3px solid #dc2626}
+
+#printView{display:none}
+@media print{
+  body{background:#fff;padding:0;margin:0}
+  .paper,.toolbar,.pages,.modal-overlay,#loading,.no-print,.back-btn{display:none !important}
+  #printView{display:block !important}
+  @page{size:A4 portrait;margin:10mm 8mm}
+  #printView{font-family:'Cairo',Arial,sans-serif;color:#000;padding:0;max-width:100%;font-size:11px;direction:ltr}
+  .inv-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:12px}
+  .inv-store{display:flex;align-items:center;gap:10px;width:55%}
+  .inv-store img{width:50px;height:50px;object-fit:contain}
+  .inv-store .det h1{font-size:15px;font-weight:900;margin-bottom:2px;direction:rtl;text-align:right}
+  .inv-store .det p{font-size:10px;margin:1px 0;direction:rtl;text-align:right}
+  .inv-info{width:42%;border:1px solid #000;padding:6px 10px;line-height:1.5;font-size:11px}
+  .inv-info p{margin:2px 0;text-align:left}
+  .inv-info p strong{direction:rtl;display:inline-block;min-width:70px}
+  .inv-bar{display:flex;justify-content:space-between;padding:4px 0;font-size:11px;font-weight:600;margin-bottom:8px;border-bottom:1px solid #000;padding-bottom:6px}
+  .inv-title{text-align:center;font-size:14px;font-weight:900;margin:10px 0;letter-spacing:.5px}
+  table.inv-table{width:100%;border-collapse:collapse;font-size:10px;direction:ltr}
+  table.inv-table th,table.inv-table td{border:1px solid #000;padding:3px 5px;vertical-align:top;text-align:left;line-height:1.35}
+  table.inv-table th{background:#f0f0f0;font-weight:900;text-align:center;font-size:10px}
+  table.inv-table td.tc{text-align:center}
+  table.inv-table td.tr{text-align:right}
+  table.inv-table td.mono{font-family:'Courier New',monospace;font-size:9px}
+  table.inv-table td.rtl{direction:rtl;text-align:right}
+  table.inv-table tr{page-break-inside:avoid}
+  .inv-summary{display:flex;justify-content:space-between;padding:6px 4px;font-size:11px;font-weight:700;border-bottom:2px solid #000;margin-bottom:10px}
+  .inv-footer{margin-top:15px;text-align:center;font-size:11px;font-weight:600;border-top:2px solid #000;padding-top:10px}
+  .inv-footer .merci{font-size:12px;font-weight:900;margin-bottom:4px}
+}
+</style>
+</head>
+<body>
+
+<a href="admin.html" class="back-btn no-print" title="رجوع" id="backBtn">
+  <i class="fas fa-arrow-right"></i> <span id="backBtnText">رجوع</span>
+</a>
+
+<div id="loading"><div class="spin"></div><div id="loadingText">جاري التحميل...</div></div>
+
+<div id="denied">
+  <i class="fas fa-lock"></i>
+  <div id="deniedText">هذه الصفحة للمالك فقط</div>
+</div>
+
+<div class="paper" id="paper" style="display:none;">
+
+<div class="header">
+  <div class="left">
+    <img id="headerLogo" style="display:none;" alt="" />
+    <div>
+      <div class="title" id="storeName">—</div>
+      <div class="subtitle" id="subtitleText">Journal des activités</div>
+    </div>
+  </div>
+  <div class="right">
+    <div id="printDate">—</div>
+    <div id="periodLabel">—</div>
+    <div id="pageNum">صفحة 1</div>
+  </div>
+</div>
+
+<div class="summary">
+  <span><span data-i18n="total">الإجمالي</span>: <b id="s-total">0</b></span>
+  <span><span data-i18n="adds">إضافات</span>: <b id="s-add">0</b></span>
+  <span><span data-i18n="edits">تعديلات</span>: <b id="s-edit">0</b></span>
+  <span><span data-i18n="dels">حذف</span>: <b id="s-del">0</b></span>
+  <span><span data-i18n="confirms">تأكيدات</span>: <b id="s-conf">0</b></span>
+  <span style="margin-right:auto"><span data-i18n="shown">الأسطر</span>: <b id="s-shown">0</b></span>
+</div>
+
+<div class="toolbar no-print">
+  <button class="tb-btn active" data-period="today" data-i18n="today">اليوم</button>
+  <button class="tb-btn" data-period="week" data-i18n="week">الأسبوع</button>
+  <button class="tb-btn" data-period="month" data-i18n="month">الشهر</button>
+  <button class="tb-btn" data-period="all" data-i18n="all">الكل</button>
+  <select class="tb-select" id="userFilter"><option value="">—</option></select>
+  <select class="tb-select" id="actionFilter"><option value="">—</option></select>
+  <input class="tb-input" type="text" id="searchInput" placeholder="بحث..." />
+</div>
+
+<div class="logs" id="logBody"></div>
+<div class="pages no-print" id="pagination"></div>
+
+<div class="footer">
+  <span id="footerStore">—</span>
+  <span id="footerDate">—</span>
+</div>
+
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">تفاصيل العملية</h3>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div id="printView"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const $ = id => document.getElementById(id);
+const BOOT = window.STORE_BOOTSTRAP;
+
+if (!BOOT || !BOOT.firebaseConfig || String(BOOT.firebaseConfig.apiKey).includes("YOUR_")) {
+  document.body.innerHTML = '<div style="text-align:center;padding:60px;color:#000;font-weight:700;font-family:monospace">config.js غير مهيأ</div>';
+  throw new Error("no config");
+}
+
+const app = initializeApp(BOOT.firebaseConfig);
+const db = getDatabase(app);
+
+const role = localStorage.getItem("role");
+if (role !== "owner") {
+  $("loading").style.display = "none";
+  $("denied").style.display = "block";
+  throw new Error("not owner");
+}
+
+try {
+  const _featSnap = await get(ref(db, 'store/features'));
+  const _feat = _featSnap.val() || {};
+  if (_feat.activityLog === false) {
+    $("loading").style.display = "none";
+    $("denied").style.display = "block";
+    const _storedLang = localStorage.getItem('store_lang') || 'ar';
+    $("deniedText").textContent = _storedLang === 'fr' ?
+      "Le journal des activités est désactivé depuis les paramètres" :
+      "سجل النشاطات معطّل من الإعدادات";
+    throw new Error("activity log disabled");
+  }
+} catch (e) {
+  if (e.message !== "activity log disabled") console.warn(e);
+  else throw e;
+}
+
+/* ═══════════════════════════════════════════════
+   🧹 تنظيف تلقائي لسجل النشاطات
+   ═══════════════════════════════════════════════ */
+const ACTIVITY_KEEP_DAYS = 60;
+
+async function cleanOldActivities() {
+  try {
+    const cutoff = Date.now() - (ACTIVITY_KEEP_DAYS * 24 * 60 * 60 * 1000);
+    const snap = await get(ref(db, 'activity_log'));
+    if (!snap.exists()) return;
+    const data = snap.val() || {};
+    const updates = {};
+    let count = 0;
+    Object.entries(data).forEach(([key, log]) => {
+      if ((log.timestamp || 0) < cutoff) {
+        updates['activity_log/' + key] = null;
+        count++;
+      }
+    });
+    if (count > 0) {
+      await update(ref(db), updates);
+      console.log(`[Cleanup] حُذف ${count} سجل قديم`);
+    }
+  } catch (e) {
+    console.warn('[Cleanup] فشل التنظيف:', e);
+  }
+}
+
+cleanOldActivities();
+
+/* ═══════════════════════════════════════════════
+   🌐 نظام الترجمة
+   ═══════════════════════════════════════════════ */
+const LANG = localStorage.getItem('store_lang') || 'ar';
+
+const I18N = {
+  ar: {
+    back:"رجوع", loading:"جاري التحميل...", denied:"هذه الصفحة للمالك فقط",
+    subtitle:"Journal des activités",
+    total:"الإجمالي", adds:"إضافات", edits:"تعديلات", dels:"حذف", confirms:"تأكيدات", shown:"الأسطر",
+    today:"اليوم", week:"الأسبوع", month:"الشهر", all:"الكل",
+    searchPh:"بحث...", allUsers:"كل المستخدمين", allActions:"كل الأنواع",
+    page:"صفحة", of:"/", noData:"لا توجد عمليات في هذه الفترة",
+    period:"الفترة", dateLbl:"التاريخ", printDate:"تاريخ الطباعة",
+    modalTitle:"تفاصيل العملية",
+    mType:"النوع", mUser:"المستخدم", mDate:"التاريخ", mTarget:"الهدف",
+    mChanges:"التغييرات", mDetails:"التفاصيل", mOrder:"الطلب",
+    mCustomer:"العميل", mPhone:"الهاتف", mAddress:"العنوان", mTotal:"الإجمالي", mProducts:"المنتجات",
+    roleOwner:"مالك", roleAdmin:"مدير", roleSeller:"بائع",
+    periodToday:"اليوم", periodWeek:"هذا الأسبوع", periodMonth:"هذا الشهر", periodAll:"كل الفترات",
+    printDeleted:"🖨️ طباعة الوثيقة",
+    printHint:"سيتم فتح صفحة الطباعة في نافذة جديدة"
+  },
+  fr: {
+    back:"Retour", loading:"Chargement...", denied:"Cette page est réservée au propriétaire",
+    subtitle:"Journal des activités",
+    total:"Total", adds:"Ajouts", edits:"Modifications", dels:"Suppressions", confirms:"Confirmations", shown:"Lignes",
+    today:"Aujourd'hui", week:"Semaine", month:"Mois", all:"Tout",
+    searchPh:"Rechercher...", allUsers:"Tous les utilisateurs", allActions:"Tous les types",
+    page:"Page", of:"/", noData:"Aucune opération pour cette période",
+    period:"Période", dateLbl:"Date", printDate:"Date d'impression",
+    modalTitle:"Détails de l'opération",
+    mType:"Type", mUser:"Utilisateur", mDate:"Date", mTarget:"Cible",
+    mChanges:"Changements", mDetails:"Détails", mOrder:"Commande",
+    mCustomer:"Client", mPhone:"Téléphone", mAddress:"Adresse", mTotal:"Total", mProducts:"Produits",
+    roleOwner:"Propriétaire", roleAdmin:"Admin", roleSeller:"Vendeur",
+    periodToday:"Aujourd'hui", periodWeek:"Cette semaine", periodMonth:"Ce mois", periodAll:"Toutes périodes",
+    printDeleted:"🖨️ Imprimer le document",
+    printHint:"La page d'impression va s'ouvrir dans une nouvelle fenêtre"
+  }
+};
+
+const T = k => (I18N[LANG] && I18N[LANG][k]) || (I18N.ar[k]) || k;
+
+const ACTION_LABELS = {
+  ar: {
+    product_add:"إضافة منتج", product_edit:"تعديل منتج", product_delete:"حذف منتج",
+    product_hide:"إخفاء منتج", product_show:"إظهار منتج", product_stock:"تعديل كمية",
+    family_add:"إضافة عائلة", family_edit:"تعديل عائلة", family_delete:"حذف عائلة",
+    discount_add:"إضافة تخفيض", discount_remove:"إزالة تخفيض",
+    promote_on:"تفعيل ترويج", promote_off:"إيقاف ترويج", promote_edit:"تعديل ترويج",
+    order_confirm:"تأكيد طلب", order_delete:"حذف طلب", orders_delete_all:"حذف كل الطلبات",
+    review_delete:"حذف تقييم",
+    settings_general:"تعديل الإعدادات", settings_cover:"تعديل الغلاف",
+    settings_features:"تعديل ميزة", settings_landing:"تعديل الترويج",
+    settings_policies:"تعديل السياسات", settings_pixels:"تعديل البكسل",
+    settings_shipping:"إضافة شحن", settings_shipping_edit:"تعديل شحن",
+    settings_shipping_delete:"حذف شحن",
+    user_add:"إضافة مستخدم", user_delete:"حذف مستخدم",
+    owner_change:"تغيير المالك", wholesale_code:"تغيير رمز الجملة",
+    products_delete_all:"حذف كل المنتجات", excel_import:"استيراد Excel",
+    login:"تسجيل دخول", logout:"تسجيل خروج"
+  },
+  fr: {
+    product_add:"Ajout produit", product_edit:"Modif produit", product_delete:"Suppr produit",
+    product_hide:"Masquer produit", product_show:"Afficher produit", product_stock:"Modif stock",
+    family_add:"Ajout famille", family_edit:"Modif famille", family_delete:"Suppr famille",
+    discount_add:"Ajout promo", discount_remove:"Suppr promo",
+    promote_on:"Activation promo", promote_off:"Désactivation promo", promote_edit:"Modif page promo",
+    order_confirm:"Commande confirmée", order_delete:"Suppr commande", orders_delete_all:"Suppr toutes commandes",
+    review_delete:"Suppr avis",
+    settings_general:"Modif paramètres", settings_cover:"Modif couverture",
+    settings_features:"Modif fonctionnalité", settings_landing:"Modif landing",
+    settings_policies:"Modif politiques", settings_pixels:"Modif pixels",
+    settings_shipping:"Ajout livraison", settings_shipping_edit:"Modif livraison",
+    settings_shipping_delete:"Suppr livraison",
+    user_add:"Ajout utilisateur", user_delete:"Suppr utilisateur",
+    owner_change:"Changement propriétaire", wholesale_code:"Modif code gros",
+    products_delete_all:"Suppr tous produits", excel_import:"Import Excel",
+    login:"Connexion", logout:"Déconnexion"
+  }
+};
+
+const FIELD_LABELS = {
+  ar: {
+    "الاسم": "الاسم", "السعر": "السعر", "سعر البيع": "سعر البيع",
+    "سعر الجملة": "سعر الجملة", "ثمن الشراء": "ثمن الشراء", "الكمية": "الكمية",
+    "الكمية في العلبة": "الكمية في العلبة", "العائلة": "العائلة",
+    "تتبع المخزون": "تتبع المخزون", "الرقم التسلسلي": "الرقم التسلسلي",
+    "السعر الجديد": "السعر الجديد", "النوع": "النوع", "الحالة": "الحالة",
+    "الدور": "الدور", "حالة الترويج": "حالة الترويج", "الستايل": "الستايل",
+    "اسم الصفحة": "اسم الصفحة", "اسم المنتج": "اسم المنتج",
+    "السعر الخاص": "السعر الخاص", "الوصف": "الوصف", "شعار الصفحة": "شعار الصفحة",
+    "عروض الكمية": "عروض الكمية", "التوصيل المجاني": "التوصيل المجاني",
+    "التقييمات": "التقييمات", "عداد الزوار": "عداد الزوار",
+    "FB Pixel": "FB Pixel", "TikTok Pixel": "TikTok Pixel",
+    "المنزل": "المنزل", "المكتب": "المكتب", "الصورة": "الصورة", "رمز جديد": "رمز جديد"
+  },
+  fr: {
+    "الاسم": "Nom", "السعر": "Prix", "سعر البيع": "Prix de vente",
+    "سعر الجملة": "Prix de gros", "ثمن الشراء": "Prix d'achat", "الكمية": "Quantité",
+    "الكمية في العلبة": "Qté par boîte", "العائلة": "Famille",
+    "تتبع المخزون": "Suivi stock", "الرقم التسلسلي": "Référence",
+    "السعر الجديد": "Nouveau prix", "النوع": "Type", "الحالة": "Statut",
+    "الدور": "Rôle", "حالة الترويج": "Statut promo", "الستايل": "Style",
+    "اسم الصفحة": "Nom page", "اسم المنتج": "Nom produit",
+    "السعر الخاص": "Prix spécial", "الوصف": "Description", "شعار الصفحة": "Logo page",
+    "عروض الكمية": "Offres quantité", "التوصيل المجاني": "Livraison gratuite",
+    "التقييمات": "Avis", "عداد الزوار": "Compteur visiteurs",
+    "FB Pixel": "FB Pixel", "TikTok Pixel": "TikTok Pixel",
+    "المنزل": "Domicile", "المكتب": "Bureau", "الصورة": "Image", "رمز جديد": "Nouveau code"
+  }
+};
+
+function trField(f) {
+  if (!f) return '';
+  return (FIELD_LABELS[LANG] && FIELD_LABELS[LANG][f]) || (FIELD_LABELS.ar[f]) || f;
+}
+
+const ACTION_TYPES = {
+  add:["product_add","discount_add","user_add","family_add","settings_shipping"],
+  edit:["product_edit","product_stock","family_edit","settings_general","settings_cover","settings_features","settings_landing","settings_policies","settings_pixels","settings_shipping_edit","owner_change","wholesale_code","promote_on","promote_off","promote_edit"],
+  delete:["product_delete","product_hide","discount_remove","order_delete","orders_delete_all","review_delete","settings_shipping_delete","user_delete","family_delete","products_delete_all"],
+  confirm:["order_confirm"],
+  settings:["settings_general","settings_cover","settings_features","settings_landing","settings_policies","settings_pixels","settings_shipping","settings_shipping_edit","settings_shipping_delete","owner_change","wholesale_code"]
+};
+
+function getType(a) {
+  for (const [t, l] of Object.entries(ACTION_TYPES)) if (l.includes(a)) return t;
+  return "edit";
+}
+
+function getActionLabel(a) {
+  return (ACTION_LABELS[LANG] && ACTION_LABELS[LANG][a]) || (ACTION_LABELS.ar[a]) || a;
+}
+
+function getPrintType(action) {
+  if (action === 'order_delete' || action === 'order_confirm' || action === 'order_add') return 'order';
+  if (action === 'product_delete') return 'product';
+  if (action === 'orders_delete_all') return 'bulk-orders';
+  if (action === 'products_delete_all') return 'bulk-products';
+  return null;
+}
+
+document.body.dir = LANG === 'fr' ? 'ltr' : 'rtl';
+document.documentElement.lang = LANG;
+document.documentElement.dir = LANG === 'fr' ? 'ltr' : 'rtl';
+
+function applyStaticTranslations() {
+  $("backBtnText").textContent = T('back');
+  $("loadingText").textContent = T('loading');
+  $("deniedText").textContent = T('denied');
+  $("subtitleText").textContent = T('subtitle');
+  $("searchInput").placeholder = T('searchPh');
+  $("modalTitle").textContent = T('modalTitle');
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    el.textContent = T(k);
+  });
+  $("backBtn").href = "admin.html";
+}
+
+applyStaticTranslations();
+
+let allLogs = [], filteredLogs = [], allUsers = [];
+let currentPage = 1;
+const PER_PAGE = 100;
+let currentPeriod = "today", currentUser = "", currentAction = "", currentSearch = "";
+let storeInfo = { name: "", logoUrl: "", phoneInvoice: "", address: "", currency: "دج" };
+
+function roleLabel(r) {
+  if (r === 'owner') return T('roleOwner');
+  if (r === 'admin') return T('roleAdmin');
+  return T('roleSeller');
+}
+
+function periodLabel(p) {
+  if (p === 'today') return T('periodToday');
+  if (p === 'week') return T('periodWeek');
+  if (p === 'month') return T('periodMonth');
+  return T('periodAll');
+}
+
+function fmtDateLocale(d, opts) {
+  const locale = LANG === 'fr' ? 'fr-FR' : 'ar-DZ';
+  return d.toLocaleDateString(locale, opts);
+}
+
+function fmtTimeLocale(d, opts) {
+  const locale = LANG === 'fr' ? 'fr-FR' : 'ar-DZ';
+  return d.toLocaleTimeString(locale, opts);
+}
+
+onValue(ref(db, 'store/info'), snap => {
+  const d = snap.val() || {};
+  storeInfo = {
+    name: d.name || "متجري",
+    logoUrl: d.logoUrl || "",
+    phoneInvoice: d.phoneInvoice || "",
+    address: d.address || "",
+    currency: d.currency || "دج"
+  };
+  $("storeName").textContent = storeInfo.name;
+  $("footerStore").textContent = storeInfo.name;
+  if (storeInfo.logoUrl) { $("headerLogo").src = storeInfo.logoUrl; $("headerLogo").style.display = "inline-block"; }
+  document.title = (LANG === 'fr' ? 'Journal' : 'سجل') + " | " + storeInfo.name;
+});
+
+async function loadUsers() {
+  const list = [];
+  const b = [
+    { path: 'owner', role: 'owner' },
+    { path: 'admins', role: 'admin' },
+    { path: 'sellers', role: 'seller' }
+  ];
+  for (const x of b) {
+    try {
+      const s = await get(ref(db, `users/${x.path}`));
+      if (s.exists()) Object.keys(s.val()).forEach(n => list.push({ name: n, role: x.role }));
+    } catch (e) {}
+  }
+  allUsers = list;
+  buildUserFilter();
+}
+
+onValue(ref(db, 'activity_log'),
+  snap => {
+    const d = snap.val() || {};
+    allLogs = Object.entries(d).map(([k, v]) => ({ key: k, ...v }));
+    allLogs.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    buildUserFilter();
+    buildActionFilter();
+    applyFilters();
+    $("loading").style.display = "none";
+    $("paper").style.display = "block";
+  },
+  error => {
+    console.error('activity_log:', error);
+    $("loading").innerHTML = '<div style="text-align:center;color:#000;font-weight:700;font-family:monospace;padding:40px 20px">ERROR</div>';
+  }
+);
+
+function buildUserFilter() {
+  const m = [...new Set([...allUsers.map(u => u.name), ...allLogs.map(l => l.user).filter(Boolean)])].sort();
+  const s = $("userFilter"); const cur = s.value;
+  s.innerHTML = `<option value="">${T('allUsers')}</option>` + m.map(u => {
+    const info = allUsers.find(x => x.name === u);
+    const rl = info ? ` (${roleLabel(info.role)})` : '';
+    return `<option value="${u}">${u}${rl}</option>`;
+  }).join('');
+  if (cur) s.value = cur;
+}
+
+function buildActionFilter() {
+  const a = [...new Set(allLogs.map(l => l.action).filter(Boolean))].sort();
+  const s = $("actionFilter"); const cur = s.value;
+  s.innerHTML = `<option value="">${T('allActions')}</option>` + a.map(x => `<option value="${x}">${getActionLabel(x)}</option>`).join('');
+  if (cur) s.value = cur;
+}
+
+function getPeriodRange(p) {
+  const now = new Date(); const start = new Date(now);
+  if (p === 'today') start.setHours(0,0,0,0);
+  else if (p === 'week') { start.setDate(now.getDate() - now.getDay()); start.setHours(0,0,0,0); }
+  else if (p === 'month') { start.setDate(1); start.setHours(0,0,0,0); }
+  else return { start: 0, end: Infinity };
+  return { start: start.getTime(), end: now.getTime() + 86400000 };
+}
+
+function applyFilters() {
+  const { start, end } = getPeriodRange(currentPeriod);
+  filteredLogs = allLogs.filter(l => {
+    const ts = l.timestamp || 0;
+    if (ts < start || ts > end) return false;
+    if (currentUser && l.user !== currentUser) return false;
+    if (currentAction && l.action !== currentAction) return false;
+    if (currentSearch) {
+      const s = currentSearch.toLowerCase();
+      const hay = ((l.user||'') + ' ' + (l.action||'') + ' ' + (l.target||'') + ' ' + (l.details||'') + ' ' + getActionLabel(l.action)).toLowerCase();
+      if (!hay.includes(s)) return false;
+    }
+    return true;
+  });
+  currentPage = 1;
+  renderStats();
+  renderRows();
+  renderPrintView();
+}
+
+function renderStats() {
+  $("s-total").textContent = filteredLogs.length;
+  $("s-add").textContent = filteredLogs.filter(l => getType(l.action) === 'add').length;
+  $("s-edit").textContent = filteredLogs.filter(l => getType(l.action) === 'edit').length;
+  $("s-del").textContent = filteredLogs.filter(l => getType(l.action) === 'delete').length;
+  $("s-conf").textContent = filteredLogs.filter(l => getType(l.action) === 'confirm').length;
+  $("s-shown").textContent = Math.min(filteredLogs.length, PER_PAGE);
+  $("periodLabel").textContent = T('period') + ": " + periodLabel(currentPeriod);
+  const now = new Date();
+  const dateStr = fmtDateLocale(now) + ' ' + fmtTimeLocale(now, {hour:'2-digit',minute:'2-digit'});
+  $("printDate").textContent = T('dateLbl') + ": " + dateStr;
+  $("footerDate").textContent = T('printDate') + ": " + dateStr;
+}
+
+function esc(s) { return !s ? '' : String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+/* ═══════════════════════════════════════════
+   🧠 استخراج ذكي من النص الفوضوي (للمودال)
+   ═══════════════════════════════════════════ */
+function extractClientData(raw) {
+  const out = { name: '', phone: '', address: '' };
+  if (!raw) return out;
+  let s = String(raw).replace(/[\u200f\u200e]/g, '').replace(/\s+/g, ' ').trim();
+  if (!s) return out;
+
+  const pm = s.match(/(?:الهاتف|هاتف|Télé|Tel|Tél|telephone)\s*:?\s*(\d[\d\s\-]{7,15})/i);
+  if (pm) out.phone = pm[1].replace(/[\s\-]/g, '').trim();
+  if (!out.phone) {
+    const ap = s.match(/(\+?\d{9,15})/);
+    if (ap) out.phone = ap[1].replace(/\D/g, '');
+  }
+
+  const am = s.match(/(?:العنوان|عنوان|Adresse)\s*:?\s*([^]*?)(?=\s*(?:المنتج|الكمية|السعر|المجموع|Product|Qté|Total|الإجمالي|$))/i);
+  if (am) {
+    let addr = am[1].replace(/[:;|#]+/g, ' ').replace(/\s{2,}/g, ' ').trim();
+    if (addr.length >= 2 && addr.length <= 150) out.address = addr;
+  }
+
+  const nm = s.match(/^([^]*?)(?=\s*(?:الهاتف|هاتف|Télé|Tel|Tél|telephone|العنوان|عنوان|Adresse))/i);
+  if (nm) {
+    let name = nm[1].replace(/[:;|#]+/g, ' ').replace(/\s{2,}/g, ' ').trim();
+    if (name.length >= 2 && name.length <= 50 && !/\d{6,}/.test(name) && !/المنتج|Total|Product|Qté|الإجمالي/i.test(name)) {
+      out.name = name;
+    }
+  }
+  if (!out.name) {
+    const ln = s.match(/^([A-Za-z][A-Za-z\s]{1,40})(?=\s*[A-Z:]|\s*$)/);
+    if (ln) out.name = ln[1].trim();
+  }
+  return out;
+}
+
+function isMessyText(val) {
+  if (!val) return false;
+  const s = String(val);
+  if (s.length > 60) return true;
+  const colons = (s.match(/:/g) || []).length;
+  if (colons > 1) return true;
+  return /الهاتف|العنوان|المنتج|الكمية|المجموع|الإجمالي|Total|Qté|تأكيد وطباعة|حذف/i.test(s);
+}
+
+function parseChanges(log) {
+  if (Array.isArray(log.changes)) return log.changes;
+  if (!log.details) return [];
+  return log.details.split(' | ').map(part => {
+    const i = part.indexOf(':');
+    if (i === -1) return { field:'', from: part.trim(), to: '' };
+    const f = part.substring(0, i).trim();
+    const r = part.substring(i + 1).trim();
+    const a = r.indexOf('→');
+    if (a === -1) return { field:f, from: r, to: '' };
+    return { field:f, from: r.substring(0, a).trim(), to: r.substring(a + 1).trim() };
+  });
+}
+
+function renderRows() {
+  const tb = $("logBody");
+  if (!filteredLogs.length) {
+    tb.innerHTML = `<div class="no-data">${T('noData')}</div>`;
+    $("pagination").innerHTML = "";
+    return;
+  }
+  const total = Math.ceil(filteredLogs.length / PER_PAGE);
+  if (currentPage > total) currentPage = 1;
+  const items = filteredLogs.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE);
+
+  tb.innerHTML = items.map((l, i) => {
+    const type = getType(l.action);
+    const t = new Date(l.timestamp || 0);
+    const dateStr = fmtDateLocale(t, {day:'2-digit',month:'2-digit'});
+    const timeStr = fmtTimeLocale(t, {hour:'2-digit',minute:'2-digit'});
+    const label = getActionLabel(l.action);
+    const rl = roleLabel(l.role);
+
+    const ch = parseChanges(l);
+    let details = '';
+    if (ch.length) {
+      details = ch.map((c, idx) => {
+        const sep = idx > 0 ? '<span class="sep"> · </span>' : '';
+        const fld = trField(c.field);
+        if (!c.field && !c.to) return sep + `<span class="from">${esc(c.from)}</span>`;
+        if (!c.to) return sep + `<span class="f">${esc(fld)}:</span><span class="from">${esc(c.from)}</span>`;
+        return sep + `<span class="f">${esc(fld)}:</span><span class="from">${esc(c.from)}</span><span class="arrow">→</span><span class="to">${esc(c.to)}</span>`;
+      }).join('');
+    } else if (l.details) {
+      details = esc(l.details);
+    }
+
+    const idx = i + 1 + (currentPage-1)*PER_PAGE;
+    const globalIdx = filteredLogs.indexOf(l);
+
+    const printType = getPrintType(l.action);
+    const printBtn = printType
+      ? `<button class="ll-print" data-print-idx="${globalIdx}" title="طباعة"><i class="fas fa-print"></i></button>`
+      : '';
+
+    /* تنظيف الهدف إن كان فوضويًا */
+    let targetDisplay = l.target || '—';
+    if (isMessyText(targetDisplay)) {
+      const ex = extractClientData(targetDisplay);
+      targetDisplay = ex.name || '—';
+    }
+
+    return `<div class="log-line t-${type}" data-idx="${globalIdx}">
+      <span class="ll-idx">${idx}</span>
+      <span class="ll-time">${dateStr} ${timeStr}</span>
+      <span class="ll-user">${esc(l.user || '؟')}</span>
+      <span class="ll-role ${l.role || 'seller'}">${rl}</span>
+      <span class="ll-action">${label}</span>
+      <span class="ll-target">${esc(targetDisplay)}</span>
+      <span class="ll-details">${details || '<span style="color:#ccc">—</span>'}</span>
+      ${printBtn}
+    </div>`;
+  }).join('');
+
+  tb.querySelectorAll('.log-line').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (e.target.closest('.ll-print')) return;
+      const idx = parseInt(el.dataset.idx);
+      openModal(filteredLogs[idx]);
+    });
+  });
+
+  tb.querySelectorAll('.ll-print').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.dataset.printIdx);
+      openDeletedPrint(filteredLogs[idx]);
+    });
+  });
+
+  $("pageNum").textContent = T('page') + " " + currentPage + " " + T('of') + " " + total;
+  renderPagination(total);
+}
+
+function renderPrintView() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-FR');
+  const timeStr = now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+  const logoHtml = storeInfo.logoUrl
+    ? `<img src="${esc(storeInfo.logoUrl)}" alt="" onerror="this.style.display='none'"/>`
+    : '';
+  const phoneHtml = storeInfo.phoneInvoice ? `<p>Télé : ${esc(storeInfo.phoneInvoice)}</p>` : '';
+  const addressHtml = storeInfo.address ? `<p>${esc(storeInfo.address)}</p>` : '';
+
+  const total = filteredLogs.length;
+  const addC = filteredLogs.filter(l => getType(l.action) === 'add').length;
+  const editC = filteredLogs.filter(l => getType(l.action) === 'edit').length;
+  const delC = filteredLogs.filter(l => getType(l.action) === 'delete').length;
+  const confC = filteredLogs.filter(l => getType(l.action) === 'confirm').length;
+
+  const frLabels = ACTION_LABELS.fr;
+
+  let rowsHtml = '';
+  if (!filteredLogs.length) {
+    rowsHtml = `<tr><td colspan="7" style="text-align:center;padding:12px">Aucune donnée</td></tr>`;
+  } else {
+    filteredLogs.forEach((l, i) => {
+      const t = new Date(l.timestamp || 0);
+      const dt = t.toLocaleDateString('fr-FR', {day:'2-digit',month:'2-digit',year:'2-digit'}) + ' ' + String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0');
+      const label = frLabels[l.action] || l.action;
+      const roleFr = l.role === 'owner' ? 'Propriétaire' : l.role === 'admin' ? 'Admin' : 'Vendeur';
+
+      const ch = parseChanges(l);
+      let detailsTxt = '';
+      if (ch.length) {
+        detailsTxt = ch.map(c => {
+          const fld = (FIELD_LABELS.fr && FIELD_LABELS.fr[c.field]) || c.field;
+          if (!c.field && !c.to) return esc(c.from);
+          if (!c.to) return esc(fld) + ': ' + esc(c.from);
+          return esc(fld) + ': ' + esc(c.from) + ' → ' + esc(c.to);
+        }).join(' · ');
+      } else if (l.details) {
+        detailsTxt = esc(l.details);
+      }
+
+      let noteTxt = '';
+      if (l.order && typeof l.order === 'object') {
+        const o = l.order;
+        const parts = [];
+        if (o.customerName) parts.push(esc(o.customerName));
+        if (o.phone) parts.push(esc(o.phone));
+        if (o.total) parts.push(Number(o.total).toLocaleString('fr-FR') + ' DA');
+        noteTxt = parts.join(' · ');
+      }
+
+      rowsHtml += `<tr>
+        <td class="tc mono">${i + 1}</td>
+        <td class="tc mono">${dt}</td>
+        <td class="rtl"><b>${esc(l.user || '?')}</b><br><span style="font-size:9px">${roleFr}</span></td>
+        <td class="rtl">${label}</td>
+        <td class="rtl"><b>${esc(l.target || '—')}</b></td>
+        <td class="rtl" style="font-size:9px">${detailsTxt || '—'}</td>
+        <td class="rtl" style="font-size:9px">${noteTxt || '—'}</td>
+      </tr>`;
+    });
+  }
+
+  const periodFr = {today:"Aujourd'hui",week:'Cette semaine',month:'Ce mois',all:'Toutes périodes'}[currentPeriod] || '';
+
+  const html = `
+    <div class="inv-header">
+      <div class="inv-store">
+        ${logoHtml}
+        <div class="det">
+          <h1>${esc(storeInfo.name) || '—'}</h1>
+          ${phoneHtml}
+          ${addressHtml}
+        </div>
+      </div>
+      <div class="inv-info">
+        <p><strong>Type</strong> : Journal des activités</p>
+        <p><strong>Période</strong> : ${esc(periodFr)}</p>
+        <p><strong>Date</strong> : ${dateStr} - ${timeStr}</p>
+        <p><strong>Opérations</strong> : ${total}</p>
+      </div>
+    </div>
+
+    <div class="inv-bar">
+      <span>Édité le ${dateStr} à ${timeStr}</span>
+      <span>Utilisateur : ${esc(localStorage.getItem("user") || '?')}</span>
+    </div>
+
+    <div class="inv-title">JOURNAL DES ACTIVITÉS</div>
+
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th style="width:4%">N°</th>
+          <th style="width:12%">Date</th>
+          <th style="width:11%">Utilisateur</th>
+          <th style="width:15%">Action</th>
+          <th style="width:18%">Cible</th>
+          <th style="width:22%">Détails</th>
+          <th style="width:18%">Notes</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+
+    <div class="inv-summary">
+      <span>Ajouts : <b>${addC}</b></span>
+      <span>Modifications : <b>${editC}</b></span>
+      <span>Suppressions : <b>${delC}</b></span>
+      <span>Confirmations : <b>${confC}</b></span>
+      <span style="margin-left:auto">Total : <b>${total}</b></span>
+    </div>
+
+    <div class="inv-footer">
+      <div class="merci">— Fin du journal —</div>
+      <div>${esc(storeInfo.name)} · ${dateStr}</div>
+    </div>
+  `;
+
+  $("printView").innerHTML = html;
+}
+
+function openDeletedPrint(log) {
+  const printType = getPrintType(log.action);
+  if (!printType) return;
+
+  const payload = {
+    type: printType === 'bulk-orders' || printType === 'bulk-products' ? 'bulk' : printType,
+    user: log.user || '',
+    role: log.role || '',
+    timestamp: log.timestamp || Date.now(),
+    storeInfo: {
+      name: storeInfo.name || '',
+      address: storeInfo.address || '',
+      logoUrl: storeInfo.logoUrl || '',
+      currency: storeInfo.currency || 'دج'
+    },
+    autoPrint: false
+  };
+
+  if (printType === 'order') {
+    if (log.order && typeof log.order === 'object' && (log.order.items || log.order.customerName)) {
+      payload.order = log.order;
+    } else {
+      payload.order = {
+        customerName: log.target || '—',
+        phone: log.order?.phone || '',
+        totalPrice: log.order?.total || 0,
+        items: []
+      };
+    }
+  } else if (printType === 'product') {
+    if (log.product && typeof log.product === 'object') {
+      payload.product = log.product;
+    } else {
+      payload.product = { name: log.target || '—' };
+    }
+  } else if (printType === 'bulk-orders' || printType === 'bulk-products') {
+    payload.count = log.count || 0;
+    payload.totalValue = log.totalValue || 0;
+    payload.bulkType = printType === 'bulk-orders' ? 'طلبات مؤكدة' : 'كل المنتجات';
+    payload.period = log.period || '';
+  }
+
+  sessionStorage.setItem('printDeleted', JSON.stringify(payload));
+  window.open('print_deleted.html', '_blank');
+}
+
+/* ═══════════════════════════════════════════
+   🎨 مودال تفاصيل العملية — بعد الترتيب
+   ═══════════════════════════════════════════ */
+function openModal(log) {
+  if (!log) return;
+  const type = getType(log.action);
+  const t = new Date(log.timestamp || 0);
+  const dateStr = fmtDateLocale(t, {day:'2-digit',month:'2-digit',year:'numeric'});
+  const timeStr = fmtTimeLocale(t, {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const label = getActionLabel(log.action);
+  const rl = roleLabel(log.role);
+
+  let html = '';
+  html += `<div class="m-row"><span class="lbl">${T('mType')}</span><span class="val"><span class="type-badge t-${type}">${label}</span></span></div>`;
+  html += `<div class="m-row"><span class="lbl">${T('mUser')}</span><span class="val">${esc(log.user || '؟')} <span style="font-size:9px;padding:0 4px;border:1px solid #999;font-weight:700">${rl}</span></span></div>`;
+  html += `<div class="m-row"><span class="lbl">${T('mDate')}</span><span class="val mono">${dateStr} ${timeStr}</span></div>`;
+
+  /* الهدف — مع تنظيف إن كان فوضويًا */
+  if (log.target) {
+    let targetDisplay = log.target;
+    if (isMessyText(targetDisplay)) {
+      const ex = extractClientData(targetDisplay);
+      targetDisplay = ex.name || '—';
+    }
+    html += `<div class="m-row"><span class="lbl">${T('mTarget')}</span><span class="val">${esc(targetDisplay)}</span></div>`;
+  }
+
+  const ch = parseChanges(log);
+  if (ch.length) {
+    html += `<div class="m-row"><span class="lbl">${T('mChanges')}</span><span class="val"><div class="m-changes">`;
+    ch.forEach(c => {
+      const fld = trField(c.field);
+      if (!c.field && !c.to) html += `<div class="m-change"><span class="from">${esc(c.from)}</span></div>`;
+      else if (!c.to) html += `<div class="m-change"><span class="f">${esc(fld)}:</span> <span class="from">${esc(c.from)}</span></div>`;
+      else html += `<div class="m-change"><span class="f">${esc(fld)}:</span> <span class="from">${esc(c.from)}</span> <span class="arrow">→</span> <span class="to">${esc(c.to)}</span></div>`;
+    });
+    html += `</div></span></div>`;
+  } else if (log.details) {
+    html += `<div class="m-row"><span class="lbl">${T('mDetails')}</span><span class="val mono">${esc(log.details)}</span></div>`;
+  }
+
+  /* الطلب — مع استخراج ذكي */
+  if (log.order && typeof log.order === 'object') {
+    const o = log.order;
+
+    /* استخراج اسم/هاتف/عنوان */
+    let orderName = '', orderPhone = '', orderAddress = '';
+    if (o.customerName && !isMessyText(o.customerName)) {
+      orderName = o.customerName;
+    } else if (o.customerName) {
+      const ex = extractClientData(o.customerName);
+      orderName = ex.name;
+      orderPhone = ex.phone;
+      orderAddress = ex.address;
+    }
+    if (!orderPhone && o.phone) {
+      if (/^[\d\s+\-()]{6,20}$/.test(String(o.phone).trim())) orderPhone = String(o.phone).trim();
+      else orderPhone = extractClientData(o.phone).phone;
+    }
+    if (!orderAddress && o.address) {
+      if (!isMessyText(o.address)) orderAddress = o.address;
+      else orderAddress = extractClientData(o.address).address;
+    }
+
+    const hasItems = Array.isArray(o.items) && o.items.length > 0;
+
+    if (orderName || orderPhone || orderAddress || o.total || o.totalPrice || hasItems) {
+      html += `<div class="m-row"><span class="lbl">${T('mOrder')}</span><span class="val"><div class="m-order">`;
+      html += `<div class="title">${T('mOrder')}</div>`;
+      if (orderName)    html += `<div class="item"><span>${T('mCustomer')}</span><b>${esc(orderName)}</b></div>`;
+      if (orderPhone)   html += `<div class="item"><span>${T('mPhone')}</span><b style="direction:ltr">${esc(orderPhone)}</b></div>`;
+      if (orderAddress) html += `<div class="item"><span>${T('mAddress')}</span><b>${esc(orderAddress)}</b></div>`;
+      if (o.total || o.totalPrice) html += `<div class="item"><span>${T('mTotal')}</span><b>${Number(o.total || o.totalPrice).toLocaleString('fr-FR')} ${LANG === 'fr' ? 'DA' : 'دج'}</b></div>`;
+      html += `</div></span></div>`;
+
+      /* جدول المنتجات إن وُجدت */
+      if (hasItems) {
+        html += `<div class="m-row"><span class="lbl">${T('mProducts')}</span><span class="val"><div class="m-order">`;
+        o.items.forEach((it, i) => {
+          const qty = Number(it.quantity || 0);
+          const price = Number(it.price || 0);
+          const total = qty * price;
+          html += `<div class="item"><span>${i + 1}. ${esc(it.name || '—')} × ${qty}</span><b>${Number(price).toLocaleString('fr-FR')} = ${Number(total).toLocaleString('fr-FR')} ${LANG === 'fr' ? 'DA' : 'دج'}</b></div>`;
+        });
+        html += `</div></span></div>`;
+      }
+    }
+  }
+
+  /* زر الطباعة */
+  const printType = getPrintType(log.action);
+  if (printType) {
+    html += `<div class="m-print-row">
+      <button class="m-print-btn" id="mPrintBtn"><i class="fas fa-print"></i> ${T('printDeleted')}</button>
+    </div>
+    <div class="m-print-hint"><i class="fas fa-info-circle"></i> ${T('printHint')}</div>`;
+  }
+
+  $("modalTitle").textContent = label;
+  $("modalBody").innerHTML = html;
+
+  const printBtn = $("mPrintBtn");
+  if (printBtn) {
+    printBtn.addEventListener('click', () => openDeletedPrint(log));
+  }
+
+  $("modalOverlay").classList.add('show');
+}
+
+function closeModal() { $("modalOverlay").classList.remove('show'); }
+$("modalClose").addEventListener('click', closeModal);
+$("modalOverlay").addEventListener('click', e => { if (e.target === $("modalOverlay")) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function renderPagination(total) {
+  const p = $("pagination"); p.innerHTML = "";
+  if (total <= 1) return;
+  const add = (txt, pg, active = false, disabled = false) => {
+    const b = document.createElement('button');
+    b.textContent = txt;
+    if (active) b.classList.add('active');
+    if (disabled) b.disabled = true;
+    b.addEventListener('click', () => { if (!disabled) { currentPage = pg; renderRows(); window.scrollTo(0,0); } });
+    p.appendChild(b);
+  };
+  add('«', 1, false, currentPage === 1);
+  add('‹', currentPage - 1, false, currentPage === 1);
+  for (let i = Math.max(1, currentPage - 3); i <= Math.min(total, currentPage + 3); i++) add(i, i, i === currentPage);
+  add('›', currentPage + 1, false, currentPage === total);
+  add('»', total, false, currentPage === total);
+}
+
+document.querySelectorAll('[data-period]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-period]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    currentPeriod = b.dataset.period;
+    applyFilters();
+  });
+});
+$("userFilter").addEventListener('change', e => { currentUser = e.target.value; applyFilters(); });
+$("actionFilter").addEventListener('change', e => { currentAction = e.target.value; applyFilters(); });
+$("searchInput").addEventListener('input', e => { currentSearch = e.target.value.trim(); applyFilters(); });
+
+loadUsers();
+</script>
+</body>
+</html>

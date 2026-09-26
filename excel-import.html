@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+<title>استيراد المنتجات من Excel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="config.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+:root {
+  --primary: #0b6e4f; --primary-light: #1a8a6a; --primary-dark: #064e3b;
+  --danger: #e74c3c; --warning: #f39c12; --success: #2ecc71; --info: #2563eb;
+  --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #64748b;
+  --border: #e9edf2; --radius: 16px; --font: 'Cairo', system-ui, sans-serif;
+}
+html, body { overflow-x: hidden; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 40px; }
+img { max-width: 100%; height: auto; }
+
+header {
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(16px);
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  gap: 10px;
+}
+header .logo { display: flex; align-items: center; gap: 8px; font-weight: 900; color: var(--primary-dark); font-size: 1rem; min-width: 0; flex: 1; }
+header .logo img { height: 2rem; width: auto; max-width: 60px; object-fit: contain; }
+header .logo span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+header .back-btn { background: var(--bg); border: 1.5px solid var(--border); border-radius: 40px; padding: 8px 14px; font-family: var(--font); font-weight: 700; font-size: .8rem; color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 6px; text-decoration: none; flex-shrink: 0; }
+header .back-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 16px 12px; }
+
+.step-card { background: var(--card); border-radius: var(--radius); padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,.04); border: 1px solid var(--border); margin-bottom: 14px; }
+.step-title { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1rem; color: var(--primary-dark); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--bg); }
+.step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+
+.upload-zone { border: 3px dashed #cbd5e1; border-radius: 20px; padding: 40px 20px; text-align: center; background: #f8fafc; cursor: pointer; transition: .2s; display: block; width: 100%; }
+.upload-zone:hover, .upload-zone.drag-over { border-color: var(--primary); background: #f0fdf4; }
+.upload-zone i { font-size: 3rem; color: var(--primary); margin-bottom: 12px; display: block; }
+.upload-zone h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+.upload-zone p { font-size: .9rem; color: var(--muted); }
+
+.file-info { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.file-info i { color: #059669; font-size: 1.3rem; flex-shrink: 0; }
+.file-info .fname { font-weight: 800; font-size: .9rem; flex: 1; min-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-info .fsize { font-size: .75rem; color: var(--muted); font-weight: 700; }
+
+.mapping-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.mapping-card { background: #f8fafc; border: 1.5px solid var(--border); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; transition: .2s; }
+.mapping-card:hover { border-color: #cbd5e1; background: #fff; }
+.mapping-card .col-header { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0; }
+.mapping-card .col-index { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 800; flex-shrink: 0; }
+.mapping-card .col-name { font-weight: 800; font-size: .92rem; word-break: break-word; overflow-wrap: anywhere; flex: 1; min-width: 0; }
+.mapping-field { display: flex; flex-direction: column; gap: 6px; }
+.mapping-field-label { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+
+.type-select {
+  width: 100%;
+  height: 46px;
+  padding: 10px 40px 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: left 14px center;
+  background-size: 14px;
+  transition: .2s;
+}
+.type-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11,110,79,.12); background-color: #fff; }
+.type-select.detected { background-color: #f0fdf4; border-color: #86efac; color: #065f46; }
+.type-select.manual { background-color: #fff7ed; border-color: #fed7aa; color: #9a3412; }
+.type-select.ignored { background-color: #f1f5f9; border-color: #cbd5e1; color: #64748b; }
+
+.mapping-sample { font-size: .78rem; color: #475569; background: #fff; border: 1px solid var(--border); padding: 8px 10px; border-radius: 10px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.5; min-height: 40px; display: flex; align-items: center; }
+.mapping-sample.empty { color: #cbd5e1; font-style: italic; }
+
+.preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
+.preview-card { background: #fff; border: 1.5px solid var(--border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: .2s; }
+.preview-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.06); }
+.preview-card img, .preview-card .no-img { width: 100%; height: 140px; object-fit: cover; background: #f8fafc; flex-shrink: 0; }
+.preview-card .no-img { display: flex; align-items: center; justify-content: center; color: #cbd5e1; font-size: 2.5rem; }
+.preview-card .info { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.preview-card .pname { font-weight: 800; font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 2px; }
+.preview-card .pline { font-size: .75rem; color: var(--muted); display: flex; justify-content: space-between; gap: 6px; align-items: baseline; }
+.preview-card .pline b { color: var(--text); font-weight: 800; }
+.preview-card .pline.price b { color: var(--primary); font-size: .88rem; }
+.preview-card .pline.purchase b { color: var(--danger); }
+.preview-card .pline.wholesale b { color: #8e44ad; }
+
+.alert-box { padding: 12px 14px; border-radius: 12px; display: flex; align-items: flex-start; gap: 10px; font-size: .85rem; font-weight: 700; margin-bottom: 12px; line-height: 1.5; }
+.alert-box i { font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
+.alert-warn { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
+.alert-warn i { color: #d97706; }
+.alert-error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
+.alert-error i { color: #dc2626; }
+.alert-success { background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; }
+.alert-success i { color: #059669; }
+.alert-info { background: #dbeafe; border: 1px solid #93c5fd; color: #1e40af; }
+.alert-info i { color: #2563eb; }
+
+.actions-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.btn { padding: 14px 22px; border: none; border-radius: 40px; font-family: var(--font); font-weight: 800; font-size: .92rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: .2s; flex: 1; min-width: 130px; min-height: 50px; text-decoration: none; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; box-shadow: 0 6px 16px rgba(11,110,79,.25); }
+.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,110,79,.35); }
+.btn-secondary { background: var(--bg); color: var(--text); border: 1.5px solid var(--border); }
+.btn-secondary:hover:not(:disabled) { background: #e2e8f0; }
+.btn-success { background: linear-gradient(135deg, #059669, #10b981); color: #fff; box-shadow: 0 6px 16px rgba(5,150,105,.25); }
+.btn-success:hover:not(:disabled) { transform: translateY(-2px); }
+.hidden { display: none !important; }
+
+#toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 12px 24px; border-radius: 40px; font-weight: 700; font-size: .88rem; z-index: 9999; display: none; max-width: 92%; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+#toast.show { display: block; animation: slideUp .3s; }
+@keyframes slideUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+.loading-overlay { position: fixed; inset: 0; background: rgba(15,23,42,.6); backdrop-filter: blur(4px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5000; color: #fff; gap: 16px; font-weight: 700; }
+.loading-overlay .spin { width: 44px; height: 44px; border: 4px solid rgba(255,255,255,.2); border-top-color: #fff; border-radius: 50%; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (min-width: 640px) {
+  .container { padding: 20px 16px; }
+  .step-card { padding: 22px; }
+  .mapping-list { grid-template-columns: repeat(2, 1fr); }
+  .preview-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .btn { min-width: 160px; }
+}
+@media (min-width: 1024px) {
+  .container { padding: 24px 20px; }
+  .mapping-list { grid-template-columns: repeat(3, 1fr); }
+  .preview-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  header { padding: 12px 24px; }
+  header .logo { font-size: 1.1rem; }
+}
+@media (max-width: 400px) {
+  .upload-zone { padding: 28px 14px; }
+  .upload-zone i { font-size: 2.4rem; }
+  .upload-zone h3 { font-size: .95rem; }
+  .upload-zone p { font-size: .82rem; }
+  .step-card { padding: 14px; }
+  .step-title { font-size: .92rem; }
+  .btn { padding: 12px 16px; font-size: .85rem; min-height: 46px; }
+  .preview-grid { grid-template-columns: 1fr; }
+  header .logo { font-size: .9rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img id="headerLogo" style="display:none;" alt="" />
+    <span id="headerStoreName">...</span>
+  </div>
+  <a class="back-btn" href="admin.html">
+    <i class="fas fa-arrow-right"></i>
+    <span>رجوع</span>
+  </a>
+</header>
+
+<div class="container">
+
+  <div class="step-card" id="stepUpload">
+    <div class="step-title">
+      <span class="step-num">1</span>
+      <span>رفع ملف Excel</span>
+    </div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;" />
+    <div class="upload-zone" id="uploadZone">
+      <i class="fas fa-file-excel"></i>
+      <h3>اضغط هنا لاختيار الملف</h3>
+      <p>أو اسحب الملف وأفلته هنا</p>
+      <p style="margin-top:8px; font-size:.78rem;">الصيغ المدعومة: .xlsx, .xls, .csv</p>
+    </div>
+  </div>
+
+  <div class="step-card hidden" id="stepMapping">
+    <div class="step-title">
+      <span class="step-num">2</span>
+      <span>مراجعة الأعمدة</span>
+    </div>
+
+    <div class="file-info">
+      <i class="fas fa-file-excel"></i>
+      <span class="fname" id="fileName">-</span>
+      <span class="fsize" id="fileSize">-</span>
+      <button class="btn btn-secondary" id="btnReset" style="flex:0; padding:8px 14px; font-size:.78rem; min-width:auto; min-height:auto;">
+        <i class="fas fa-times"></i> ملف آخر
+      </button>
+    </div>
+
+    <div id="mappingAlert"></div>
+
+    <div class="mapping-list" id="mappingList"></div>
+
+    <div style="margin-top:20px; padding-top:16px; border-top:2px solid var(--bg);">
+      <div style="font-weight:800; font-size:.9rem; margin-bottom:10px; color:var(--primary-dark);">
+        <i class="fas fa-eye"></i> معاينة أول 5 منتجات
+      </div>
+      <div id="previewAlert"></div>
+      <div class="preview-grid" id="previewGrid"></div>
+    </div>
+
+    <div class="actions-row">
+      <button class="btn btn-secondary" id="btnCancel">
+        <i class="fas fa-times"></i> إلغاء
+      </button>
+      <button class="btn btn-success" id="btnImport">
+        <i class="fas fa-check-circle"></i> <span>تأكيد الاستيراد</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="step-card hidden" id="stepResult">
+    <div class="step-title">
+      <span class="step-num">3</span>
+      <span>النتيجة</span>
+    </div>
+    <div id="resultContent"></div>
+    <div class="actions-row">
+      <button class="btn btn-secondary" id="btnAnother">
+        <i class="fas fa-upload"></i> استيراد ملف آخر
+      </button>
+      <a href="admin.html" class="btn btn-primary">
+        <i class="fas fa-home"></i> رجوع للوحة
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, get, update, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const $ = id => document.getElementById(id);
+const BOOT = window.STORE_BOOTSTRAP;
+
+if (!BOOT || !BOOT.firebaseConfig || String(BOOT.firebaseConfig.apiKey).includes("YOUR_")) {
+  alert("config.js manquant ou invalide");
+  throw new Error("no config");
+}
+
+if (localStorage.getItem('auth') !== 'true') {
+  document.body.innerHTML = '<div style="text-align:center; padding:60px; font-family:Cairo,sans-serif; color:#e74c3c; font-weight:700;"><h2>يجب تسجيل الدخول أولاً</h2><p style="margin-top:12px; color:#64748b;">سيتم توجيهك تلقائياً...</p></div>';
+  setTimeout(() => window.location.href = 'admin.html', 2000);
+  throw new Error("not logged in");
+}
+
+const app = initializeApp(BOOT.firebaseConfig);
+const db = getDatabase(app);
+
+const COLUMN_TYPES = [
+  { id: 'ignore',         label: 'تجاهل' },
+  { id: 'name',           label: 'اسم المنتج' },
+  { id: 'serial',         label: 'الرقم التسلسلي / SKU' },
+  { id: 'salePrice',      label: 'سعر البيع' },
+  { id: 'purchasePrice',  label: 'ثمن الشراء' },
+  { id: 'wholesalePrice', label: 'سعر الجملة' },
+  { id: 'quantity',       label: 'الكمية' },
+  { id: 'quantityPerBox', label: 'الكمية في العلبة' },
+  { id: 'family',         label: 'العائلة' },
+  { id: 'image',          label: 'صورة (رابط)' },
+  { id: 'description',    label: 'الوصف' }
+];
+
+const KEYWORDS = {
+  name:           ['designation','nom','libelle','article','produit','name','title','product','item','اسم','تسمية','بيان','منتج','اسم المنتج'],
+  serial:         ['code','reference','ref','sku','barcode','ean','serial','مرجع','رمز','باركود','تسلسلي','الرقم التسلسلي'],
+  salePrice:      ['prix de vente','prix vente','prix public','prix detail','prix unitaire','prix','price','sale','vente','selling','سعر البيع','ثمن البيع','سعر','بيع','الثمن'],
+  purchasePrice:  ['prix achat','prix d achat','pa ttc','pa ht','prix revient','cout','cost','achat','purchase','ثمن الشراء','سعر الشراء','تكلفة','شراء'],
+  wholesalePrice: ['prix gros','prix de gros','prix en gros','gros','wholesale','جملة','سعر الجملة','بالجملة'],
+  quantity:       ['quantite','qte','qty','stock','quantity','inventaire','كمية','الكمية','المخزون','مخزون','العدد'],
+  quantityPerBox: ['qte boite','quantite boite','par boite','pieces par boite','unites par boite','colisage','الكمية في العلبة','في العلبة','علبة','العلبة','عدد في العلبة'],
+  family:         ['famille','categorie','category','rubrique','groupe','groupe produit','sous famille','type','عائلة','فئة','صنف','تصنيف','مجموعة','نوع'],
+  image:          ['image','photo','img','picture','url image','lien image','visuel','صورة','الصورة','رابط الصورة'],
+  description:    ['description','desc','details','detail','remarque','note','commentaire','وصف','الوصف','تفاصيل','ملاحظة']
+};
+
+let workbook = null;
+let headerRowIndex = -1;
+let rawHeaders = [];
+let dataRows = [];
+let columnTypes = [];
+let columnDetected = [];
+let storeInfo = { name: '', logoUrl: '', currency: 'دج' };
+
+function normalize(s) {
+  return String(s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/['"`]/g, '')
+    .replace(/[^\w\u0600-\u06FF\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function hasAny(hay, needles) {
+  return needles.some(n => hay.includes(normalize(n)));
+}
+
+function scoreHeaderForType(header, type) {
+  const h = normalize(header);
+  if (!h) return 0;
+  const words = KEYWORDS[type] || [];
+  let score = 0;
+  words.forEach(w => {
+    const nw = normalize(w);
+    if (!nw) return;
+    if (h === nw) score += 5;
+    else if (h.startsWith(nw + ' ') || h.endsWith(' ' + nw)) score += 3;
+    else if (h.includes(nw)) score += 1;
+  });
+  return score;
+}
+
+function detectType(header) {
+  const h = normalize(header);
+  if (!h) return 'ignore';
+
+  if (hasAny(h, ['pa ttc','pa ht','prix achat','prix d achat','prix revient'])) return 'purchasePrice';
+  if (hasAny(h, ['prix de vente','prix vente','prix public'])) return 'salePrice';
+  if (hasAny(h, ['prix gros','prix de gros','prix en gros'])) return 'wholesalePrice';
+  if (hasAny(h, ['qte boite','par boite','pieces par boite','unites par boite','colisage'])) return 'quantityPerBox';
+
+  if (h.includes('سعر') || h.includes('ثمن')) {
+    if (h.includes('شراء') || h.includes('تكلفة')) return 'purchasePrice';
+    if (h.includes('جملة')) return 'wholesalePrice';
+    if (h.includes('بيع')) return 'salePrice';
+    return 'salePrice';
+  }
+  if (h.includes('كمية') || h.includes('عدد')) {
+    if (h.includes('علبة') || h.includes('في العلبة')) return 'quantityPerBox';
+    if (h.includes('مخزون') || h.includes('المخزون')) return 'quantity';
+    return 'quantity';
+  }
+
+  let best = 'ignore', bestScore = 0;
+  for (const type of Object.keys(KEYWORDS)) {
+    const s = scoreHeaderForType(header, type);
+    if (s > bestScore) { bestScore = s; best = type; }
+  }
+  return best;
+}
+
+function findHeaderRow(rows) {
+  const limit = Math.min(rows.length, 15);
+  let bestIdx = -1, bestScore = 0;
+  for (let i = 0; i < limit; i++) {
+    const row = rows[i] || [];
+    let score = 0, nonEmpty = 0;
+    row.forEach(cell => {
+      const v = String(cell || '').trim();
+      if (!v) return;
+      nonEmpty++;
+      const t = detectType(v);
+      if (t !== 'ignore') score += 2;
+      if (/prix|سعر|ثمن|code|ref|sku|designation|nom|qte|quantite|كمية|famille|عائلة|image|صورة/i.test(v)) score += 3;
+    });
+    if (nonEmpty === 0) continue;
+    const numericCells = row.filter(c => typeof c === 'number' || /^\d+([.,]\d+)?$/.test(String(c || '').trim())).length;
+    score -= numericCells * 1.5;
+    if (score > bestScore) { bestScore = score; bestIdx = i; }
+  }
+  return bestIdx;
+}
+
+async function readFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const wb = XLSX.read(data, { type: 'array', cellDates: false, raw: true });
+        resolve(wb);
+      } catch (err) { reject(err); }
+    };
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+function renderMapping() {
+  const list = $('mappingList');
+  list.innerHTML = '';
+  rawHeaders.forEach((header, idx) => {
+    const samples = dataRows.slice(0, 3).map(r => r[idx]).filter(v => v !== undefined && v !== null && String(v).trim() !== '');
+    const sampleText = samples.map(v => String(v).slice(0, 40)).join(' • ');
+
+    const card = document.createElement('div');
+    card.className = 'mapping-card';
+
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'col-header';
+    headerDiv.innerHTML = `<div class="col-index">${idx + 1}</div><div class="col-name">${escapeHtml(header || `عمود ${idx + 1}`)}</div>`;
+    card.appendChild(headerDiv);
+
+    const field = document.createElement('div');
+    field.className = 'mapping-field';
+    field.innerHTML = `<span class="mapping-field-label">النوع</span>`;
+    const select = document.createElement('select');
+    select.className = 'type-select ' + (columnTypes[idx] === 'ignore' ? 'ignored' : (columnTypes[idx] === columnDetected[idx] ? 'detected' : 'manual'));
+    COLUMN_TYPES.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t.id;
+      opt.textContent = t.label;
+      if (t.id === columnTypes[idx]) opt.selected = true;
+      select.appendChild(opt);
+    });
+    select.addEventListener('change', e => {
+      columnTypes[idx] = e.target.value;
+      renderMapping();
+      renderPreview();
+      updateMappingAlert();
+    });
+    field.appendChild(select);
+    card.appendChild(field);
+
+    const sampleDiv = document.createElement('div');
+    sampleDiv.className = 'mapping-sample' + (sampleText ? '' : ' empty');
+    sampleDiv.textContent = sampleText || '— فارغ —';
+    card.appendChild(sampleDiv);
+
+    list.appendChild(card);
+  });
+}
+
+function updateMappingAlert() {
+  const alert = $('mappingAlert');
+  const hasName = columnTypes.includes('name');
+  const hasPrice = columnTypes.includes('salePrice') || columnTypes.includes('purchasePrice') || columnTypes.includes('wholesalePrice');
+
+  if (!hasName) {
+    alert.innerHTML = `<div class="alert-box alert-error"><i class="fas fa-exclamation-circle"></i><div><b>لم يتم تحديد عمود "اسم المنتج"</b><br>الرجاء اختيار العمود الذي يحتوي على أسماء المنتجات قبل المتابعة.</div></div>`;
+  } else if (!hasPrice) {
+    alert.innerHTML = `<div class="alert-box alert-warn"><i class="fas fa-exclamation-triangle"></i><div><b>لم يتم تحديد أي عمود سعر</b><br>الرجاء تحديد سعر البيع على الأقل.</div></div>`;
+  } else {
+    alert.innerHTML = `<div class="alert-box alert-success"><i class="fas fa-check-circle"></i><div><b>كل شيء جاهز</b><br>راجع الأعمدة أدناه ثم اضغط "تأكيد الاستيراد".</div></div>`;
+  }
+}
+
+function renderPreview() {
+  const grid = $('previewGrid');
+  grid.innerHTML = '';
+
+  const nameIdx = columnTypes.indexOf('name');
+  const serialIdx = columnTypes.indexOf('serial');
+  const salePriceIdx = columnTypes.indexOf('salePrice');
+  const purchasePriceIdx = columnTypes.indexOf('purchasePrice');
+  const wholesalePriceIdx = columnTypes.indexOf('wholesalePrice');
+  const quantityIdx = columnTypes.indexOf('quantity');
+  const qtyPerBoxIdx = columnTypes.indexOf('quantityPerBox');
+  const familyIdx = columnTypes.indexOf('family');
+  const imageIdx = columnTypes.indexOf('image');
+
+  const previewRows = dataRows.slice(0, 5);
+  $('previewAlert').innerHTML = '';
+
+  previewRows.forEach(row => {
+    const name = nameIdx !== -1 ? String(row[nameIdx] || '').trim() : '';
+    const serial = serialIdx !== -1 ? String(row[serialIdx] || '').trim() : '';
+    if (!name && !serial) return;
+
+    const salePrice = salePriceIdx !== -1 ? parseNumber(row[salePriceIdx]) : 0;
+    const purchasePrice = purchasePriceIdx !== -1 ? parseNumber(row[purchasePriceIdx]) : 0;
+    const wholesalePrice = wholesalePriceIdx !== -1 ? parseNumber(row[wholesalePriceIdx]) : 0;
+    const quantity = quantityIdx !== -1 ? parseInt(row[quantityIdx]) || 0 : 0;
+    const qtyPerBox = qtyPerBoxIdx !== -1 ? parseInt(row[qtyPerBoxIdx]) || 0 : 0;
+    const family = familyIdx !== -1 ? String(row[familyIdx] || '').trim() : '';
+    let imageUrl = imageIdx !== -1 ? String(row[imageIdx] || '').trim() : '';
+    if (imageUrl && !/^https?:\/\//i.test(imageUrl)) imageUrl = '';
+
+    const card = document.createElement('div');
+    card.className = 'preview-card';
+    const imgHtml = imageUrl
+      ? `<img src="${escapeAttr(imageUrl)}" onerror="this.outerHTML='<div class=\\'no-img\\'><i class=\\'fas fa-image\\'></i></div>'">`
+      : `<div class="no-img"><i class="fas fa-image"></i></div>`;
+    const cur = storeInfo.currency || 'دج';
+    card.innerHTML = `
+      ${imgHtml}
+      <div class="info">
+        <div class="pname" title="${escapeAttr(name)}">${escapeHtml(name) || '<span style="color:#cbd5e1;">بدون اسم</span>'}</div>
+        ${serial ? `<div class="pline"><span>SKU:</span><b>${escapeHtml(serial)}</b></div>` : ''}
+        ${salePrice > 0 ? `<div class="pline price"><span>سعر البيع:</span><b>${fmt(salePrice)} ${cur}</b></div>` : ''}
+        ${purchasePrice > 0 ? `<div class="pline purchase"><span>ثمن الشراء:</span><b>${fmt(purchasePrice)} ${cur}</b></div>` : ''}
+        ${wholesalePrice > 0 ? `<div class="pline wholesale"><span>سعر الجملة:</span><b>${fmt(wholesalePrice)} ${cur}</b></div>` : ''}
+        ${quantity > 0 ? `<div class="pline"><span>الكمية:</span><b>${quantity}</b></div>` : ''}
+        ${qtyPerBox > 0 ? `<div class="pline"><span>في العلبة:</span><b>${qtyPerBox}</b></div>` : ''}
+        ${family ? `<div class="pline"><span>العائلة:</span><b>${escapeHtml(family)}</b></div>` : ''}
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  if (imageIdx !== -1) {
+    const nonUrls = dataRows.slice(0, 20).filter(r => {
+      const v = String(r[imageIdx] || '').trim();
+      return v && !/^https?:\/\//i.test(v);
+    }).length;
+    if (nonUrls > 0) {
+      $('previewAlert').innerHTML = `<div class="alert-box alert-warn"><i class="fas fa-exclamation-triangle"></i><div><b>عمود الصورة يحتوي على قيم ليست روابط</b><br>الخلايا التالية لن تُستخدم كصور. تأكد أن ملف الإكسل يحتوي على <b>رابط الصورة</b> (يبدأ بـ http) وليس اسمها.</div></div>`;
+    }
+  }
+
+  if (grid.children.length === 0) {
+    grid.innerHTML = `<div style="text-align:center; padding:24px; color:#cbd5e1; font-weight:700; grid-column:1/-1;">لا توجد بيانات للعرض — راجع الأعمدة</div>`;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ⚡ الاستيراد مع منع التكرار
+   ══════════════════════════════════════════════════════════════ */
+async function doImport() {
+  const nameIdx = columnTypes.indexOf('name');
+  if (nameIdx === -1) { showToast('يجب تحديد عمود اسم المنتج'); return; }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'loading-overlay';
+  overlay.innerHTML = '<div class="spin"></div><div>جاري الاستيراد...</div>';
+  document.body.appendChild(overlay);
+
+  try {
+    const serialIdx = columnTypes.indexOf('serial');
+    const salePriceIdx = columnTypes.indexOf('salePrice');
+    const purchasePriceIdx = columnTypes.indexOf('purchasePrice');
+    const wholesalePriceIdx = columnTypes.indexOf('wholesalePrice');
+    const quantityIdx = columnTypes.indexOf('quantity');
+    const qtyPerBoxIdx = columnTypes.indexOf('quantityPerBox');
+    const familyIdx = columnTypes.indexOf('family');
+    const imageIdx = columnTypes.indexOf('image');
+    const descIdx = columnTypes.indexOf('description');
+
+    /* ═══ 1. قراءة المنتجات الموجودة من قاعدة البيانات ═══ */
+    const snap = await get(ref(db, 'products'));
+    const currentProducts = snap.val() || {};
+
+    const existingSerials = new Set();
+    const existingNames = new Set();
+    Object.values(currentProducts).forEach(p => {
+      if (p.serial) existingSerials.add(String(p.serial).trim().toLowerCase());
+      if (p.name) existingNames.add(normalize(p.name));
+    });
+
+    /* ═══ 2. تجنب التكرار داخل الملف نفسه ═══ */
+    const newSerials = new Set();
+    const newNames = new Set();
+
+    let added = 0;
+    let skippedExisting = 0;
+    let skippedDuplicateInFile = 0;
+    let skippedNoName = 0;
+    const updateBatch = {};
+    const addedNames = [];
+
+    /* ═══ 3. المرور على كل صف ═══ */
+    for (const row of dataRows) {
+      const name = String(row[nameIdx] || '').trim();
+      if (!name) { skippedNoName++; continue; }
+
+      const serial = serialIdx !== -1 ? String(row[serialIdx] || '').trim() : '';
+      const nameNorm = normalize(name);
+      const serialNorm = serial ? serial.toLowerCase() : '';
+
+      /* ✅ تكرار داخل نفس الملف */
+      const isDupInFile =
+        (serialNorm && newSerials.has(serialNorm)) ||
+        (!serialNorm && newNames.has(nameNorm)) ||
+        (serialNorm && newNames.has(nameNorm));
+
+      if (isDupInFile) {
+        skippedDuplicateInFile++;
+        continue;
+      }
+
+      /* ✅ موجود مسبقاً في المتجر → تجاهل تماماً ولا نلمسه */
+      const isExisting =
+        (serialNorm && existingSerials.has(serialNorm)) ||
+        (!serialNorm && existingNames.has(nameNorm)) ||
+        (serialNorm && existingNames.has(nameNorm));
+
+      if (isExisting) {
+        skippedExisting++;
+        continue;
+      }
+
+      /* ✅ غير موجود → ننشئ منتجاً جديداً */
+      const salePrice = salePriceIdx !== -1 ? parseNumber(row[salePriceIdx]) : 0;
+      const purchasePrice = purchasePriceIdx !== -1 ? parseNumber(row[purchasePriceIdx]) : null;
+      const wholesalePrice = wholesalePriceIdx !== -1 ? parseNumber(row[wholesalePriceIdx]) : null;
+      const quantity = quantityIdx !== -1 ? (parseInt(row[quantityIdx]) || 0) : null;
+      const qtyPerBox = qtyPerBoxIdx !== -1 ? (parseInt(row[qtyPerBoxIdx]) || 0) : null;
+      const family = familyIdx !== -1 ? String(row[familyIdx] || '').trim() : '';
+      let imageUrl = imageIdx !== -1 ? String(row[imageIdx] || '').trim() : '';
+      if (imageUrl && !/^https?:\/\//i.test(imageUrl)) imageUrl = '';
+      const description = descIdx !== -1 ? String(row[descIdx] || '').trim() : '';
+
+      const productData = {
+        name,
+        price: salePrice > 0 ? salePrice : 0,
+        serial: serial || null,
+        wholesalePrice: wholesalePrice && wholesalePrice > 0 ? wholesalePrice : null,
+        quantityPerBox: qtyPerBox && qtyPerBox > 0 ? qtyPerBox : null,
+        family: family || '',
+        imageUrl: imageUrl || '',
+        hidden: false
+      };
+      if (purchasePrice !== null && !isNaN(purchasePrice)) productData.costPrice = purchasePrice;
+      if (quantity !== null && !isNaN(quantity)) {
+        productData.stockQuantity = quantity;
+        productData.trackStock = true;
+      }
+      if (description) productData.description = description;
+
+      const newRef = push(ref(db, 'products'));
+      updateBatch[`products/${newRef.key}`] = productData;
+
+      if (serialNorm) newSerials.add(serialNorm);
+      newNames.add(nameNorm);
+      addedNames.push(name);
+      added++;
+    }
+
+    /* ═══ 4. كتابة الدفعة مرة واحدة ═══ */
+    if (Object.keys(updateBatch).length > 0) {
+      await update(ref(db), updateBatch);
+    }
+
+    /* ═══ 5. عرض النتيجة ═══ */
+    $('resultContent').innerHTML = `
+      <div class="alert-box alert-success"><i class="fas fa-check-circle"></i><div><b>تم الاستيراد بنجاح</b></div></div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-top:12px;">
+        <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:12px; padding:14px; text-align:center;">
+          <div style="font-size:1.6rem; font-weight:900; color:#059669;">${added}</div>
+          <div style="font-size:.78rem; font-weight:700; color:#065f46;">منتج جديد أُضيف</div>
+        </div>
+        <div style="background:#dbeafe; border:1.5px solid #93c5fd; border-radius:12px; padding:14px; text-align:center;">
+          <div style="font-size:1.6rem; font-weight:900; color:#2563eb;">${skippedExisting}</div>
+          <div style="font-size:.78rem; font-weight:700; color:#1e40af;">موجود مسبقاً (تُجوهل)</div>
+        </div>
+        <div style="background:#fef3c7; border:1.5px solid #fcd34d; border-radius:12px; padding:14px; text-align:center;">
+          <div style="font-size:1.6rem; font-weight:900; color:#d97706;">${skippedDuplicateInFile}</div>
+          <div style="font-size:.78rem; font-weight:700; color:#92400e;">مكرر في الملف</div>
+        </div>
+        <div style="background:#f1f5f9; border:1.5px solid #cbd5e1; border-radius:12px; padding:14px; text-align:center;">
+          <div style="font-size:1.6rem; font-weight:900; color:#64748b;">${skippedNoName}</div>
+          <div style="font-size:.78rem; font-weight:700; color:#475569;">بدون اسم (تُجوهل)</div>
+        </div>
+      </div>
+
+      ${addedNames.length > 0 ? `
+      <div style="margin-top:16px; background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px 14px;">
+        <div style="font-weight:800; font-size:.85rem; margin-bottom:8px; color:var(--primary-dark);">
+          <i class="fas fa-list"></i> قائمة المنتجات المُضافة (${addedNames.length})
+        </div>
+        <div style="max-height:220px; overflow-y:auto; font-size:.82rem; line-height:1.8; color:#334155;">
+          ${addedNames.map((n, i) => `${i + 1}. ${escapeHtml(n)}`).join('<br>')}
+        </div>
+      </div>` : ''}
+    `;
+
+    $('stepMapping').classList.add('hidden');
+    $('stepResult').classList.remove('hidden');
+
+  } catch (err) {
+    console.error(err);
+    showToast('خطأ: ' + err.message);
+  } finally {
+    overlay.remove();
+  }
+}
+
+function parseNumber(v) {
+  if (v === undefined || v === null) return 0;
+  if (typeof v === 'number') return v;
+  const cleaned = String(v).replace(/[^\d.,\-]/g, '').replace(/,/g, '.');
+  const n = parseFloat(cleaned);
+  return isNaN(n) ? 0 : n;
+}
+function fmt(n) { return Number(n || 0).toLocaleString('fr-FR'); }
+function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+function escapeAttr(s) { return escapeHtml(s); }
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function loadStoreInfo() {
+  try {
+    const snap = await get(ref(db, 'store/info'));
+    if (snap.exists()) {
+      const d = snap.val();
+      storeInfo = { name: d.name || '', logoUrl: d.logoUrl || '', currency: d.currency || 'دج' };
+    }
+  } catch (e) { console.warn(e); }
+  $('headerStoreName').textContent = storeInfo.name || 'المتجر';
+  if (storeInfo.logoUrl) {
+    $('headerLogo').src = storeInfo.logoUrl;
+    $('headerLogo').style.display = 'inline-block';
+  }
+}
+
+async function handleFile(file) {
+  if (!file) return;
+  $('fileName').textContent = file.name;
+  $('fileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+
+  try {
+    workbook = await readFile(file);
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', raw: true });
+
+    if (!rows.length) { showToast('الملف فارغ'); return; }
+
+    headerRowIndex = findHeaderRow(rows);
+    if (headerRowIndex === -1) headerRowIndex = 0;
+
+    rawHeaders = (rows[headerRowIndex] || []).map(h => String(h || '').trim());
+    dataRows = rows.slice(headerRowIndex + 1).filter(r => r && r.some(c => String(c || '').trim() !== ''));
+
+    let lastNonEmpty = -1;
+    rawHeaders.forEach((h, i) => { if (h) lastNonEmpty = i; });
+    if (lastNonEmpty === -1) lastNonEmpty = rawHeaders.length - 1;
+    rawHeaders = rawHeaders.slice(0, lastNonEmpty + 1);
+    dataRows = dataRows.map(r => r.slice(0, lastNonEmpty + 1));
+
+    columnTypes = rawHeaders.map(h => detectType(h));
+    columnDetected = [...columnTypes];
+
+    const nameSeen = new Set();
+    columnTypes = columnTypes.map(t => {
+      if (t === 'name') {
+        if (nameSeen.has('name')) return 'ignore';
+        nameSeen.add('name');
+      }
+      return t;
+    });
+
+    renderMapping();
+    renderPreview();
+    updateMappingAlert();
+
+    $('stepUpload').classList.add('hidden');
+    $('stepMapping').classList.remove('hidden');
+
+  } catch (err) {
+    console.error(err);
+    showToast('فشل قراءة الملف: ' + err.message);
+  }
+}
+
+$('uploadZone').addEventListener('click', () => $('fileInput').click());
+$('fileInput').addEventListener('change', e => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+  e.target.value = '';
+});
+
+['dragover','dragenter'].forEach(ev => {
+  $('uploadZone').addEventListener(ev, e => {
+    e.preventDefault();
+    $('uploadZone').classList.add('drag-over');
+  });
+});
+['dragleave','drop'].forEach(ev => {
+  $('uploadZone').addEventListener(ev, e => {
+    e.preventDefault();
+    $('uploadZone').classList.remove('drag-over');
+  });
+});
+$('uploadZone').addEventListener('drop', e => {
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+
+$('btnReset').addEventListener('click', () => {
+  workbook = null; headerRowIndex = -1; rawHeaders = []; dataRows = [];
+  columnTypes = []; columnDetected = [];
+  $('stepMapping').classList.add('hidden');
+  $('stepUpload').classList.remove('hidden');
+  $('fileInput').value = '';
+});
+
+$('btnCancel').addEventListener('click', () => {
+  if (confirm('إلغاء الاستيراد والعودة؟')) window.location.href = 'admin.html';
+});
+
+$('btnImport').addEventListener('click', doImport);
+
+$('btnAnother').addEventListener('click', () => {
+  $('stepResult').classList.add('hidden');
+  $('stepUpload').classList.remove('hidden');
+  $('btnReset').click();
+});
+
+loadStoreInfo();
+</script>
+</body>
+</html>
