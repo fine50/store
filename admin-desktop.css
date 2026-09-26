@@ -1,0 +1,205 @@
+/* ═══════════════════════════════════════════════════════════
+   admin-desktop.css — تخطيط سطح المكتب والتابلت
+   الهاتف: لا تغيير إطلاقاً
+   ═══════════════════════════════════════════════════════════ */
+
+/* ═══ إخفاء نص الزر على الهاتف (يبقى + فقط) ═══ */
+.add-fab-text { display: none; }
+.products-toolbar { display: contents; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   تخطيط سطح المكتب (900px وأكثر)
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 900px) {
+
+  body { padding-bottom: 0; }
+
+  #appContainer {
+    display: grid !important;
+    grid-template-columns: 260px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar main"
+      "footer footer";
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    direction: ltr;
+  }
+
+  #appContainer > * { direction: rtl; text-align: right; }
+
+  #appContainer > header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+  }
+
+  #appContainer > .main-nav {
+    grid-area: sidebar;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 12px;
+    background: #fff;
+    border-inline-end: 1px solid var(--border);
+    border-bottom: none;
+    min-height: calc(100vh - 70px);
+    overflow-y: auto;
+    position: sticky;
+    top: 70px;
+  }
+
+  #appContainer > .main-nav .nav-btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    gap: 12px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    min-height: 46px;
+  }
+
+  #appContainer > .main-nav .nav-btn::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  #appContainer > .main-nav .nav-btn[data-page="products"]::before { content: "\f466"; }
+#appContainer > .main-nav .nav-btn[data-page="families"]::before { content: "\f02c"; }
+#appContainer > .main-nav .nav-btn[data-page="orders"]::before { content: "\f543"; }
+  #appContainer > .main-nav .nav-btn[data-page="inventory"]::before { content: "\f494"; }
+  #appContainer > .main-nav .nav-btn[data-page="reviews"]::before { content: "\f086"; }
+  #appContainer > .main-nav .nav-btn[data-page="landing"]::before { content: "\f135"; }
+  #appContainer > .main-nav .nav-btn[data-page="settings"]::before { content: "\f013"; }
+
+  #appContainer > .main-nav .nav-btn .badge { margin-inline-start: auto; }
+
+  #appContainer > .page.active {
+    grid-area: main;
+    padding: 24px 32px 40px;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  #appContainer > footer {
+    grid-area: footer;
+    margin-top: 0;
+  }
+
+  /* ═══ شريط أدوات المنتجات: فلاتر + زر إضافة ═══ */
+  .products-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .products-toolbar .filter-section {
+    flex: 1;
+    min-width: 0;
+    border-bottom: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+  }
+
+  /* ═══ زر إضافة المنتج على الحاسوب ═══ */
+  .add-fab {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 42px;
+    border-radius: 10px !important;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    gap: 8px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,128,96,.18) !important;
+    transition: all 0.2s ease;
+  }
+
+  .add-fab:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,128,96,.25) !important;
+  }
+
+  .add-fab:active { transform: translateY(0); }
+
+  .add-fab i { font-size: 14px; }
+  .add-fab-text { display: inline !important; }
+
+  /* ═══ شبكة المنتجات ═══ */
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 0;
+  }
+  .product-card { min-height: 360px; }
+  .product-card img { height: 200px; }
+
+  /* ═══ الطلبات ═══ */
+  .order-card { margin: 0 0 14px; padding: 18px 20px; }
+
+  /* ═══ الترويج ═══ */
+  .landing-intro { margin: 0 0 16px; }
+  .landing-list { padding: 0; }
+
+  /* ═══ التقييمات ═══ */
+  .reviews-container { padding: 0; }
+
+  /* ═══ الإعدادات ═══ */
+  .settings-panel { max-width: 900px; margin: 0 auto; padding: 0; }
+  .settings-tabs {
+    padding: 10px 0;
+    background: transparent;
+    margin-bottom: 20px;
+  }
+
+  /* ═══ المخزون ═══ */
+  .inv-stats-main { padding: 0 0 14px; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .inv-info-bar { margin: 0 0 16px; }
+  .inv-section { margin: 0 0 16px; }
+  .inv-alert { margin: 0 0 12px; }
+
+  /* ═══ شريط الفلاتر العلوي ═══ */
+  .filter-section, .orders-chips, .inv-tabs {
+    padding: 12px 0;
+    background: transparent;
+    margin-bottom: 20px;
+  }
+
+  /* ═══ المودالات ═══ */
+  .modal-content { max-width: 640px; }
+  .toast { bottom: 40px; }
+}
+
+@media (min-width: 1400px) {
+  #appContainer > .page.active { padding: 32px 40px 48px; }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+}
+/* ═══ صفحة العائلات على الحاسوب ═══ */
+@media (min-width: 900px) {
+  .families-header { padding: 0; margin-bottom: 24px; }
+  .families-header-info h2 { font-size: 24px; }
+  .families-grid { padding: 0; max-width: 900px; }
+  .family-card { padding: 18px 20px; }
+  .family-card-name { font-size: 16px; }
+}
