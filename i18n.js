@@ -269,6 +269,7 @@
     "اسم فارغ":"Nom vide", "اسم قصير":"Nom trop court",
     "اسم موجود مسبقاً":"Nom déjà utilisé",
     "العائلة موجودة":"Famille déjà existante",
+    "العائلة موجودة مسبقاً":"Famille déjà existante",
     "سعر غير صحيح":"Prix invalide",
     "حدد المدة":"Définir la durée", "وقت غير صحيح":"Heure invalide",
     "املأ الحقول":"Remplissez les champs", "أدخل الرقم":"Entrez le code",
@@ -351,7 +352,7 @@
     "بكسل خاص بهذا المنتج (اختياري)":"Pixel spécifique à ce produit (optionnel)",
     "بكسل خاص بهذا المنتج":"Pixel spécifique à ce produit",
 
-    /* ═══ النصوص الناقصة التي ظهرت في الصور ═══ */
+    /* ═══ النصوص الناقصة ═══ */
     "أضف مستويات متعددة. النظام يختار تلقائياً":"Ajoutez plusieurs niveaux. Le système choisit automatiquement",
     "أرخص سعر للقطعة":"le meilleur prix unitaire",
     "حسب كمية الزبون.":"selon la quantité du client.",
@@ -365,7 +366,27 @@
     "إظهار الغلاف":"Afficher la couverture",
     "إخفاء الغلاف":"Masquer la couverture",
     "تم تفعيل الغلاف":"Couverture activée",
-    "تم إخفاء الغلاف":"Couverture masquée"
+    "تم إخفاء الغلاف":"Couverture masquée",
+
+    /* ═══════════════════════════════════════════════════════
+       ═══ قسم العائلات (جديد) ═══
+       ═══════════════════════════════════════════════════════ */
+    "العائلات":"Familles",
+    "أضف، عدّل، أو احذف عائلات المنتجات":"Ajoutez, modifiez ou supprimez les familles de produits",
+    "إضافة عائلة جديدة":"Ajouter une nouvelle famille",
+    "لا توجد عائلات بعد":"Aucune famille pour le moment",
+    "اضغط \"إضافة عائلة جديدة\" للبدء":"Cliquez sur « Ajouter une nouvelle famille » pour commencer",
+    "اسم العائلة الجديدة:":"Nom de la nouvelle famille :",
+    "العائلة موجودة مسبقاً":"Famille déjà existante",
+    "منتج":"produit",
+    "منتجات":"produits",
+    "منها":"dont",
+    "مخفي":"masqué",
+    "مخفية":"masquée",
+    "لا يمكن حذف العائلة":"Impossible de supprimer la famille",
+    "تعديل اسم العائلة":"Modifier le nom de la famille",
+    "حذف العائلة":"Supprimer la famille",
+    "سيتم إزالة هذه العائلة من جميع المنتجات المرتبطة بها":"Cette famille sera retirée de tous les produits associés"
   };
 
   const PATTERNS = [
@@ -394,7 +415,10 @@
     { regex: /^العنوان:\s*(.+)$/, fn:(m,p)=>`Adresse : ${p.trim()}` },
     { regex: /^سيتم حذف (\d+) طلب أقدم من شهر\.$/, fn:(m,n)=>`Seront supprimées ${n} commande(s) de plus d'un mois.` },
     { regex: /^سيُحتفظ بـ (\d+) طلب خلال الشهر الأخير\.$/, fn:(m,n)=>`Seront conservées ${n} commande(s) du dernier mois.` },
-    { regex: /^تم حذف (\d+) طلب$/, fn:(m,n)=>`${n} commande(s) supprimée(s)` }
+    { regex: /^تم حذف (\d+) طلب$/, fn:(m,n)=>`${n} commande(s) supprimée(s)` },
+    { regex: /^\(منها (\d+) مخفي\)$/, fn:(m,n)=>`(dont ${n} masqué(s))` },
+    { regex: /^\(منها (\d+) مخفية\)$/, fn:(m,n)=>`(dont ${n} masquée(s))` },
+    { regex: /^تمت إضافة "(.+)"$/, fn:(m,p)=>`« ${p} » a été ajoutée` }
   ];
 
   const EMOJI_RE = /^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{1F1E6}-\u{1F1FF}]+\s*/u;
