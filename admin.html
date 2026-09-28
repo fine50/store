@@ -9,256 +9,11 @@
 <script src="config.js"></script>
 <link rel="stylesheet" href="admin.css" />
 <link rel="stylesheet" href="admin-desktop.css" />
-<style>
-/* ═══════════════════════════════════════════════════════════
-   🎨 أنماط الأقسام المدمجة (Inline Panels) — بديلة النوافذ
-   ═══════════════════════════════════════════════════════════ */
-.inline-panel {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  margin: 16px;
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  animation: inlineSlide .3s cubic-bezier(.22,1,.36,1);
-}
-@keyframes inlineSlide {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.inline-panel-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  background: #f7f8fa;
-  border-bottom: 1.5px solid var(--border);
-}
-.inline-panel-head h3 {
-  font-size: 15px;
-  font-weight: 800;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text);
-  letter-spacing: -.01em;
-}
-.inline-panel-head h3 i { color: var(--primary); }
-.inline-panel-head.danger-head h3 i { color: var(--danger); }
-.inline-panel-head.vip-head h3 i { color: var(--vip); }
-.inline-close-btn {
-  width: 32px; height: 32px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: #fff;
-  color: var(--text-2);
-  font-size: 15px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: .15s;
-}
-.inline-close-btn:hover {
-  background: var(--danger);
-  color: #fff;
-  border-color: var(--danger);
-}
-.inline-panel-body {
-  padding: 20px 18px;
-}
-.inline-panel-body input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
-.inline-panel-body select,
-.inline-panel-body textarea {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: #fff;
-  font-size: 14px;
-  outline: none;
-  margin-bottom: 12px;
-  transition: .15s;
-}
-.inline-panel-body input:focus,
-.inline-panel-body select:focus,
-.inline-panel-body textarea:focus {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-focus);
-}
-.inline-panel-body label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 6px;
-  display: block;
-}
-.inline-panel-body .date-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.icon-upload-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: #fff;
-  cursor: pointer;
-  color: var(--text-2);
-  transition: .15s;
-}
-.icon-upload-btn:hover { background: var(--primary-tint); color: var(--primary); }
-
-/* ═══ الطبقات المندمجة (icon picker بسيط) ═══ */
-.icon-picker-inline {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 94%;
-  max-width: 560px;
-  max-height: 70vh;
-  background: #fff;
-  border: 2px solid var(--primary);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
-  z-index: 5000;
-  overflow: hidden;
-  display: none;
-}
-.icon-picker-inline.show { display: flex; flex-direction: column; animation: pickerUp .3s ease; }
-@keyframes pickerUp {
-  from { opacity: 0; transform: translate(-50%, 30px); }
-  to   { opacity: 1; transform: translate(-50%, 0); }
-}
-.icon-picker-inline .picker-head {
-  padding: 12px 16px;
-  background: var(--primary);
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
-  font-size: 14px;
-}
-.icon-picker-inline .picker-head button {
-  background: rgba(255,255,255,.15);
-  color: #fff;
-  border: none;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 14px;
-}
-.icon-picker-inline .picker-body {
-  padding: 14px;
-  overflow-y: auto;
-  flex: 1;
-}
-.icon-picker-inline .picker-cats {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  scrollbar-width: none;
-}
-.icon-picker-inline .picker-cats::-webkit-scrollbar { display: none; }
-.icon-picker-inline .picker-cats button {
-  flex-shrink: 0;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-2);
-  cursor: pointer;
-  white-space: nowrap;
-}
-.icon-picker-inline .picker-cats button.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-}
-.icon-picker-inline .picker-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.icon-picker-inline .picker-grid button {
-  aspect-ratio: 1/1;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: #f7f8fa;
-  color: var(--primary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: .15s;
-}
-.icon-picker-inline .picker-grid button:hover {
-  background: var(--primary-tint);
-  border-color: var(--primary);
-  transform: scale(1.05);
-}
-.icon-picker-inline .picker-upload {
-  width: 100%;
-  padding: 11px;
-  border: 1px dashed var(--primary);
-  border-radius: var(--radius-sm);
-  background: #fff;
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-.icon-picker-inline .picker-upload:hover { background: var(--primary-tint); }
-
-/* ═══ إبراز بطاقة الإحصائية المختارة ═══ */
-.inv-stat.active-detail {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 2px var(--primary-ring), var(--shadow-md) !important;
-  transform: translateY(-2px);
-}
-
-/* ═══ صندوق التفاصيل المدمج داخل المخزون ═══ */
-#invDetailContainer .inv-section {
-  animation: inlineSlide .3s ease;
-}
-
-/* ═══ إخفاء أي modal متبقٍ (أمان) ═══ */
-.modal { display: none !important; }
-</style>
 </head>
 <body>
 
 <div id="loadingScreen"><div class="spinner"></div><div>جاري التحميل...</div></div>
 <div id="noticeScreen"></div>
-
-<!-- ═══════════════════════════════════════════════════════════
-     🔐 شاشة تسجيل الدخول — صفحة كاملة
-     ═══════════════════════════════════════════════════════════ -->
-<div id="loginScreen" style="position:fixed;inset:0;z-index:9999;background:#f7f8fa;display:none;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#fff;width:100%;max-width:400px;border-radius:16px;padding:32px 24px;box-shadow:0 20px 48px rgba(15,23,42,.12);text-align:center;border:1px solid #e5e8ec;">
-    <img id="loginLogo" style="width:80px;margin:0 auto 16px;display:none;border-radius:12px;" alt="" />
-    <h3 style="font-weight:800;font-size:1.2rem;margin-bottom:20px;letter-spacing:-.01em;">🔐 تسجيل الدخول</h3>
-    <input type="text" id="adminUser" placeholder="اسم المستخدم" style="width:100%;padding:12px 16px;border:1px solid #e5e8ec;border-radius:10px;background:#fff;font-size:14px;outline:none;margin-bottom:12px;font-family:inherit;" />
-    <input type="password" id="adminPassword" placeholder="كلمة المرور" style="width:100%;padding:12px 16px;border:1px solid #e5e8ec;border-radius:10px;background:#fff;font-size:14px;outline:none;margin-bottom:16px;font-family:inherit;" />
-    <button class="btn-primary" id="loginBtn" style="width:100%;">دخول</button>
-  </div>
-</div>
 
 <div id="appContainer" style="display:none;">
 
@@ -281,17 +36,14 @@
 
 <nav class="main-nav" id="mainNav">
   <button class="nav-btn active" data-page="products" data-perm="nav.products">المنتجات</button>
-  <button class="nav-btn" data-page="families" data-perm="nav.products">العائلات</button>
-  <button class="nav-btn" data-page="orders" data-perm="nav.orders">الطلبات <span class="badge" id="ordersBadge" style="display:none;">0</span></button>
+<button class="nav-btn" data-page="families" data-perm="nav.products">العائلات</button>
+<button class="nav-btn" data-page="orders" data-perm="nav.orders">الطلبات <span class="badge" id="ordersBadge" style="display:none;">0</span></button>
   <button class="nav-btn" data-page="inventory" data-perm="nav.inventory" data-feature="inventory">المخزون</button>
   <button class="nav-btn" data-page="reviews" data-perm="nav.reviews" data-feature="reviews">التقييمات <span class="badge" id="reviewsBadge" style="display:none;">0</span></button>
   <button class="nav-btn" data-page="landing" data-perm="nav.landing" data-feature="landing">الترويج</button>
   <button class="nav-btn" data-page="settings" data-perm="nav.settings">الإعدادات</button>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════════
-     📦 صفحة المنتجات
-     ═══════════════════════════════════════════════════════════ -->
 <section id="page-products" class="page active">
   <div class="admin-hero-preview" id="productsHero" style="display:none;">
     <img id="coverImage" class="admin-hero-img" src="" alt="" />
@@ -302,111 +54,36 @@
     </div>
   </div>
   <div class="products-toolbar">
-    <div class="filter-section" id="familyFilterSection">
-      <button class="filter-btn active" data-family="الكل" id="filterAll"><i class="fas fa-th-list"></i> الكل <span class="filter-count" id="countAll">0</span></button>
-      <button class="filter-btn discount-filter" data-family="__discounts__" id="filterDiscounts" data-perm="product.discount"><i class="fas fa-tags"></i> التخفيضات <span class="filter-count" id="countDiscounts">0</span></button>
-      <button class="filter-btn hidden-filter" data-family="__hidden__" id="filterHidden" data-perm="product.delete"><i class="fas fa-eye-slash"></i> المخفية <span class="filter-count" id="countHidden">0</span></button>
-      <button class="filter-clear" id="clearFilterBtn"><i class="fas fa-times"></i> إلغاء</button>
-    </div>
-    <button class="add-fab" id="addProductBtn" style="display:none;">
-      <i class="fas fa-plus"></i>
-      <span class="add-fab-text">إضافة منتج</span>
-    </button>
+  <div class="filter-section" id="familyFilterSection">
+    <button class="filter-btn active" data-family="الكل" id="filterAll"><i class="fas fa-th-list"></i> الكل <span class="filter-count" id="countAll">0</span></button>
+    <button class="filter-btn discount-filter" data-family="__discounts__" id="filterDiscounts" data-perm="product.discount"><i class="fas fa-tags"></i> التخفيضات <span class="filter-count" id="countDiscounts">0</span></button>
+    <button class="filter-btn hidden-filter" data-family="__hidden__" id="filterHidden" data-perm="product.delete"><i class="fas fa-eye-slash"></i> المخفية <span class="filter-count" id="countHidden">0</span></button>
+    <button class="filter-clear" id="clearFilterBtn"><i class="fas fa-times"></i> إلغاء</button>
   </div>
+  <button class="add-fab" id="addProductBtn" style="display:none;">
+    <i class="fas fa-plus"></i>
+    <span class="add-fab-text">إضافة منتج</span>
+  </button>
+</div>
   <div class="search-box"><input type="text" id="searchInput" placeholder="بحث..." /></div>
   <div class="products-grid" id="productsContainer"></div>
   <div id="pagination"></div>
-
-  <!-- 🆕 نموذج المنتج المدمج -->
-  <div id="productFormInline" class="inline-panel" style="display:none;">
-    <div class="inline-panel-head">
-      <h3><i class="fas fa-box"></i> <span id="formTitle">إضافة منتج</span></h3>
-      <button type="button" class="inline-close-btn" data-inline-close="productFormInline">
-        <i class="fas fa-times"></i>
+  </section>
+  
+  <section id="page-families" class="page">
+    <div class="families-header">
+      <div class="families-header-info">
+        <h2><i class="fas fa-tags"></i> العائلات</h2>
+        <p>أضف، عدّل، أو احذف عائلات المنتجات</p>
+      </div>
+      <button class="btn-primary add-family-main-btn" id="addFamilyMainBtn" type="button">
+        <i class="fas fa-plus"></i>
+        <span>إضافة عائلة جديدة</span>
       </button>
     </div>
-    <div class="inline-panel-body">
-      <form id="productForm">
-        <input type="hidden" id="editId" />
-        <input type="text" id="name" placeholder="اسم المنتج" required />
-        <input type="text" id="serial" placeholder="الرقم التسلسلي / المرجع (SKU)" data-feature-field="serial" />
-        <input type="number" id="price" placeholder="سعر البيع (دج)" required />
-        <input type="number" id="wholesalePrice" placeholder="سعر الجملة (اختياري)" data-feature-field="wholesale" />
-        <input type="number" id="quantityPerBox" placeholder="الكمية في العلبة (اختياري)" min="0" data-feature-field="quantityPerBox" />
-        <div id="stockFieldsBox">
-          <input type="number" id="costPrice" placeholder="ثمن الشراء (تكلفة الوحدة)" min="0" step="any" data-feature-field="costPrice" />
-          <input type="number" id="stockQuantity" placeholder="الكمية المتوفرة في المخزون" min="0" data-feature-field="inventory" />
-        </div>
-        <div class="family-field-wrapper">
-          <select id="familySelect"><option value="">-- اختر عائلة --</option></select>
-          <button type="button" class="family-add-btn" id="addFamilyBtn"><i class="fas fa-plus"></i> إضافة</button>
-        </div>
-        <input type="text" id="newFamilyInput" placeholder="اسم العائلة الجديدة" style="display:none;" />
-        <div style="display:flex;gap:8px;">
-          <input type="file" id="imageFile" accept="image/*" style="flex:1;" />
-          <label for="cameraInput" class="icon-upload-btn"><i class="fas fa-camera"></i></label>
-          <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;" />
-        </div>
-        <div style="display:flex;gap:10px;margin-top:14px;">
-          <button type="submit" class="btn-primary">حفظ</button>
-          <button type="button" id="toggleVisibilityBtn" class="btn-secondary" style="display:none;"><i class="fas fa-eye"></i></button>
-        </div>
-      </form>
-    </div>
-  </div>
+    <div class="families-grid" id="familiesGrid"></div>
+  </section>
 
-  <!-- 🆕 نموذج التخفيض المدمج -->
-  <div id="discountFormInline" class="inline-panel" style="display:none;">
-    <div class="inline-panel-head danger-head">
-      <h3><i class="fas fa-tags"></i> إدارة التخفيض</h3>
-      <button type="button" class="inline-close-btn" data-inline-close="discountFormInline">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="inline-panel-body">
-      <input type="hidden" id="discountProductId" />
-      <label>المنتج: <b id="discountProductName"></b></label>
-      <label>السعر بعد التخفيض</label>
-      <input type="number" id="discountNewPrice" required />
-      <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-infinity"></i> تخفيض دائم</h4></div>
-        <span class="toggle-switch"><input type="checkbox" id="discountUnlimited" /><span class="toggle-slider"></span></span>
-      </label>
-      <div id="discountDateGroup">
-        <label>المدة</label>
-        <div class="date-fields">
-          <div><label style="font-weight:400;font-size:12px;">من</label><input type="datetime-local" id="discountStartDate" /></div>
-          <div><label style="font-weight:400;font-size:12px;">إلى</label><input type="datetime-local" id="discountEndDate" /></div>
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:12px;">
-        <button type="button" id="saveDiscountBtn" class="btn-success" style="flex:2;">حفظ</button>
-        <button type="button" id="removeDiscountBtn" class="btn-danger" style="flex:1;display:none;">إزالة</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     🏷️ صفحة العائلات
-     ═══════════════════════════════════════════════════════════ -->
-<section id="page-families" class="page">
-  <div class="families-header">
-    <div class="families-header-info">
-      <h2><i class="fas fa-tags"></i> العائلات</h2>
-      <p>أضف، عدّل، أو احذف عائلات المنتجات</p>
-    </div>
-    <button class="btn-primary add-family-main-btn" id="addFamilyMainBtn" type="button">
-      <i class="fas fa-plus"></i>
-      <span>إضافة عائلة جديدة</span>
-    </button>
-  </div>
-  <div class="families-grid" id="familiesGrid"></div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     🛒 صفحة الطلبات
-     ═══════════════════════════════════════════════════════════ -->
 <section id="page-orders" class="page">
   <div class="orders-chips">
     <button class="orders-chip active" data-ofilter="new">طلبات جديدة <span class="cnt" id="newCount">0</span></button>
@@ -426,41 +103,9 @@
   <div style="text-align:center;padding:0 16px 16px;" id="deleteAllConfirmedWrap">
     <button id="deleteAllConfirmedBtn" data-perm="orders.deleteAll" style="display:none;background:var(--danger);color:#fff;border:none;padding:9px 20px;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;font-family:var(--font);font-size:13px;">حذف جميع الطلبات المؤكدة</button>
   </div>
-
-  <!-- 🆕 تفاصيل الطلب المدمج -->
-  <div id="orderDetailInline" class="inline-panel" style="display:none;">
-    <div class="inline-panel-head">
-      <h3><i class="fas fa-receipt"></i> تفاصيل الطلب</h3>
-      <button type="button" class="inline-close-btn" data-inline-close="orderDetailInline">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="inline-panel-body" id="orderDetailContent"></div>
-  </div>
-
-  <!-- 🆕 خيارات الطباعة المدمجة -->
-  <div id="printOptionInline" class="inline-panel" style="display:none;">
-    <div class="inline-panel-head">
-      <h3><i class="fas fa-print"></i> اختر طريقة الطباعة</h3>
-      <button type="button" class="inline-close-btn" data-inline-close="printOptionInline">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="inline-panel-body" style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button id="thermalPrintBtn" class="btn-primary" style="flex:1;min-width:180px;">
-        <i class="fas fa-bluetooth"></i> طباعة حرارية
-      </button>
-      <button id="normalPrintBtn" class="btn-primary" style="flex:1;min-width:180px;">
-        <i class="fas fa-print"></i> طباعة عادية
-      </button>
-    </div>
-  </div>
-
   <div id="ordersListContainer"></div>
 </section>
-<!-- ═══════════════════════════════════════════════════════════
-     📊 صفحة المخزون
-     ═══════════════════════════════════════════════════════════ -->
+
 <section id="page-inventory" class="page">
   <div class="orders-chips" id="invPeriodChips">
     <button class="orders-chip active" data-period="today">اليوم</button>
@@ -500,21 +145,20 @@
       <div class="item"><i class="fas fa-box"></i> إجمالي القطع: <b id="statStockQty">0</b></div>
     </div>
     <div id="invAlertsContainer"></div>
-    <div id="invDetailContainer" style="display:none;"></div>
   </div>
 
   <div id="itab-inventory" class="inv-tab-panel">
     <div class="inv-section">
       <div class="inv-section-header">
-        <h3><i class="fas fa-warehouse"></i> حالة المخزون</h3>
-        <div class="inv-header-actions">
-          <input type="text" id="invSearchInput" placeholder="بحث..." />
-          <button class="btn-print-inv" id="printInvTableBtn" type="button">
-            <i class="fas fa-print"></i>
-            <span>طباعة</span>
-          </button>
-        </div>
-      </div>
+  <h3><i class="fas fa-warehouse"></i> حالة المخزون</h3>
+  <div class="inv-header-actions">
+    <input type="text" id="invSearchInput" placeholder="بحث..." />
+    <button class="btn-print-inv" id="printInvTableBtn" type="button">
+      <i class="fas fa-print"></i>
+      <span>طباعة</span>
+    </button>
+  </div>
+</div>
       <div id="invTableContainer"></div>
     </div>
   </div>
@@ -529,16 +173,10 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     💬 صفحة التقييمات
-     ═══════════════════════════════════════════════════════════ -->
 <section id="page-reviews" class="page">
   <div class="reviews-container" id="reviewsListContainer"></div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     🚀 صفحة الترويج
-     ═══════════════════════════════════════════════════════════ -->
 <section id="page-landing" class="page">
   <div class="landing-intro">
     <div class="icon"><i class="fas fa-rocket"></i></div>
@@ -548,143 +186,8 @@
     </div>
   </div>
   <div class="landing-list" id="landingListContainer"></div>
-
-  <!-- 🆕 نموذج تعديل الترويج المدمج -->
-  <div id="landingEditInline" class="inline-panel" style="display:none;">
-    <div class="inline-panel-head vip-head">
-      <h3><i class="fas fa-rocket"></i> تعديل صفحة الترويج</h3>
-      <button type="button" class="inline-close-btn" data-inline-close="landingEditInline">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    <div class="inline-panel-body">
-      <p style="font-size:13px;color:var(--text-2);margin-bottom:14px;">المنتج الأصلي: <b id="landingEditProductName" style="color:var(--primary);"></b></p>
-      <input type="hidden" id="landingEditProductId" />
-
-      <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-rocket"></i> تفعيل صفحة الترويج</h4></div>
-        <span class="toggle-switch"><input type="checkbox" id="landingEnabled" /><span class="toggle-slider"></span></span>
-      </label>
-
-      <span class="section-label vip"><i class="fas fa-palette"></i> ستايل الصفحة</span>
-      <div class="theme-dropdown" id="themeDropdown">
-        <button type="button" class="theme-current-btn" id="themeCurrentBtn">
-          <div class="theme-mini-preview" id="themeCurrentPreview"></div>
-          <div class="theme-current-info">
-            <span class="label">الستايل الحالي</span>
-            <span class="name" id="themeCurrentName">أخضر</span>
-          </div>
-          <i class="fas fa-chevron-down chevron"></i>
-        </button>
-        <div class="theme-list">
-          <div class="theme-grid" id="themePicker"></div>
-        </div>
-      </div>
-
-      <span class="section-label vip"><i class="fas fa-image"></i> شعار الصفحة</span>
-      <div class="helper-text">ارفع شعاراً خاصاً. إذا لم تُضف، شعار المتجر الأساسي يُستخدم.</div>
-      <div class="logo-box">
-        <img id="landingLogoPreview" src="" style="display:none;" />
-        <div id="landingLogoEmpty" class="empty"><i class="fas fa-store"></i><span>لا يوجد شعار</span></div>
-      </div>
-      <div class="upload-btns-row">
-        <input type="file" id="landingLogoFile" accept="image/*" style="display:none;" />
-        <input type="file" id="landingLogoCamera" accept="image/*" capture="environment" style="display:none;" />
-        <button type="button" class="upload-btn" id="btnUploadLogoGallery"><i class="fas fa-images"></i> من المعرض</button>
-        <button type="button" class="upload-btn" id="btnUploadLogoCamera"><i class="fas fa-camera"></i> كاميرا</button>
-        <button type="button" class="upload-btn" id="btnRemoveLogo" style="color:#dc2626;border-color:#fecaca;flex:0 0 auto;padding:12px 14px;"><i class="fas fa-trash"></i></button>
-      </div>
-
-      <span class="section-label vip"><i class="fas fa-heading"></i> النصوص الظاهرة</span>
-      <label>اسم الصفحة</label><input id="landingPageName" />
-      <label>اسم المنتج</label><input id="landingProductName" placeholder="اتركه فارغاً لاستخدام اسم المنتج الأصلي" />
-      <div class="price-field-box">
-        <label><i class="fas fa-tag"></i> سعر خاص لصفحة الترويج</label>
-        <input type="number" id="landingPrice" placeholder="اتركه فارغاً لاستخدام السعر الأصلي" min="0" />
-        <p class="hint">سعر منفصل تماماً يظهر فقط في صفحة الترويج.</p>
-      </div>
-
-      <div class="bundle-box">
-        <label><i class="fas fa-gift"></i> <span>عروض وامتيازات</span></label>
-        <label class="toggle-row compact">
-          <div class="toggle-row-info"><h4>تفعيل عروض الكمية</h4></div>
-          <span class="toggle-switch"><input type="checkbox" id="landingBundleEnabled" /><span class="toggle-slider"></span></span>
-        </label>
-        <div id="bundleConfigBox" style="display:none;">
-          <p class="hint" style="margin-bottom:12px;">أضف مستويات متعددة. النظام يختار تلقائياً <b>أرخص سعر للقطعة</b> حسب كمية الزبون.</p>
-          <label style="color:#92400e;font-size:12px;font-weight:700;margin-bottom:6px;display:block;"><i class="fas fa-layer-group"></i> مستويات العرض:</label>
-          <div class="bundle-tiers-list" id="bundleTiersList"><div class="bundle-empty">لم تُضف أي مستوى بعد</div></div>
-          <button type="button" class="bundle-add-tier" id="addBundleTierBtn"><i class="fas fa-plus-circle"></i> إضافة مستوى جديد</button>
-          <label style="color:#92400e;font-size:12px;font-weight:700;margin-top:10px;display:block;"><i class="fas fa-ban"></i> الحد الأقصى للكمية (اختياري)</label>
-          <input type="number" id="landingBundleMaxQty" min="0" placeholder="مثال: 10" style="margin-bottom:10px;" />
-        </div>
-        <div style="height:1px;background:#fcd34d;margin:14px 0;"></div>
-        <label class="toggle-row compact">
-          <div class="toggle-row-info"><h4>تفعيل التوصيل المجاني</h4></div>
-          <span class="toggle-switch"><input type="checkbox" id="landingFreeShippingEnabled" /><span class="toggle-slider"></span></span>
-        </label>
-        <div id="freeShippingConfigBox" style="display:none;">
-          <label style="color:#92400e;font-size:13px;font-weight:600;">عند شراء عدد القطع:</label>
-          <input type="number" id="landingFreeShippingMinQty" min="1" value="3" />
-          <label style="color:#92400e;font-size:13px;font-weight:600;">نص الإعلان:</label>
-          <input type="text" id="landingFreeShippingLabel" placeholder="التوصيل علينا" value="التوصيل علينا" />
-        </div>
-        <div class="bundle-preview" id="bundlePreviewBox" style="display:none;">
-          <div class="preview-title"><i class="fas fa-eye"></i> معاينة العرض:</div>
-          <div id="bundlePreviewContent"></div>
-        </div>
-      </div>
-
-      <label>نص الشريط الإعلاني (اختياري)</label><input id="landingAnnouncementItem" placeholder="اتركه فارغاً للعام" />
-      <label>وصف المنتج</label><textarea id="landingDescription" rows="4"></textarea>
-
-      <span class="section-label vip"><i class="fas fa-images"></i> صور صفحة الترويج</span>
-      <div class="helper-text">ارفع صوراً متعددة. إذا لم تُضف، الصورة الأساسية تُستخدم.</div>
-      <div class="landing-images-grid" id="landingImagesGrid"><div class="landing-img-empty">لا توجد صور بعد</div></div>
-      <div class="upload-btns-row">
-        <input type="file" id="landingImageFile" accept="image/*" multiple style="display:none;" />
-        <input type="file" id="landingCameraInput" accept="image/*" capture="environment" style="display:none;" />
-        <button type="button" class="upload-btn" id="btnUploadGallery"><i class="fas fa-images"></i> من المعرض</button>
-        <button type="button" class="upload-btn" id="btnUploadCamera"><i class="fas fa-camera"></i> كاميرا</button>
-      </div>
-
-      <span class="section-label vip"><i class="fas fa-star"></i> لماذا تختارنا؟ (المميزات)</span>
-      <div class="helper-text">كل ميزة: أيقونة + عبارة صغيرة</div>
-      <div class="dynamic-list" id="featuresList"></div>
-      <button type="button" class="add-item-btn" id="addFeatureBtn"><i class="fas fa-plus"></i> إضافة ميزة</button>
-
-      <span class="section-label vip"><i class="fas fa-chart-line"></i> بكسل خاص بهذا المنتج (اختياري)</span>
-      <label><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook Pixel ID</label>
-      <input id="landingItemPixel" placeholder="اتركه فارغاً للعام" dir="ltr" style="font-family:monospace;" />
-      <label><i class="fab fa-tiktok"></i> TikTok Pixel ID</label>
-      <input id="landingItemTiktokPixel" placeholder="اتركه فارغاً للعام" dir="ltr" style="font-family:monospace;" />
-
-      <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-comments"></i> إظهار التقييمات</h4></div>
-        <span class="toggle-switch"><input type="checkbox" id="landingShowReviews" /><span class="toggle-slider"></span></span>
-      </label>
-      <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-users"></i> إظهار عدد الزوار</h4></div>
-        <span class="toggle-switch"><input type="checkbox" id="landingShowVisitors" /><span class="toggle-slider"></span></span>
-      </label>
-
-      <div id="landingUrlBox" style="background:#f3e8ff;border:1px solid #ddd6fe;border-radius:var(--radius-sm);padding:12px;margin:14px 0;display:none;">
-        <label style="color:#5b21b6;font-weight:700;margin-bottom:6px;display:block;"><i class="fas fa-link"></i> رابط الصفحة</label>
-        <input id="landingUrl" readonly dir="ltr" style="background:#fff;font-family:monospace;font-size:12px;" />
-        <div style="display:flex;gap:6px;margin-top:8px;">
-          <button type="button" id="copyLandingUrl" class="btn-success" style="flex:1;padding:10px;font-size:13px;margin:0;">نسخ</button>
-          <button type="button" id="openLandingUrl" class="btn-primary" style="flex:1;padding:10px;font-size:13px;background:#7c3aed;margin:0;">فتح</button>
-        </div>
-      </div>
-
-      <button class="btn-primary" id="saveLandingBtn" style="background:#7c3aed;">حفظ</button>
-    </div>
-  </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     ⚙️ صفحة الإعدادات
-     ═══════════════════════════════════════════════════════════ -->
 <section id="page-settings" class="page">
   <div class="settings-tabs" id="settingsTabs">
     <button class="settings-tab active" data-stab="general" data-perm="settings.general"><i class="fas fa-store"></i> عام</button>
@@ -706,6 +209,7 @@
       <label>عنوان المتجر</label><input id="setAddress" />
       <label>رقم الهاتف (يظهر للعملاء)</label><input id="setPhone" />
       <label>رقم واتساب (لاستقبال الطلبات)</label><input id="setWhatsapp" dir="ltr" />
+      <label>مفتاح ImgBB (لرفع الصور)</label><input id="setImgbb" dir="ltr" />
       <label>العملة</label><input id="setCurrency" placeholder="دج" />
       <label class="toggle-row" style="margin-top:14px;">
         <div class="toggle-row-info"><h4><i class="fab fa-whatsapp"></i> تفعيل الطلبات عبر واتساب</h4></div>
@@ -779,43 +283,73 @@
       <h3><i class="fas fa-toggle-on"></i> إدارة الميزات</h3>
       <div class="helper-text">تحكم في الميزات التي تظهر في متجرك ولوحة التحكم. التغييرات تُحفظ تلقائياً.</div>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-dollar-sign"></i> سعر الشراء</h4><p>تفعيل حساب تكلفة الشراء والأرباح لكل منتج.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-dollar-sign"></i> سعر الشراء</h4>
+          <p>تفعيل حساب تكلفة الشراء والأرباح لكل منتج.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featCostPrice" data-feat="costPrice" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-boxes"></i> تتبع المخزون</h4><p>تفعيل تتبع الكميات وإحصائيات المخزون.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-boxes"></i> تتبع المخزون</h4>
+          <p>تفعيل تتبع الكميات وإحصائيات المخزون.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featInventory" data-feat="inventory" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-box"></i> الكمية في العلبة</h4><p>تفعيل خيار تحديد عدد الوحدات داخل العلبة الواحدة.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-box"></i> الكمية في العلبة</h4>
+          <p>تفعيل خيار تحديد عدد الوحدات داخل العلبة الواحدة.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featQuantityPerBox" data-feat="quantityPerBox" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-barcode"></i> الرقم التسلسلي (SKU)</h4><p>تفعيل خانة الرقم التسلسلي/المرجعي لكل منتج.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-barcode"></i> الرقم التسلسلي (SKU)</h4>
+          <p>تفعيل خانة الرقم التسلسلي/المرجعي لكل منتج.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featSerial" data-feat="serial" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-crown"></i> سعر الجملة</h4><p>تفعيل أسعار الجملة والرمز السري الخاص بزبائن الجملة.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-crown"></i> سعر الجملة</h4>
+          <p>تفعيل أسعار الجملة والرمز السري الخاص بزبائن الجملة.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featWholesale" data-feat="wholesale" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-tags"></i> التخفيضات</h4><p>تفعيل نظام التخفيضات الزمنية على المنتجات.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-tags"></i> التخفيضات</h4>
+          <p>تفعيل نظام التخفيضات الزمنية على المنتجات.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featDiscounts" data-feat="discounts" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-rocket"></i> صفحات الترويج</h4><p>تفعيل إنشاء صفحات ترويج مستقلة لكل منتج.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-rocket"></i> صفحات الترويج</h4>
+          <p>تفعيل إنشاء صفحات ترويج مستقلة لكل منتج.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featLanding" data-feat="landing" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-comments"></i> التقييمات</h4><p>تفعيل نظام تقييمات العملاء على المنتجات.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-comments"></i> التقييمات</h4>
+          <p>تفعيل نظام تقييمات العملاء على المنتجات.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featReviews" data-feat="reviews" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-truck"></i> الشحن</h4><p>تفعيل إدارة مناطق الشحن والولايات والأسعار.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-truck"></i> الشحن</h4>
+          <p>تفعيل إدارة مناطق الشحن والولايات والأسعار.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featShipping" data-feat="shipping" /><span class="toggle-slider"></span></span>
       </label>
       <label class="toggle-row">
-        <div class="toggle-row-info"><h4><i class="fas fa-history"></i> سجل النشاطات</h4><p>تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.</p></div>
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-history"></i> سجل النشاطات</h4>
+          <p>تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.</p>
+        </div>
         <span class="toggle-switch"><input type="checkbox" id="featActivityLog" data-feat="activityLog" /><span class="toggle-slider"></span></span>
       </label>
     </div>
@@ -877,29 +411,6 @@
       <h3><i class="fas fa-truck"></i> مناطق الشحن</h3>
       <button class="btn-primary" id="addZoneBtn" style="margin-bottom:14px;">إضافة منطقة</button>
       <div id="zonesListContainer"></div>
-
-      <!-- 🆕 منطقة الشحن المدمجة -->
-      <div id="zoneFormInline" class="inline-panel" style="display:none;margin:14px 0 0 0;">
-        <div class="inline-panel-head">
-          <h3><i class="fas fa-truck"></i> <span id="zoneEditTitle">منطقة شحن</span></h3>
-          <button type="button" class="inline-close-btn" data-inline-close="zoneFormInline">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <div class="inline-panel-body">
-          <input type="hidden" id="zoneEditId" />
-          <label>اسم المنطقة</label><input id="zoneName" />
-          <label>سعر للمنزل (دج)</label><input type="number" id="zoneHomePrice" min="0" />
-          <label>سعر للمكتب (دج)</label><input type="number" id="zoneDeskPrice" min="0" />
-          <label>الولايات <span class="selected-count" id="selectedWilayaCount">0</span></label>
-          <div class="wilaya-toolbar">
-            <button type="button" id="selectAllWilayas">تحديد الكل</button>
-            <button type="button" id="clearAllWilayas">إلغاء الكل</button>
-          </div>
-          <div class="wilaya-selector" id="wilayaSelector"></div>
-          <button class="btn-primary" id="saveZoneBtn" style="margin-top:14px;">حفظ</button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -961,18 +472,240 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     🎨 Icon Picker المدمج (يظهر في الأسفل — ليس modal)
-     ═══════════════════════════════════════════════════════════ -->
-<div class="icon-picker-inline" id="iconPicker">
-  <div class="picker-head">
-    <span><i class="fas fa-icons"></i> اختر أيقونة</span>
-    <button id="iconPickerClose"><i class="fas fa-times"></i></button>
+<div id="loginModal" class="modal show">
+  <div class="modal-content" style="text-align:center;">
+    <img id="loginLogo" style="width:80px;margin-bottom:16px;display:none;" />
+    <h3>تسجيل الدخول</h3>
+    <input type="text" id="adminUser" placeholder="اسم المستخدم" />
+    <input type="password" id="adminPassword" placeholder="كلمة المرور" />
+    <button class="btn-primary" id="loginBtn">دخول</button>
   </div>
-  <div class="picker-body">
-    <div class="picker-cats" id="iconCats"></div>
-    <div class="picker-grid" id="iconGrid"></div>
-    <button type="button" class="picker-upload" id="uploadCustomIcon"><i class="fas fa-upload"></i> رفع أيقونة مخصصة</button>
+</div>
+
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <button class="close-x" data-close="productModal">&times;</button>
+    <h3 id="formTitle">إضافة منتج</h3>
+    <form id="productForm">
+      <input type="hidden" id="editId" />
+      <input type="text" id="name" placeholder="اسم المنتج" required />
+      <input type="text" id="serial" placeholder="الرقم التسلسلي / المرجع (SKU)" data-feature-field="serial" />
+      <input type="number" id="price" placeholder="سعر البيع (دج)" required />
+      <input type="number" id="wholesalePrice" placeholder="سعر الجملة (اختياري)" data-feature-field="wholesale" />
+      <input type="number" id="quantityPerBox" placeholder="الكمية في العلبة (اختياري)" min="0" data-feature-field="quantityPerBox" />
+      <div id="stockFieldsBox">
+        <input type="number" id="costPrice" placeholder="ثمن الشراء (تكلفة الوحدة)" min="0" step="any" data-feature-field="costPrice" />
+        <input type="number" id="stockQuantity" placeholder="الكمية المتوفرة في المخزون" min="0" data-feature-field="inventory" />
+      </div>
+      <div class="family-field-wrapper">
+        <select id="familySelect"><option value="">-- اختر عائلة --</option></select>
+        <button type="button" class="family-add-btn" id="addFamilyBtn"><i class="fas fa-plus"></i> إضافة</button>
+      </div>
+      <input type="text" id="newFamilyInput" placeholder="اسم العائلة الجديدة" style="display:none;" />
+      <div style="display:flex;gap:8px;">
+        <input type="file" id="imageFile" accept="image/*" style="flex:1;margin-bottom:12px;" />
+        <label for="cameraInput" style="background:var(--bg);padding:12px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;width:48px;margin-bottom:12px;"><i class="fas fa-camera"></i></label>
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;" />
+      </div>
+      <div style="display:flex;gap:10px;margin-top:10px;">
+        <button type="submit" class="btn-primary">حفظ</button>
+        <button type="button" id="toggleVisibilityBtn" style="display:none;background:var(--warning);color:#fff;border:none;border-radius:var(--radius-sm);padding:0 16px;font-weight:600;cursor:pointer;font-family:var(--font);"><i class="fas fa-eye"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="discountModal" class="modal">
+  <div class="modal-content">
+    <button class="close-x" data-close="discountModal">&times;</button>
+    <h3 style="color:var(--danger);">إدارة التخفيض</h3>
+    <input type="hidden" id="discountProductId" />
+    <label>المنتج: <span id="discountProductName"></span></label>
+    <label>السعر بعد التخفيض</label><input type="number" id="discountNewPrice" required />
+    <label class="toggle-row">
+      <div class="toggle-row-info"><h4><i class="fas fa-infinity"></i> تخفيض دائم</h4></div>
+      <span class="toggle-switch"><input type="checkbox" id="discountUnlimited" /><span class="toggle-slider"></span></span>
+    </label>
+    <div id="discountDateGroup">
+      <label>المدة</label>
+      <div class="date-fields">
+        <div><label style="font-weight:400;font-size:12px;">من</label><input type="datetime-local" id="discountStartDate" /></div>
+        <div><label style="font-weight:400;font-size:12px;">إلى</label><input type="datetime-local" id="discountEndDate" /></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;">
+      <button type="button" id="saveDiscountBtn" class="btn-success" style="flex:2;">حفظ</button>
+      <button type="button" id="removeDiscountBtn" class="btn-danger" style="flex:1;display:none;">إزالة</button>
+    </div>
+  </div>
+</div>
+
+<div id="landingEditModal" class="modal">
+  <div class="modal-content" style="max-width:680px;">
+    <button class="close-x" data-close="landingEditModal">&times;</button>
+    <h3 style="color:#7c3aed;">تعديل صفحة الترويج</h3>
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:14px;">المنتج الأصلي: <b id="landingEditProductName" style="color:var(--primary);"></b></p>
+    <input type="hidden" id="landingEditProductId" />
+    <label class="toggle-row">
+      <div class="toggle-row-info"><h4><i class="fas fa-rocket"></i> تفعيل صفحة الترويج</h4></div>
+      <span class="toggle-switch"><input type="checkbox" id="landingEnabled" /><span class="toggle-slider"></span></span>
+    </label>
+    <span class="section-label vip"><i class="fas fa-palette"></i> ستايل الصفحة</span>
+    <div class="theme-dropdown" id="themeDropdown">
+      <button type="button" class="theme-current-btn" id="themeCurrentBtn">
+        <div class="theme-mini-preview" id="themeCurrentPreview"></div>
+        <div class="theme-current-info">
+          <span class="label">الستايل الحالي</span>
+          <span class="name" id="themeCurrentName">أخضر</span>
+        </div>
+        <i class="fas fa-chevron-down chevron"></i>
+      </button>
+      <div class="theme-list">
+        <div class="theme-grid" id="themePicker"></div>
+      </div>
+    </div>
+    <span class="section-label vip"><i class="fas fa-image"></i> شعار الصفحة</span>
+    <div class="helper-text">ارفع شعاراً خاصاً. إذا لم تُضف، شعار المتجر الأساسي يُستخدم.</div>
+    <div class="logo-box">
+      <img id="landingLogoPreview" src="" style="display:none;" />
+      <div id="landingLogoEmpty" class="empty"><i class="fas fa-store"></i><span>لا يوجد شعار</span></div>
+    </div>
+    <div class="upload-btns-row">
+      <input type="file" id="landingLogoFile" accept="image/*" style="display:none;" />
+      <input type="file" id="landingLogoCamera" accept="image/*" capture="environment" style="display:none;" />
+      <button type="button" class="upload-btn" id="btnUploadLogoGallery"><i class="fas fa-images"></i> من المعرض</button>
+      <button type="button" class="upload-btn" id="btnUploadLogoCamera"><i class="fas fa-camera"></i> كاميرا</button>
+      <button type="button" class="upload-btn" id="btnRemoveLogo" style="color:#dc2626;border-color:#fecaca;flex:0 0 auto;padding:12px 14px;"><i class="fas fa-trash"></i></button>
+    </div>
+    <span class="section-label vip"><i class="fas fa-heading"></i> النصوص الظاهرة</span>
+    <label>اسم الصفحة</label><input id="landingPageName" />
+    <label>اسم المنتج</label><input id="landingProductName" placeholder="اتركه فارغاً لاستخدام اسم المنتج الأصلي" />
+    <div class="price-field-box">
+      <label><i class="fas fa-tag"></i> سعر خاص لصفحة الترويج</label>
+      <input type="number" id="landingPrice" placeholder="اتركه فارغاً لاستخدام السعر الأصلي" min="0" />
+      <p class="hint">سعر منفصل تماماً يظهر فقط في صفحة الترويج.</p>
+    </div>
+    <div class="bundle-box">
+      <label><i class="fas fa-gift"></i> <span>عروض وامتيازات</span></label>
+      <label class="toggle-row compact">
+        <div class="toggle-row-info"><h4>تفعيل عروض الكمية</h4></div>
+        <span class="toggle-switch"><input type="checkbox" id="landingBundleEnabled" /><span class="toggle-slider"></span></span>
+      </label>
+      <div id="bundleConfigBox" style="display:none;">
+        <p class="hint" style="margin-bottom:12px;">أضف مستويات متعددة. النظام يختار تلقائياً <b>أرخص سعر للقطعة</b> حسب كمية الزبون.</p>
+        <label style="color:#92400e;font-size:12px;font-weight:700;margin-bottom:6px;display:block;"><i class="fas fa-layer-group"></i> مستويات العرض:</label>
+        <div class="bundle-tiers-list" id="bundleTiersList"><div class="bundle-empty">لم تُضف أي مستوى بعد</div></div>
+        <button type="button" class="bundle-add-tier" id="addBundleTierBtn"><i class="fas fa-plus-circle"></i> إضافة مستوى جديد</button>
+        <label style="color:#92400e;font-size:12px;font-weight:700;margin-top:10px;display:block;"><i class="fas fa-ban"></i> الحد الأقصى للكمية (اختياري)</label>
+        <input type="number" id="landingBundleMaxQty" min="0" placeholder="مثال: 10" style="margin-bottom:10px;" />
+      </div>
+      <div style="height:1px;background:#fcd34d;margin:14px 0;"></div>
+      <label class="toggle-row compact">
+        <div class="toggle-row-info"><h4>تفعيل التوصيل المجاني</h4></div>
+        <span class="toggle-switch"><input type="checkbox" id="landingFreeShippingEnabled" /><span class="toggle-slider"></span></span>
+      </label>
+      <div id="freeShippingConfigBox" style="display:none;">
+        <label style="color:#92400e;font-size:13px;font-weight:600;">عند شراء عدد القطع:</label>
+        <input type="number" id="landingFreeShippingMinQty" min="1" value="3" />
+        <label style="color:#92400e;font-size:13px;font-weight:600;">نص الإعلان:</label>
+        <input type="text" id="landingFreeShippingLabel" placeholder="التوصيل علينا" value="التوصيل علينا" />
+      </div>
+      <div class="bundle-preview" id="bundlePreviewBox" style="display:none;">
+        <div class="preview-title"><i class="fas fa-eye"></i> معاينة العرض:</div>
+        <div id="bundlePreviewContent"></div>
+      </div>
+    </div>
+    <label>نص الشريط الإعلاني (اختياري)</label><input id="landingAnnouncementItem" placeholder="اتركه فارغاً للعام" />
+    <label>وصف المنتج</label><textarea id="landingDescription" rows="4"></textarea>
+    <span class="section-label vip"><i class="fas fa-images"></i> صور صفحة الترويج</span>
+    <div class="helper-text">ارفع صوراً متعددة. إذا لم تُضف، الصورة الأساسية تُستخدم.</div>
+    <div class="landing-images-grid" id="landingImagesGrid"><div class="landing-img-empty">لا توجد صور بعد</div></div>
+    <div class="upload-btns-row">
+      <input type="file" id="landingImageFile" accept="image/*" multiple style="display:none;" />
+      <input type="file" id="landingCameraInput" accept="image/*" capture="environment" style="display:none;" />
+      <button type="button" class="upload-btn" id="btnUploadGallery"><i class="fas fa-images"></i> من المعرض</button>
+      <button type="button" class="upload-btn" id="btnUploadCamera"><i class="fas fa-camera"></i> كاميرا</button>
+    </div>
+    <span class="section-label vip"><i class="fas fa-star"></i> لماذا تختارنا؟ (المميزات)</span>
+    <div class="helper-text">كل ميزة: أيقونة + عبارة صغيرة</div>
+    <div class="dynamic-list" id="featuresList"></div>
+    <button type="button" class="add-item-btn" id="addFeatureBtn"><i class="fas fa-plus"></i> إضافة ميزة</button>
+    <span class="section-label vip"><i class="fas fa-chart-line"></i> بكسل خاص بهذا المنتج (اختياري)</span>
+    <label><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook Pixel ID</label>
+    <input id="landingItemPixel" placeholder="اتركه فارغاً للعام" dir="ltr" style="font-family:monospace;" />
+    <label><i class="fab fa-tiktok"></i> TikTok Pixel ID</label>
+    <input id="landingItemTiktokPixel" placeholder="اتركه فارغاً للعام" dir="ltr" style="font-family:monospace;" />
+    <label class="toggle-row">
+      <div class="toggle-row-info"><h4><i class="fas fa-comments"></i> إظهار التقييمات</h4></div>
+      <span class="toggle-switch"><input type="checkbox" id="landingShowReviews" /><span class="toggle-slider"></span></span>
+    </label>
+    <label class="toggle-row">
+      <div class="toggle-row-info"><h4><i class="fas fa-users"></i> إظهار عدد الزوار</h4></div>
+      <span class="toggle-switch"><input type="checkbox" id="landingShowVisitors" /><span class="toggle-slider"></span></span>
+    </label>
+    <div id="landingUrlBox" style="background:#f3e8ff;border:1px solid #ddd6fe;border-radius:var(--radius-sm);padding:12px;margin:14px 0;display:none;">
+      <label style="color:#5b21b6;font-weight:700;margin-bottom:6px;display:block;"><i class="fas fa-link"></i> رابط الصفحة</label>
+      <input id="landingUrl" readonly dir="ltr" style="background:#fff;font-family:monospace;font-size:12px;" />
+      <div style="display:flex;gap:6px;margin-top:8px;">
+        <button type="button" id="copyLandingUrl" class="btn-success" style="flex:1;padding:10px;font-size:13px;margin:0;">نسخ</button>
+        <button type="button" id="openLandingUrl" class="btn-primary" style="flex:1;padding:10px;font-size:13px;background:#7c3aed;margin:0;">فتح</button>
+      </div>
+    </div>
+    <button class="btn-primary" id="saveLandingBtn" style="background:#7c3aed;">حفظ</button>
+  </div>
+</div>
+
+<div id="zoneEditModal" class="modal">
+  <div class="modal-content" style="max-width:600px;">
+    <button class="close-x" data-close="zoneEditModal">&times;</button>
+    <h3 id="zoneEditTitle">منطقة شحن</h3>
+    <input type="hidden" id="zoneEditId" />
+    <label>اسم المنطقة</label><input id="zoneName" />
+    <label>سعر للمنزل (دج)</label><input type="number" id="zoneHomePrice" min="0" />
+    <label>سعر للمكتب (دج)</label><input type="number" id="zoneDeskPrice" min="0" />
+    <label>الولايات <span class="selected-count" id="selectedWilayaCount">0</span></label>
+    <div class="wilaya-toolbar">
+      <button type="button" id="selectAllWilayas">تحديد الكل</button>
+      <button type="button" id="clearAllWilayas">إلغاء الكل</button>
+    </div>
+    <div class="wilaya-selector" id="wilayaSelector"></div>
+    <button class="btn-primary" id="saveZoneBtn">حفظ</button>
+  </div>
+</div>
+
+<div id="orderDetailModal" class="modal">
+  <div class="modal-content" style="max-width:700px;">
+    <button class="close-x" data-close="orderDetailModal">&times;</button>
+    <div id="orderDetailContent"></div>
+  </div>
+</div>
+
+<div id="printOptionModal" class="modal">
+  <div class="modal-content" style="max-width:400px;text-align:center;">
+    <h3>اختر طريقة الطباعة</h3>
+    <button id="thermalPrintBtn" style="background:#1e293b;color:#fff;padding:12px;border-radius:var(--radius-sm);width:100%;margin-bottom:10px;border:none;font-weight:600;cursor:pointer;font-family:var(--font);"><i class="fas fa-bluetooth"></i> طباعة حرارية</button>
+    <button id="normalPrintBtn" style="background:var(--primary);color:#fff;padding:12px;border-radius:var(--radius-sm);width:100%;border:none;font-weight:600;cursor:pointer;font-family:var(--font);"><i class="fas fa-print"></i> طباعة عادية</button>
+    <button data-close="printOptionModal" style="background:none;border:none;color:var(--text-2);margin-top:16px;cursor:pointer;font-size:14px;font-family:var(--font);">إلغاء</button>
+  </div>
+</div>
+
+<div class="inv-drawer-overlay" id="invDrawerOverlay"></div>
+<aside class="inv-drawer" id="invDrawer">
+  <div class="inv-drawer-header">
+    <button class="inv-drawer-close" id="invDrawerClose" title="إغلاق"><i class="fas fa-times"></i></button>
+    <h3 id="invDrawerTitle">-</h3>
+    <button class="inv-drawer-print" id="invDrawerPrint" title="طباعة"><i class="fas fa-print"></i></button>
+  </div>
+  <div class="inv-drawer-body" id="invDrawerBody"></div>
+</aside>
+
+<div class="icon-picker" id="iconPicker">
+  <div class="icon-picker-content">
+    <button id="iconPickerClose" style="position:absolute;top:14px;inset-inline-end:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-2);">&times;</button>
+    <h3><i class="fas fa-icons"></i> اختر أيقونة</h3>
+    <div class="cats" id="iconCats"></div>
+    <div class="icons-grid" id="iconGrid"></div>
+    <button type="button" class="upload-custom" id="uploadCustomIcon"><i class="fas fa-upload"></i> رفع أيقونة مخصصة</button>
     <input type="file" id="customIconFile" accept="image/*" style="display:none;" />
   </div>
 </div>
@@ -984,56 +717,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="i18n.js"></script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getDatabase, ref, onValue, set, remove, update, push, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const $ = id => document.getElementById(id);
-
-/* ═══════════════════════════════════════════════════════════
-   🎯 مساعدات الأقسام المدمجة
-   ═══════════════════════════════════════════════════════════ */
-function showInline(id) {
-  const el = $(id);
-  if (!el) return;
-  el.style.display = "block";
-  setTimeout(() => {
-    const y = el.getBoundingClientRect().top + window.pageYOffset - 90;
-    window.scrollTo({ top: y, behavior: "smooth" });
-  }, 50);
-}
-function hideInline(id) {
-  const el = $(id);
-  if (el) el.style.display = "none";
-}
-window.showInline = showInline;
-window.hideInline = hideInline;
-
-/* ═══ خريطة توافق: أي استدعاء قديم openModal("productModal") يُترجم تلقائياً ═══ */
-const INLINE_MAP = {
-  productModal:    "productFormInline",
-  discountModal:   "discountFormInline",
-  landingEditModal:"landingEditInline",
-  zoneEditModal:   "zoneFormInline",
-  orderDetailModal:"orderDetailInline",
-  printOptionModal:"printOptionInline"
-};
-function openModal(id) {
-  const target = INLINE_MAP[id] || id;
-  if ($(target)) showInline(target);
-}
-function closeModal(id) {
-  const target = INLINE_MAP[id] || id;
-  if ($(target)) hideInline(target);
-}
-
-/* ═══ إغلاق الأقسام المدمجة بأزرار الإغلاق ═══ */
-document.addEventListener('click', e => {
-  const b = e.target.closest('[data-inline-close]');
-  if (b) hideInline(b.dataset.inlineClose);
-});
-
 const BOOT = window.STORE_BOOTSTRAP;
 function showNotice(icon, title, msg) {
   $("loadingScreen").style.display = "none";
@@ -1152,8 +842,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const PERMS = {
-  owner: {
-    nav: { products: true, families: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
+    owner: {
+      nav: { products: true, families: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
     settings: { general: true, cover: true, features: true, landingSettings: true, policies: true, pixels: true, shipping: true, users: true, owner: true, advanced: true },
     product: { add: true, edit: true, delete: true, discount: true, promote: true, viewCost: true },
     orders: { viewNew: true, viewConfirmed: true, confirm: true, delete: true, deleteAll: true },
@@ -1246,7 +936,7 @@ function switchPage(pageName) {
   if (pageName === 'reviews') renderReviewsSection();
   if (pageName === 'landing') renderLandingList();
   if (pageName === 'products') applyFiltersAndRender();
-  if (pageName === 'families') renderFamiliesPage();
+if (pageName === 'families') renderFamiliesPage();
   if (pageName === 'settings') {
     const firstTab = Array.from(document.querySelectorAll('.settings-tab')).find(tab => {
       const p = tab.getAttribute('data-perm');
@@ -1298,9 +988,12 @@ function showToast(msg) {
   clearTimeout(window._tt);
   window._tt = setTimeout(() => t2.classList.remove('show'), 2800);
 }
+function openModal(id) { $(id).classList.add('show'); }
+function closeModal(id) { $(id).classList.remove('show'); }
 
-/* ═══ ربط كل الإغلاق ═══ */
 document.addEventListener('click', e => {
+  const t2 = e.target.closest('[data-close]');
+  if (t2) closeModal(t2.dataset.close);
   if (e.target.classList && e.target.classList.contains('modal')) e.target.classList.remove('show');
 });
 
@@ -1345,17 +1038,25 @@ onValue(ref(db, 'store/info'), snap => {
   if ($("page-inventory") && $("page-inventory").classList.contains('active')) renderInventoryPage();
 });
 
-/* ✅ مفتاح ImgBB يُقرأ مباشرة من BOOT (config.js) بدل store/settings */
-/* تم حذف onValue('store/settings') — لم يعد هناك حقل لهذا في لوحة التحكم */
+onValue(ref(db, 'store/settings'), snap => {
+  const d = snap.val() || {};
+  imgbbKey = d.imgbbApiKey || BOOT.imgbbApiKey || "";
+  $("setImgbb").value = imgbbKey;
+});
 
 onValue(ref(db, 'store/features'), snap => {
   const d = snap.val() || {};
   storeFeatures = {
-    costPrice: d.costPrice !== false, inventory: d.inventory !== false,
-    quantityPerBox: d.quantityPerBox !== false, wholesale: d.wholesale !== false,
-    discounts: d.discounts !== false, landing: d.landing !== false,
-    reviews: d.reviews !== false, shipping: d.shipping !== false,
-    serial: d.serial === true, activityLog: d.activityLog !== false
+    costPrice: d.costPrice !== false,
+    inventory: d.inventory !== false,
+    quantityPerBox: d.quantityPerBox !== false,
+    wholesale: d.wholesale !== false,
+    discounts: d.discounts !== false,
+    landing: d.landing !== false,
+    reviews: d.reviews !== false,
+    shipping: d.shipping !== false,
+    serial: d.serial === true,
+    activityLog: d.activityLog !== false
   };
   window.storeFeatures = storeFeatures;
   $("featCostPrice").checked = storeFeatures.costPrice;
@@ -1510,14 +1211,19 @@ function renderFamiliesPage() {
         <p class="family-card-meta">${total} منتج${hiddenCount > 0 ? ` <span style="color:var(--muted);">(منها ${hiddenCount} مخفي)</span>` : ''}</p>
       </div>
       ${canManage ? `<div class="family-card-actions">
-        <button class="family-card-btn edit" data-fam-edit="${key}" title="تعديل"><i class="fas fa-pen"></i> <span>تعديل</span></button>
-        <button class="family-card-btn delete" data-fam-del="${key}" title="حذف"><i class="fas fa-trash"></i> <span>حذف</span></button>
+        <button class="family-card-btn edit" data-fam-edit="${key}" title="تعديل">
+          <i class="fas fa-pen"></i> <span>تعديل</span>
+        </button>
+        <button class="family-card-btn delete" data-fam-del="${key}" title="حذف">
+          <i class="fas fa-trash"></i> <span>حذف</span>
+        </button>
       </div>` : ''}
     </div>`;
   }).join('');
   grid.querySelectorAll('[data-fam-edit]').forEach(b => b.addEventListener('click', () => editFamilyName(b.dataset.famEdit, familiesList.find(f => f.key === b.dataset.famEdit)?.name || '')));
   grid.querySelectorAll('[data-fam-del]').forEach(b => b.addEventListener('click', () => deleteFamily(b.dataset.famDel, familiesList.find(f => f.key === b.dataset.famDel)?.name || '')));
 }
+
 
 async function editFamilyName(key, oldName) {
   if (!can('product.edit')) return showToast(t('notAllowed'));
@@ -1577,7 +1283,6 @@ function filterByFamily(f) {
   }
   applyFiltersAndRender();
 }
-
 $("addFamilyMainBtn").addEventListener('click', async () => {
   if (!can('product.edit')) return showToast(t('notAllowed'));
   const n = prompt("اسم العائلة الجديدة:");
@@ -1713,7 +1418,7 @@ $("addProductBtn").addEventListener('click', () => {
   const _ser = $("serial"); if (_ser) _ser.value = "";
   $("costPrice").value = ""; $("stockQuantity").value = "";
   applyPermissions();
-  showInline("productFormInline");
+  openModal("productModal");
 });
 
 function editProduct(id) {
@@ -1739,7 +1444,7 @@ function editProduct(id) {
     tb.onclick = () => toggleVisibility(id);
   } else { tb.style.display = "none"; }
   applyPermissions();
-  showInline("productFormInline");
+  openModal("productModal");
 }
 
 async function deleteProduct(id) {
@@ -1758,7 +1463,7 @@ async function toggleVisibility(id) {
   const c = allProducts[id]; if (!c) return;
   await update(ref(db, "products/" + id), { hidden: !c.hidden });
   showToast(c.hidden ? "تم الإظهار" : "تم الإخفاء");
-  hideInline("productFormInline");
+  closeModal("productModal");
 }
 
 $("addFamilyBtn").addEventListener('click', async function() {
@@ -1781,7 +1486,7 @@ $("addFamilyBtn").addEventListener('click', async function() {
 });
 
 async function uploadImage(file) {
-  if (!imgbbKey) throw new Error("مفتاح ImgBB مفقود في config.js");
+  if (!imgbbKey) throw new Error("مفتاح ImgBB مفقود");
   const fd = new FormData(); fd.append("image", file);
   const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, { method: "POST", body: fd });
   const d = await res.json();
@@ -1801,7 +1506,7 @@ $("productForm").addEventListener('submit', async e => {
   const file = $("imageFile").files[0] || $("cameraInput").files[0];
   const ex = allProducts[id];
   let nImg = ex?.imageUrl || "", nDel = ex?.deleteUrl || "";
-  hideInline("productFormInline"); showToast("جاري الحفظ...");
+  closeModal("productModal"); showToast("جاري الحفظ...");
   try {
     if (file) {
       if (ex?.deleteUrl) { try { await fetch(ex.deleteUrl, { mode: 'no-cors' }); } catch (e) {} }
@@ -1846,7 +1551,7 @@ function openDiscountModal(id) {
     $("removeDiscountBtn").style.display = "none";
   }
   $("discountDateGroup").style.display = $("discountUnlimited").checked ? "none" : "block";
-  showInline("discountFormInline");
+  openModal("discountModal");
 }
 $("discountUnlimited").addEventListener('change', function() {
   $("discountDateGroup").style.display = this.checked ? "none" : "block";
@@ -1865,12 +1570,12 @@ $("saveDiscountBtn").addEventListener('click', async () => {
     start = new Date(start).toISOString(); end = new Date(end).toISOString();
   } else { start = null; end = null; }
   await set(ref(db, `discounts/${id}`), { productId: id, newPrice, unlimited, startDate: start, endDate: end, isActive: true, createdAt: Date.now() });
-  showToast("تم الحفظ"); hideInline("discountFormInline");
+  showToast("تم الحفظ"); closeModal("discountModal");
 });
 $("removeDiscountBtn").addEventListener('click', async () => {
   if (!can('product.discount')) return showToast(t('notAllowed'));
   const id = $("discountProductId").value;
-  if (id && confirm("إزالة التخفيض؟")) { await remove(ref(db, `discounts/${id}`)); showToast("تمت الإزالة"); hideInline("discountFormInline"); }
+  if (id && confirm("إزالة التخفيض؟")) { await remove(ref(db, `discounts/${id}`)); showToast("تمت الإزالة"); closeModal("discountModal"); }
 });
 
 function renderLandingList() {
@@ -1939,8 +1644,8 @@ function renderBundleTiers() {
   const sorted = [...currentBundleTiers].sort((a, b) => (a.qty || 0) - (b.qty || 0));
   c.innerHTML = sorted.map((tier, i) => {
     const perUnit = (tier.totalPrice && tier.qty) ? Math.round(tier.totalPrice / tier.qty) : 0;
-    const isFR = (window.currentLang === 'fr') || (localStorage.getItem('store_lang') === 'fr');
-    const unitLbl = isFR ? '/pcs' : '/قطعة';
+const isFR = (window.currentLang === 'fr') || (localStorage.getItem('store_lang') === 'fr');
+const unitLbl = isFR ? '/pcs' : '/قطعة';
     return `<div class="bundle-tier-row" data-tier-idx="${i}"><div class="tier-index">${i + 1}</div><div class="tier-field"><label>عدد القطع</label><input type="number" min="2" value="${tier.qty || 2}" data-tier-qty="${i}" placeholder="2" /></div><div class="tier-field"><label>إجمالي الحزمة</label><input type="number" min="0" value="${tier.totalPrice || ''}" data-tier-price="${i}" placeholder="20000" /><div class="tier-unit-price">${perUnit > 0 ? '≈ ' + fmt(perUnit) + unitLbl : ''}</div></div><button type="button" class="rm-btn" data-tier-rm="${i}"><i class="fas fa-trash"></i></button></div>`;
   }).join('');
   c.querySelectorAll('[data-tier-qty]').forEach(inp => inp.addEventListener('input', e => {
@@ -1969,15 +1674,17 @@ function renderBundlePreview() {
   const freeMin = parseInt($("landingFreeShippingMinQty").value) || 0;
   const rawLabel = ($("landingFreeShippingLabel").value || '').trim();
   const LANG = localStorage.getItem('store_lang') || window.currentLang || 'ar';
-  const isFR = LANG === 'fr';
+const isFR = LANG === 'fr';
   const isDefault = !rawLabel || rawLabel === 'التوصيل علينا' || rawLabel === 'التوصيل مجاني' || rawLabel === 'Livraison offerte';
   const freeLabel = isDefault ? (isFR ? 'Livraison offerte' : 'التوصيل علينا') : rawLabel;
   if (!hasTiers && !(freeEnabled && freeMin > 0)) { box.style.display = "none"; return; }
   box.style.display = "block";
+  
   const lblPieces = isFR ? 'pièces' : 'قطع';
   const lblPerUnit = isFR ? '/pcs' : '/قطعة';
   const lblShippingFrom = isFR ? 'Livraison offerte à partir de' : 'التوصيل مجاني عند شراء';
   const lblShippingOrMore = isFR ? 'pièces ou plus' : 'قطع أو أكثر';
+  
   let html = '';
   const validTiers = currentBundleTiers.filter(t => t.qty >= 2 && t.totalPrice > 0).sort((a, b) => a.qty - b.qty);
   if (validTiers.length) {
@@ -2059,7 +1766,7 @@ function openLandingEditModal(id) {
   renderBundleTiers();
   $("landingUrl").value = buildLandingUrl(id);
   $("landingUrlBox").style.display = "block";
-  showInline("landingEditInline");
+  openModal("landingEditModal");
 }
 
 function renderLandingLogo() {
@@ -2158,6 +1865,7 @@ function applyIconChoice(type, value) {
   $("iconPicker").classList.remove('show');
 }
 $("iconPickerClose").addEventListener('click', () => $("iconPicker").classList.remove('show'));
+$("iconPicker").addEventListener('click', e => { if (e.target === $("iconPicker")) $("iconPicker").classList.remove('show'); });
 $("uploadCustomIcon").addEventListener('click', () => $("customIconFile").click());
 $("customIconFile").addEventListener('change', async e => {
   const file = e.target.files[0]; if (!file) return;
@@ -2204,9 +1912,10 @@ $("saveLandingBtn").addEventListener('click', async () => {
     bundleData = { enabled: true, tiers: [], maxQty: null, freeShipping: { enabled: true, minQty: parseInt($("landingFreeShippingMinQty").value) || 0, label: ($("landingFreeShippingLabel").value || '').trim() || "التوصيل علينا" } };
   }
   const landingData = { enabled, theme, pageName: pageName || null, productName: productName || null, logo: currentLandingLogo || null, price: (!isNaN(customPrice) && customPrice > 0) ? customPrice : null, announcement: announcement || null, description: description || null, images: images, features: features.length ? features : null, pixelId: pixelId || null, tiktokPixelId: tiktokPixelId || null, showReviews, showVisitors, bundle: bundleData, updatedAt: Date.now() };
-  try { await update(ref(db, "products/" + id), { landing: landingData }); showToast("تم الحفظ"); hideInline("landingEditInline"); }
+  try { await update(ref(db, "products/" + id), { landing: landingData }); showToast("تم الحفظ"); closeModal("landingEditModal"); }
   catch (e) { showToast("خطأ: " + e.message); }
 });
+
 $("saveLandingSettingsBtn").addEventListener('click', async () => {
   if (!can('settings.landingSettings')) return showToast(t('notAllowed'));
   const snap = await get(ref(db, 'store/landing')); const existing = snap.val() || {};
@@ -2244,8 +1953,7 @@ function openZoneEdit(id) {
   const z = id ? shippingZones.find(x => x.id === id) : null;
   $("zoneEditId").value = id || ""; $("zoneName").value = z ? (z.name || "") : "";
   $("zoneHomePrice").value = z ? (z.homePrice || 0) : ""; $("zoneDeskPrice").value = z ? (z.deskPrice || 0) : "";
-  renderWilayaSelector(z && Array.isArray(z.wilayas) ? z.wilayas : []);
-  showInline("zoneFormInline");
+  renderWilayaSelector(z && Array.isArray(z.wilayas) ? z.wilayas : []); openModal("zoneEditModal");
 }
 function renderWilayaSelector(selected) {
   const c = $("wilayaSelector");
@@ -2264,7 +1972,7 @@ $("saveZoneBtn").addEventListener('click', async () => {
   if (!name) return showToast("اسم المنطقة مطلوب");
   if (!wilayas.length) return showToast("اختر ولاية واحدة على الأقل");
   const data = { name, homePrice, deskPrice, wilayas, updatedAt: Date.now() };
-  try { if (id) await update(ref(db, "store/shipping_zones/" + id), data); else await push(ref(db, "store/shipping_zones"), data); showToast("تم الحفظ"); hideInline("zoneFormInline"); }
+  try { if (id) await update(ref(db, "store/shipping_zones/" + id), data); else await push(ref(db, "store/shipping_zones"), data); showToast("تم الحفظ"); closeModal("zoneEditModal"); }
   catch (e) { showToast("فشل الحفظ"); }
 });
 async function deleteZone(id) {
@@ -2276,14 +1984,17 @@ async function deleteZone(id) {
 function updateOrdersCounts() {
   const newCount = Object.keys(ordersData).length;
   const confCount = Object.keys(confirmedData).length;
+
   const nc = $("newCount"), cc = $("confirmedCount");
   if (nc) nc.textContent = newCount;
   if (cc) cc.textContent = confCount;
+
   const badge = $("ordersBadge");
   if (badge) {
     if (newCount > 0) { badge.style.display = "inline-block"; badge.textContent = newCount; }
     else badge.style.display = "none";
   }
+
   const banner = document.getElementById('ordersWarningBanner');
   const bannerCount = document.getElementById('ordersWarningCount');
   if (banner) {
@@ -2302,45 +2013,74 @@ function renderOrdersList() {
   const data = currentOrdersFilter === 'new' ? ordersData : confirmedData;
   const arr = Object.entries(data);
   if (!arr.length) { c.innerHTML = `<div class="no-data">${currentOrdersFilter === 'new' ? t('noOrders') : t('noConfirmed')}</div>`; return; }
+  const isNew = currentOrdersFilter === 'new';
   arr.reverse().forEach(([key, o]) => {
     const card = document.createElement('div');
-    card.className = 'order-card ' + (currentOrdersFilter === 'new' ? 'whatsapp-orders' : 'confirmed-card');
+    card.className = 'order-card ' + (isNew ? 'whatsapp-orders' : 'confirmed-card');
     const shortAddr = (o.address || '').length > 30 ? o.address.substring(0, 27) + '...' : (o.address || '');
-    const srcBadge = o.source === 'landing' ? `<span class="landing-source-badge"><i class="fas fa-rocket"></i> ${t('promotionBadge')}</span>` : (currentOrdersFilter === 'new' ? `<span class="whatsapp-badge">${t('newOrderBadge')}</span>` : `<span class="confirmed-badge">${t('confirmedBadge')}</span>`);
+    const srcBadge = o.source === 'landing' ? `<span class="landing-source-badge"><i class="fas fa-rocket"></i> ${t('promotionBadge')}</span>` : (isNew ? `<span class="whatsapp-badge">${t('newOrderBadge')}</span>` : `<span class="confirmed-badge">${t('confirmedBadge')}</span>`);
     const hasBundle = o.bundleApplied || (o.items && o.items.some(it => it.bundleApplied === true));
     const bundleTag = hasBundle ? `<span class="bundle-badge-order"><i class="fas fa-gift"></i> عرض كمية</span>` : '';
     const hasFreeShip = o.freeShippingApplied;
     const freeTag = hasFreeShip ? `<span style="background:#059669;color:#fff;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block;margin-inline-start:6px;">توصيل مجاني</span>` : '';
-    const ts = currentOrdersFilter === 'new' ? o.timestamp : (o.confirmedAt || o.timestamp);
-    const extraInfo = currentOrdersFilter === 'confirmed' ? `<div style="font-size:11px;color:var(--muted);margin-top:4px;"><i class="fas fa-check-circle"></i> ${escapeHtml(o.confirmedBy || 'Admin')}</div>` : '';
+    const ts = isNew ? o.timestamp : (o.confirmedAt || o.timestamp);
+    const extraInfo = !isNew ? `<div style="font-size:11px;color:var(--muted);margin-top:4px;"><i class="fas fa-check-circle"></i> ${escapeHtml(o.confirmedBy || 'Admin')}</div>` : '';
 
-    card.innerHTML = `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;"><div><span style="font-weight:600;">${escapeHtml(o.customerName || '')}</span> ${srcBadge}${bundleTag}${freeTag}</div><span style="color:${currentOrdersFilter === 'new' ? '#059669' : '#d97706'};font-weight:700;">${fmt(o.totalPrice)} ${cur}</span></div><div style="font-size:13px;color:var(--text-2);margin-top:6px;"><span><i class="fas fa-phone"></i> ${escapeHtml(o.phone || '')}</span> | <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(shortAddr)}</span></div><div style="font-size:11px;color:var(--muted);margin-top:4px;"><i class="far fa-clock"></i> ${formatDate(ts)}</div>${extraInfo}
-      <div class="order-card-actions">
-        <button class="order-print-btn" data-print-key="${key}" type="button">
-          <i class="fas fa-print"></i> ${t('actionPrint') || 'طباعة'}
-        </button>
-      </div>`;
+    const actionBtnHtml = isNew
+      ? `<button class="order-confirm-btn" data-confirm-key="${key}" type="button"><i class="fas fa-check-circle"></i> ${t('actionConfirmPrint') || 'تأكيد وطباعة'}</button>`
+      : `<button class="order-print-btn" data-print-key="${key}" type="button"><i class="fas fa-print"></i> ${t('actionPrint') || 'طباعة'}</button>`;
+
+    card.innerHTML = `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;"><div><span style="font-weight:600;">${escapeHtml(o.customerName || '')}</span> ${srcBadge}${bundleTag}${freeTag}</div><span style="color:${isNew ? '#059669' : '#d97706'};font-weight:700;">${fmt(o.totalPrice)} ${cur}</span></div><div style="font-size:13px;color:var(--text-2);margin-top:6px;"><span><i class="fas fa-phone"></i> ${escapeHtml(o.phone || '')}</span> | <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(shortAddr)}</span></div><div style="font-size:11px;color:var(--muted);margin-top:4px;"><i class="far fa-clock"></i> ${formatDate(ts)}</div>${extraInfo}<div class="order-card-actions">${actionBtnHtml}</div>`;
 
     card.addEventListener('click', (e) => {
-      if (e.target.closest('.order-print-btn')) return;
-      openOrderDetailModal(o, currentOrdersFilter === 'new' ? 'whatsapp' : 'confirmed', key);
+      if (e.target.closest('.order-print-btn') || e.target.closest('.order-confirm-btn')) return;
+      openOrderDetailModal(o, isNew ? 'whatsapp' : 'confirmed', key);
     });
 
     const printBtn = card.querySelector('.order-print-btn');
     if (printBtn) {
       printBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const orderType = currentOrdersFilter === 'new' ? 'whatsapp' : 'confirmed';
-        const printPayload = { key: key, order: o, type: orderType };
+        const printPayload = { key: key, order: o, type: 'confirmed' };
         sessionStorage.setItem('printOrder', JSON.stringify(printPayload));
         window.open('print_admin.html', '_blank');
       });
     }
+
+    const confirmBtn = card.querySelector('.order-confirm-btn');
+if (confirmBtn) {
+  confirmBtn.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!can('orders.confirm')) return showToast(t('notAllowed'));
+    
+    showToast('جاري التأكيد...');
+    
+    try {
+      const confirmed = await confirmOrderOnly(key, o);
+      
+      const printPayload = {
+        key: key,
+        order: confirmed,
+        type: 'confirmed'
+      };
+      sessionStorage.setItem('printOrder', JSON.stringify(printPayload));
+      
+      window.open('print_admin.html', '_blank');
+    } catch (err) {
+      console.error('Confirm error:', err);
+      showToast('خطأ: ' + err.message);
+    }
+  });
+}
+
     c.appendChild(card);
   });
 }
 
-document.querySelectorAll('.orders-chip').forEach(chip => {
+    
+    
+    document.querySelectorAll('.orders-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     if (chip.parentElement.id === 'invPeriodChips') return;
     const filter = chip.dataset.ofilter;
@@ -2361,7 +2101,6 @@ document.querySelectorAll('#invPeriodChips .orders-chip').forEach(chip => {
     document.querySelectorAll('#invPeriodChips .orders-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     invPeriod = chip.dataset.period;
-    closeInvDetailInline();
     renderInventoryPage();
   });
 });
@@ -2392,10 +2131,19 @@ document.addEventListener('click', e => {
 function printInventoryTableBtn() {
   const canSeeCost = can('product.viewCost') && canFeature('costPrice');
   const lowStockAlert = Number(storeInfo.lowStockAlert) || 5;
+
   let list = Object.entries(allProducts).filter(([_, p]) => p.trackStock === true);
-  if (invSearchTerm) list = list.filter(([_, p]) => (p.name || '').toLowerCase().includes(invSearchTerm));
-  if (!list.length) { showToast('لا توجد بيانات للطباعة'); return; }
+  if (invSearchTerm) {
+    list = list.filter(([_, p]) => (p.name || '').toLowerCase().includes(invSearchTerm));
+  }
+
+  if (!list.length) {
+    showToast('لا توجد بيانات للطباعة');
+    return;
+  }
+
   list.sort((a, b) => (Number(a[1].stockQuantity) || 0) - (Number(b[1].stockQuantity) || 0));
+
   const rows = list.map(([id, p]) => {
     const q = Number(p.stockQuantity) || 0;
     const cp = Number(p.costPrice) || 0;
@@ -2404,12 +2152,20 @@ function printInventoryTableBtn() {
     const status = q === 0 ? 'نفد' : (q <= lowStockAlert ? 'منخفض' : 'متوفر');
     return [p.name, q, lowStockAlert, status, cp, sp, margin];
   });
+
   const totalQty = list.reduce((s, [_, p]) => s + (Number(p.stockQuantity) || 0), 0);
+
   sessionStorage.setItem('printInventory', JSON.stringify({
-    type: 'stock_full', title: 'حالة المخزون', periodLabel: getPeriodLabel(),
-    rows: rows, total: 'إجمالي القطع', totalValue: fmt(totalQty),
-    canSeeCost: canSeeCost, lowStockAlert: lowStockAlert
+    type: 'stock_full',
+    title: 'حالة المخزون',
+    periodLabel: getPeriodLabel(),
+    rows: rows,
+    total: 'إجمالي القطع',
+    totalValue: fmt(totalQty),
+    canSeeCost: canSeeCost,
+    lowStockAlert: lowStockAlert
   }));
+
   window.open('print-inventory.html', '_blank');
 }
 
@@ -2492,7 +2248,7 @@ function renderInvAlerts(low, out) {
   }
   c.innerHTML = html;
   c.querySelectorAll('[data-open-alert]').forEach(el => {
-    el.addEventListener('click', () => openInvDetailInline(el.dataset.openAlert, null));
+    el.addEventListener('click', () => openInvDrawer(el.dataset.openAlert));
   });
 }
 
@@ -2549,7 +2305,7 @@ function renderTopProducts(periodOrders) {
 function bindInvStatCards() {
   document.querySelectorAll('#page-inventory .inv-stat[data-detail]').forEach(card => {
     if (card._bound) return; card._bound = true;
-    card.addEventListener('click', () => openInvDetailInline(card.dataset.detail, card));
+    card.addEventListener('click', () => openInvDrawer(card.dataset.detail));
   });
 }
 
@@ -2609,42 +2365,26 @@ function buildInvDetail(type) {
   return { type, title, rows, total, totalValue, periodLabel, canSeeCost };
 }
 
-/* ═══════════════════════════════════════════════════════════
-   📊 عرض تفاصيل المخزون مباشرة أسفل التنبيهات
-   ═══════════════════════════════════════════════════════════ */
-function openInvDetailInline(type, cardEl) {
+function openInvDrawer(type) {
   const data = buildInvDetail(type);
   currentInvDetail = data;
+  $("invDrawerTitle").textContent = data.title;
   const cur = curLbl();
   const canSeeCost = data.canSeeCost;
-  const container = $("invDetailContainer");
-  if (!container) return;
-
-  document.querySelectorAll('#page-inventory .inv-stat').forEach(c => c.classList.remove('active-detail'));
-  if (cardEl) cardEl.classList.add('active-detail');
-
   let tableHtml = '';
   if (!data.rows.length) {
-    tableHtml = `<div class="inv-empty" style="padding:30px 20px;">
-      <i class="fas fa-inbox" style="font-size:32px;color:#c9cccf;display:block;margin-bottom:10px;"></i>
-      لا توجد بيانات في هذه الفترة
-    </div>`;
+    tableHtml = `<div class="inv-empty" style="padding:40px 20px;"><i class="fas fa-inbox" style="font-size:40px;color:#c9cccf;display:block;margin-bottom:10px;"></i>لا توجد بيانات في هذه الفترة</div>`;
   } else {
     let thead = '';
-    if (type === 'revenue' || type === 'orders')
-      thead = '<tr><th>العميل</th><th>الهاتف</th><th>المبلغ</th><th>التاريخ</th></tr>';
-    else if (type === 'profit' || type === 'cost')
-      thead = `<tr><th>المنتج</th><th>الكمية</th><th>المبيعات</th>${canSeeCost ? '<th>التكلفة</th><th>الربح</th>' : ''}</tr>`;
-    else if (type === 'stockValue' || type === 'stockQty')
-      thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
-    else
-      thead = '<tr><th>المنتج</th><th>الكمية</th><th>حد التنبيه</th><th>الحالة</th></tr>';
-
+    if (type === 'revenue' || type === 'orders') thead = '<tr><th>العميل</th><th>الهاتف</th><th>المبلغ</th><th>التاريخ</th></tr>';
+    else if (type === 'profit' || type === 'cost') thead = `<tr><th>المنتج</th><th>الكمية</th><th>المبيعات</th>${canSeeCost ? '<th>التكلفة</th><th>الربح</th>' : ''}</tr>`;
+    else if (type === 'stockValue' || type === 'stockQty') thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
+    else thead = '<tr><th>المنتج</th><th>الكمية</th><th>حد التنبيه</th><th>الحالة</th></tr>';
     tableHtml = `<div style="overflow-x:auto;"><table class="inv-table"><thead>${thead}</thead><tbody>`;
     data.rows.forEach(r => {
       tableHtml += '<tr>' + r.map((cell, i) => {
         let style = '';
-        if (typeof cell === 'string' && /^[+\-\d]/.test(cell)) style = 'font-weight:700;';
+        if (typeof cell === 'string' && cell.match(/^\d|^\+|^-/)) style = 'font-weight:700;';
         return `<td style="${i === 0 ? 'font-weight:600;' : ''}${style}">${escapeHtml(String(cell))}</td>`;
       }).join('') + '</tr>';
     });
@@ -2653,54 +2393,39 @@ function openInvDetailInline(type, cardEl) {
       tableHtml += `<div class="inv-drawer-total"><span>${data.total}</span><b>${data.totalValue}</b></div>`;
     }
   }
-
-  container.innerHTML = `
-    <div class="inv-section" style="margin-top:14px;">
-      <div class="inv-section-header">
-        <h3><i class="fas fa-chart-bar"></i> ${escapeHtml(data.title)}</h3>
-        <div style="display:flex;gap:6px;">
-          <button class="btn-print-inv" id="invDetailPrintBtn" type="button" title="طباعة" style="width:38px;height:38px;">
-            <i class="fas fa-print"></i>
-          </button>
-          <button class="btn-icon" id="invDetailCloseBtn" type="button" title="إغلاق"
-                  style="width:38px;height:38px;border:1px solid var(--border);color:var(--text-2);border-radius:var(--radius-sm);background:#fff;cursor:pointer;">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <div class="inv-drawer-subtitle" style="margin-bottom:12px;padding-bottom:10px;">
-        <span><i class="far fa-calendar-alt"></i> الفترة: <b>${data.periodLabel}</b></span>
-        <span><i class="far fa-clock"></i> ${formatDate()}</span>
-      </div>
-      ${tableHtml}
-    </div>
+  $("invDrawerBody").innerHTML = `
+    <div class="inv-drawer-subtitle"><span><i class="far fa-calendar-alt"></i> الفترة: <b>${data.periodLabel}</b></span><span><i class="far fa-clock"></i> ${formatDate()}</span></div>
+    ${tableHtml}
   `;
-
-  container.style.display = "block";
-
-  $("invDetailCloseBtn").addEventListener('click', closeInvDetailInline);
-  $("invDetailPrintBtn").addEventListener('click', () => {
-    sessionStorage.setItem('printInventory', JSON.stringify({
-      type: data.type, title: data.title, periodLabel: data.periodLabel,
-      rows: data.rows, total: data.total, totalValue: data.totalValue,
-      canSeeCost: data.canSeeCost, lowStockAlert: Number(storeInfo.lowStockAlert) || 5
-    }));
-    window.open('print-inventory.html', '_blank');
-  });
+  $("invDrawer").classList.add('show');
+  $("invDrawerOverlay").classList.add('show');
 }
 
-function closeInvDetailInline() {
-  const c = $("invDetailContainer");
-  if (c) c.style.display = "none";
-  document.querySelectorAll('#page-inventory .inv-stat').forEach(el => el.classList.remove('active-detail'));
+function closeInvDrawer() {
+  $("invDrawer").classList.remove('show');
+  $("invDrawerOverlay").classList.remove('show');
 }
-window.closeInvDetailInline = closeInvDetailInline;
+
+$("invDrawerClose").addEventListener('click', closeInvDrawer);
+$("invDrawerOverlay").addEventListener('click', closeInvDrawer);
+$("invDrawerPrint").addEventListener('click', printInvDetail);
+
+function printInvDetail() {
+  const data = currentInvDetail;
+  if (!data || !data.rows.length) return showToast('لا توجد بيانات للطباعة');
+  sessionStorage.setItem('printInventory', JSON.stringify({
+    type: data.type, title: data.title, periodLabel: data.periodLabel,
+    rows: data.rows, total: data.total, totalValue: data.totalValue,
+    canSeeCost: data.canSeeCost, lowStockAlert: Number(storeInfo.lowStockAlert) || 5
+  }));
+  window.open('print-inventory.html', '_blank');
+}
 
 bindInvStatCards();
 
 function openOrderDetailModal(order, type, key) {
   window.__orderForDeletion = order;
-  window.__orderForDeletionKey = key;
+window.__orderForDeletionKey = key;
   const content = $("orderDetailContent");
   const cur = curLbl();
   let itemsHtml = '';
@@ -2720,25 +2445,24 @@ function openOrderDetailModal(order, type, key) {
   if (order.freeShippingApplied) shippingRow = `<div style="background:#d1fae5;padding:10px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:12px;color:#065f46;border:1px solid #10b981;font-weight:600;text-align:center;">توصيل مجاني - تم تطبيق العرض</div>`;
   else if (order.shippingCost !== undefined && order.shippingCost !== null && order.shippingCost > 0) shippingRow = `<div style="background:#fff7ed;padding:10px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:12px;color:#9a3412;border:1px solid #fed7aa;"><strong>الشحن:</strong> ${fmt(order.shippingCost)} ${cur}${order.wilaya ? ` - ${escapeHtml(order.wilaya)}` : ''}${order.deliveryType ? ` - ${escapeHtml(order.deliveryType)}` : ''}</div>`;
   const sourceInfo = order.source === 'landing' ? `<span class="landing-source-badge"><i class="fas fa-rocket"></i> ${t('promotionSourceBadge')}</span>` : '';
-  content.innerHTML = `<h3 style="color:${statusColor};margin-top:0;">${statusLabel} ${sourceInfo}</h3><div style="display:flex;margin-bottom:12px;flex-wrap:wrap;gap:8px;"><span style="background:${statusColor};color:white;padding:4px 16px;border-radius:20px;font-weight:600;">${fmt(order.totalPrice)} ${cur}</span></div><div style="background:#fafafa;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;display:grid;gap:6px;font-size:13px;"><div><strong>العميل:</strong> ${escapeHtml(order.customerName || '')}</div><div><strong>الهاتف:</strong> ${escapeHtml(order.phone || '')}</div><div><strong>العنوان:</strong> ${escapeHtml(order.address || '')}</div></div>${shippingRow}<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#fafafa;"><th style="padding:8px;">#</th><th style="padding:8px;">المنتج</th><th style="padding:8px;">الكمية</th><th style="padding:8px;">السعر</th><th style="padding:8px;">المجموع</th></tr></thead><tbody>${itemsHtml || '<tr><td colspan="5" style="text-align:center;padding:12px;">---</td></tr>'}</tbody><tfoot><tr style="font-weight:700;background:#fafafa;"><td colspan="5" style="text-align:right;padding:8px;color:#059669;">الإجمالي: ${fmt(order.totalPrice)} ${cur}</td></tr></tfoot></table></div><div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;">${actionsArr.join('')}</div>`;
+  content.innerHTML = `<h3 style="color:${statusColor};">${statusLabel} ${sourceInfo}</h3><div style="display:flex;margin-bottom:12px;flex-wrap:wrap;gap:8px;"><span style="background:${statusColor};color:white;padding:4px 16px;border-radius:20px;font-weight:600;">${fmt(order.totalPrice)} ${cur}</span></div><div style="background:#fafafa;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;display:grid;gap:6px;font-size:13px;"><div><strong>العميل:</strong> ${escapeHtml(order.customerName || '')}</div><div><strong>الهاتف:</strong> ${escapeHtml(order.phone || '')}</div><div><strong>العنوان:</strong> ${escapeHtml(order.address || '')}</div></div>${shippingRow}<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#fafafa;"><th style="padding:8px;">#</th><th style="padding:8px;">المنتج</th><th style="padding:8px;">الكمية</th><th style="padding:8px;">السعر</th><th style="padding:8px;">المجموع</th></tr></thead><tbody>${itemsHtml || '<tr><td colspan="5" style="text-align:center;padding:12px;">---</td></tr>'}</tbody><tfoot><tr style="font-weight:700;background:#fafafa;"><td colspan="5" style="text-align:right;padding:8px;color:#059669;">الإجمالي: ${fmt(order.totalPrice)} ${cur}</td></tr></tfoot></table></div><div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;">${actionsArr.join('')}</div>`;
   content.querySelectorAll('[data-act]').forEach(btn => btn.addEventListener('click', async () => {
     const act = btn.dataset.act;
     if (act === 'confirm') {
       if (!can('orders.confirm')) return showToast(t('notAllowed'));
       const confirmed = await confirmOrderOnly(key, order);
       printContext = { key, order: confirmed, type: 'confirmed' };
-      hideInline("orderDetailInline");
-      showInline("printOptionInline");
+      openModal('printOptionModal'); closeModal('orderDetailModal');
     } else if (act === 'del-wa') {
       if (!can('orders.delete')) return showToast(t('notAllowed'));
-      if (confirm("تأكيد الحذف؟")) { await remove(ref(db, `whatsappOrders/${key}`)); showToast("تم الحذف"); hideInline("orderDetailInline"); }
-    } else if (act === 'print') { printContext = { key, order, type: 'confirmed' }; showInline("printOptionInline"); }
+      if (confirm("تأكيد الحذف؟")) { await remove(ref(db, `whatsappOrders/${key}`)); showToast("تم الحذف"); closeModal('orderDetailModal'); }
+    } else if (act === 'print') { printContext = { key, order, type: 'confirmed' }; openModal('printOptionModal'); }
     else if (act === 'del-conf') {
       if (!can('orders.delete')) return showToast(t('notAllowed'));
-      if (confirm("تأكيد الحذف؟")) { await remove(ref(db, `confirmedOrders/${key}`)); showToast("تم الحذف"); hideInline("orderDetailInline"); }
+      if (confirm("تأكيد الحذف؟")) { await remove(ref(db, `confirmedOrders/${key}`)); showToast("تم الحذف"); closeModal('orderDetailModal'); }
     }
   }));
-  showInline("orderDetailInline");
+  openModal("orderDetailModal");
 }
 
 async function getNextInvoiceNumber() {
@@ -2759,8 +2483,8 @@ async function confirmOrderOnly(key, order) {
   return order;
 }
 
-$("thermalPrintBtn").addEventListener('click', () => { sessionStorage.setItem('printOrder', JSON.stringify(printContext)); window.open('print_invoice.html', '_blank'); hideInline('printOptionInline'); });
-$("normalPrintBtn").addEventListener('click', () => { sessionStorage.setItem('printOrder', JSON.stringify(printContext)); window.open('print_admin.html', '_blank'); hideInline('printOptionInline'); });
+$("thermalPrintBtn").addEventListener('click', () => { sessionStorage.setItem('printOrder', JSON.stringify(printContext)); window.open('print_invoice.html', '_blank'); closeModal('printOptionModal'); });
+$("normalPrintBtn").addEventListener('click', () => { sessionStorage.setItem('printOrder', JSON.stringify(printContext)); window.open('print_admin.html', '_blank'); closeModal('printOptionModal'); });
 $("deleteAllConfirmedBtn").addEventListener('click', async () => {
   if (!can('orders.deleteAll')) return showToast(t('notAllowed'));
   if (confirm("تأكيد حذف الكل؟")) { await remove(confirmedRef); showToast("تم الحذف"); }
@@ -2768,25 +2492,44 @@ $("deleteAllConfirmedBtn").addEventListener('click', async () => {
 
 async function cleanupOldConfirmedOrders() {
   if (!can('orders.deleteAll')) return showToast(t('notAllowed'));
+
   const cutoff = Date.now() - (CLEANUP_KEEP_DAYS * 24 * 60 * 60 * 1000);
   const toDelete = [];
   let kept = 0;
+
   Object.entries(confirmedData).forEach(([key, order]) => {
     const ts = order.confirmedAt || order.timestamp || 0;
     if (ts < cutoff) toDelete.push(key);
     else kept++;
   });
-  if (toDelete.length === 0) { showToast('لا توجد طلبات أقدم من شهر'); return; }
-  const msg = `سيتم حذف ${toDelete.length} طلب أقدم من شهر.\nسيُحتفظ بـ ${kept} طلب خلال الشهر الأخير.\n\nهل تريد المتابعة؟`;
+
+  if (toDelete.length === 0) {
+    showToast('لا توجد طلبات أقدم من شهر');
+    return;
+  }
+
+  const msg =
+    `سيتم حذف ${toDelete.length} طلب أقدم من شهر.\n` +
+    `سيُحتفظ بـ ${kept} طلب خلال الشهر الأخير.\n\n` +
+    `هل تريد المتابعة؟`;
+
   if (!confirm(msg)) return;
+
   const updates = {};
   toDelete.forEach(k => { updates['confirmedOrders/' + k] = null; });
-  try { await update(ref(db), updates); showToast(`تم حذف ${toDelete.length} طلب`); }
-  catch (e) { showToast('خطأ: ' + e.message); }
+
+  try {
+    await update(ref(db), updates);
+    showToast(`تم حذف ${toDelete.length} طلب`);
+  } catch (e) {
+    showToast('خطأ: ' + e.message);
+  }
 }
 
 document.addEventListener('click', e => {
-  if (e.target.closest('#cleanupOldOrdersBtn')) cleanupOldConfirmedOrders();
+  if (e.target.closest('#cleanupOldOrdersBtn')) {
+    cleanupOldConfirmedOrders();
+  }
 });
 
 function updateReviewsBadge() {
@@ -2842,33 +2585,40 @@ function renderStoreLogo() {
 
 function renderCoverPreview() {
   const shouldShow = currentCoverUrl && currentCoverEnabled;
+
   const box = $("coverBox");
   const preview = $("coverPreview");
   const nameEl = $("adminHeroName");
   const tagEl = $("adminHeroTagline");
+
   if (box && preview) {
     if (currentCoverUrl) {
-      preview.src = currentCoverUrl; preview.style.display = "block";
+      preview.src = currentCoverUrl;
+      preview.style.display = "block";
       box.classList.add("has-image");
       if (nameEl) nameEl.textContent = storeInfo.name || "اسم المتجر";
       if (tagEl) tagEl.textContent = storeInfo.tagline || "";
     } else {
-      preview.src = ""; preview.style.display = "none";
+      preview.src = "";
+      preview.style.display = "none";
       box.classList.remove("has-image");
     }
   }
+
   const banner = $("productsHero");
   const bannerImg = $("coverImage");
   const pName = $("productsHeroName");
   const pTag = $("productsHeroTagline");
   if (banner) {
     if (shouldShow) {
-      banner.style.display = "block"; banner.classList.add("has-image");
+      banner.style.display = "block";
+      banner.classList.add("has-image");
       if (bannerImg) bannerImg.src = currentCoverUrl;
       if (pName) pName.textContent = storeInfo.name || "";
       if (pTag) pTag.textContent = storeInfo.tagline || "";
     } else {
-      banner.style.display = "none"; banner.classList.remove("has-image");
+      banner.style.display = "none";
+      banner.classList.remove("has-image");
     }
   }
 }
@@ -2911,14 +2661,20 @@ $("btnCoverRemove").addEventListener('click', async () => {
 
 document.addEventListener('change', async e => {
   if (e.target && e.target.id === 'coverEnabled') {
-    if (!can('settings.cover')) { e.target.checked = !e.target.checked; return showToast(t('notAllowed')); }
+    if (!can('settings.cover')) {
+      e.target.checked = !e.target.checked;
+      return showToast(t('notAllowed'));
+    }
     const newVal = e.target.checked;
     try {
       await update(ref(db, 'store/cover'), { enabled: newVal });
       currentCoverEnabled = newVal;
       showToast(newVal ? "تم تفعيل الغلاف" : "تم إخفاء الغلاف");
       renderCoverPreview();
-    } catch (err) { e.target.checked = !newVal; showToast("خطأ: " + err.message); }
+    } catch (err) {
+      e.target.checked = !newVal;
+      showToast("خطأ: " + err.message);
+    }
   }
 }, true);
 
@@ -2934,8 +2690,10 @@ $("saveStoreSettingsBtn").addEventListener('click', async () => {
     tagline: storeInfo.tagline || ""
   };
   if (!data.name) return showToast("اسم المتجر مطلوب");
+  const imgbb = $("setImgbb").value.trim();
   try {
     await set(ref(db, "store/info"), data);
+    if (imgbb) await set(ref(db, "store/settings"), { imgbbApiKey: imgbb });
     $("setWhatsapp").value = data.whatsappNumber;
     showToast("تم الحفظ");
   } catch (e) { showToast("فشل الحفظ"); }
@@ -3029,9 +2787,6 @@ $("logoutBtn").addEventListener('click', () => {
   location.reload();
 });
 
-/* ═══════════════════════════════════════════════════════════
-   🔐 نظام تسجيل الدخول الجديد (شاشة كاملة)
-   ═══════════════════════════════════════════════════════════ */
 $("loginBtn").addEventListener('click', async () => {
   const u = $("adminUser").value.trim(), p = $("adminPassword").value.trim();
   if (!u || !p) return alert("أدخل البيانات");
@@ -3047,11 +2802,9 @@ $("loginBtn").addEventListener('click', async () => {
   alert("بيانات خاطئة");
 });
 $("adminPassword").addEventListener('keydown', e => { if (e.key === 'Enter') $("loginBtn").click(); });
-$("adminUser").addEventListener('keydown', e => { if (e.key === 'Enter') $("adminPassword").focus(); });
 
 function initApp() {
-  $("loginScreen").style.display = "none";
-  $("appContainer").style.display = "block";
+  $("loginModal").classList.remove('show');
   const roleLabel = currentRole === 'owner' ? 'مالك' : currentRole === 'admin' ? 'مدير' : 'بائع';
   $("userNameDisplay").innerHTML = `<i class="fas fa-user-circle"></i> ${localStorage.getItem("user")} <span class="role-tag ${currentRole}">${roleLabel}</span>`;
   applyPermissions();
@@ -3060,14 +2813,11 @@ function initApp() {
 
 function bootApp() {
   $("loadingScreen").style.display = "none";
+  $("appContainer").style.display = "block";
   const savedRole = localStorage.getItem("role") || "seller";
   setRole(savedRole);
-  if (localStorage.getItem("auth") === "true") {
-    $("appContainer").style.display = "block";
-    initApp();
-  } else {
-    $("loginScreen").style.display = "flex";
-  }
+  if (localStorage.getItem("auth") === "true") initApp();
+  else applyPermissions();
 }
 </script>
 
