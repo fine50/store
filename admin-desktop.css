@@ -71,13 +71,13 @@
     flex-shrink: 0;
   }
 
-  #appContainer > .main-nav .nav-btn[data-page="products"]::before { content: "\f466"; }
-#appContainer > .main-nav .nav-btn[data-page="families"]::before { content: "\f02c"; }
-#appContainer > .main-nav .nav-btn[data-page="orders"]::before { content: "\f543"; }
+  #appContainer > .main-nav .nav-btn[data-page="products"]::before  { content: "\f466"; }
+  #appContainer > .main-nav .nav-btn[data-page="families"]::before  { content: "\f02c"; }
+  #appContainer > .main-nav .nav-btn[data-page="orders"]::before    { content: "\f543"; }
   #appContainer > .main-nav .nav-btn[data-page="inventory"]::before { content: "\f494"; }
-  #appContainer > .main-nav .nav-btn[data-page="reviews"]::before { content: "\f086"; }
-  #appContainer > .main-nav .nav-btn[data-page="landing"]::before { content: "\f135"; }
-  #appContainer > .main-nav .nav-btn[data-page="settings"]::before { content: "\f013"; }
+  #appContainer > .main-nav .nav-btn[data-page="reviews"]::before   { content: "\f086"; }
+  #appContainer > .main-nav .nav-btn[data-page="landing"]::before   { content: "\f135"; }
+  #appContainer > .main-nav .nav-btn[data-page="settings"]::before  { content: "\f013"; }
 
   #appContainer > .main-nav .nav-btn .badge { margin-inline-start: auto; }
 
@@ -183,9 +183,91 @@
     margin-bottom: 20px;
   }
 
-  /* ═══ المودالات ═══ */
-  .modal-content { max-width: 640px; }
+  /* ═══ Toast ═══ */
   .toast { bottom: 40px; }
+
+  /* ═══ الأقسام المدمجة (inline panels) ═══ */
+  .inline-panel { margin: 20px 0; }
+  #invDetailContainer .inv-section { margin: 0; }
+
+  /* ═══ صفحة العائلات ═══ */
+  .families-header { padding: 0; margin-bottom: 24px; }
+  .families-header-info h2 { font-size: 24px; }
+  .families-grid { padding: 0; max-width: 900px; }
+  .family-card { padding: 18px 20px; }
+  .family-card-name { font-size: 16px; }
+
+  /* ═══════════════════════════════════════════════════════════
+     🎯 تحسين حجم الأزرار في وضع الحاسوب
+     (حل مشكلة الأزرار الممتدة على كامل العرض)
+     ═══════════════════════════════════════════════════════════ */
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger,
+  .btn-success {
+    width: auto !important;
+    min-width: 140px;
+    max-width: fit-content;
+    padding: 10px 24px;
+    display: inline-flex;
+    margin-top: 8px;
+  }
+
+  /* زر "فتح سجل النشاطات" وكل الروابط المشابهة */
+  .settings-card a.btn-primary,
+  .settings-card a.btn-secondary,
+  .settings-card a.btn-danger {
+    width: auto !important;
+    display: inline-flex !important;
+    padding: 10px 24px;
+    text-decoration: none;
+  }
+
+  /* أزرار محددة بأحجام مخصصة */
+  #addUserBtn {
+    width: auto !important;
+    min-width: 160px;
+  }
+
+  #saveStoreSettingsBtn,
+  #savePixelsBtn,
+  #savePoliciesBtn,
+  #saveOwnerBtn,
+  #saveWholesaleCodeBtn,
+  #saveLandingSettingsBtn {
+    width: auto !important;
+    min-width: 200px;
+  }
+
+  #addZoneBtn,
+  #btnExcelImport,
+  #btnSetup,
+  #btnDeleteAllProducts {
+    width: auto !important;
+    min-width: 180px;
+  }
+
+  /* الحقول وعناصر الـ toggle تبقى بعرض كامل */
+  .settings-card input:not([type="checkbox"]),
+  .settings-card select,
+  .settings-card textarea,
+  .toggle-row {
+    width: 100% !important;
+  }
+
+  /* أزرار الـ upload تبقى بأحجامها */
+  .upload-btns-row .upload-btn {
+    width: auto !important;
+    flex: 1;
+  }
+
+  /* الأزرار داخل الأقسام المدمجة */
+  .inline-panel-body .btn-primary,
+  .inline-panel-body .btn-secondary,
+  .inline-panel-body .btn-danger,
+  .inline-panel-body .btn-success {
+    min-width: 140px;
+  }
 }
 
 @media (min-width: 1400px) {
@@ -194,12 +276,4 @@
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 24px;
   }
-}
-/* ═══ صفحة العائلات على الحاسوب ═══ */
-@media (min-width: 900px) {
-  .families-header { padding: 0; margin-bottom: 24px; }
-  .families-header-info h2 { font-size: 24px; }
-  .families-grid { padding: 0; max-width: 900px; }
-  .family-card { padding: 18px 20px; }
-  .family-card-name { font-size: 16px; }
 }
