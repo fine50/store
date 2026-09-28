@@ -2735,3 +2735,51 @@ header {
 
 /* ═══ إخفاء أي modal متبقٍ (أمان) ═══ */
 .modal { display: none !important; }
+/* ═══ زر التأكيد المباشر في بطاقة الطلب ═══ */
+.order-confirm-btn {
+  padding: 7px 14px;
+  border: 1px solid #059669;
+  background: #059669;
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: .15s;
+  box-shadow: 0 2px 6px rgba(5,150,105,.2);
+}
+.order-confirm-btn:hover {
+  background: #047857;
+  border-color: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(5,150,105,.3);
+}
+.order-confirm-btn:active { transform: translateY(0); }
+.order-confirm-btn i { font-size: 12px; }
+/* ═══ زر "تأكيد وطباعة" المباشر على البطاقة ═══ */
+.order-confirm-btn {
+  padding: 7px 14px;
+  border: 1px solid #059669;
+  background: #059669;
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: .15s;
+  box-shadow: 0 2px 6px rgba(5,150,105,.2);
+}
+.order-confirm-btn:hover {
+  background: #047857;
+  border-color: #047857;
+  transform: translateY(-1px);
+}
+.order-confirm-btn i { font-size: 12px; }
