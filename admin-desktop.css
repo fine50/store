@@ -1,20 +1,28 @@
 /* ═══════════════════════════════════════════════════════════
-   admin-desktop.css — تخطيط سطح المكتب والتابلت
-   الهاتف: لا تغيير إطلاقاً
+   admin-desktop.css — تخطيط سطح المكتب فقط (900px+)
+   ═══════════════════════════════════════════════════════════
+   • الهاتف: لا شيء هنا — التخطيط من admin.css
+   • الحاسوب: قائمة جانبية + الفلاتر في سطر + زر الإضافة أسفلها
    ═══════════════════════════════════════════════════════════ */
 
-/* ═══ إخفاء نص الزر على الهاتف (يبقى + فقط) ═══ */
+
+/* ═══════════════════════════════════════════════════════════
+   📱 الهاتف (< 900px) — ضبط شريط الفلاتر فقط
+   ═══════════════════════════════════════════════════════════ */
+   /* ═══ قواعد أساسية (تعمل على كل الأجهزة) ═══ */
 .add-fab-text { display: none; }
 .products-toolbar { display: contents; }
 
 
+
 /* ═══════════════════════════════════════════════════════════
-   تخطيط سطح المكتب (900px وأكثر)
+   💻 الحاسوب والتابلت الكبير (900px+)
    ═══════════════════════════════════════════════════════════ */
 @media (min-width: 900px) {
 
   body { padding-bottom: 0; }
 
+  /* ═══ الشبكة الكاملة: Sidebar + Main ═══ */
   #appContainer {
     display: grid !important;
     grid-template-columns: 260px 1fr;
@@ -36,6 +44,7 @@
     z-index: 1100;
   }
 
+  /* ═══ القائمة الجانبية ═══ */
   #appContainer > .main-nav {
     grid-area: sidebar;
     flex-direction: column;
@@ -81,6 +90,7 @@
 
   #appContainer > .main-nav .nav-btn .badge { margin-inline-start: auto; }
 
+  /* ═══ منطقة المحتوى ═══ */
   #appContainer > .page.active {
     grid-area: main;
     padding: 24px 32px 40px;
@@ -93,55 +103,88 @@
     margin-top: 0;
   }
 
-  /* ═══ شريط أدوات المنتجات: فلاتر + زر إضافة ═══ */
+  /* ═══════════════════════════════════════════════════════════
+     🎯 شريط الأدوات: الفلاتر في سطر، زر الإضافة أسفلها
+     ═══════════════════════════════════════════════════════════ */
   .products-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid var(--border) !important;
   }
 
-  .products-toolbar .filter-section {
-    flex: 1;
-    min-width: 0;
-    border-bottom: none;
-    padding: 0;
-    margin: 0;
-    background: transparent;
+  #familyFilterSection {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+    min-height: auto !important;
   }
 
-  /* ═══ زر إضافة المنتج على الحاسوب ═══ */
-  .add-fab {
+  #familyFilterSection .filter-btn,
+  #familyFilterSection .family-dropdown-btn {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    min-height: 40px !important;
+    gap: 6px !important;
+  }
+
+  #familyFilterSection .filter-btn i,
+  #familyFilterSection .family-dropdown-btn i {
+    font-size: 13px !important;
+  }
+
+  #familyFilterSection .filter-count {
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+    min-width: 22px !important;
+  }
+
+  #familyFilterSection .filter-clear {
+    padding: 7px 14px !important;
+    font-size: 12px !important;
+  }
+
+  /* زر إضافة المنتج: أسفل الفلاتر، على اليمين */
+  .products-toolbar .add-fab {
     position: static !important;
+    flex: 0 0 auto !important;
+    align-self: flex-end !important;
     width: auto !important;
-    height: auto !important;
-    min-height: 42px;
+    height: 42px !important;
+    min-height: 42px !important;
     border-radius: 10px !important;
-    padding: 0 18px !important;
-    font-size: 14px !important;
+    padding: 0 20px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
-    gap: 8px;
+    gap: 8px !important;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    margin: 0 !important;
     box-shadow: 0 4px 12px rgba(0,128,96,.18) !important;
     transition: all 0.2s ease;
   }
 
-  .add-fab:hover {
+  .products-toolbar .add-fab:hover {
     background: var(--primary-hover);
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(0,128,96,.25) !important;
   }
 
-  .add-fab:active { transform: translateY(0); }
-
-  .add-fab i { font-size: 14px; }
-  .add-fab-text { display: inline !important; }
+  .products-toolbar .add-fab:active { transform: translateY(0); }
+  .products-toolbar .add-fab i { font-size: 13px; }
+  .products-toolbar .add-fab-text { display: inline !important; }
 
   /* ═══ شبكة المنتجات ═══ */
   .products-grid {
@@ -154,6 +197,32 @@
 
   /* ═══ الطلبات ═══ */
   .order-card { margin: 0 0 14px; padding: 18px 20px; }
+
+  #ordersWarningBanner {
+    margin: 0 0 16px;
+    padding: 16px 20px;
+    gap: 14px;
+    font-size: 13.5px;
+  }
+  #ordersWarningBanner > i { font-size: 22px; }
+  #ordersWarningBanner > div { flex: 1 1 auto; }
+  #cleanupOldOrdersBtn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  #deleteAllConfirmedWrap {
+    text-align: center;
+    padding: 0 0 16px;
+  }
+  #deleteAllConfirmedBtn {
+    padding: 11px 24px;
+    font-size: 13.5px;
+    min-width: 220px;
+    width: auto !important;
+    display: inline-flex !important;
+    justify-content: center;
+  }
 
   /* ═══ الترويج ═══ */
   .landing-intro { margin: 0 0 16px; }
@@ -176,7 +245,15 @@
   .inv-section { margin: 0 0 16px; }
   .inv-alert { margin: 0 0 12px; }
 
-  /* ═══ شريط الفلاتر العلوي ═══ */
+  #invDetailContainer {
+    margin: 0 0 20px;
+    padding: 18px 20px;
+  }
+  #invDetailContainer .inv-section-header {
+    margin-bottom: 16px;
+  }
+
+  /* ═══ شريط الفلاتر العامة ═══ */
   .filter-section, .orders-chips, .inv-tabs {
     padding: 12px 0;
     background: transparent;
@@ -186,10 +263,6 @@
   /* ═══ Toast ═══ */
   .toast { bottom: 40px; }
 
-  /* ═══ الأقسام المدمجة (inline panels) ═══ */
-  .inline-panel { margin: 20px 0; }
-  #invDetailContainer .inv-section { margin: 0; }
-
   /* ═══ صفحة العائلات ═══ */
   .families-header { padding: 0; margin-bottom: 24px; }
   .families-header-info h2 { font-size: 24px; }
@@ -197,10 +270,7 @@
   .family-card { padding: 18px 20px; }
   .family-card-name { font-size: 16px; }
 
-  /* ═══════════════════════════════════════════════════════════
-     🎯 تحسين حجم الأزرار في وضع الحاسوب
-     (حل مشكلة الأزرار الممتدة على كامل العرض)
-     ═══════════════════════════════════════════════════════════ */
+  /* ═══ تحسين حجم الأزرار على الحاسوب ═══ */
   .btn-primary,
   .btn-secondary,
   .btn-danger,
@@ -213,7 +283,6 @@
     margin-top: 8px;
   }
 
-  /* زر "فتح سجل النشاطات" وكل الروابط المشابهة */
   .settings-card a.btn-primary,
   .settings-card a.btn-secondary,
   .settings-card a.btn-danger {
@@ -223,11 +292,7 @@
     text-decoration: none;
   }
 
-  /* أزرار محددة بأحجام مخصصة */
-  #addUserBtn {
-    width: auto !important;
-    min-width: 160px;
-  }
+  #addUserBtn { width: auto !important; min-width: 160px; }
 
   #saveStoreSettingsBtn,
   #savePixelsBtn,
@@ -247,7 +312,6 @@
     min-width: 180px;
   }
 
-  /* الحقول وعناصر الـ toggle تبقى بعرض كامل */
   .settings-card input:not([type="checkbox"]),
   .settings-card select,
   .settings-card textarea,
@@ -255,21 +319,16 @@
     width: 100% !important;
   }
 
-  /* أزرار الـ upload تبقى بأحجامها */
   .upload-btns-row .upload-btn {
     width: auto !important;
     flex: 1;
   }
-
-  /* الأزرار داخل الأقسام المدمجة */
-  .inline-panel-body .btn-primary,
-  .inline-panel-body .btn-secondary,
-  .inline-panel-body .btn-danger,
-  .inline-panel-body .btn-success {
-    min-width: 140px;
-  }
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   شاشات كبيرة جداً (1400px+)
+   ═══════════════════════════════════════════════════════════ */
 @media (min-width: 1400px) {
   #appContainer > .page.active { padding: 32px 40px 48px; }
   .products-grid {
