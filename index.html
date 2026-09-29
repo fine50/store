@@ -329,119 +329,12 @@ header{
   .store-hero-tagline{font-size:.75rem}
 }
 
-.categories-wrapper{
-  background:rgba(255,255,255,.92);
-  backdrop-filter:saturate(180%) blur(12px);
-  -webkit-backdrop-filter:saturate(180%) blur(12px);
-  padding:6px 16px 4px;
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:var(--header-h, 60px);
-  z-index:1050;
-  display:none;
-}
-.categories-wrapper.show{display:block}
-.categories-bar{
-  display:flex;
-  flex-wrap:nowrap;
-  overflow-x:auto;
-  gap:8px;
-  padding-bottom:2px;
-  scrollbar-width:none;
-}
-.categories-bar::-webkit-scrollbar{display:none}
-
-.cat-btn{
-  flex-shrink:0;
-  padding:8px 16px;
-  border-radius:var(--radius-pill);
-  border:1px solid var(--border);
-  background:#fff;
-  font-weight:600;
-  font-size:.8rem;
-  color:var(--text-2);
-  cursor:pointer;
-  transition:all var(--dur) var(--ease);
-  font-family:var(--font);
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  white-space:nowrap;
-  box-shadow:var(--shadow-xs);
-}
-.cat-btn:hover{
-  transform:translateY(-1px);
-  background:var(--hover);
-  border-color:var(--border-strong);
-  color:var(--text);
-}
-.cat-btn.active{
-  background:var(--primary);
-  color:#fff;
-  box-shadow:0 4px 12px rgba(11,110,79,.22),
-             inset 0 1px 0 rgba(255,255,255,.15);
-  border-color:var(--primary);
-}
-.cat-btn .cat-count{
-  background:rgba(15,23,42,.06);
-  padding:1px 7px;
-  border-radius:var(--radius-pill);
-  font-size:.65rem;
-  font-weight:700;
-  line-height:1.6;
-  color:var(--text-2);
-}
-.cat-btn.active .cat-count{
-  background:rgba(255,255,255,.25);
-  color:#fff;
-}
-.cat-btn.discount-btn{
-  background:#fff;
-  color:var(--danger);
-  border-color:#fecaca;
-}
-.cat-btn.discount-btn:hover{
-  background:var(--danger-tint);
-  border-color:var(--danger);
-}
-.cat-btn.discount-btn.active{
-  background:var(--danger);
-  color:#fff;
-  border-color:var(--danger);
-  box-shadow:0 4px 12px rgba(220,38,38,.22),
-             inset 0 1px 0 rgba(255,255,255,.15);
-}
-.cat-btn.discount-btn .cat-count{
-  background:var(--danger-tint);
-  color:var(--danger);
-}
-.cat-btn.discount-btn.active .cat-count{
-  background:rgba(255,255,255,.25);
-  color:#fff;
-}
-
-.cat-clear-btn{
-  flex-shrink:0;
-  padding:7px 14px;
-  border-radius:var(--radius-pill);
-  border:1px solid #fecaca;
-  background:var(--danger-tint);
-  color:var(--danger);
-  font-weight:700;
-  font-size:.72rem;
-  cursor:pointer;
-  display:none;
-  font-family:var(--font);
-  align-items:center;
-  gap:4px;
-  transition:all var(--dur) var(--ease);
-}
-.cat-clear-btn.show{display:inline-flex}
-.cat-clear-btn:hover{background:#fee2e2}
-
+/* ═══════════════════════════════════════════════════════════
+   💎 صندوق الجملة
+   ═══════════════════════════════════════════════════════════ */
 .wholesale-box{
   background:linear-gradient(135deg,var(--vip-light),#faf5ff);
-  margin:14px 16px 8px;
+  margin:12px 16px;
   padding:16px 20px;
   border-radius:var(--radius-lg);
   box-shadow:var(--shadow-sm);
@@ -535,6 +428,341 @@ header{
   border-color:#fecaca;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   شريط الفلاتر — خلفية بيضاء صلبة
+   ═══════════════════════════════════════════════════════════ */
+.categories-wrapper{
+  background:#fff;
+  padding:6px 16px 4px;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:var(--header-h, 60px);
+  z-index:1050;
+  display:none;
+}
+.categories-wrapper.show{display:block}
+.categories-bar{
+  display:flex;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  gap:8px;
+  padding-bottom:2px;
+  scrollbar-width:none;
+  align-items:center;
+}
+.categories-bar::-webkit-scrollbar{display:none}
+
+.cat-btn{
+  flex-shrink:0;
+  padding:8px 16px;
+  border-radius:var(--radius-pill);
+  border:1px solid var(--border);
+  background:#fff;
+  font-weight:600;
+  font-size:.8rem;
+  color:var(--text-2);
+  cursor:pointer;
+  transition:all var(--dur) var(--ease);
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+  box-shadow:var(--shadow-xs);
+}
+.cat-btn:hover{
+  transform:translateY(-1px);
+  background:var(--hover);
+  border-color:var(--border-strong);
+  color:var(--text);
+}
+.cat-btn.active{
+  background:var(--primary);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(11,110,79,.22),
+             inset 0 1px 0 rgba(255,255,255,.15);
+  border-color:var(--primary);
+}
+.cat-btn .cat-count{
+  background:rgba(15,23,42,.06);
+  padding:1px 7px;
+  border-radius:var(--radius-pill);
+  font-size:.65rem;
+  font-weight:700;
+  line-height:1.6;
+  color:var(--text-2);
+}
+.cat-btn.active .cat-count{
+  background:rgba(255,255,255,.25);
+  color:#fff;
+}
+
+.cat-btn.discount-btn{
+  background:#fff;
+  color:var(--danger);
+  border-color:#fecaca;
+}
+.cat-btn.discount-btn:hover{
+  background:var(--danger-tint);
+  border-color:var(--danger);
+}
+.cat-btn.discount-btn.active{
+  background:var(--danger);
+  color:#fff;
+  border-color:var(--danger);
+  box-shadow:0 4px 12px rgba(220,38,38,.22),
+             inset 0 1px 0 rgba(255,255,255,.15);
+}
+.cat-btn.discount-btn .cat-count{
+  background:var(--danger-tint);
+  color:var(--danger);
+}
+.cat-btn.discount-btn.active .cat-count{
+  background:rgba(255,255,255,.25);
+  color:#fff;
+}
+
+.cat-btn.new-btn{
+  background:#fff;
+  color:#2563eb;
+  border-color:#bfdbfe;
+}
+.cat-btn.new-btn:hover{
+  background:#eff6ff;
+  border-color:#2563eb;
+}
+.cat-btn.new-btn.active{
+  background:#2563eb;
+  color:#fff;
+  border-color:#2563eb;
+  box-shadow:0 4px 12px rgba(37,99,235,.22),
+             inset 0 1px 0 rgba(255,255,255,.15);
+}
+.cat-btn.new-btn .cat-count{
+  background:#eff6ff;
+  color:#2563eb;
+}
+.cat-btn.new-btn.active .cat-count{
+  background:rgba(255,255,255,.25);
+  color:#fff;
+}
+
+.families-dropdown-wrapper{
+  position:relative;
+  flex-shrink:0;
+}
+.cat-btn.families-btn{
+  background:#fff;
+  color:var(--primary);
+  border-color:var(--primary-200);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.cat-btn.families-btn:hover{
+  background:var(--primary-50);
+  border-color:var(--primary);
+}
+.cat-btn.families-btn.active,
+.cat-btn.families-btn.open{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+  box-shadow:0 4px 12px rgba(11,110,79,.22);
+}
+.cat-btn.families-btn .chev{
+  font-size:.65rem;
+  opacity:.85;
+  transition:transform var(--dur) var(--ease);
+}
+.cat-btn.families-btn.open .chev{
+  transform:rotate(180deg);
+}
+
+.families-dropdown{
+  position:fixed;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);
+  padding:6px;
+  min-width:220px;
+  max-width:320px;
+  max-height:320px;
+  overflow-y:auto;
+  z-index:2000;
+  display:none;
+  animation:fadeIn .18s var(--ease);
+}
+.families-dropdown.show{display:block}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.families-dropdown::-webkit-scrollbar{width:6px}
+.families-dropdown::-webkit-scrollbar-thumb{
+  background:#cbd5e1;
+  border-radius:999px;
+}
+
+.family-dropdown-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 12px;
+  border-radius:var(--radius-sm);
+  font-family:var(--font);
+  font-weight:600;
+  font-size:.85rem;
+  color:var(--text-2);
+  cursor:pointer;
+  border:none;
+  background:none;
+  width:100%;
+  text-align:right;
+  transition:background var(--dur-fast) var(--ease),
+             color var(--dur-fast) var(--ease);
+  white-space:nowrap;
+}
+.family-dropdown-item:hover{
+  background:var(--hover);
+  color:var(--text);
+}
+.family-dropdown-item.active{
+  background:var(--primary);
+  color:#fff;
+}
+.family-dropdown-item .fname{
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.family-dropdown-item .fname i{
+  font-size:.72rem;
+  opacity:.75;
+}
+.family-dropdown-item .fcount{
+  background:rgba(15,23,42,.06);
+  padding:2px 8px;
+  border-radius:var(--radius-pill);
+  font-size:.68rem;
+  font-weight:700;
+  flex-shrink:0;
+  line-height:1.6;
+}
+.family-dropdown-item.active .fcount{
+  background:rgba(255,255,255,.25);
+  color:#fff;
+}
+.family-empty{
+  padding:20px 14px;
+  text-align:center;
+  color:var(--text-3);
+  font-size:.8rem;
+  font-weight:500;
+}
+
+.cat-clear-btn{
+  flex-shrink:0;
+  padding:7px 14px;
+  border-radius:var(--radius-pill);
+  border:1px solid #fecaca;
+  background:var(--danger-tint);
+  color:var(--danger);
+  font-weight:700;
+  font-size:.72rem;
+  cursor:pointer;
+  display:none;
+  font-family:var(--font);
+  align-items:center;
+  gap:4px;
+  transition:all var(--dur) var(--ease);
+}
+.cat-clear-btn.show{display:inline-flex}
+.cat-clear-btn:hover{background:#fee2e2}
+
+/* ═══════════════════════════════════════════════════════════
+   📱 زر "اسحب لرؤية المزيد"
+   ═══════════════════════════════════════════════════════════ */
+.scroll-hint{
+  display:none;
+  position:absolute;
+  inset-inline-end:0;
+  top:0;
+  bottom:0;
+  width:52px;
+  pointer-events:auto;
+  cursor:pointer;
+  z-index:20;
+  align-items:center;
+  justify-content:flex-start;
+  padding-inline-start:4px;
+  background:linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.65) 40%,
+    rgba(255,255,255,0.95) 100%
+  );
+  opacity:0;
+  transition:opacity .25s var(--ease);
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  border:none;
+  outline:none;
+}
+.scroll-hint.show{
+  display:flex;
+  opacity:1;
+}
+.scroll-hint i{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:#fff;
+  font-size:12px;
+  box-shadow:0 2px 8px rgba(11,110,79,.35),
+             inset 0 1px 0 rgba(255,255,255,.25);
+  animation:scrollHintPulse 1.6s ease-in-out infinite;
+  transition:transform .18s var(--ease),
+             box-shadow .18s var(--ease);
+}
+@keyframes scrollHintPulse{
+  0%,100%{transform:translateX(0);opacity:1}
+  50%{transform:translateX(-5px);opacity:.75}
+}
+.scroll-hint:hover i{
+  animation-play-state:paused;
+  transform:scale(1.12);
+  box-shadow:0 4px 14px rgba(11,110,79,.45),
+             inset 0 1px 0 rgba(255,255,255,.3);
+}
+.scroll-hint:active i{
+  transform:scale(.92);
+  transition-duration:.08s;
+}
+.scroll-hint.clicked i{
+  transform:scale(.85);
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  box-shadow:0 0 0 6px rgba(11,110,79,.15),
+             0 2px 8px rgba(11,110,79,.35);
+  transition:all .2s var(--ease);
+}
+@media (min-width:900px){
+  .scroll-hint{display:none !important}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   شبكة المنتجات
+   ═══════════════════════════════════════════════════════════ */
 .products-container{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -926,7 +1154,6 @@ header{
   padding:20px;
 }
 .modal.show{display:flex;animation:fadeIn var(--dur-slow) var(--ease)}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 .modal-content{
   background:#fff;
@@ -1198,6 +1425,9 @@ footer i{color:var(--primary);margin-inline-end:4px}
 
   footer{padding:20px 12px;font-size:.72rem}
   .toast{bottom:72px;padding:11px 18px;font-size:.82rem}
+
+  .families-dropdown{min-width:200px;max-width:280px}
+  .family-dropdown-item{font-size:.8rem;padding:8px 10px}
 }
 
 @media(max-width:400px){
@@ -1274,22 +1504,7 @@ select{
     </div>
   </div>
 
-  <div class="categories-wrapper" id="categoriesWrapper">
-    <div class="categories-bar" id="categoriesBar">
-      <button class="cat-btn active" data-family="__all__" id="filterAllBtn">
-        <i class="fas fa-th-list"></i> <span data-t="all">الكل</span>
-        <span class="cat-count" id="countAll">0</span>
-      </button>
-      <button class="cat-btn discount-btn" data-family="__discounts__" id="filterDiscountsBtn">
-        <i class="fas fa-tags"></i> <span data-t="discounts">التخفيضات</span>
-        <span class="cat-count" id="countDiscounts">0</span>
-      </button>
-      <button class="cat-clear-btn" id="clearFilterBtn">
-        <i class="fas fa-times-circle"></i> <span data-t="cancel">إلغاء</span>
-      </button>
-    </div>
-  </div>
-
+  <!-- ✅ صندوق الجملة قبل شريط الفلاتر -->
   <div id="wholesaleBox" class="wholesale-box">
     <div class="info">
       <div class="icon"><i class="fa-solid fa-crown"></i></div>
@@ -1305,6 +1520,48 @@ select{
       <span id="wholesaleStatus" class="inactive" data-t="notActive">غير مفعل</span>
     </div>
   </div>
+
+  <div class="categories-wrapper" id="categoriesWrapper">
+    <div class="categories-bar" id="categoriesBar">
+
+      <button class="cat-btn active" data-filter="__all__" id="filterAllBtn">
+        <i class="fas fa-th-list"></i>
+        <span data-t="all">الكل</span>
+        <span class="cat-count" id="countAll">0</span>
+      </button>
+
+      <button class="cat-btn new-btn" data-filter="__new__" id="filterNewBtn">
+        <i class="fas fa-bolt"></i>
+        <span data-t="new">الجديدة</span>
+        <span class="cat-count" id="countNew">0</span>
+      </button>
+
+      <button class="cat-btn discount-btn" data-filter="__discounts__" id="filterDiscountsBtn">
+        <i class="fas fa-tags"></i>
+        <span data-t="discounts">التخفيضات</span>
+        <span class="cat-count" id="countDiscounts">0</span>
+      </button>
+
+      <div class="families-dropdown-wrapper">
+        <button class="cat-btn families-btn" id="familiesBtn" type="button" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-layer-group"></i>
+          <span data-t="families">العائلات</span>
+          <i class="fas fa-chevron-down chev"></i>
+        </button>
+      </div>
+
+      <button class="cat-clear-btn" id="clearFilterBtn">
+        <i class="fas fa-times-circle"></i>
+        <span data-t="cancel">إلغاء</span>
+      </button>
+
+    </div>
+    <button type="button" class="scroll-hint" id="scrollHint" aria-label="اسحب لرؤية المزيد">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+  </div>
+
+  <div class="families-dropdown" id="familiesDropdown"></div>
 
   <div class="products-container" id="productsContainer"></div>
   <div id="pagination"></div>
@@ -1356,7 +1613,10 @@ const I18N = {
     loading: "جاري التحميل...",
     searchPlaceholder: "ابحث باسم المنتج...",
     all: "الكل",
+    new: "الجديدة",
     discounts: "التخفيضات",
+    families: "العائلات",
+    noFamilies: "لا توجد عائلات",
     cancel: "إلغاء",
     wholesaleCode: "الرمز السري",
     activate: "تفعيل",
@@ -1416,7 +1676,10 @@ const I18N = {
     loading: "Chargement...",
     searchPlaceholder: "Rechercher un produit...",
     all: "Tout",
+    new: "Nouveaux",
     discounts: "Promotions",
+    families: "Familles",
+    noFamilies: "Aucune famille",
     cancel: "Annuler",
     wholesaleCode: "Code secret",
     activate: "Activer",
@@ -1553,7 +1816,7 @@ let storeFeatures = {
 let storeConfigured = false;
 
 /* ═══════════════════════════════════════════════════════════
-   🎯 بيكسل — Facebook + TikTok
+   🎯 بيكسل
    ═══════════════════════════════════════════════════════════ */
 let activePixelId = null;
 let activeTiktokPixelId = null;
@@ -1613,6 +1876,7 @@ function trackPurchase(items, totalValue) {
 
 let wholesaleCode = null;
 let allProducts = [];
+let allProductsRaw = [];
 let allDiscounts = {};
 let familiesList = [];
 let cart = [];
@@ -1623,6 +1887,9 @@ const PER_PAGE = 20;
 let searchTerm = '';
 let isWholesaleActive = localStorage.getItem('wholesale_active') === 'true';
 let booted = false;
+
+let newProductDays = 30;
+let newProductsEnabled = true;
 
 const escapeHtml = s => !s ? '' : String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const fmt = n => Number(n || 0).toLocaleString('fr-FR');
@@ -1690,6 +1957,14 @@ function applyFeatures() {
     currentFamilyFilter = "__all__";
     updateActiveCategory();
   }
+
+  const nf = $("filterNewBtn");
+  if (nf) nf.style.display = newProductsEnabled ? 'inline-flex' : 'none';
+  if (!newProductsEnabled && currentFamilyFilter === "__new__") {
+    currentFamilyFilter = "__all__";
+    updateActiveCategory();
+  }
+
   const wb = $("wholesaleBox");
   if (wb && !storeFeatures.wholesale) wb.style.display = 'none';
 }
@@ -1757,6 +2032,10 @@ onValue(ref(db, 'store/features'), (snap) => {
     reviews: d.reviews !== false,
     shipping: d.shipping !== false
   };
+
+  newProductsEnabled = d.newProducts !== false;
+  newProductDays = Number(d.newProductsDays) || 30;
+
   if (!storeFeatures.wholesale) {
     isWholesaleActive = false;
     localStorage.setItem('wholesale_active', 'false');
@@ -1801,10 +2080,14 @@ onValue(ref(db, 'store/wholesaleCode'), (snap) => {
 
 onValue(ref(db, 'products'), (snap) => {
   const d = snap.val() || {};
-  allProducts = Object.entries(d).map(([id, p]) => ({ id, ...p })).filter(p => !p.hidden);
+  allProductsRaw = Object.entries(d).map(([id, p]) => ({ id, ...p }));
+  allProducts = allProductsRaw.filter(p => !p.hidden);
   refreshCartPrices();
   updateFamilyCounts();
   applyFiltersAndRender();
+  if ($("familiesDropdown").classList.contains("show")) {
+    renderFamiliesDropdown();
+  }
 });
 
 onValue(ref(db, 'discounts'), (snap) => {
@@ -1826,86 +2109,237 @@ onValue(ref(db, 'discounts'), (snap) => {
     refreshCartPrices();
     applyFiltersAndRender();
     startCountdownTimers();
+    if ($("familiesDropdown").classList.contains("show")) {
+      renderFamiliesDropdown();
+    }
   } catch (err) { console.error('[Discounts]', err); }
 });
 
 onValue(ref(db, 'families'), (snap) => {
   const d = snap.val();
   familiesList = d ? Object.values(d).map(v => typeof v === 'string' ? v : (v.name || v)) : [];
-  renderCategoryButtons();
+  $("categoriesWrapper").classList.add("show");
   updateFamilyCounts();
+  updateActiveCategory();
+  if ($("familiesDropdown").classList.contains("show")) {
+    renderFamiliesDropdown();
+  }
+  setTimeout(updateScrollHint, 100);
 });
 
-function renderCategoryButtons() {
-  const bar = $("categoriesBar");
-  bar.querySelectorAll('.cat-btn:not(#filterAllBtn):not(#filterDiscountsBtn)').forEach(el => el.remove());
-  if (familiesList.length || allProducts.length) $("categoriesWrapper").classList.add("show");
-  familiesList.forEach(name => {
-    const btn = document.createElement('button');
-    btn.className = 'cat-btn';
-    btn.dataset.family = name;
-    btn.innerHTML = `<i class="fas fa-tag"></i> ${escapeHtml(name)}<span class="cat-count" id="count_${CSS.escape(name)}">0</span>`;
-    btn.addEventListener('click', () => setFamily(name));
-    bar.insertBefore(btn, $("clearFilterBtn"));
-  });
-  updateActiveCategory();
-}
-
+/* ═══════════════════════════════════════════════════════════
+   🎛️ إدارة الفلاتر
+   ═══════════════════════════════════════════════════════════ */
 function updateActiveCategory() {
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.family === currentFamilyFilter);
-  });
+  const allBtn = $("filterAllBtn");
+  const newBtn = $("filterNewBtn");
+  const discBtn = $("filterDiscountsBtn");
+  const famBtn = $("familiesBtn");
+
+  if (allBtn) allBtn.classList.toggle('active', currentFamilyFilter === "__all__");
+  if (newBtn) newBtn.classList.toggle('active', currentFamilyFilter === "__new__");
+  if (discBtn) discBtn.classList.toggle('active', currentFamilyFilter === "__discounts__");
+
+  const isFamily = familiesList.includes(currentFamilyFilter);
+  if (famBtn) famBtn.classList.toggle('active', isFamily);
+
   const clear = $("clearFilterBtn");
+  if (!clear) return;
   if (currentFamilyFilter !== "__all__") {
     clear.classList.add('show');
-    const label = currentFamilyFilter === "__discounts__" ? t('discounts') : currentFamilyFilter;
+    let label = currentFamilyFilter;
+    if (currentFamilyFilter === "__new__") label = t('new');
+    else if (currentFamilyFilter === "__discounts__") label = t('discounts');
     clear.innerHTML = `<i class="fas fa-times-circle"></i> <span>✕ ${escapeHtml(label)}</span>`;
-  } else clear.classList.remove('show');
+  } else {
+    clear.classList.remove('show');
+  }
+}
+
+function setFamily(f) {
+  currentFamilyFilter = f;
+  currentPage = 1;
+  updateActiveCategory();
+  applyFiltersAndRender();
+  closeFamiliesDropdown();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+$("filterAllBtn").addEventListener('click', () => setFamily("__all__"));
+$("filterNewBtn").addEventListener('click', () => {
+  if (!newProductsEnabled) return;
+  setFamily("__new__");
+});
+$("filterDiscountsBtn").addEventListener('click', () => {
+  if (storeFeatures.discounts) setFamily("__discounts__");
+});
+$("clearFilterBtn").addEventListener('click', () => setFamily("__all__"));
+
+/* ═══ القائمة المنسدلة للعائلات ═══ */
+function openFamiliesDropdown() {
+  const dd = $("familiesDropdown");
+  const btn = $("familiesBtn");
+  renderFamiliesDropdown();
+  dd.classList.add("show");
+  btn.classList.add("open");
+  btn.setAttribute("aria-expanded", "true");
+  positionFamiliesDropdown();
+}
+
+function closeFamiliesDropdown() {
+  const dd = $("familiesDropdown");
+  const btn = $("familiesBtn");
+  if (!dd || !btn) return;
+  dd.classList.remove("show");
+  btn.classList.remove("open");
+  btn.setAttribute("aria-expanded", "false");
+}
+
+function toggleFamiliesDropdown() {
+  if ($("familiesDropdown").classList.contains("show")) closeFamiliesDropdown();
+  else openFamiliesDropdown();
+}
+
+function positionFamiliesDropdown() {
+  const dd = $("familiesDropdown");
+  const btn = $("familiesBtn");
+  if (!dd || !btn) return;
+  const rect = btn.getBoundingClientRect();
+  const margin = 8;
+  const viewportW = window.innerWidth;
+  const ddW = Math.min(320, Math.max(220, viewportW - 32));
+
+  let right = viewportW - rect.right;
+  if (right < margin) right = margin;
+  if (right + ddW > viewportW - margin) {
+    right = Math.max(margin, viewportW - ddW - margin);
+  }
+
+  dd.style.width = ddW + "px";
+  dd.style.top = (rect.bottom + 6) + "px";
+  dd.style.right = right + "px";
+  dd.style.left = "auto";
+}
+
+function renderFamiliesDropdown() {
+  const dd = $("familiesDropdown");
+  if (!dd) return;
+
+  if (!familiesList.length) {
+    dd.innerHTML = `<div class="family-empty">${t('noFamilies')}</div>`;
+    return;
+  }
+
+  dd.innerHTML = familiesList.map(f => {
+    const cnt = allProducts.filter(p => p.family === f).length;
+    const isActive = currentFamilyFilter === f;
+    return `<button class="family-dropdown-item ${isActive ? 'active' : ''}" data-family="${escapeHtml(f)}" type="button">
+      <span class="fname"><i class="fas fa-tag"></i>${escapeHtml(f)}</span>
+      <span class="fcount">${cnt}</span>
+    </button>`;
+  }).join('');
+
+  dd.querySelectorAll('.family-dropdown-item').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setFamily(btn.dataset.family);
+    });
+  });
+}
+
+$("familiesBtn").addEventListener('click', (e) => {
+  e.stopPropagation();
+  toggleFamiliesDropdown();
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#familiesBtn') && !e.target.closest('#familiesDropdown')) {
+    closeFamiliesDropdown();
+  }
+});
+
+window.addEventListener('scroll', () => {
+  if ($("familiesDropdown").classList.contains("show")) closeFamiliesDropdown();
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  if ($("familiesDropdown").classList.contains("show")) positionFamiliesDropdown();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeFamiliesDropdown();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   🆕 المنتجات الجديدة
+   ═══════════════════════════════════════════════════════════ */
+function isProductNew(p) {
+  if (!p || p.hidden) return false;
+  const days = newProductDays || 30;
+  const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
+  return !!(p.createdAt && p.createdAt >= cutoff);
+}
+
+function getNewProductCount() {
+  return allProducts.filter(p => isProductNew(p)).length;
 }
 
 function updateFamilyCounts() {
-  $("countAll").textContent = allProducts.filter(p => !p.hidden).length;
-  const dc = storeFeatures.discounts
-    ? allProducts.filter(p => !p.hidden && isDiscountActive(allDiscounts[p.id])).length
-    : 0;
-  $("countDiscounts").textContent = dc;
-  familiesList.forEach(f => {
-    const c = allProducts.filter(p => !p.hidden && p.family === f).length;
-    const el = document.getElementById('count_' + CSS.escape(f));
-    if (el) el.textContent = c;
-  });
+  const ca = $("countAll");
+  if (ca) ca.textContent = allProducts.length;
+
+  const cn = $("countNew");
+  if (cn) cn.textContent = getNewProductCount();
+
+  const cd = $("countDiscounts");
+  if (cd) {
+    const dc = storeFeatures.discounts
+      ? allProducts.filter(p => isDiscountActive(allDiscounts[p.id])).length
+      : 0;
+    cd.textContent = dc;
+  }
 }
 
-function setFamily(f) { currentFamilyFilter = f; currentPage = 1; updateActiveCategory(); applyFiltersAndRender(); }
-$("filterAllBtn").addEventListener('click', () => setFamily("__all__"));
-$("filterDiscountsBtn").addEventListener('click', () => { if (storeFeatures.discounts) setFamily("__discounts__"); });
-$("clearFilterBtn").addEventListener('click', () => setFamily("__all__"));
-
+/* ═══════════════════════════════════════════════════════════
+   🎨 العرض
+   ═══════════════════════════════════════════════════════════ */
 function applyFiltersAndRender() {
   if (!storeConfigured) return;
   let filtered = allProducts.filter(p => !p.hidden);
+
   if (currentFamilyFilter === "__discounts__") {
     filtered = filtered.filter(p => isDiscountActive(allDiscounts[p.id]));
+  } else if (currentFamilyFilter === "__new__") {
+    if (!newProductsEnabled) {
+      filtered = [];
+    } else {
+      filtered = filtered.filter(p => isProductNew(p));
+    }
   } else if (currentFamilyFilter !== "__all__") {
     filtered = filtered.filter(p => p.family === currentFamilyFilter);
   }
+
   if (searchTerm.trim()) {
     const t2 = searchTerm.toLowerCase().trim();
     filtered = filtered.filter(p => (p.name || '').toLowerCase().includes(t2));
   }
+
   renderProducts(filtered);
   updateFamilyCounts();
+  setTimeout(updateScrollHint, 50);
 }
 
 function getEffectivePrice(p) {
+  const wh = getWholesalePrice(p);
+  /* ✅ عند تفعيل الجملة → الأولوية لسعر الجملة فوق كل شيء */
+  if (isWholesaleActive && wh !== null) return wh;
+  
   const d = allDiscounts[p.id];
   const onSale = isDiscountActive(d);
-  const base = Number(p.price) || 0;
   const salePrice = getDiscountPrice(d);
   if (onSale && salePrice !== null) return salePrice;
-  const wh = getWholesalePrice(p);
-  if (isWholesaleActive && wh !== null) return wh;
-  return base;
+  
+  return Number(p.price) || 0;
 }
 
 function renderProducts(filtered) {
@@ -1926,15 +2360,15 @@ function renderProducts(filtered) {
     const wh = getWholesalePrice(p);
 
     let display, strike, badgeText, priceClass;
-    if (onSale && salePrice !== null) {
-      display = salePrice; strike = base;
-      badgeText = t('discountBadge'); priceClass = 'discount-price';
-    } else if (isWholesaleActive && wh !== null) {
-      display = wh; strike = base;
-      badgeText = t('wholesaleBadge'); priceClass = 'wholesale-price';
-    } else {
-      display = base; strike = null; badgeText = null; priceClass = 'current-price';
-    }
+if (isWholesaleActive && wh !== null) {
+  display = wh; strike = base;
+  badgeText = t('wholesaleBadge'); priceClass = 'wholesale-price';
+} else if (onSale && salePrice !== null) {
+  display = salePrice; strike = base;
+  badgeText = t('discountBadge'); priceClass = 'discount-price';
+} else {
+  display = base; strike = null; badgeText = null; priceClass = 'current-price';
+}
 
     const inCart = cart.find(i => i.id === p.id);
     const qtyBoxes = inCart ? (inCart.quantityBoxes || 0) : 0;
@@ -2010,6 +2444,7 @@ function renderProducts(filtered) {
       if (tel) updateTimer(tel);
     }
   });
+  setTimeout(updateScrollHint, 50);
 }
 
 function updateQty(id, change) {
@@ -2087,11 +2522,23 @@ $("cartBtn").addEventListener('click', () => {
 $("closeCartBtn").addEventListener('click', () => $("cartModal").classList.remove('show'));
 $("clearCartBtn").addEventListener('click', () => { cart = []; saveCart(); $("cartModal").classList.remove('show'); });
 
+/* ═══════════════════════════════════════════════════════════
+   💎 صندوق الجملة
+   ═══════════════════════════════════════════════════════════ */
 $("logoBtn").addEventListener('click', () => {
   if (!storeFeatures.wholesale) return;
   const b = $("wholesaleBox");
-  b.style.display = b.style.display === 'flex' ? 'none' : 'flex';
+  const isOpen = b.style.display === 'flex';
+  if (isOpen) {
+    b.style.display = 'none';
+  } else {
+    b.style.display = 'flex';
+    setTimeout(() => {
+      b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
 });
+
 $("activateWholesaleBtn").addEventListener('click', () => {
   if (!storeFeatures.wholesale) return;
   const input = $("wholesaleInput").value.trim();
@@ -2100,16 +2547,21 @@ $("activateWholesaleBtn").addEventListener('click', () => {
   if (input === wholesaleCode) {
     isWholesaleActive = true;
     localStorage.setItem('wholesale_active', 'true');
-    cart = []; saveCart();
+    cart = [];
+    saveCart();
     applyWholesaleUI(true);
+    /* ✅ إعادة رسم إضافية لضمان ظهور أسعار الجملة */
+    setTimeout(() => { applyFiltersAndRender(); }, 50);
     alert(t('alertWsActivated'));
   } else alert(t('alertWrongCode'));
 });
 $("deactivateWholesaleBtn").addEventListener('click', () => {
   isWholesaleActive = false;
   localStorage.setItem('wholesale_active', 'false');
-  cart = []; saveCart();
+  cart = [];
+  saveCart();
   applyWholesaleUI(false);
+  setTimeout(() => { applyFiltersAndRender(); }, 50);
 });
 function applyWholesaleUI(active) {
   const status = $("wholesaleStatus");
@@ -2288,10 +2740,104 @@ function bootApp() {
   else applyWholesaleUI(false);
   updateCartBadge();
 }
+
+/* ═══════════════════════════════════════════════════════════
+   📱 مؤشر "اسحب لرؤية المزيد"
+   ═══════════════════════════════════════════════════════════ */
+function updateScrollHint() {
+  const bar = $("categoriesBar");
+  const hint = $("scrollHint");
+  if (!bar || !hint) return;
+
+  if (window.innerWidth >= 900) {
+    hint.classList.remove("show");
+    return;
+  }
+
+  const maxScroll = bar.scrollWidth - bar.clientWidth;
+  const hasOverflow = maxScroll > 4;
+  const scrolled = Math.abs(bar.scrollLeft);
+  const atEnd = scrolled >= (maxScroll - 6);
+
+  if (hasOverflow && !atEnd) {
+    hint.classList.add("show");
+  } else {
+    hint.classList.remove("show");
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🖱️ الضغط على المؤشر — يحاول الاتجاهين لضمان العمل
+   ═══════════════════════════════════════════════════════════ */
+function scrollBarToNext() {
+  const bar = $("categoriesBar");
+  const hint = $("scrollHint");
+  if (!bar) return;
+
+  const step = Math.max(160, Math.round(bar.clientWidth * 0.6));
+
+  if (hint) {
+    hint.classList.add('clicked');
+    setTimeout(() => hint.classList.remove('clicked'), 220);
+  }
+
+  const startPos = bar.scrollLeft;
+
+  /* محاولة 1: تحريك سالب (المتصفحات الحديثة في RTL) */
+  try {
+    bar.scrollBy({ left: -step, behavior: 'smooth' });
+  } catch (e) {
+    bar.scrollLeft = startPos - step;
+  }
+
+  /* بعد فترة، إذا لم يتحرك شيء → جرّب العكس */
+  setTimeout(() => {
+    const nowPos = bar.scrollLeft;
+    if (Math.abs(nowPos - startPos) < 5) {
+      try {
+        bar.scrollBy({ left: step, behavior: 'smooth' });
+      } catch (e) {
+        bar.scrollLeft = startPos + step;
+      }
+    }
+    updateScrollHint();
+  }, 350);
+
+  setTimeout(updateScrollHint, 700);
+}
+
+(function initScrollHint() {
+  const bar = $("categoriesBar");
+  const hint = $("scrollHint");
+  if (!bar || !hint) return;
+
+  hint.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    scrollBarToNext();
+  });
+
+  bar.addEventListener('scroll', () => {
+    if (bar._scrollRaf) return;
+    bar._scrollRaf = requestAnimationFrame(() => {
+      bar._scrollRaf = null;
+      updateScrollHint();
+    });
+  }, { passive: true });
+
+  let resizeTimeout = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updateScrollHint, 150);
+  });
+
+  setTimeout(updateScrollHint, 300);
+  setTimeout(updateScrollHint, 800);
+  setTimeout(updateScrollHint, 1500);
+})();
 </script>
 
 <script>
-  /* قياس ارتفاع الهيدر تلقائيًا وضبط --header-h */
   (function() {
     function updateHeaderHeight() {
       var header = document.querySelector('header');
