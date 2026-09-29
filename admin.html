@@ -54,10 +54,27 @@
     </div>
   </div>
   <div class="products-toolbar">
-  <div class="filter-section" id="familyFilterSection">
+   <div class="filter-section" id="familyFilterSection">
     <button class="filter-btn active" data-family="الكل" id="filterAll"><i class="fas fa-th-list"></i> الكل <span class="filter-count" id="countAll">0</span></button>
+    <button class="filter-btn new-filter" data-family="__new__" id="filterNew" data-perm="nav.products" data-feature="newProducts"><i class="fas fa-sparkles"></i> <span data-i18n="newProductsFilterLabel">الجديدة</span> <span class="filter-count" id="countNew">0</span></button>
     <button class="filter-btn discount-filter" data-family="__discounts__" id="filterDiscounts" data-perm="product.discount"><i class="fas fa-tags"></i> التخفيضات <span class="filter-count" id="countDiscounts">0</span></button>
     <button class="filter-btn hidden-filter" data-family="__hidden__" id="filterHidden" data-perm="product.delete"><i class="fas fa-eye-slash"></i> المخفية <span class="filter-count" id="countHidden">0</span></button>
+    
+    <div class="family-dropdown" id="familyDropdown">
+      <button class="filter-btn family-dropdown-btn" id="familyDropdownBtn" type="button">
+        <i class="fas fa-tags"></i>
+        <span id="familyDropdownLabel">العائلات</span>
+        <i class="fas fa-chevron-down family-dropdown-chevron"></i>
+      </button>
+      <div class="family-dropdown-panel" id="familyDropdownPanel">
+        <div class="family-dropdown-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="familySearchInput" placeholder="بحث في العائلات..." />
+        </div>
+        <div class="family-dropdown-list" id="familyDropdownList"></div>
+      </div>
+    </div>
+    
     <button class="filter-clear" id="clearFilterBtn"><i class="fas fa-times"></i> إلغاء</button>
   </div>
   <button class="add-fab" id="addProductBtn" style="display:none;">
@@ -100,9 +117,9 @@
       <span>حذف الأقدم من شهر</span>
     </button>
   </div>
-  <div style="text-align:center;padding:0 16px 16px;" id="deleteAllConfirmedWrap">
-    <button id="deleteAllConfirmedBtn" data-perm="orders.deleteAll" style="display:none;background:var(--danger);color:#fff;border:none;padding:9px 20px;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;font-family:var(--font);font-size:13px;">حذف جميع الطلبات المؤكدة</button>
-  </div>
+  <div id="deleteAllConfirmedWrap">
+  <button id="deleteAllConfirmedBtn" style="display:none;">حذف جميع الطلبات المؤكدة</button>
+</div>
   <div id="ordersListContainer"></div>
 </section>
 
@@ -140,11 +157,12 @@
         <div class="stat-body"><div class="stat-label">عدد الطلبات</div><div class="stat-value" id="statOrders">0</div></div>
       </div>
     </div>
-    <div class="inv-info-bar" id="invInfoBar">
-      <div class="item"><i class="fas fa-boxes"></i> قيمة المخزون: <b id="statStockValue">0</b></div>
-      <div class="item"><i class="fas fa-box"></i> إجمالي القطع: <b id="statStockQty">0</b></div>
-    </div>
-    <div id="invAlertsContainer"></div>
+      <div class="inv-info-bar" id="invInfoBar">
+    <div class="item"><i class="fas fa-boxes"></i> قيمة المخزون: <b id="statStockValue">0</b></div>
+    <div class="item"><i class="fas fa-box"></i> إجمالي القطع: <b id="statStockQty">0</b></div>
+  </div>
+  <div id="invAlertsContainer"></div>
+  <div id="invDetailContainer" style="display:none;"></div>
   </div>
 
   <div id="itab-inventory" class="inv-tab-panel">
@@ -345,15 +363,39 @@
         </div>
         <span class="toggle-switch"><input type="checkbox" id="featShipping" data-feat="shipping" /><span class="toggle-slider"></span></span>
       </label>
-      <label class="toggle-row">
-        <div class="toggle-row-info">
-          <h4><i class="fas fa-history"></i> سجل النشاطات</h4>
-          <p>تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.</p>
-        </div>
-        <span class="toggle-switch"><input type="checkbox" id="featActivityLog" data-feat="activityLog" /><span class="toggle-slider"></span></span>
+          <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-history"></i> سجل النشاطات</h4>
+        <p>تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featActivityLog" data-feat="activityLog" /><span class="toggle-slider"></span></span>
+    </label>
+
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-sparkles"></i> المنتجات الجديدة</h4>
+        <p>إظهار تبويب "الجديدة" لتصفية المنتجات المُضافة حديثاً.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featNewProducts" data-feat="newProducts" /><span class="toggle-slider"></span></span>
+    </label>
+
+    <div id="newProductsDaysBox" style="display:none; margin: 8px 0 16px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+      <label style="display:block; font-weight:600; font-size:13px; margin-bottom:8px; color:var(--text);">
+        <i class="fas fa-clock" style="color:var(--primary);"></i>
+        <span data-i18n="newProductsDaysLabel">عرض المنتجات المُضافة خلال:</span>
       </label>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <input type="number" id="featNewProductsDays" min="1" max="365" value="30"
+               style="width:100px; padding:8px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font); font-size:14px; font-weight:700; text-align:center; outline:none;" />
+        <span style="font-weight:600; color:var(--text-2);" data-i18n="dayUnit">يوم</span>
+      </div>
+      <p style="font-size:12px; color:var(--text-2); line-height:1.6; margin-top:8px; margin-bottom:0;">
+        <i class="fas fa-info-circle" style="color:var(--info);"></i>
+        <span data-i18n="newProductsHint">المنتجات التي أُضيفت خلال هذه المدة ستظهر في تبويب "الجديدة".</span>
+      </p>
     </div>
   </div>
+</div>
 
   <div id="stab-landingSettings" class="settings-panel">
     <div class="settings-card">
@@ -434,7 +476,7 @@
   <div id="stab-owner" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-crown"></i> بيانات المالك</h3>
-      <div class="helper-text">تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.</div>
+      <div class="helper-text">تغيير بيانات المالك سيُحدّث حسابك. سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.</div>
       <label>الاسم الجديد</label><input id="newOwnerName" />
       <label>كلمة المرور الجديدة</label><input id="newOwnerPass" type="password" placeholder="••••" />
       <button class="btn-primary" id="saveOwnerBtn">حفظ</button>
@@ -689,16 +731,6 @@
   </div>
 </div>
 
-<div class="inv-drawer-overlay" id="invDrawerOverlay"></div>
-<aside class="inv-drawer" id="invDrawer">
-  <div class="inv-drawer-header">
-    <button class="inv-drawer-close" id="invDrawerClose" title="إغلاق"><i class="fas fa-times"></i></button>
-    <h3 id="invDrawerTitle">-</h3>
-    <button class="inv-drawer-print" id="invDrawerPrint" title="طباعة"><i class="fas fa-print"></i></button>
-  </div>
-  <div class="inv-drawer-body" id="invDrawerBody"></div>
-</aside>
-
 <div class="icon-picker" id="iconPicker">
   <div class="icon-picker-content">
     <button id="iconPickerClose" style="position:absolute;top:14px;inset-inline-end:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-2);">&times;</button>
@@ -751,7 +783,7 @@ const discountsRef = ref(db, "discounts");
 const reviewsRef = ref(db, "reviews");
 
 let storeInfo = { name:"", logoUrl:"", phoneInvoice:"", address:"", whatsappNumber:"", enableWhatsapp:true, enableLocation:true, currency:"دج", lowStockAlert:5, tagline:"" };
-let storeFeatures = { costPrice:true, inventory:true, quantityPerBox:true, wholesale:true, discounts:true, landing:true, reviews:true, shipping:true, serial:false, activityLog:true };
+let storeFeatures = { costPrice:true, inventory:true, quantityPerBox:true, wholesale:true, discounts:true, landing:true, reviews:true, shipping:true, serial:false, activityLog:true, newProducts:true, newProductsDays:30 };
 window.storeFeatures = storeFeatures;
 let imgbbKey = BOOT.imgbbApiKey || "";
 let wholesaleCode = null;
@@ -1056,7 +1088,9 @@ onValue(ref(db, 'store/features'), snap => {
     reviews: d.reviews !== false,
     shipping: d.shipping !== false,
     serial: d.serial === true,
-    activityLog: d.activityLog !== false
+    activityLog: d.activityLog !== false,
+    newProducts: d.newProducts !== false,
+    newProductsDays: Number(d.newProductsDays) || 30
   };
   window.storeFeatures = storeFeatures;
   $("featCostPrice").checked = storeFeatures.costPrice;
@@ -1069,10 +1103,20 @@ onValue(ref(db, 'store/features'), snap => {
   $("featReviews").checked = storeFeatures.reviews;
   $("featShipping").checked = storeFeatures.shipping;
   $("featActivityLog").checked = storeFeatures.activityLog;
+  
+  /* ✅ المنتجات الجديدة */
+  const featNP = $("featNewProducts");
+  if (featNP) featNP.checked = storeFeatures.newProducts;
+  const npBox = $("newProductsDaysBox");
+  if (npBox) npBox.style.display = storeFeatures.newProducts ? 'block' : 'none';
+  const npDays = $("featNewProductsDays");
+  if (npDays) npDays.value = storeFeatures.newProductsDays;
+  
   applyPermissions();
   if ($("page-inventory") && $("page-inventory").classList.contains('active')) renderInventoryPage();
   if ($("page-landing") && $("page-landing").classList.contains('active')) renderLandingList();
   if ($("page-reviews") && $("page-reviews").classList.contains('active')) renderReviewsSection();
+  if ($("page-products") && $("page-products").classList.contains('active')) applyFiltersAndRender();
 });
 
 document.querySelectorAll('input[data-feat]').forEach(inp => {
@@ -1086,6 +1130,27 @@ document.querySelectorAll('input[data-feat]').forEach(inp => {
   });
 });
 
+/* ✅ معالج خاص لحقل "عدد أيام المنتجات الجديدة" */
+document.addEventListener('change', async e => {
+  if (e.target && e.target.id === 'featNewProductsDays') {
+    let days = parseInt(e.target.value) || 30;
+    if (days < 1) days = 1;
+    if (days > 365) days = 365;
+    e.target.value = days;
+    try {
+      await update(ref(db, 'store/features'), { newProductsDays: days });
+      showToast("تم الحفظ");
+    } catch (err) { showToast("خطأ: " + err.message); }
+  }
+}, true);
+
+/* ✅ إظهار/إخفاء صندوق الأيام عند تبديل الميزة */
+document.addEventListener('change', e => {
+  if (e.target && e.target.id === 'featNewProducts') {
+    const box = $("newProductsDaysBox");
+    if (box) box.style.display = e.target.checked ? 'block' : 'none';
+  }
+}, true);
 onValue(ref(db, 'store/cover'), snap => {
   const d = snap.val() || {};
   const enabled = d.enabled !== false;
@@ -1134,7 +1199,10 @@ onValue(familiesRef, snap => {
 onValue(productsRef, snap => {
   allProducts = snap.val() || {};
   window.allProducts = allProducts;
-  applyFiltersAndRender(); renderLandingList(); renderReviewsSection();
+  applyFiltersAndRender();
+  renderLandingList();
+  renderReviewsSection();
+  renderFamilyFilters();
   if ($("page-inventory") && $("page-inventory").classList.contains('active')) renderInventoryPage();
 });
 
@@ -1178,19 +1246,75 @@ function populateFamilySelect() {
 }
 
 function renderFamilyFilters() {
-  const sec = $("familyFilterSection"); if (!sec) return;
-  sec.querySelectorAll('.family-item-wrapper').forEach(el => el.remove());
-  familiesList.forEach(({ name }) => {
-    const b = document.createElement('button');
-    b.className = 'filter-btn';
-    if (currentFamilyFilter === name) b.classList.add('active');
-    b.dataset.family = name;
-    b.innerHTML = `<i class="fas fa-tag"></i> ${escapeHtml(name)} <span class="filter-count" id="count_${CSS.escape(name)}">0</span>`;
-    b.addEventListener('click', () => filterByFamily(name));
-    sec.insertBefore(b, $("clearFilterBtn"));
+  const list = $("familyDropdownList"); if (!list) return;
+
+  const searchEl = $("familySearchInput");
+  const term = searchEl ? (searchEl.value || '').trim().toLowerCase() : '';
+  const filtered = familiesList.filter(f => !term || f.name.toLowerCase().includes(term));
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="family-dropdown-empty">${term ? 'لا توجد نتائج' : 'لا توجد عائلات'}</div>`;
+  } else {
+    list.innerHTML = filtered.map(({ name }) => {
+      const count = Object.values(allProducts).filter(p => !p.hidden && p.family === name).length;
+      const isActive = currentFamilyFilter === name;
+      return `<div class="family-dropdown-item${isActive ? ' active' : ''}" data-family="${escapeHtml(name)}">
+        <i class="fas fa-tag"></i>
+        <span class="family-dropdown-name">${escapeHtml(name)}</span>
+        <span class="family-dropdown-count">${count}</span>
+      </div>`;
+    }).join('');
+  }
+
+  list.querySelectorAll('.family-dropdown-item').forEach(el => {
+    el.addEventListener('click', () => {
+      filterByFamily(el.dataset.family);
+      closeFamilyDropdown();
+    });
   });
+
   updateFamilyCounts();
   renderFamiliesPage();
+}
+
+function openFamilyDropdown() {
+  const dd = $("familyDropdown");
+  const btn = $("familyDropdownBtn");
+  const panel = $("familyDropdownPanel");
+  if (!dd || !btn || !panel) return;
+  
+  const rect = btn.getBoundingClientRect();
+  
+  panel.style.position = 'fixed';
+  panel.style.top = (rect.bottom + 6) + 'px';
+  panel.style.maxHeight = Math.max(200, window.innerHeight - rect.bottom - 20) + 'px';
+  
+  const isRTL = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+  const panelWidth = Math.max(240, Math.min(340, window.innerWidth - 24));
+  panel.style.width = panelWidth + 'px';
+  
+  if (isRTL) {
+    let rightPos = window.innerWidth - rect.right;
+    if (rect.right - panelWidth < 12) rightPos = 12;
+    panel.style.right = rightPos + 'px';
+    panel.style.left = 'auto';
+  } else {
+    let leftPos = rect.left;
+    if (leftPos + panelWidth > window.innerWidth - 12) {
+      panel.style.left = 'auto';
+      panel.style.right = '12px';
+    } else {
+      panel.style.left = leftPos + 'px';
+      panel.style.right = 'auto';
+    }
+  }
+  
+  dd.classList.add('open');
+}
+
+function closeFamilyDropdown() {
+  const dd = $("familyDropdown");
+  if (dd) dd.classList.remove('open');
 }
 
 function renderFamiliesPage() {
@@ -1252,7 +1376,12 @@ function updateFamilyCounts() {
   const cntAll = $("countAll"); 
   if (cntAll) cntAll.textContent = Object.values(allProducts).filter(p => !p.hidden).length;
   const cntHidden = $("countHidden");
-  if (cntHidden) cntHidden.textContent = Object.values(allProducts).filter(p => p.hidden === true).length;
+if (cntHidden) cntHidden.textContent = Object.values(allProducts).filter(p => p.hidden === true).length;
+const cntNew = $("countNew");
+if (cntNew) {
+  const cutoff = Date.now() - ((storeFeatures.newProductsDays || 30) * 24 * 60 * 60 * 1000);
+  cntNew.textContent = Object.values(allProducts).filter(p => !p.hidden && p.createdAt && p.createdAt >= cutoff).length;
+}
   const cntDiscounts = $("countDiscounts");
   if (cntDiscounts) {
     const now = Date.now();
@@ -1262,27 +1391,60 @@ function updateFamilyCounts() {
       return d && d.isActive && (d.unlimited || (d.endDate && new Date(d.endDate).getTime() > now));
     }).length;
   }
-  familiesList.forEach(({ name }) => {
-    const c = Object.values(allProducts).filter(p => !p.hidden && p.family === name).length;
-    const el = document.getElementById('count_' + CSS.escape(name));
-    if (el) el.textContent = c;
-  });
-}
+  }
 
 function filterByFamily(f) {
   if (f === "__hidden__" && !can('product.delete')) return showToast(t('notAllowed'));
   if (f === "__discounts__" && !can('product.discount')) return showToast(t('notAllowed'));
   currentFamilyFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.family === f));
+  
+  /* ✅ تحديث حالة زر "العائلات" */
+  const ddBtn = $("familyDropdownBtn");
+  const ddLabel = $("familyDropdownLabel");
+  const isFamily = f !== "الكل" && f !== "__new__" && f !== "__discounts__" && f !== "__hidden__";
+  if (ddBtn) ddBtn.classList.toggle('active', isFamily);
+  if (ddLabel) ddLabel.textContent = isFamily ? f : "العائلات";
+  
+  /* ✅ تحديث العنصر النشط في القائمة المنسدلة */
+  document.querySelectorAll('.family-dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.family === f);
+  });
+  
   const clr = $("clearFilterBtn");
   if (f === "الكل") clr.classList.remove('show');
   else {
     clr.classList.add('show');
-    const label = f === "__hidden__" ? "المخفية" : (f === "__discounts__" ? "التخفيضات" : escapeHtml(f));
+    const label = f === "__hidden__" ? "المخفية" : (f === "__discounts__" ? "التخفيضات" : f === "__new__" ? "الجديدة" : escapeHtml(f));
     clr.innerHTML = `<i class="fas fa-times"></i> ${label}`;
   }
   applyFiltersAndRender();
 }
+/* ═══════════════════════════════════════════════════════════
+   Family Dropdown Events
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener('click', e => {
+  const dd = $("familyDropdown");
+  if (!dd) return;
+  if (!dd.contains(e.target)) closeFamilyDropdown();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = $("familyDropdownBtn");
+  const searchEl = $("familySearchInput");
+  if (btn) {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const dd = $("familyDropdown");
+      if (dd.classList.contains('open')) closeFamilyDropdown();
+      else openFamilyDropdown();
+    });
+  }
+  if (searchEl) {
+    searchEl.addEventListener('input', () => renderFamilyFilters());
+  }
+});
+
 $("addFamilyMainBtn").addEventListener('click', async () => {
   if (!can('product.edit')) return showToast(t('notAllowed'));
   const n = prompt("اسم العائلة الجديدة:");
@@ -1296,6 +1458,7 @@ $("addFamilyMainBtn").addEventListener('click', async () => {
 });
 
 $("filterAll").addEventListener('click', () => filterByFamily("الكل"));
+$("filterNew").addEventListener('click', () => filterByFamily("__new__"));
 $("filterDiscounts").addEventListener('click', () => filterByFamily("__discounts__"));
 $("filterHidden").addEventListener('click', () => filterByFamily("__hidden__"));
 $("clearFilterBtn").addEventListener('click', () => filterByFamily("الكل"));
@@ -1305,6 +1468,9 @@ function applyFiltersAndRender() {
   let res = { ...allProducts };
   if (currentFamilyFilter === "__hidden__") {
     res = Object.fromEntries(Object.entries(res).filter(([_, p]) => p.hidden === true));
+  } else if (currentFamilyFilter === "__new__") {
+    const cutoff = Date.now() - ((storeFeatures.newProductsDays || 30) * 24 * 60 * 60 * 1000);
+    res = Object.fromEntries(Object.entries(res).filter(([_, p]) => !p.hidden && p.createdAt && p.createdAt >= cutoff));
   } else if (currentFamilyFilter === "__discounts__") {
     const now = Date.now();
     res = Object.fromEntries(Object.entries(res).filter(([id, p]) => {
@@ -1528,8 +1694,12 @@ $("productForm").addEventListener('submit', async e => {
       serial: serial || null
     };
     if (ex?.landing) data.landing = ex.landing;
-    if (id) await update(ref(db, "products/" + id), data);
-    else await push(productsRef, data);
+if (id) {
+  await update(ref(db, "products/" + id), data);
+} else {
+  data.createdAt = Date.now();
+  await push(productsRef, data);
+}
     showToast("تم الحفظ"); $("productForm").reset();
   } catch (err) { showToast("خطأ: " + err.message); }
 });
@@ -2005,7 +2175,15 @@ function updateOrdersCounts() {
       banner.style.display = 'none';
     }
   }
+
+  /* ✅ إظهار زر "حذف جميع الطلبات المؤكدة" فقط في تبويب "مؤكدة" */
+  const delBtn = $("deleteAllConfirmedBtn");
+  if (delBtn) {
+    const shouldShow = currentOrdersFilter === 'confirmed' && can('orders.deleteAll') && confCount > 0;
+    delBtn.style.display = shouldShow ? 'inline-flex' : 'none';
+  }
 }
+
 
 function renderOrdersList() {
   const c = $("ordersListContainer"); if (!c) return;
@@ -2087,7 +2265,8 @@ if (confirmBtn) {
     if (filter === 'confirmed' && !can('orders.viewConfirmed')) return showToast(t('notAllowed'));
     currentOrdersFilter = filter;
     document.querySelectorAll('.orders-chip').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active'); renderOrdersList();
+    chip.classList.add('active');
+    renderOrdersList();
     updateOrdersCounts();
   });
 });
@@ -2101,6 +2280,7 @@ document.querySelectorAll('#invPeriodChips .orders-chip').forEach(chip => {
     document.querySelectorAll('#invPeriodChips .orders-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     invPeriod = chip.dataset.period;
+    closeInvDrawer();
     renderInventoryPage();
   });
 });
@@ -2366,20 +2546,35 @@ function buildInvDetail(type) {
 }
 
 function openInvDrawer(type) {
+  const target = $("invDetailContainer");
+  if (!target) return;
+  
+  /* إذا ضغط على نفس البطاقة → أغلقها (Toggle) */
+  if (target.dataset.currentType === type && target.style.display !== 'none') {
+    closeInvDrawer();
+    return;
+  }
+  
   const data = buildInvDetail(type);
   currentInvDetail = data;
-  $("invDrawerTitle").textContent = data.title;
   const cur = curLbl();
   const canSeeCost = data.canSeeCost;
+  
+  /* بناء الجدول */
   let tableHtml = '';
   if (!data.rows.length) {
     tableHtml = `<div class="inv-empty" style="padding:40px 20px;"><i class="fas fa-inbox" style="font-size:40px;color:#c9cccf;display:block;margin-bottom:10px;"></i>لا توجد بيانات في هذه الفترة</div>`;
   } else {
     let thead = '';
-    if (type === 'revenue' || type === 'orders') thead = '<tr><th>العميل</th><th>الهاتف</th><th>المبلغ</th><th>التاريخ</th></tr>';
-    else if (type === 'profit' || type === 'cost') thead = `<tr><th>المنتج</th><th>الكمية</th><th>المبيعات</th>${canSeeCost ? '<th>التكلفة</th><th>الربح</th>' : ''}</tr>`;
-    else if (type === 'stockValue' || type === 'stockQty') thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
-    else thead = '<tr><th>المنتج</th><th>الكمية</th><th>حد التنبيه</th><th>الحالة</th></tr>';
+    if (type === 'revenue' || type === 'orders')
+      thead = '<tr><th>العميل</th><th>الهاتف</th><th>المبلغ</th><th>التاريخ</th></tr>';
+    else if (type === 'profit' || type === 'cost')
+      thead = `<tr><th>المنتج</th><th>الكمية</th><th>المبيعات</th>${canSeeCost ? '<th>التكلفة</th><th>الربح</th>' : ''}</tr>`;
+    else if (type === 'stockValue' || type === 'stockQty')
+      thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
+    else
+      thead = '<tr><th>المنتج</th><th>الكمية</th><th>حد التنبيه</th><th>الحالة</th></tr>';
+    
     tableHtml = `<div style="overflow-x:auto;"><table class="inv-table"><thead>${thead}</thead><tbody>`;
     data.rows.forEach(r => {
       tableHtml += '<tr>' + r.map((cell, i) => {
@@ -2393,22 +2588,54 @@ function openInvDrawer(type) {
       tableHtml += `<div class="inv-drawer-total"><span>${data.total}</span><b>${data.totalValue}</b></div>`;
     }
   }
-  $("invDrawerBody").innerHTML = `
-    <div class="inv-drawer-subtitle"><span><i class="far fa-calendar-alt"></i> الفترة: <b>${data.periodLabel}</b></span><span><i class="far fa-clock"></i> ${formatDate()}</span></div>
+  
+  /* نحقن الـ HTML داخل القسم الجديد */
+  target.innerHTML = `
+    <div class="inv-section-header">
+      <h3><i class="fas fa-chart-bar"></i> ${data.title}</h3>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-print-inv" id="invDetailPrint" title="طباعة">
+          <i class="fas fa-print"></i>
+        </button>
+        <button id="invDetailClose" title="إغلاق" style="width:38px;height:38px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--danger);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="inv-drawer-subtitle">
+      <span><i class="far fa-calendar-alt"></i> الفترة: <b>${data.periodLabel}</b></span>
+      <span><i class="far fa-clock"></i> ${formatDate()}</span>
+    </div>
     ${tableHtml}
   `;
-  $("invDrawer").classList.add('show');
-  $("invDrawerOverlay").classList.add('show');
+  
+  target.dataset.currentType = type;
+  target.style.display = 'block';
+  
+  /* إبراز البطاقة النشطة */
+  document.querySelectorAll('.inv-stat').forEach(el => el.classList.remove('active-detail'));
+  const activeCard = document.querySelector(`.inv-stat[data-detail="${type}"]`);
+  if (activeCard) activeCard.classList.add('active-detail');
+  
+  /* ربط الأزرار الجديدة */
+  const closeBtn = $("invDetailClose");
+  if (closeBtn) closeBtn.addEventListener('click', closeInvDrawer);
+  
+  const printBtn = $("invDetailPrint");
+  if (printBtn) printBtn.addEventListener('click', printInvDetail);
+  
+  /* تمرير سلس للقسم */
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function closeInvDrawer() {
-  $("invDrawer").classList.remove('show');
-  $("invDrawerOverlay").classList.remove('show');
+  const target = $("invDetailContainer");
+  if (!target) return;
+  target.style.display = 'none';
+  target.innerHTML = '';
+  target.dataset.currentType = '';
+  document.querySelectorAll('.inv-stat').forEach(el => el.classList.remove('active-detail'));
 }
-
-$("invDrawerClose").addEventListener('click', closeInvDrawer);
-$("invDrawerOverlay").addEventListener('click', closeInvDrawer);
-$("invDrawerPrint").addEventListener('click', printInvDetail);
 
 function printInvDetail() {
   const data = currentInvDetail;
@@ -2739,10 +2966,15 @@ $("saveOwnerBtn").addEventListener('click', async () => {
   const nn = $("newOwnerName").value.trim(), np = $("newOwnerPass").value.trim();
   if (!nn || !np) return showToast("املأ الحقول");
   const cur = localStorage.getItem("user");
-  await set(ref(db, `users/owner/${nn}`), { password: np, role: "owner" });
-  if (nn !== cur) await remove(ref(db, `users/owner/${cur}`));
-  localStorage.setItem("user", nn);
-  showToast("تم الحفظ"); 
+  try {
+    await set(ref(db, `users/owner/${nn}`), { password: np, role: "owner" });
+    if (nn !== cur) await remove(ref(db, `users/owner/${cur}`));
+    localStorage.setItem("user", nn);
+    showToast("تم الحفظ، جاري إعادة التحميل...");
+    setTimeout(() => location.reload(), 1200);
+  } catch (e) {
+    showToast("فشل الحفظ: " + e.message);
+  }
 });
 
 $("saveWholesaleCodeBtn").addEventListener('click', async () => {
