@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   i18n.js — نظام الترجمة الكامل — النسخة النهائية
+   i18n.js — نظام الترجمة الكامل — النسخة النهائية الشاملة
    ═══════════════════════════════════════════════════════════ */
 (function() {
   'use strict';
@@ -65,6 +65,9 @@
   };
 
   const AR_TO_FR = {
+    /* ═══════════════════════════════════════════
+       GENERAL / COMMON
+       ═══════════════════════════════════════════ */
     "لوحة الإدارة":"Panneau d'administration",
     "جاري التحميل...":"Chargement...",
     "تسجيل الخروج":"Déconnexion",
@@ -80,6 +83,8 @@
     "مالك":"Propriétaire", "زبون":"Client", "لا يوجد":"Aucun",
     "الكل":"Tout", "بحث":"Rechercher", "رؤية":"Voir", "نسخ":"Copier", "فتح":"Ouvrir",
     "نشطة":"Active", "جديد":"Nouveau", "مؤكد":"Confirmé",
+    "رجوع للوحة":"Retour au panneau",
+    "رجوع للوحة الإدارة":"Retour au panneau d'admin",
 
     "المنتجات":"Produits", "الطلبات":"Commandes", "المخزون":"Stock",
     "التقييمات":"Avis", "الترويج":"Promotion", "الإعدادات":"Paramètres",
@@ -88,6 +93,27 @@
     "لا توجد منتجات":"Aucun produit", "لا توجد منتجات مخفية":"Aucun produit masqué",
     "غير مصنف":"Non classé",
 
+    /* ═══════════════════════════════════════════
+       HEADER / NOTICES
+       ═══════════════════════════════════════════ */
+    "المتجر قيد الإعداد":"Boutique en préparation",
+    "لم يتم ضبط معلومات المتجر بعد.":"Les informations de la boutique ne sont pas encore définies.",
+    "ملف الإعدادات مفقود":"Fichier de configuration manquant",
+    "لم يتم العثور على ملف config.js.":"Fichier config.js introuvable.",
+    "الصفحة غير متاحة":"Page non disponible",
+    "صفحات الترويج معطّلة من الإدارة.":"Les pages promotionnelles sont désactivées.",
+    "المنتج غير موجود":"Produit introuvable",
+    "ربما حُذف أو الرابط غير صحيح.":"Il a peut-être été supprimé ou le lien est incorrect.",
+    "المنتج غير متاح":"Produit non disponible",
+    "هذا المنتج غير متاح حالياً.":"Ce produit n'est pas disponible actuellement.",
+    "رابط غير صالح":"Lien invalide",
+    "لم يتم تحديد المنتج.":"Aucun produit spécifié.",
+    "خطأ في التحميل":"Erreur de chargement",
+    "تعذّر الاتصال بـ Firebase.":"Impossible de se connecter à Firebase.",
+
+    /* ═══════════════════════════════════════════
+       ORDERS
+       ═══════════════════════════════════════════ */
     "طلبات جديدة":"Nouvelles commandes", "مؤكدة":"Confirmées",
     "حذف جميع الطلبات المؤكدة":"Supprimer toutes les commandes confirmées",
     "لا توجد طلبات":"Aucune commande", "لا توجد طلبات مؤكدة":"Aucune commande confirmée",
@@ -97,7 +123,19 @@
     "من صفحة ترويج":"Page promo",
     "توصيل مجاني - تم تطبيق العرض":"Livraison gratuite — offre appliquée",
     "الشحن:":"Livraison :", "الإجمالي:":"Total :",
+    "تنبيه:":"Alerte :",
+    "لديك":"Vous avez",
+    "طلب مؤكد. يُنصح بحذف الطلبات الأقدم من شهر والاحتفاظ بطلبات الشهر الأخير، لتجنّب ثقل المتجر وبطء التحميل.":"commande(s) confirmée(s). Il est recommandé de supprimer les commandes de plus d'un mois et de conserver celles du dernier mois, pour éviter la surcharge et le ralentissement du magasin.",
+    "حذف الأقدم من شهر":"Supprimer les anciennes (> 1 mois)",
+    "لا توجد طلبات أقدم من شهر":"Aucune commande de plus d'un mois",
+    "هل تريد المتابعة؟":"Voulez-vous continuer ?",
+    "تأكيد الحذف؟":"Confirmer la suppression ?",
+    "تأكيد حذف الكل؟":"Confirmer la suppression totale ?",
+    "تأكيد الحذف":"Confirmer",
 
+    /* ═══════════════════════════════════════════
+       INVENTORY
+       ═══════════════════════════════════════════ */
     "اليوم":"Aujourd'hui", "هذا الأسبوع":"Cette semaine", "هذا الشهر":"Ce mois",
     "هذه السنة":"Cette année", "نظرة عامة":"Vue d'ensemble",
     "الأكثر مبيعاً":"Top ventes", "المنتجات الأكثر مبيعاً":"Produits les plus vendus",
@@ -120,16 +158,21 @@
     "المخزون بحالة جيدة":"Stock en bon état", "الإجمالي":"Total",
     "الفترة:":"Période :", "الفترة":"Période", "العميل":"Client",
     "الهاتف":"Téléphone", "العنوان":"Adresse", "المبلغ":"Montant",
-    "التاريخ":"Date", "حد التنبيه":"Seuil", "لا توجد بيانات للطباعة":"Aucune donnée à imprimer",
-
+    "التاريخ":"Date", "حد التنبيه":"Seuil alerte", "لا توجد بيانات للطباعة":"Aucune donnée à imprimer",
     "يوجد":"Il y a",
     "منتج نفد من المخزون":"produit(s) épuisé(s)",
     "منتج على وشك النفاد":"produit(s) bientôt épuisé(s)",
 
+    /* ═══════════════════════════════════════════
+       SETTINGS TABS
+       ═══════════════════════════════════════════ */
     "عام":"Général", "الغلاف":"Couverture", "الميزات":"Fonctionnalités",
     "الصفحات":"Pages", "السياسات":"Politiques", "البكسل":"Pixels",
     "الشحن":"Livraison", "المستخدمون":"Utilisateurs", "متقدم":"Avancé",
 
+    /* ═══════════════════════════════════════════
+       GENERAL SETTINGS
+       ═══════════════════════════════════════════ */
     "معلومات المتجر":"Informations boutique", "اسم المتجر":"Nom de la boutique",
     "عنوان المتجر":"Adresse de la boutique",
     "رقم الهاتف (يظهر للعملاء)":"Téléphone (visible clients)",
@@ -143,20 +186,64 @@
     "تنبيهات المخزون":"Alertes de stock",
     "حد التنبيه العام (الكمية الدنيا قبل إظهار التنبيه)":"Seuil d'alerte global",
     "حفظ الإعدادات":"Enregistrer les paramètres",
+
+    /* ═══════════════════════════════════════════
+       COVER SETTINGS
+       ═══════════════════════════════════════════ */
     "غلاف المتجر":"Couverture de la boutique",
-    "صورة كبيرة تظهر أعلى صفحة المتجر الرئيسية.":"Grande image en haut de la boutique.",
+    "صورة كبيرة تظهر أعلى صفحة المتجر الرئيسية.":"Grande image affichée en haut de la page principale.",
     "لا يوجد غلاف":"Aucune couverture",
+    "إظهار الغلاف في المتجر":"Afficher la couverture dans la boutique",
+    "عند الإيقاف، يختفي الغلاف تمامًا من صفحة المنتجات.":"Si désactivé, la couverture disparaît complètement.",
+    "إظهار الغلاف":"Afficher la couverture",
+    "إخفاء الغلاف":"Masquer la couverture",
+    "تم تفعيل الغلاف":"Couverture activée",
+    "تم إخفاء الغلاف":"Couverture masquée",
+
+    /* ═══════════════════════════════════════════
+       FEATURES SETTINGS
+       ═══════════════════════════════════════════ */
     "إدارة الميزات":"Gestion des fonctionnalités",
     "سعر الشراء":"Prix d'achat", "تتبع المخزون":"Suivi du stock",
     "الكمية في العلبة":"Quantité par boîte", "الرقم التسلسلي (SKU)":"Référence (SKU)",
     "سعر الجملة":"Prix de gros", "التخفيضات":"Promotions",
     "صفحات الترويج":"Pages promotionnelles",
+    "تفعيل حساب تكلفة الشراء والأرباح لكل منتج.":"Activer le calcul du coût d'achat et des bénéfices.",
+    "تفعيل تتبع الكميات وإحصائيات المخزون.":"Activer le suivi des quantités et les statistiques du stock.",
+    "تفعيل خيار تحديد عدد الوحدات داخل العلبة الواحدة.":"Activer le nombre d'unités par boîte.",
+    "تفعيل خانة الرقم التسلسلي/المرجعي لكل منتج.":"Activer le champ référence/SKU.",
+    "تفعيل أسعار الجملة والرمز السري الخاص بزبائن الجملة.":"Activer les prix de gros et le code secret.",
+    "تفعيل نظام التخفيضات الزمنية على المنتجات.":"Activer le système de promotions temporaires.",
+    "تفعيل إنشاء صفحات ترويج مستقلة لكل منتج.":"Activer la création de pages promotionnelles.",
+    "تفعيل نظام تقييمات العملاء على المنتجات.":"Activer le système d'avis clients.",
+    "تفعيل إدارة مناطق الشحن والولايات والأسعار.":"Activer la gestion des zones de livraison.",
+    "تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.":"Activer le journal des opérations utilisateurs.",
+
+    /* ═══════════════════════════════════════════
+       NEW PRODUCTS FEATURE
+       ═══════════════════════════════════════════ */
+    "المنتجات الجديدة":"Nouveaux produits",
+    "إظهار تبويب \"الجديدة\" لتصفية المنتجات المُضافة حديثاً.":"Afficher l'onglet « Nouveaux » pour filtrer les produits récemment ajoutés.",
+    "عرض المنتجات المُضافة خلال:":"Afficher les produits ajoutés durant :",
+    "يوم":"jours",
+    "المنتجات التي أُضيفت خلال هذه المدة ستظهر في تبويب \"الجديدة\".":"Les produits ajoutés durant cette période apparaîtront dans l'onglet « Nouveaux ».",
+    "الجديدة":"Nouveaux",
+
+    /* ═══════════════════════════════════════════
+       LANDING SETTINGS
+       ═══════════════════════════════════════════ */
     "الشريط الإعلاني":"Bandeau publicitaire",
     "نص الشريط العلوي (عام لكل الصفحات)":"Texte du bandeau (général)",
     "اكتب النص هنا":"Écrivez ici",
     "إظهار التقييمات":"Afficher les avis",
     "إظهار عداد الزوار":"Afficher le compteur visiteurs",
     "إظهار عدد الزوار":"Afficher le compteur visiteurs",
+    "نص الشريط الإعلاني (اختياري)":"Texte du bandeau publicitaire (optionnel)",
+    "نص الشريط الإعلاني":"Texte du bandeau publicitaire",
+
+    /* ═══════════════════════════════════════════
+       POLICIES
+       ═══════════════════════════════════════════ */
     "سياسات المتجر":"Politiques de la boutique",
     "كل سياسة تحتوي على عنوان + نص الشرح.":"Chaque politique : titre + description.",
     "إضافة سياسة جديدة":"Ajouter une politique",
@@ -164,11 +251,21 @@
     "عنوان السياسة":"Titre de la politique",
     "اكتب نص السياسة هنا...":"Écrivez le contenu de la politique...",
     "لا توجد سياسات بعد.":"Aucune politique pour le moment.",
+    "حذف السياسة؟":"Supprimer la politique ?",
+
+    /* ═══════════════════════════════════════════
+       PIXELS
+       ═══════════════════════════════════════════ */
     "تفعيل Facebook Pixel":"Activer Facebook Pixel",
     "من Events Manager إلى Pixel ID":"Depuis Events Manager → Pixel ID",
     "تفعيل TikTok Pixel":"Activer TikTok Pixel",
     "من TikTok Ads Manager إلى Events ثم Pixel ID":"Depuis TikTok Ads Manager → Events → Pixel ID",
+    "بكسل خاص بهذا المنتج (اختياري)":"Pixel spécifique à ce produit (optionnel)",
+    "بكسل خاص بهذا المنتج":"Pixel spécifique à ce produit",
 
+    /* ═══════════════════════════════════════════
+       SHIPPING
+       ═══════════════════════════════════════════ */
     "مناطق الشحن":"Zones de livraison", "إضافة منطقة":"Ajouter une zone",
     "لا توجد مناطق":"Aucune zone", "منطقة شحن":"Zone de livraison",
     "اسم المنطقة":"Nom de la zone",
@@ -176,24 +273,43 @@
     "سعر للمكتب (دج)":"Prix au bureau (DA)",
     "الولايات":"Wilayas", "تحديد الكل":"Tout sélectionner",
     "إلغاء الكل":"Tout désélectionner",
+    "تأكيد حذف المنطقة؟":"Confirmer la suppression de la zone ?",
 
+    /* ═══════════════════════════════════════════
+       USERS
+       ═══════════════════════════════════════════ */
     "إضافة مستخدم جديد":"Ajouter un utilisateur",
     "اسم المستخدم":"Nom d'utilisateur", "كلمة المرور":"Mot de passe",
     "مدير (Admin)":"Admin (Admin)", "قائمة المستخدمين":"Liste des utilisateurs",
     "لا يمكن الحذف":"Non supprimable",
 
+    /* ═══════════════════════════════════════════
+       OWNER
+       ═══════════════════════════════════════════ */
     "بيانات المالك":"Données du propriétaire",
     "الاسم الجديد":"Nouveau nom", "كلمة المرور الجديدة":"Nouveau mot de passe",
     "سجل النشاطات":"Journal des activités",
     "فتح سجل النشاطات":"Ouvrir le journal des activités",
+    "تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.":"Changer le nom du propriétaire vous déconnectera.",
+    "عرض كل ما فعله المستخدمون (بائع/مدير) مع إمكانية التصفية حسب اليوم/الأسبوع/الشهر.":"Voir toutes les opérations des utilisateurs avec filtres.",
 
+    /* ═══════════════════════════════════════════
+       ADVANCED
+       ═══════════════════════════════════════════ */
     "الرقم السري للجملة":"Code secret de gros",
     "استيراد المنتجات من Excel":"Importer des produits depuis Excel",
     "رفع ملف Excel":"Charger un fichier Excel",
     "معالج الإعداد (setup)":"Assistant de configuration",
-    "فتح setup.html":"Ouvrir setup.html", "منطقة الخطر":"Zone de danger",
+    "فتح setup.html":"Ouvrir setup.html",
+    "منطقة الخطر":"Zone de danger",
     "حذف كل المنتجات":"Supprimer tous les produits",
+    "يقرأ الملف تلقائياً ويتعرف على الأعمدة (Code, Désignation, Prix, PA TTC…).":"Lit automatiquement le fichier et reconnaît les colonnes.",
+    "لإعادة توليد config.js من جديد.":"Pour régénérer config.js.",
+    "حذف كل المنتجات والتخفيضات نهائياً (لا يمكن التراجع).":"Suppression définitive de tous les produits et promotions (irréversible).",
 
+    /* ═══════════════════════════════════════════
+       PRODUCT FORM
+       ═══════════════════════════════════════════ */
     "إضافة منتج":"Ajouter un produit", "تعديل المنتج":"Modifier le produit",
     "اسم المنتج":"Nom du produit",
     "الرقم التسلسلي / المرجع (SKU)":"Référence / SKU",
@@ -204,12 +320,21 @@
     "الكمية المتوفرة في المخزون":"Quantité en stock",
     "-- اختر عائلة --":"-- Choisir une famille --",
     "اسم العائلة الجديدة":"Nom nouvelle famille",
+    "حذف المنتج؟":"Supprimer le produit ?",
+    "تحذير: سيتم حذف المنتج نهائياً":"Attention : le produit sera supprimé définitivement",
 
+    /* ═══════════════════════════════════════════
+       DISCOUNT MODAL
+       ═══════════════════════════════════════════ */
     "إدارة التخفيض":"Gérer la promotion", "المنتج:":"Produit :",
     "السعر بعد التخفيض":"Prix après réduction",
     "تخفيض دائم":"Promotion permanente", "المدة":"Durée",
     "من":"De", "إلى":"À", "إزالة":"Retirer",
+    "إزالة التخفيض؟":"Retirer la promotion ?",
 
+    /* ═══════════════════════════════════════════
+       LANDING EDIT
+       ═══════════════════════════════════════════ */
     "تعديل صفحة الترويج":"Modifier la page promo",
     "المنتج الأصلي:":"Produit original :",
     "تفعيل صفحة الترويج":"Activer la page promo",
@@ -222,6 +347,8 @@
     "اسم الصفحة":"Nom de la page",
     "سعر خاص لصفحة الترويج":"Prix spécial page promo",
     "اتركه فارغاً للعام":"Vide pour le général",
+    "اتركه فارغاً لاستخدام اسم المنتج الأصلي":"Vide pour utiliser le nom original",
+    "اتركه فارغاً لاستخدام السعر الأصلي":"Vide pour utiliser le prix original",
     "وصف المنتج":"Description du produit",
     "صور صفحة الترويج":"Images de la page promo",
     "لا توجد صور بعد":"Aucune image pour le moment",
@@ -229,99 +356,60 @@
     "إضافة ميزة":"Ajouter un avantage",
     "رابط الصفحة":"Lien de la page",
     "لا توجد مميزات بعد":"Aucun avantage pour le moment",
+    "كل ميزة: أيقونة + عبارة صغيرة":"Chaque avantage : icône + petite phrase",
+    "ارفع شعاراً خاصاً. إذا لم تُضف، شعار المتجر الأساسي يُستخدم.":"Téléchargez un logo spécifique. Sinon, le logo principal sera utilisé.",
+    "ارفع صوراً متعددة. إذا لم تُضف، الصورة الأساسية تُستخدم.":"Téléchargez plusieurs images. Sinon, l'image principale sera utilisée.",
+    "سعر منفصل تماماً يظهر فقط في صفحة الترويج.":"Prix séparé qui apparaît uniquement sur la page promotionnelle.",
+    "حذف الشعار؟":"Supprimer le logo ?",
 
+    /* ═══════════════════════════════════════════
+       LANDING LIST
+       ═══════════════════════════════════════════ */
     "صفحات الترويج المستقلة":"Pages promotionnelles indépendantes",
     "تظهر هنا":"Apparaissent ici",
     "المنتجات المُفعَّلة فقط":"les produits activés uniquement",
     ". لتفعيل منتج، اذهب إلى":". Pour activer un produit, allez à",
     "واضغط على زر.":"et cliquez sur le bouton.",
     "لا توجد صفحات ترويج بعد":"Aucune page promo",
+    "اذهب إلى المنتجات واضغط على الزر.":"Allez dans Produits et cliquez sur le bouton.",
 
+    /* ═══════════════════════════════════════════
+       PRINT OPTIONS
+       ═══════════════════════════════════════════ */
     "اختر طريقة الطباعة":"Méthode d'impression",
     "طباعة حرارية":"Impression thermique",
     "طباعة عادية":"Impression normale",
 
+    /* ═══════════════════════════════════════════
+       ICON PICKER
+       ═══════════════════════════════════════════ */
     "اختر أيقونة":"Choisir une icône",
     "رفع أيقونة مخصصة":"Uploader une icône personnalisée",
     "التوصيل":"Livraison", "الدفع":"Paiement", "الجودة":"Qualité",
     "الضمان":"Garantie", "الخدمة":"Service", "متنوع":"Divers",
 
-    "تفعيل":"Activer", "إيقاف":"Désactiver",
-    "مفعّل":"Activé", "متوقف":"Désactivé",
-    "قديم":"Ancien", "بدون":"Sans", "محدّث":"Mis à jour", "موجود":"Existant",
-    "نعم":"Oui", "لا":"Non",
-    "معالجة...":"Traitement...",
-    "جاري الحفظ...":"Enregistrement...",
-    "جاري الرفع...":"Téléchargement...",
-    "جاري القراءة...":"Lecture en cours...",
-
-    "تم الحفظ":"Enregistré", "تم الحذف":"Supprimé", "تم التعديل":"Modifié",
-    "تمت الإضافة":"Ajouté", "تم الرفع":"Téléchargé", "تم الإظهار":"Affiché",
-    "تم الإخفاء":"Masqué", "تم النسخ":"Copié",
-
-    "مفتاح ImgBB مفقود":"Clé ImgBB manquante", "خطأ: ":"Erreur : ",
-    "فشل الرفع":"Échec du téléchargement",
-    "فشل الحفظ":"Échec de l'enregistrement",
-    "فشل الحذف":"Échec de la suppression", "فشل النسخ":"Échec de la copie",
-    "اسم المتجر مطلوب":"Nom de la boutique requis",
-    "اسم المنطقة مطلوب":"Nom de zone requis",
-    "اختر ولاية واحدة على الأقل":"Choisissez au moins une wilaya",
-    "اسم فارغ":"Nom vide", "اسم قصير":"Nom trop court",
-    "اسم موجود مسبقاً":"Nom déjà utilisé",
-    "العائلة موجودة":"Famille déjà existante",
+    /* ═══════════════════════════════════════════
+       FAMILIES
+       ═══════════════════════════════════════════ */
+    "العائلات":"Familles",
+    "أضف، عدّل، أو احذف عائلات المنتجات":"Ajoutez, modifiez ou supprimez les familles de produits",
+    "إضافة عائلة جديدة":"Ajouter une nouvelle famille",
+    "لا توجد عائلات بعد":"Aucune famille pour le moment",
+    "اضغط \"إضافة عائلة جديدة\" للبدء":"Cliquez sur « Ajouter une nouvelle famille » pour commencer",
+    "اسم العائلة الجديدة:":"Nom de la nouvelle famille :",
     "العائلة موجودة مسبقاً":"Famille déjà existante",
-    "سعر غير صحيح":"Prix invalide",
-    "حدد المدة":"Définir la durée", "وقت غير صحيح":"Heure invalide",
-    "املأ الحقول":"Remplissez les champs", "أدخل الرقم":"Entrez le code",
-    "أدخل البيانات":"Entrez les données", "بيانات خاطئة":"Données incorrectes",
-    "ملف فارغ":"Fichier vide",
+    "منتج":"produit",
+    "منتجات":"produits",
+    "منها":"dont",
+    "مخفي":"masqué",
+    "مخفية":"masquée",
+    "تعديل اسم العائلة":"Modifier le nom de la famille",
+    "حذف العائلة":"Supprimer la famille",
+    "سيتم إزالة هذه العائلة من جميع المنتجات المرتبطة بها":"Cette famille sera retirée de tous les produits associés",
 
-    "حذف المنتج؟":"Supprimer le produit ?",
-    "حذف التقييم؟":"Supprimer l'avis ?",
-    "حذف الشعار؟":"Supprimer le logo ?",
-    "حذف شعار المتجر؟":"Supprimer le logo de la boutique ?",
-    "حذف الغلاف؟":"Supprimer la couverture ?",
-    "حذف السياسة؟":"Supprimer la politique ?",
-    "إزالة التخفيض؟":"Retirer la promotion ?",
-    "تأكيد حذف المنطقة؟":"Confirmer la suppression de la zone ?",
-    "تأكيد الحذف؟":"Confirmer la suppression ?",
-    "تأكيد حذف الكل؟":"Confirmer la suppression totale ?",
-    "تسجيل الخروج؟":"Se déconnecter ?",
-    "تأكيد الحذف":"Confirmer",
-    "حذف جميع الطلبات":"Supprimer toutes les commandes",
-
-    "تنبيه:":"Alerte :",
-    "لديك":"Vous avez",
-    "طلب مؤكد. يُنصح بحذف الطلبات الأقدم من شهر والاحتفاظ بطلبات الشهر الأخير، لتجنّب ثقل المتجر وبطء التحميل.":"commande(s) confirmée(s). Il est recommandé de supprimer les commandes de plus d'un mois et de conserver celles du dernier mois, pour éviter la surcharge et le ralentissement du magasin.",
-    "حذف الأقدم من شهر":"Supprimer les anciennes (> 1 mois)",
-    "لا توجد طلبات أقدم من شهر":"Aucune commande de plus d'un mois",
-    "هل تريد المتابعة؟":"Voulez-vous continuer ?",
-
-    "أي منتج كميته أقل من أو يساوي هذا الحد سيُعتبر \"منخفضاً\" في المخزون.":"Tout produit dont la quantité est inférieure ou égale à ce seuil sera considéré comme faible dans le stock.",
-    "تحكم في الميزات التي تظهر في متجرك ولوحة التحكم. التغييرات تُحفظ تلقائياً.":"Contrôlez les fonctionnalités affichées dans votre boutique et le panneau d'administration. Les modifications sont sauvegardées automatiquement.",
-    "ارفع شعاراً خاصاً. إذا لم تُضف، شعار المتجر الأساسي يُستخدم.":"Téléchargez un logo spécifique. S'il n'est pas ajouté, le logo principal sera utilisé.",
-    "سعر منفصل تماماً يظهر فقط في صفحة الترويج.":"Prix séparé qui apparaît uniquement sur la page promotionnelle.",
-    "ارفع صوراً متعددة. إذا لم تُضف، الصورة الأساسية تُستخدم.":"Téléchargez plusieurs images. Si aucune n'est ajoutée, l'image principale sera utilisée.",
-    "كل ميزة: أيقونة + عبارة صغيرة":"Chaque avantage : icône + petite phrase",
-    "يقرأ الملف تلقائياً ويتعرف على الأعمدة (Code, Désignation, Prix, PA TTC…).":"Lit automatiquement le fichier et reconnaît les colonnes (Code, Désignation, Prix, PA TTC…).",
-    "لإعادة توليد config.js من جديد.":"Pour régénérer config.js.",
-    "حذف كل المنتجات والتخفيضات نهائياً (لا يمكن التراجع).":"Suppression définitive de tous les produits et promotions (irréversible).",
-    "تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.":"Changer le nom du propriétaire vous déconnectera. Reconnectez-vous après l'enregistrement.",
-    "عرض كل ما فعله المستخدمون (بائع/مدير) مع إمكانية التصفية حسب اليوم/الأسبوع/الشهر.":"Voir tout ce que les utilisateurs (vendeur/admin) ont fait, avec la possibilité de filtrer.",
-    "صورة كبيرة تظهر أعلى صفحة المتجر الرئيسية.":"Grande image affichée en haut de la page principale.",
-
-    "تفعيل حساب تكلفة الشراء والأرباح لكل منتج.":"Activer le calcul du coût d'achat et des bénéfices.",
-    "تفعيل تتبع الكميات وإحصائيات المخزون.":"Activer le suivi des quantités et les statistiques du stock.",
-    "تفعيل خيار تحديد عدد الوحدات داخل العلبة الواحدة.":"Activer l'option pour définir le nombre d'unités dans une boîte.",
-    "تفعيل خانة الرقم التسلسلي/المرجعي لكل منتج.":"Activer le champ référence/SKU pour chaque produit.",
-    "تفعيل أسعار الجملة والرمز السري الخاص بزبائن الجملة.":"Activer les prix de gros et le code secret des clients en gros.",
-    "تفعيل نظام التخفيضات الزمنية على المنتجات.":"Activer le système de promotions temporaires.",
-    "تفعيل إنشاء صفحات ترويج مستقلة لكل منتج.":"Activer la création de pages promotionnelles indépendantes.",
-    "تفعيل نظام تقييمات العملاء على المنتجات.":"Activer le système d'avis clients.",
-    "تفعيل إدارة مناطق الشحن والولايات والأسعار.":"Activer la gestion des zones de livraison, wilayas et tarifs.",
-    "تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.":"Activer le journal des opérations utilisateurs.",
-
-    /* ═══ عروض وامتيازات ═══ */
+    /* ═══════════════════════════════════════════
+       BUNDLE / OFFERS
+       ═══════════════════════════════════════════ */
     "عروض وامتيازات":"Offres et avantages",
     "تفعيل عروض الكمية":"Activer les offres de quantité",
     "مستويات العرض:":"Niveaux d'offre :",
@@ -340,62 +428,301 @@
     "لم تُضف أي مستوى بعد":"Aucun niveau ajouté",
     "قطعة":"pièce",
     "قطع":"pièces",
-
     "عرض خاص":"Offre spéciale",
     "عروض خاصة":"Offres spéciales",
-    "لا توجد بيانات":"Aucune donnée",
-
-    "التوصيل مجاني":"Livraison offerte",
-    "توصيل مجاني":"Livraison gratuite",
-    "التوصيل مجاني عند شراء":"Livraison offerte à partir de",
-    "قطع أو أكثر":"pièces ou plus",
-    "بكسل خاص بهذا المنتج (اختياري)":"Pixel spécifique à ce produit (optionnel)",
-    "بكسل خاص بهذا المنتج":"Pixel spécifique à ce produit",
-
-    /* ═══ النصوص الناقصة ═══ */
     "أضف مستويات متعددة. النظام يختار تلقائياً":"Ajoutez plusieurs niveaux. Le système choisit automatiquement",
     "أرخص سعر للقطعة":"le meilleur prix unitaire",
     "حسب كمية الزبون.":"selon la quantité du client.",
     "حسب كمية الزبون":"selon la quantité du client",
-    "نص الشريط الإعلاني (اختياري)":"Texte du bandeau publicitaire (optionnel)",
-    "نص الشريط الإعلاني":"Texte du bandeau publicitaire",
 
-    /* ═══ زر إظهار/إخفاء الغلاف ═══ */
-    "إظهار الغلاف في المتجر":"Afficher la couverture dans la boutique",
-    "عند الإيقاف، يختفي الغلاف تمامًا من صفحة المنتجات.":"Si désactivé, la couverture disparaît complètement de la page des produits.",
-    "إظهار الغلاف":"Afficher la couverture",
-    "إخفاء الغلاف":"Masquer la couverture",
-    "تم تفعيل الغلاف":"Couverture activée",
-    "تم إخفاء الغلاف":"Couverture masquée",
+    /* ═══════════════════════════════════════════
+       ACTIVITY LOG
+       ═══════════════════════════════════════════ */
+    "سجل النشاطات":"Journal des activités",
+    "هذه الصفحة للمالك فقط":"Cette page est réservée au propriétaire",
+    "سجل النشاطات معطّل من الإعدادات":"Le journal des activités est désactivé depuis les paramètres",
+    "الإجمالي":"Total", "إضافات":"Ajouts", "تعديلات":"Modifications",
+    "حذف":"Suppressions", "تأكيدات":"Confirmations", "الأسطر":"Lignes",
+    "الفترة":"Période", "تاريخ الطباعة":"Date d'impression",
+    "تفاصيل العملية":"Détails de l'opération",
+    "النوع":"Type", "المستخدم":"Utilisateur", "الهدف":"Cible",
+    "التغييرات":"Changements", "التفاصيل":"Détails", "الطلب":"Commande",
+    "المنتجات":"Produits",
+    "🖨️ طباعة الوثيقة":"🖨️ Imprimer le document",
+    "سيتم فتح صفحة الطباعة في نافذة جديدة":"La page d'impression va s'ouvrir dans une nouvelle fenêtre",
+    "لا توجد عمليات في هذه الفترة":"Aucune opération pour cette période",
+    "كل المستخدمين":"Tous les utilisateurs", "كل الأنواع":"Tous les types",
+    "اليوم":"Aujourd'hui", "الأسبوع":"Semaine", "الشهر":"Mois", "الكل":"Tout",
+    "هذا الأسبوع":"Cette semaine", "هذا الشهر":"Ce mois", "كل الفترات":"Toutes périodes",
+    "صفحة":"Page", "/":"/",
+    "بائع":"Vendeur", "مدير":"Admin", "مالك":"Propriétaire",
 
-    /* ═══════════════════════════════════════════════════════
-       ═══ قسم العائلات (جديد) ═══
-       ═══════════════════════════════════════════════════════ */
-    "العائلات":"Familles",
-    "أضف، عدّل، أو احذف عائلات المنتجات":"Ajoutez, modifiez ou supprimez les familles de produits",
-    "إضافة عائلة جديدة":"Ajouter une nouvelle famille",
-    "لا توجد عائلات بعد":"Aucune famille pour le moment",
-    "اضغط \"إضافة عائلة جديدة\" للبدء":"Cliquez sur « Ajouter une nouvelle famille » pour commencer",
-    "اسم العائلة الجديدة:":"Nom de la nouvelle famille :",
+    /* Activity actions */
+    "إضافة منتج":"Ajout produit", "تعديل منتج":"Modif produit", "حذف منتج":"Suppr produit",
+    "إخفاء منتج":"Masquer produit", "إظهار منتج":"Afficher produit", "تعديل كمية":"Modif stock",
+    "إضافة عائلة":"Ajout famille", "تعديل عائلة":"Modif famille", "حذف عائلة":"Suppr famille",
+    "إضافة تخفيض":"Ajout promo", "إزالة تخفيض":"Suppr promo",
+    "تفعيل ترويج":"Activation promo", "إيقاف ترويج":"Désactivation promo", "تعديل ترويج":"Modif page promo",
+    "تأكيد طلب":"Commande confirmée", "حذف طلب":"Suppr commande", "حذف كل الطلبات":"Suppr toutes commandes",
+    "حذف تقييم":"Suppr avis",
+    "تعديل الإعدادات":"Modif paramètres", "تعديل الغلاف":"Modif couverture",
+    "تعديل ميزة":"Modif fonctionnalité", "تعديل الترويج":"Modif landing",
+    "تعديل السياسات":"Modif politiques", "تعديل البكسل":"Modif pixels",
+    "إضافة شحن":"Ajout livraison", "تعديل شحن":"Modif livraison",
+    "حذف شحن":"Suppr livraison",
+    "إضافة مستخدم":"Ajout utilisateur", "حذف مستخدم":"Suppr utilisateur",
+    "تغيير المالك":"Changement propriétaire", "تغيير رمز الجملة":"Modif code gros",
+    "حذف كل المنتجات":"Suppr tous produits", "استيراد Excel":"Import Excel",
+    "تسجيل دخول":"Connexion", "تسجيل خروج":"Déconnexion",
+
+    /* Activity fields */
+    "الاسم":"Nom", "السعر":"Prix",
+    "سعر الجملة":"Prix de gros", "ثمن الشراء":"Prix d'achat", "الكمية":"Quantité",
+    "الكمية في العلبة":"Qté par boîte", "العائلة":"Famille",
+    "تتبع المخزون":"Suivi stock", "الرقم التسلسلي":"Référence",
+    "السعر الجديد":"Nouveau prix", "النوع":"Type", "الحالة":"Statut",
+    "الدور":"Rôle", "حالة الترويج":"Statut promo", "الستايل":"Style",
+    "اسم الصفحة":"Nom page", "اسم المنتج":"Nom produit",
+    "السعر الخاص":"Prix spécial", "الوصف":"Description", "شعار الصفحة":"Logo page",
+    "عروض الكمية":"Offres quantité", "التوصيل المجاني":"Livraison gratuite",
+    "التقييمات":"Avis", "عداد الزوار":"Compteur visiteurs",
+    "FB Pixel":"FB Pixel", "TikTok Pixel":"TikTok Pixel",
+    "المنزل":"Domicile", "المكتب":"Bureau", "الصورة":"Image", "رمز جديد":"Nouveau code",
+
+    /* ═══════════════════════════════════════════
+       EXCEL IMPORT PAGE
+       ═══════════════════════════════════════════ */
+    "استيراد المنتجات من Excel":"Importer des produits depuis Excel",
+    "رفع ملف Excel":"Charger un fichier Excel",
+    "اضغط هنا لاختيار الملف":"Cliquez ici pour choisir un fichier",
+    "أو اسحب الملف وأفلته هنا":"Ou glissez-déposez le fichier ici",
+    "الصيغ المدعومة: .xlsx, .xls, .csv":"Formats supportés : .xlsx, .xls, .csv",
+    "مراجعة الأعمدة":"Vérification des colonnes",
+    "ملف آخر":"Autre fichier",
+    "معاينة أول 5 منتجات":"Aperçu des 5 premiers produits",
+    "تأكيد الاستيراد":"Confirmer l'import",
+    "النتيجة":"Résultat",
+    "تم الاستيراد بنجاح":"Import réussi",
+    "منتج جديد أُضيف":"Nouveaux produits ajoutés",
+    "موجود مسبقاً (تُجوهل)":"Déjà existant (ignoré)",
+    "مكرر في الملف":"Doublon dans le fichier",
+    "بدون اسم (تُجوهل)":"Sans nom (ignoré)",
+    "قائمة المنتجات المُضافة":"Liste des produits ajoutés",
+    "استيراد ملف آخر":"Importer un autre fichier",
+    "عمود":"Colonne",
+    "— فارغ —":"— vide —",
+    "تجاهل":"Ignorer",
+    "صورة (رابط)":"Image (URL)",
+    "لم يتم تحديد عمود \"اسم المنتج\"":"Aucune colonne « Nom du produit » sélectionnée",
+    "الرجاء اختيار العمود الذي يحتوي على أسماء المنتجات قبل المتابعة.":"Veuillez choisir la colonne des noms avant de continuer.",
+    "لم يتم تحديد أي عمود سعر":"Aucune colonne de prix sélectionnée",
+    "الرجاء تحديد سعر البيع على الأقل.":"Veuillez sélectionner au moins un prix de vente.",
+    "كل شيء جاهز":"Tout est prêt",
+    "راجع الأعمدة أدناه ثم اضغط \"تأكيد الاستيراد\".":"Vérifiez les colonnes ci-dessous puis cliquez sur « Confirmer l'import ».",
+    "عمود الصورة يحتوي على قيم ليست روابط":"La colonne image contient des valeurs qui ne sont pas des liens",
+    "الخلايا التي لا تبدأ بـ http لن تُستخدم كصور.":"Les cellules ne commençant pas par http ne seront pas utilisées comme images.",
+    "الخلايا التالية لن تُستخدم كصور. تأكد أن ملف الإكسل يحتوي على رابط الصورة (يبدأ بـ http) وليس اسمها.":"Les cellules sans lien ne seront pas utilisées. Assurez-vous que le fichier contient l'URL de l'image.",
+    "لا توجد بيانات للعرض":"Aucune donnée à afficher",
+    "لا توجد بيانات للعرض — راجع الأعمدة":"Aucune donnée à afficher — vérifiez les colonnes",
+    "بدون اسم":"Sans nom",
+    "جاري الاستيراد...":"Importation en cours...",
+    "الملف فارغ":"Fichier vide",
+    "فشل قراءة الملف: ":"Échec de lecture du fichier : ",
+    "يجب تحديد عمود اسم المنتج":"Vous devez sélectionner la colonne du nom du produit",
+    "خطأ أثناء الاستيراد: ":"Erreur lors de l'import : ",
+    "جاري الحفظ...":"Enregistrement...",
+    "جاري الرفع...":"Téléchargement...",
+    "جاري الرفع... ":"Téléchargement... ",
+    "جاري رفع N...":"Téléchargement de N...",
+    "جاري القراءة...":"Lecture en cours...",
+    "جاري المعالجة...":"Traitement...",
+    "معالجة...":"Traitement...",
+    "جاري إعادة التحميل...":"Rechargement...",
+    "جاري التأكيد...":"Confirmation...",
+    "جاري الإرسال...":"Envoi en cours...",
+    "جاري الطباعة...":"Impression...",
+
+    /* ═══════════════════════════════════════════
+       TOASTS & ALERTS
+       ═══════════════════════════════════════════ */
+    "تم الحفظ":"Enregistré", "تم الحذف":"Supprimé", "تم التعديل":"Modifié",
+    "تمت الإضافة":"Ajouté", "تم الرفع":"Téléchargé", "تم الإظهار":"Affiché",
+    "تم الإخفاء":"Masqué", "تم النسخ":"Copié",
+    "تم تفعيل":"Activé", "تم الإيقاف":"Désactivé",
+    "مفتاح ImgBB مفقود":"Clé ImgBB manquante", "خطأ: ":"Erreur : ",
+    "خطأ:":"Erreur :",
+    "فشل الرفع":"Échec du téléchargement",
+    "فشل الحفظ":"Échec de l'enregistrement",
+    "فشل الحذف":"Échec de la suppression",
+    "فشل النسخ":"Échec de la copie",
+    "فشل الإرسال":"Échec de l'envoi",
+    "فشل الاستيراد":"Échec de l'import",
+    "اسم المتجر مطلوب":"Nom de la boutique requis",
+    "اسم المنطقة مطلوب":"Nom de zone requis",
+    "اختر ولاية واحدة على الأقل":"Choisissez au moins une wilaya",
+    "اسم فارغ":"Nom vide", "اسم قصير":"Nom trop court",
+    "اسم موجود مسبقاً":"Nom déjà utilisé",
+    "العائلة موجودة":"Famille déjà existante",
     "العائلة موجودة مسبقاً":"Famille déjà existante",
-    "منتج":"produit",
-    "منتجات":"produits",
-    "منها":"dont",
-    "مخفي":"masqué",
-    "مخفية":"masquée",
-    "لا يمكن حذف العائلة":"Impossible de supprimer la famille",
-    "تعديل اسم العائلة":"Modifier le nom de la famille",
-    "حذف العائلة":"Supprimer la famille",
-    "سيتم إزالة هذه العائلة من جميع المنتجات المرتبطة بها":"Cette famille sera retirée de tous les produits associés"
+    "سعر غير صحيح":"Prix invalide",
+    "حدد المدة":"Définir la durée", "وقت غير صحيح":"Heure invalide",
+    "املأ الحقول":"Remplissez les champs", "أدخل الرقم":"Entrez le code",
+    "أدخل البيانات":"Entrez les données", "بيانات خاطئة":"Données incorrectes",
+    "ملف فارغ":"Fichier vide",
+    "أدخل الرمز السري":"Entrez le code secret",
+    "لم يتم ضبط الرمز السري من الإدارة":"Le code secret n'est pas configuré",
+    "✅ تم تفعيل أسعار الجملة":"✅ Prix de gros activés",
+    "❌ الرمز غير صحيح":"❌ Code incorrect",
+    "طلبات لا يمكن حذف المالك":"Le propriétaire ne peut être supprimé",
+
+    /* ═══════════════════════════════════════════
+       PLACEHOLDERS
+       ═══════════════════════════════════════════ */
+    "بحث...":"Rechercher...",
+    "اكتب اسمك الكامل":"Écrivez votre nom complet",
+    "رقم الهاتف":"Numéro de téléphone",
+    "العنوان":"Adresse",
+    "البلدية":"Commune",
+    "-- اختر --":"-- Choisir --",
+    "الرمز السري":"Code secret",
+    "اكتب رأيك في المنتج...":"Écrivez votre avis...",
+    "اسمك":"Votre nom",
+    "بحث في العائلات...":"Rechercher dans les familles...",
+    "الاسم الكامل":"Nom complet",
+    "حي / شارع / رقم المنزل":"Quartier / rue / numéro",
+    "07 XX XX XX XX":"07 XX XX XX XX",
+
+    /* ═══════════════════════════════════════════
+       LANDING PAGE (product.html)
+       ═══════════════════════════════════════════ */
+    "اطلب الآن":"Commander maintenant",
+    "الاسم واللقب":"Nom et prénom",
+    "الولاية":"Wilaya",
+    "طريقة التوصيل":"Mode de livraison",
+    "توصيل للمنزل":"Livraison à domicile",
+    "استلام من المكتب":"Retrait au bureau",
+    "ملخّص الطلب":"Résumé de la commande",
+    "سعر المنتج × ":"Prix du produit × ",
+    "سعر الشحن":"Frais de livraison",
+    "الإجمالي النهائي":"Total final",
+    "وفّرت":"Vous avez économisé",
+    "إتمام الطلب":"Finaliser la commande",
+    "تغيير العرض":"Changer l'offre",
+    "تفاصيل المنتج":"Détails du produit",
+    "لماذا تختارنا؟":"Pourquoi nous choisir ?",
+    "تقييمات العملاء":"Avis clients",
+    "شكراً لثقتك! ننتظر تقييمك":"Merci de votre confiance ! Donnez votre avis",
+    "إرسال التقييم":"Envoyer l'avis",
+    "اختر العرض المناسب لك":"Choisissez l'offre qui vous convient",
+    "أو اطلب كمية مخصّصة من الأسفل":"Ou commandez une quantité personnalisée ci-dessous",
+    "ينتهي العرض الخاص بعد":"L'offre se termine dans",
+    "يشاهد المنتج الآن:":"Personnes qui consultent :",
+    "تم استلام طلبك بنجاح":"Commande reçue avec succès",
+    "إغلاق":"Fermer",
+    "لا توجد تقييمات بعد":"Aucun avis pour le moment",
+    "انتهى العرض":"Offre terminée",
+    "وفّر":"Économisez",
+    "الأفضل":"Meilleur",
+    "قطعتان":"2 pièces",
+    "قطع":"pièces",
+    "زبون":"Client",
+    "مجاني":"Gratuit",
+    "اختر الولاية":"Choisissez la wilaya",
+    "غير متاح":"Indisponible",
+    "سعر خاص":"Prix spécial",
+    "عرض خاص":"Offre spéciale",
+    "تخفيض دائم":"Promo permanente",
+    "أضف":"Ajouter",
+    "أخرى للاستفادة من سعر":"de plus pour bénéficier du prix",
+    "للقطعة الواحدة":"par pièce",
+    "لقد حصلت على":"Vous avez obtenu",
+    "أفضل عرض متاح":"la meilleure offre disponible",
+    "سعر":"prix",
+    "للقطعة":"par pièce",
+    "مع":"avec",
+    "خدمة العملاء:":"Service client :",
+    "جاري التحميل...":"Chargement...",
+
+    /* ═══════════════════════════════════════════
+       INDEX (store)
+       ═══════════════════════════════════════════ */
+    "سلة التسوق":"Mon panier",
+    "السلة فارغة":"Panier vide",
+    "المجموع: ":"Total : ",
+    "مسح السلة":"Vider le panier",
+    "إرسال الطلب":"Envoyer la commande",
+    "الموقع":"Localisation",
+    "الطلبات غير مفعّلة":"Commandes désactivées",
+    "يرجى ملء جميع البيانات":"Veuillez remplir tous les champs",
+    "✅ تم استلام طلبك بنجاح!":"✅ Votre commande a bien été reçue !",
+    "عرض كمية":"Offre quantité",
+    "💎 أسعار الجملة":"💎 Prix de gros",
+    "✅ تم تفعيل أسعار الجملة":"✅ Prix de gros activés",
+    "الآن يمكنك الشراء بأسعار الجملة":"Vous pouvez acheter en gros",
+    "👑 خاص بزبائن الجملة – أدخل الرمز السري":"👑 Réservé aux grossistes – Entrez le code",
+    "غير مفعل":"Désactivé",
+    "✅ مفعل":"✅ Activé",
+    "تفعيل":"Activer",
+    "عدد العلب":"Nb de boîtes",
+    "الكمية":"Quantité",
+    "وحدة":"unités",
+    "علبة":"boîte",
+    "يوم":"j",
+    "📦 العلبة: ":"📦 Boîte : ",
+    "لا توجد منتجات":"Aucun produit",
+    "لا توجد عائلات":"Aucune famille",
+
+    /* ═══════════════════════════════════════════
+       SETUP PAGE
+       ═══════════════════════════════════════════ */
+    "⚙️ معالج إعداد المتجر":"⚙️ Assistant de configuration",
+    "1) إعداد Firebase":"1) Configuration Firebase",
+    "2) مفتاح ImgBB":"2) Clé ImgBB",
+    "3) حساب المالك (للدخول)":"3) Compte propriétaire (connexion)",
+    "كود Firebase بالكامل":"Code Firebase complet",
+    "💡 الصق الكود كما هو من Firebase Console بدون تعديل.":"💡 Collez le code directement depuis Firebase Console.",
+    "توليد config.js":"Générer config.js",
+    "📋 خطوة أخيرة: انسخ هذا المحتوى":"📋 Dernière étape : copiez ce contenu",
+    "نسخ المحتوى":"Copier",
+    "تحميل الملف":"Télécharger",
+    "🎉 تم بنجاح!":"🎉 Succès !",
+    "🛠️ فتح لوحة الإدارة":"🛠️ Ouvrir l'admin",
+    "🏪 فتح المتجر":"🏪 Ouvrir la boutique",
+    "📌 بعد توليد الملف:":"📌 Après la génération :",
+    "العودة للوحة الإدارة":"Retour au panneau d'admin",
+    "عرض المتجر":"Voir la boutique",
+    "هذا الحساب سيُستخدم للدخول إلى لوحة الإدارة. استخدم أحرفاً إنجليزية وأرقاماً فقط.":"Ce compte servira à accéder au panneau d'administration. Utilisez uniquement des lettres et chiffres.",
+
+    /* ═══════════════════════════════════════════
+       ERRORS / VALIDATION
+       ═══════════════════════════════════════════ */
+    "غير مسموح":"Non autorisé",
+    "تأكيد الحذف":"Confirmer la suppression",
+    "حذف جميع الطلبات":"Supprimer toutes les commandes",
+    "تحذير":"Attention",
+    "تنبيه":"Alerte",
+    "خطأ":"Erreur",
+    "نجاح":"Succès",
+    "معلومة":"Information"
   };
 
+  /* ═══════════════════════════════════════════════════════════
+     PATTERNS — الترجمات الديناميكية (regex)
+     ═══════════════════════════════════════════════════════════ */
   const PATTERNS = [
+    /* Inventory alerts */
     { regex: /^يوجد (\d+) منتج نفد من المخزون$/, fn:(m,n)=>`Il y a ${n} produit(s) épuisé(s)` },
     { regex: /^يوجد (\d+) منتج على وشك النفاد$/, fn:(m,n)=>`Il y a ${n} produit(s) bientôt épuisé(s)` },
+
+    /* Period */
     { regex: /^الفترة:\s*(.+)$/, fn:(m,p)=>`Période : ${p.trim()}` },
     { regex: /^الفترة :\s*(.+)$/, fn:(m,p)=>`Période : ${p.trim()}` },
+
+    /* Zone prices */
     { regex: /^منزل:\s*(.+)$/, fn:(m,p)=>`Domicile : ${p.trim()}` },
     { regex: /^مكتب:\s*(.+)$/, fn:(m,p)=>`Bureau : ${p.trim()}` },
+
+    /* Counts */
     { regex: /^(\d+)\s*طلب$/, fn:(m,n)=>`${n} commande(s)` },
     { regex: /^(\d+)\s*منتج$/, fn:(m,n)=>`${n} produit(s)` },
     { regex: /^(\d+)\s*قطعة$/, fn:(m,n)=>`${n} pièce(s)` },
@@ -408,19 +735,45 @@
     { regex: /^(\d+)\s*عروض$/, fn:(m,n)=>`${n} offres` },
     { regex: /^(\d+)\s*تقييم$/, fn:(m,n)=>`${n} avis` },
     { regex: /^(\d+)\s*منطقة$/, fn:(m,n)=>`${n} zone(s)` },
+    { regex: /^(\d+)\s*صفحة$/, fn:(m,n)=>`${n} page(s)` },
+
+    /* Prefixes */
     { regex: /^المنتج:\s*(.+)$/, fn:(m,p)=>`Produit : ${p.trim()}` },
     { regex: /^الإجمالي:\s*(.+)$/, fn:(m,p)=>`Total : ${p.trim()}` },
     { regex: /^العميل:\s*(.+)$/, fn:(m,p)=>`Client : ${p.trim()}` },
     { regex: /^الهاتف:\s*(.+)$/, fn:(m,p)=>`Téléphone : ${p.trim()}` },
     { regex: /^العنوان:\s*(.+)$/, fn:(m,p)=>`Adresse : ${p.trim()}` },
+    { regex: /^البريد الإلكتروني:\s*(.+)$/, fn:(m,p)=>`Email : ${p.trim()}` },
+    { regex: /^الإيميل:\s*(.+)$/, fn:(m,p)=>`Email : ${p.trim()}` },
+
+    /* Family counts */
+    { regex: /^\(منها (\d+) مخفي\)$/, fn:(m,n)=>`(dont ${n} masqué(s))` },
+    { regex: /^\(منها (\d+) مخفية\)$/, fn:(m,n)=>`(dont ${n} masquée(s))` },
+    { regex: /^\(منها (\d+) مخفي\/ة\)$/, fn:(m,n)=>`(dont ${n} masqué(s))` },
+
+    /* Bulk actions */
     { regex: /^سيتم حذف (\d+) طلب أقدم من شهر\.$/, fn:(m,n)=>`Seront supprimées ${n} commande(s) de plus d'un mois.` },
     { regex: /^سيُحتفظ بـ (\d+) طلب خلال الشهر الأخير\.$/, fn:(m,n)=>`Seront conservées ${n} commande(s) du dernier mois.` },
     { regex: /^تم حذف (\d+) طلب$/, fn:(m,n)=>`${n} commande(s) supprimée(s)` },
-    { regex: /^\(منها (\d+) مخفي\)$/, fn:(m,n)=>`(dont ${n} masqué(s))` },
-    { regex: /^\(منها (\d+) مخفية\)$/, fn:(m,n)=>`(dont ${n} masquée(s))` },
-    { regex: /^تمت إضافة "(.+)"$/, fn:(m,p)=>`« ${p} » a été ajoutée` }
+    { regex: /^تمت إضافة "(.+)"$/, fn:(m,p)=>`« ${p} » a été ajoutée` },
+
+    /* Progress */
+    { regex: /^دفعة (\d+) من (\d+)$/, fn:(m,a,b)=>`Lot ${a} sur ${b}` },
+    { regex: /^(\d+)\s*\/\s*(\d+)$/, fn:(m,a,b)=>`${a} / ${b}` },
+
+    /* Prices */
+    { regex: /^وفّر (\d+)$/, fn:(m,n)=>`Économisez ${n}` },
+    { regex: /^تمت إضافة "(.+)" بنجاح$/, fn:(m,p)=>`« ${p} » ajoutée avec succès` },
+    { regex: /^يوجد (\d+) عنصر$/, fn:(m,n)=>`${n} article(s)` },
+
+    /* Bundle */
+    { regex: /^أضف (\d+) أخرى للاستفادة من سعر (.+) للقطعة الواحدة$/, fn:(m,n,p)=>`Ajoutez ${n} de plus pour bénéficier du prix ${p} par pièce` },
+    { regex: /^لقد حصلت على أفضل عرض متاح — سعر (.+) للقطعة$/, fn:(m,p)=>`Vous avez obtenu la meilleure offre — ${p} par pièce` }
   ];
 
+  /* ═══════════════════════════════════════════════════════════
+     HELPERS
+     ═══════════════════════════════════════════════════════════ */
   const EMOJI_RE = /^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{1F1E6}-\u{1F1FF}]+\s*/u;
   const WILAYA_SPLIT_RE = /\s*[•·∙⋅]\s*/;
 
@@ -447,6 +800,7 @@
       .trim();
   }
 
+  /* Dictionnaire normalisé */
   const AR_TO_FR_NORM = {};
   Object.keys(AR_TO_FR).forEach(k => {
     AR_TO_FR_NORM[normalizeKey(k)] = AR_TO_FR[k];
@@ -470,20 +824,26 @@
     const trimmed = text.trim();
     if (!trimmed) return null;
 
+    /* 1. Direct match */
     if (AR_TO_FR[trimmed]) return AR_TO_FR[trimmed];
 
+    /* 2. Collapsed */
     const collapsed = collapseWS(trimmed);
     if (collapsed !== trimmed && AR_TO_FR[collapsed]) return AR_TO_FR[collapsed];
 
+    /* 3. Normalized */
     const normKey = normalizeKey(trimmed);
     if (AR_TO_FR_NORM[normKey]) return AR_TO_FR_NORM[normKey];
 
+    /* 4. Wilayas */
     if (WILAYAS_FR[trimmed]) return WILAYAS_FR[trimmed];
     if (collapsed !== trimmed && WILAYAS_FR[collapsed]) return WILAYAS_FR[collapsed];
 
+    /* 5. Wilaya list */
     const wilayaList = translateWilayaList(trimmed);
     if (wilayaList) return wilayaList;
 
+    /* 6. Remove emoji prefix */
     const noEmoji = trimmed.replace(EMOJI_RE, '').trim();
     const noEmojiCollapsed = collapseWS(noEmoji);
     if (noEmoji && noEmoji !== trimmed) {
@@ -494,6 +854,7 @@
       if (AR_TO_FR_NORM[normKey2]) return AR_TO_FR_NORM[normKey2];
     }
 
+    /* 7. Patterns */
     for (const p of PATTERNS) {
       const m = noEmoji.match(p.regex) || trimmed.match(p.regex) || collapsed.match(p.regex);
       if (m) return p.fn(...m);
@@ -541,13 +902,17 @@
       const tag = root.tagName;
       if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return;
     }
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
-      acceptNode: function(n) {
-        if (n.nodeType === 1 && (n.tagName === 'SCRIPT' || n.tagName === 'STYLE' || n.tagName === 'NOSCRIPT'))
-          return NodeFilter.FILTER_REJECT;
-        return NodeFilter.FILTER_ACCEPT;
+    const walker = document.createTreeWalker(
+      root,
+      NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode: function(n) {
+          if (n.nodeType === 1 && (n.tagName === 'SCRIPT' || n.tagName === 'STYLE' || n.tagName === 'NOSCRIPT'))
+            return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
       }
-    });
+    );
     const nodes = [];
     let n;
     while (n = walker.nextNode()) nodes.push(n);
@@ -576,6 +941,9 @@
     if (LANG !== 'fr') return;
     walkAndTranslate(document.body);
     document.title = document.title.replace("لوحة الإدارة", "Panneau d'administration");
+    document.title = document.title.replace("سجل النشاطات", "Journal des activités");
+    document.title = document.title.replace("استيراد المنتجات من Excel", "Importer des produits depuis Excel");
+    document.title = document.title.replace("معالج إعداد المتجر", "Assistant de configuration");
   }
 
   let _observerStarted = false;
@@ -635,12 +1003,20 @@
     }
   }
 
+  /* ═══════════════════════════════════════════════════════════
+     EXPORTS
+     ═══════════════════════════════════════════════════════════ */
   window.I18N = I18N;
+  window.AR_TO_FR = AR_TO_FR;
   window.t = t;
   window.translateText = translateText;
   window.applyTranslations = applyTranslations;
   window.lockDirection = lockDirection;
+  window.lookupTranslation = lookupTranslation;
 
+  /* ═══════════════════════════════════════════════════════════
+     INIT
+     ═══════════════════════════════════════════════════════════ */
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initI18n);
   else initI18n();
   setTimeout(bindLangButton, 500);
