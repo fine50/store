@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   i18n.js — نظام الترجمة الكامل — النسخة النهائية الشاملة
+   i18n.js — نظام الترجمة الكامل — النسخة النهائية المنقّحة
    ═══════════════════════════════════════════════════════════ */
 (function() {
   'use strict';
@@ -85,6 +85,7 @@
     "نشطة":"Active", "جديد":"Nouveau", "مؤكد":"Confirmé",
     "رجوع للوحة":"Retour au panneau",
     "رجوع للوحة الإدارة":"Retour au panneau d'admin",
+    "نشطة":"Active",
 
     "المنتجات":"Produits", "الطلبات":"Commandes", "المخزون":"Stock",
     "التقييمات":"Avis", "الترويج":"Promotion", "الإعدادات":"Paramètres",
@@ -112,7 +113,7 @@
     "تعذّر الاتصال بـ Firebase.":"Impossible de se connecter à Firebase.",
 
     /* ═══════════════════════════════════════════
-       ORDERS
+       ORDERS + ORDER MODAL
        ═══════════════════════════════════════════ */
     "طلبات جديدة":"Nouvelles commandes", "مؤكدة":"Confirmées",
     "حذف جميع الطلبات المؤكدة":"Supprimer toutes les commandes confirmées",
@@ -120,10 +121,10 @@
     "طلب وارد":"Commande reçue", "طلب مؤكد":"Commande confirmée",
     "تأكيد وطباعة":"Confirmer & imprimer", "طباعة":"Imprimer",
     "عرض كمية":"Offre quantité", "توصيل مجاني":"Livraison gratuite",
-    "من صفحة ترويج":"Page promo",
+    "من صفحة ترويج":"Depuis la page promo",
     "توصيل مجاني - تم تطبيق العرض":"Livraison gratuite — offre appliquée",
     "الشحن:":"Livraison :", "الإجمالي:":"Total :",
-    "تنبيه:":"Alerte :",
+    "تنبيه:":"Alerte :", "تنبيه":"Alerte",
     "لديك":"Vous avez",
     "طلب مؤكد. يُنصح بحذف الطلبات الأقدم من شهر والاحتفاظ بطلبات الشهر الأخير، لتجنّب ثقل المتجر وبطء التحميل.":"commande(s) confirmée(s). Il est recommandé de supprimer les commandes de plus d'un mois et de conserver celles du dernier mois, pour éviter la surcharge et le ralentissement du magasin.",
     "حذف الأقدم من شهر":"Supprimer les anciennes (> 1 mois)",
@@ -131,41 +132,38 @@
     "هل تريد المتابعة؟":"Voulez-vous continuer ?",
     "تأكيد الحذف؟":"Confirmer la suppression ?",
     "تأكيد حذف الكل؟":"Confirmer la suppression totale ?",
-    "تأكيد الحذف":"Confirmer",
-    /* ═══════════════════════════════════════════
-   ORDER MODAL — جداول وبطاقات الطلب
-   ═══════════════════════════════════════════ */
-"المجموع": "Total",
-"السعر": "Prix",
-"سعر الوحدة": "Prix unitaire",
-"سعر الوحدة:": "Prix unitaire :",
-"الإجمالي:": "Total :",
-"المجموع الكلي": "Total général",
-"المجموع الفرعي": "Sous-total",
-"عدد المنتجات": "Nombre de produits",
-"عدد المنتجات:": "Nombre de produits :",
-"إجمالي القطع": "Total pièces",
-"إجمالي القطع:": "Total pièces :",
-"الطريقة": "Méthode",
-"نوع التسليم": "Type de livraison",
-"طريقة التوصيل": "Mode de livraison",
-"ملاحظة": "Note",
-"ملاحظات": "Notes",
-"تاريخ الطلب": "Date de commande",
-"تاريخ التأكيد": "Date de confirmation",
-"رقم الفاتورة": "N° de facture",
-"رقم الفاتورة:": "N° de facture :",
-"رقم الطلب": "N° de commande",
-"رقم الطلب:": "N° de commande :",
-"حالة الطلب": "Statut de la commande",
-"منتج": "Produit",
-"المنتجات": "Produits",
-"المصدر": "Source",
-"من واتساب": "Depuis WhatsApp",
-"من المتجر": "Depuis la boutique",
-"من صفحة ترويج": "Depuis la page promo",
-"طلب وارد من واتساب": "Commande reçue via WhatsApp",
-"طلب وارد من المتجر": "Commande reçue via la boutique",
+    "تأكيد الحذف":"Confirmer la suppression",
+
+    /* Order modal — tableau */
+    "المجموع":"Total",
+    "السعر":"Prix",
+    "سعر الوحدة":"Prix unitaire",
+    "سعر الوحدة:":"Prix unitaire :",
+    "المجموع الكلي":"Total général",
+    "المجموع الفرعي":"Sous-total",
+    "عدد المنتجات":"Nombre de produits",
+    "عدد المنتجات:":"Nombre de produits :",
+    "إجمالي القطع":"Total pièces",
+    "إجمالي القطع:":"Total pièces :",
+    "الطريقة":"Méthode",
+    "نوع التسليم":"Type de livraison",
+    "طريقة التوصيل":"Mode de livraison",
+    "ملاحظة":"Note",
+    "ملاحظات":"Notes",
+    "تاريخ الطلب":"Date de commande",
+    "تاريخ التأكيد":"Date de confirmation",
+    "رقم الفاتورة":"N° de facture",
+    "رقم الفاتورة:":"N° de facture :",
+    "رقم الطلب":"N° de commande",
+    "رقم الطلب:":"N° de commande :",
+    "حالة الطلب":"Statut de la commande",
+    "منتج":"Produit",
+    "المصدر":"Source",
+    "من واتساب":"Depuis WhatsApp",
+    "من المتجر":"Depuis la boutique",
+    "طلب وارد من واتساب":"Commande reçue via WhatsApp",
+    "طلب وارد من المتجر":"Commande reçue via la boutique",
+    "الطلب":"Commande",
 
     /* ═══════════════════════════════════════════
        INVENTORY
@@ -176,7 +174,6 @@
     "إجمالي المبيعات":"Total des ventes", "الربح الصافي":"Bénéfice net",
     "تكلفة البضاعة":"Coût des marchandises", "عدد الطلبات":"Nombre de commandes",
     "قيمة المخزون:":"Valeur du stock :", "قيمة المخزون":"Valeur du stock",
-    "إجمالي القطع:":"Total pièces :", "إجمالي القطع":"Total pièces",
     "حالة المخزون":"État du stock", "المنتج":"Produit", "الكمية":"Qté",
     "الكمية المباعة":"Qté vendue", "ثمن الشراء":"Prix d'achat", "سعر البيع":"Prix de vente",
     "الفائدة/قطعة":"Marge/pièce", "التكلفة":"Coût", "الحالة":"Statut",
@@ -220,6 +217,7 @@
     "تنبيهات المخزون":"Alertes de stock",
     "حد التنبيه العام (الكمية الدنيا قبل إظهار التنبيه)":"Seuil d'alerte global",
     "حفظ الإعدادات":"Enregistrer les paramètres",
+    "أي منتج كميته أقل من أو يساوي هذا الحد سيُعتبر \"منخفضاً\" في المخزون.":"Tout produit dont la quantité est inférieure ou égale à ce seuil sera considéré comme faible dans le stock.",
 
     /* ═══════════════════════════════════════════
        COVER SETTINGS
@@ -235,11 +233,12 @@
     "تم إخفاء الغلاف":"Couverture masquée",
 
     /* ═══════════════════════════════════════════
-       FEATURES SETTINGS
+       FEATURES SETTINGS + NEW PRODUCTS
        ═══════════════════════════════════════════ */
     "إدارة الميزات":"Gestion des fonctionnalités",
+    "تحكم في الميزات التي تظهر في متجرك ولوحة التحكم. التغييرات تُحفظ تلقائياً.":"Contrôlez les fonctionnalités affichées dans votre boutique et le panneau d'administration. Les modifications sont sauvegardées automatiquement.",
     "سعر الشراء":"Prix d'achat", "تتبع المخزون":"Suivi du stock",
-    "الكمية في العلبة":"Quantité par boîte", "الرقم التسلسلي (SKU)":"Référence (SKU)",
+    "الكمية في العلبة":"Qté par boîte", "الرقم التسلسلي (SKU)":"Référence (SKU)",
     "سعر الجملة":"Prix de gros", "التخفيضات":"Promotions",
     "صفحات الترويج":"Pages promotionnelles",
     "تفعيل حساب تكلفة الشراء والأرباح لكل منتج.":"Activer le calcul du coût d'achat et des bénéfices.",
@@ -253,9 +252,7 @@
     "تفعيل إدارة مناطق الشحن والولايات والأسعار.":"Activer la gestion des zones de livraison.",
     "تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.":"Activer le journal des opérations utilisateurs.",
 
-    /* ═══════════════════════════════════════════
-       NEW PRODUCTS FEATURE
-       ═══════════════════════════════════════════ */
+    /* New products */
     "المنتجات الجديدة":"Nouveaux produits",
     "إظهار تبويب \"الجديدة\" لتصفية المنتجات المُضافة حديثاً.":"Afficher l'onglet « Nouveaux » pour filtrer les produits récemment ajoutés.",
     "عرض المنتجات المُضافة خلال:":"Afficher les produits ajoutés durant :",
@@ -279,7 +276,7 @@
        POLICIES
        ═══════════════════════════════════════════ */
     "سياسات المتجر":"Politiques de la boutique",
-    "كل سياسة تحتوي على عنوان + نص الشرح.":"Chaque politique : titre + description.",
+    "كل سياسة تحتوي على عنوان + نص الشرح.":"Chaque politique contient un titre + une description.",
     "إضافة سياسة جديدة":"Ajouter une politique",
     "حفظ السياسات":"Enregistrer les politiques",
     "عنوان السياسة":"Titre de la politique",
@@ -324,11 +321,11 @@
     "الاسم الجديد":"Nouveau nom", "كلمة المرور الجديدة":"Nouveau mot de passe",
     "سجل النشاطات":"Journal des activités",
     "فتح سجل النشاطات":"Ouvrir le journal des activités",
-    "تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.": "Changer le nom du propriétaire vous déconnectera.",
-"تغيير بيانات المالك سيُحدّث حسابك. سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.": "Changer les données du propriétaire mettra à jour votre compte. La page se rechargera automatiquement après l'enregistrement.",
-"تغيير بيانات المالك سيُحدّث حسابك.": "Changer les données du propriétaire mettra à jour votre compte.",
-"سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.": "La page se rechargera automatiquement après l'enregistrement.",
-    "عرض كل ما فعله المستخدمون (بائع/مدير) مع إمكانية التصفية حسب اليوم/الأسبوع/الشهر.":"Voir toutes les opérations des utilisateurs avec filtres.",
+    "تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.":"Changer le nom du propriétaire vous déconnectera.",
+    "تغيير بيانات المالك سيُحدّث حسابك. سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.":"Changer les données du propriétaire mettra à jour votre compte. La page se rechargera automatiquement après l'enregistrement.",
+    "تغيير بيانات المالك سيُحدّث حسابك.":"Changer les données du propriétaire mettra à jour votre compte.",
+    "سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.":"La page se rechargera automatiquement après l'enregistrement.",
+    "عرض كل ما فعله المستخدمون (بائع/مدير) مع إمكانية التصفية حسب اليوم/الأسبوع/الشهر.":"Voir toutes les opérations des utilisateurs (vendeur/admin) avec filtres par jour/semaine/mois.",
 
     /* ═══════════════════════════════════════════
        ADVANCED
@@ -340,7 +337,7 @@
     "فتح setup.html":"Ouvrir setup.html",
     "منطقة الخطر":"Zone de danger",
     "حذف كل المنتجات":"Supprimer tous les produits",
-    "يقرأ الملف تلقائياً ويتعرف على الأعمدة (Code, Désignation, Prix, PA TTC…).":"Lit automatiquement le fichier et reconnaît les colonnes.",
+    "يقرأ الملف تلقائياً ويتعرف على الأعمدة (Code, Désignation, Prix, PA TTC…).":"Lit automatiquement le fichier et reconnaît les colonnes (Code, Désignation, Prix, PA TTC…).",
     "لإعادة توليد config.js من جديد.":"Pour régénérer config.js.",
     "حذف كل المنتجات والتخفيضات نهائياً (لا يمكن التراجع).":"Suppression définitive de tous les produits et promotions (irréversible).",
 
@@ -350,6 +347,7 @@
     "إضافة منتج":"Ajouter un produit", "تعديل المنتج":"Modifier le produit",
     "اسم المنتج":"Nom du produit",
     "الرقم التسلسلي / المرجع (SKU)":"Référence / SKU",
+    "الرقم التسلسلي":"Référence",
     "سعر البيع (دج)":"Prix de vente (DA)",
     "سعر الجملة (اختياري)":"Prix de gros (optionnel)",
     "الكمية في العلبة (اختياري)":"Qté par boîte (optionnel)",
@@ -368,6 +366,7 @@
     "تخفيض دائم":"Promotion permanente", "المدة":"Durée",
     "من":"De", "إلى":"À", "إزالة":"Retirer",
     "إزالة التخفيض؟":"Retirer la promotion ?",
+    "السعر الجديد":"Nouveau prix",
 
     /* ═══════════════════════════════════════════
        LANDING EDIT
@@ -387,6 +386,7 @@
     "اتركه فارغاً لاستخدام اسم المنتج الأصلي":"Vide pour utiliser le nom original",
     "اتركه فارغاً لاستخدام السعر الأصلي":"Vide pour utiliser le prix original",
     "وصف المنتج":"Description du produit",
+    "الوصف":"Description",
     "صور صفحة الترويج":"Images de la page promo",
     "لا توجد صور بعد":"Aucune image pour le moment",
     "لماذا تختارنا؟ (المميزات)":"Pourquoi nous choisir ? (avantages)",
@@ -435,8 +435,7 @@
     "اضغط \"إضافة عائلة جديدة\" للبدء":"Cliquez sur « Ajouter une nouvelle famille » pour commencer",
     "اسم العائلة الجديدة:":"Nom de la nouvelle famille :",
     "العائلة موجودة مسبقاً":"Famille déjà existante",
-    "منتج":"produit",
-    "منتجات":"produits",
+    "العائلة":"Famille",
     "منها":"dont",
     "مخفي":"masqué",
     "مخفية":"masquée",
@@ -475,24 +474,20 @@
     /* ═══════════════════════════════════════════
        ACTIVITY LOG
        ═══════════════════════════════════════════ */
-    "سجل النشاطات":"Journal des activités",
     "هذه الصفحة للمالك فقط":"Cette page est réservée au propriétaire",
     "سجل النشاطات معطّل من الإعدادات":"Le journal des activités est désactivé depuis les paramètres",
-    "الإجمالي":"Total", "إضافات":"Ajouts", "تعديلات":"Modifications",
+    "إضافات":"Ajouts", "تعديلات":"Modifications",
     "حذف":"Suppressions", "تأكيدات":"Confirmations", "الأسطر":"Lignes",
-    "الفترة":"Période", "تاريخ الطباعة":"Date d'impression",
+    "تاريخ الطباعة":"Date d'impression",
     "تفاصيل العملية":"Détails de l'opération",
     "النوع":"Type", "المستخدم":"Utilisateur", "الهدف":"Cible",
-    "التغييرات":"Changements", "التفاصيل":"Détails", "الطلب":"Commande",
-    "المنتجات":"Produits",
+    "التغييرات":"Changements", "التفاصيل":"Détails",
     "🖨️ طباعة الوثيقة":"🖨️ Imprimer le document",
     "سيتم فتح صفحة الطباعة في نافذة جديدة":"La page d'impression va s'ouvrir dans une nouvelle fenêtre",
     "لا توجد عمليات في هذه الفترة":"Aucune opération pour cette période",
     "كل المستخدمين":"Tous les utilisateurs", "كل الأنواع":"Tous les types",
-    "اليوم":"Aujourd'hui", "الأسبوع":"Semaine", "الشهر":"Mois", "الكل":"Tout",
-    "هذا الأسبوع":"Cette semaine", "هذا الشهر":"Ce mois", "كل الفترات":"Toutes périodes",
-    "صفحة":"Page", "/":"/",
-    "بائع":"Vendeur", "مدير":"Admin", "مالك":"Propriétaire",
+    "الأسبوع":"Semaine", "الشهر":"Mois", "كل الفترات":"Toutes périodes",
+    "صفحة":"Page",
 
     /* Activity actions */
     "إضافة منتج":"Ajout produit", "تعديل منتج":"Modif produit", "حذف منتج":"Suppr produit",
@@ -513,24 +508,19 @@
     "تسجيل دخول":"Connexion", "تسجيل خروج":"Déconnexion",
 
     /* Activity fields */
-    "الاسم":"Nom", "السعر":"Prix",
-    "سعر الجملة":"Prix de gros", "ثمن الشراء":"Prix d'achat", "الكمية":"Quantité",
-    "الكمية في العلبة":"Qté par boîte", "العائلة":"Famille",
-    "تتبع المخزون":"Suivi stock", "الرقم التسلسلي":"Référence",
-    "السعر الجديد":"Nouveau prix", "النوع":"Type", "الحالة":"Statut",
+    "الاسم":"Nom",
+    "تتبع المخزون":"Suivi stock",
     "الدور":"Rôle", "حالة الترويج":"Statut promo", "الستايل":"Style",
     "اسم الصفحة":"Nom page", "اسم المنتج":"Nom produit",
-    "السعر الخاص":"Prix spécial", "الوصف":"Description", "شعار الصفحة":"Logo page",
+    "السعر الخاص":"Prix spécial", "شعار الصفحة":"Logo page",
     "عروض الكمية":"Offres quantité", "التوصيل المجاني":"Livraison gratuite",
-    "التقييمات":"Avis", "عداد الزوار":"Compteur visiteurs",
+    "عداد الزوار":"Compteur visiteurs",
     "FB Pixel":"FB Pixel", "TikTok Pixel":"TikTok Pixel",
     "المنزل":"Domicile", "المكتب":"Bureau", "الصورة":"Image", "رمز جديد":"Nouveau code",
 
     /* ═══════════════════════════════════════════
        EXCEL IMPORT PAGE
        ═══════════════════════════════════════════ */
-    "استيراد المنتجات من Excel":"Importer des produits depuis Excel",
-    "رفع ملف Excel":"Charger un fichier Excel",
     "اضغط هنا لاختيار الملف":"Cliquez ici pour choisir un fichier",
     "أو اسحب الملف وأفلته هنا":"Ou glissez-déposez le fichier ici",
     "الصيغ المدعومة: .xlsx, .xls, .csv":"Formats supportés : .xlsx, .xls, .csv",
@@ -569,8 +559,6 @@
     "خطأ أثناء الاستيراد: ":"Erreur lors de l'import : ",
     "جاري الحفظ...":"Enregistrement...",
     "جاري الرفع...":"Téléchargement...",
-    "جاري الرفع... ":"Téléchargement... ",
-    "جاري رفع N...":"Téléchargement de N...",
     "جاري القراءة...":"Lecture en cours...",
     "جاري المعالجة...":"Traitement...",
     "معالجة...":"Traitement...",
@@ -600,7 +588,6 @@
     "اسم فارغ":"Nom vide", "اسم قصير":"Nom trop court",
     "اسم موجود مسبقاً":"Nom déjà utilisé",
     "العائلة موجودة":"Famille déjà existante",
-    "العائلة موجودة مسبقاً":"Famille déjà existante",
     "سعر غير صحيح":"Prix invalide",
     "حدد المدة":"Définir la durée", "وقت غير صحيح":"Heure invalide",
     "املأ الحقول":"Remplissez les champs", "أدخل الرقم":"Entrez le code",
@@ -615,10 +602,8 @@
     /* ═══════════════════════════════════════════
        PLACEHOLDERS
        ═══════════════════════════════════════════ */
-    "بحث...":"Rechercher...",
     "اكتب اسمك الكامل":"Écrivez votre nom complet",
     "رقم الهاتف":"Numéro de téléphone",
-    "العنوان":"Adresse",
     "البلدية":"Commune",
     "-- اختر --":"-- Choisir --",
     "الرمز السري":"Code secret",
@@ -635,7 +620,6 @@
     "اطلب الآن":"Commander maintenant",
     "الاسم واللقب":"Nom et prénom",
     "الولاية":"Wilaya",
-    "طريقة التوصيل":"Mode de livraison",
     "توصيل للمنزل":"Livraison à domicile",
     "استلام من المكتب":"Retrait au bureau",
     "ملخّص الطلب":"Résumé de la commande",
@@ -661,14 +645,10 @@
     "وفّر":"Économisez",
     "الأفضل":"Meilleur",
     "قطعتان":"2 pièces",
-    "قطع":"pièces",
-    "زبون":"Client",
     "مجاني":"Gratuit",
     "اختر الولاية":"Choisissez la wilaya",
     "غير متاح":"Indisponible",
     "سعر خاص":"Prix spécial",
-    "عرض خاص":"Offre spéciale",
-    "تخفيض دائم":"Promo permanente",
     "أضف":"Ajouter",
     "أخرى للاستفادة من سعر":"de plus pour bénéficier du prix",
     "للقطعة الواحدة":"par pièce",
@@ -678,8 +658,6 @@
     "للقطعة":"par pièce",
     "مع":"avec",
     "خدمة العملاء:":"Service client :",
-    "جاري التحميل...":"Chargement...",
-    
 
     /* ═══════════════════════════════════════════
        INDEX (store)
@@ -693,21 +671,17 @@
     "الطلبات غير مفعّلة":"Commandes désactivées",
     "يرجى ملء جميع البيانات":"Veuillez remplir tous les champs",
     "✅ تم استلام طلبك بنجاح!":"✅ Votre commande a bien été reçue !",
-    "عرض كمية":"Offre quantité",
     "💎 أسعار الجملة":"💎 Prix de gros",
-    "✅ تم تفعيل أسعار الجملة":"✅ Prix de gros activés",
     "الآن يمكنك الشراء بأسعار الجملة":"Vous pouvez acheter en gros",
     "👑 خاص بزبائن الجملة – أدخل الرمز السري":"👑 Réservé aux grossistes – Entrez le code",
     "غير مفعل":"Désactivé",
     "✅ مفعل":"✅ Activé",
     "تفعيل":"Activer",
     "عدد العلب":"Nb de boîtes",
-    "الكمية":"Quantité",
     "وحدة":"unités",
     "علبة":"boîte",
-    "يوم":"j",
+    "أيام":"j",
     "📦 العلبة: ":"📦 Boîte : ",
-    "لا توجد منتجات":"Aucun produit",
     "لا توجد عائلات":"Aucune famille",
 
     /* ═══════════════════════════════════════════
@@ -735,10 +709,8 @@
        ERRORS / VALIDATION
        ═══════════════════════════════════════════ */
     "غير مسموح":"Non autorisé",
-    "تأكيد الحذف":"Confirmer la suppression",
     "حذف جميع الطلبات":"Supprimer toutes les commandes",
     "تحذير":"Attention",
-    "تنبيه":"Alerte",
     "خطأ":"Erreur",
     "نجاح":"Succès",
     "معلومة":"Information"
@@ -858,28 +830,26 @@
   }
 
   function lookupTranslation(text) {
-  if (!text) return null;
-  const trimmed = text.trim();
-  if (!trimmed) return null;
-  
-  /* 1. Direct match */
-  if (AR_TO_FR[trimmed]) return AR_TO_FR[trimmed];
-  
-  /* 1.5. Match with trailing colon/punctuation stripped */
-  const strippedTrailing = trimmed.replace(/[:\u060C\u061B\u061F]+\s*$/, '').trim();
-  if (strippedTrailing && strippedTrailing !== trimmed && AR_TO_FR[strippedTrailing]) {
-    const hadColon = /:\s*$/.test(trimmed);
-    const trans = AR_TO_FR[strippedTrailing];
-    // نعيد النقطتين بصيغة فرنسية (مسافة قبل النقطتين)
-    return hadColon ? trans + ' :' : trans;
-  }
-  // نحاول أيضاً نسخة normalized
-  const strippedNorm = normalizeKey(strippedTrailing);
-  if (strippedNorm && AR_TO_FR_NORM[strippedNorm]) {
-    const hadColon = /:\s*$/.test(trimmed);
-    const trans = AR_TO_FR_NORM[strippedNorm];
-    return hadColon ? trans + ' :' : trans;
-  }
+    if (!text) return null;
+    const trimmed = text.trim();
+    if (!trimmed) return null;
+
+    /* 1. Direct match */
+    if (AR_TO_FR[trimmed]) return AR_TO_FR[trimmed];
+
+    /* 1.5. Match with trailing colon/punctuation stripped */
+    const strippedTrailing = trimmed.replace(/[:\u060C\u061B\u061F]+\s*$/, '').trim();
+    if (strippedTrailing && strippedTrailing !== trimmed && AR_TO_FR[strippedTrailing]) {
+      const hadColon = /:\s*$/.test(trimmed);
+      const trans = AR_TO_FR[strippedTrailing];
+      return hadColon ? trans + ' :' : trans;
+    }
+    const strippedNorm = normalizeKey(strippedTrailing);
+    if (strippedNorm && AR_TO_FR_NORM[strippedNorm]) {
+      const hadColon = /:\s*$/.test(trimmed);
+      const trans = AR_TO_FR_NORM[strippedNorm];
+      return hadColon ? trans + ' :' : trans;
+    }
 
     /* 2. Collapsed */
     const collapsed = collapseWS(trimmed);
