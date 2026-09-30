@@ -132,6 +132,40 @@
     "تأكيد الحذف؟":"Confirmer la suppression ?",
     "تأكيد حذف الكل؟":"Confirmer la suppression totale ?",
     "تأكيد الحذف":"Confirmer",
+    /* ═══════════════════════════════════════════
+   ORDER MODAL — جداول وبطاقات الطلب
+   ═══════════════════════════════════════════ */
+"المجموع": "Total",
+"السعر": "Prix",
+"سعر الوحدة": "Prix unitaire",
+"سعر الوحدة:": "Prix unitaire :",
+"الإجمالي:": "Total :",
+"المجموع الكلي": "Total général",
+"المجموع الفرعي": "Sous-total",
+"عدد المنتجات": "Nombre de produits",
+"عدد المنتجات:": "Nombre de produits :",
+"إجمالي القطع": "Total pièces",
+"إجمالي القطع:": "Total pièces :",
+"الطريقة": "Méthode",
+"نوع التسليم": "Type de livraison",
+"طريقة التوصيل": "Mode de livraison",
+"ملاحظة": "Note",
+"ملاحظات": "Notes",
+"تاريخ الطلب": "Date de commande",
+"تاريخ التأكيد": "Date de confirmation",
+"رقم الفاتورة": "N° de facture",
+"رقم الفاتورة:": "N° de facture :",
+"رقم الطلب": "N° de commande",
+"رقم الطلب:": "N° de commande :",
+"حالة الطلب": "Statut de la commande",
+"منتج": "Produit",
+"المنتجات": "Produits",
+"المصدر": "Source",
+"من واتساب": "Depuis WhatsApp",
+"من المتجر": "Depuis la boutique",
+"من صفحة ترويج": "Depuis la page promo",
+"طلب وارد من واتساب": "Commande reçue via WhatsApp",
+"طلب وارد من المتجر": "Commande reçue via la boutique",
 
     /* ═══════════════════════════════════════════
        INVENTORY
@@ -290,7 +324,10 @@
     "الاسم الجديد":"Nouveau nom", "كلمة المرور الجديدة":"Nouveau mot de passe",
     "سجل النشاطات":"Journal des activités",
     "فتح سجل النشاطات":"Ouvrir le journal des activités",
-    "تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.":"Changer le nom du propriétaire vous déconnectera.",
+    "تغيير اسم المالك سيخرجك من الجلسة. سجّل الدخول مجدداً بعد الحفظ.": "Changer le nom du propriétaire vous déconnectera.",
+"تغيير بيانات المالك سيُحدّث حسابك. سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.": "Changer les données du propriétaire mettra à jour votre compte. La page se rechargera automatiquement après l'enregistrement.",
+"تغيير بيانات المالك سيُحدّث حسابك.": "Changer les données du propriétaire mettra à jour votre compte.",
+"سيُعاد تحميل الصفحة تلقائياً بعد الحفظ.": "La page se rechargera automatiquement après l'enregistrement.",
     "عرض كل ما فعله المستخدمون (بائع/مدير) مع إمكانية التصفية حسب اليوم/الأسبوع/الشهر.":"Voir toutes les opérations des utilisateurs avec filtres.",
 
     /* ═══════════════════════════════════════════
@@ -642,6 +679,7 @@
     "مع":"avec",
     "خدمة العملاء:":"Service client :",
     "جاري التحميل...":"Chargement...",
+    
 
     /* ═══════════════════════════════════════════
        INDEX (store)
@@ -820,12 +858,28 @@
   }
 
   function lookupTranslation(text) {
-    if (!text) return null;
-    const trimmed = text.trim();
-    if (!trimmed) return null;
-
-    /* 1. Direct match */
-    if (AR_TO_FR[trimmed]) return AR_TO_FR[trimmed];
+  if (!text) return null;
+  const trimmed = text.trim();
+  if (!trimmed) return null;
+  
+  /* 1. Direct match */
+  if (AR_TO_FR[trimmed]) return AR_TO_FR[trimmed];
+  
+  /* 1.5. Match with trailing colon/punctuation stripped */
+  const strippedTrailing = trimmed.replace(/[:\u060C\u061B\u061F]+\s*$/, '').trim();
+  if (strippedTrailing && strippedTrailing !== trimmed && AR_TO_FR[strippedTrailing]) {
+    const hadColon = /:\s*$/.test(trimmed);
+    const trans = AR_TO_FR[strippedTrailing];
+    // نعيد النقطتين بصيغة فرنسية (مسافة قبل النقطتين)
+    return hadColon ? trans + ' :' : trans;
+  }
+  // نحاول أيضاً نسخة normalized
+  const strippedNorm = normalizeKey(strippedTrailing);
+  if (strippedNorm && AR_TO_FR_NORM[strippedNorm]) {
+    const hadColon = /:\s*$/.test(trimmed);
+    const trans = AR_TO_FR_NORM[strippedNorm];
+    return hadColon ? trans + ' :' : trans;
+  }
 
     /* 2. Collapsed */
     const collapsed = collapseWS(trimmed);
