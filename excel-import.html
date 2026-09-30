@@ -7,71 +7,281 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <script src="config.js"></script>
+<link rel="stylesheet" href="admin.css" />
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
-:root {
-  --primary: #0b6e4f; --primary-light: #1a8a6a; --primary-dark: #064e3b;
-  --danger: #e74c3c; --warning: #f39c12; --success: #2ecc71; --info: #2563eb;
-  --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #64748b;
-  --border: #e9edf2; --radius: 16px; --font: 'Cairo', system-ui, sans-serif;
+/* ═══ إضافات بسيطة فقط — الباقي من admin.css ═══ */
+body {
+  padding-bottom: 24px !important;
+  overflow-x: hidden;
 }
-html, body { overflow-x: hidden; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 40px; }
-img { max-width: 100%; height: auto; }
 
-header {
-  background: rgba(255,255,255,.95);
-  backdrop-filter: blur(16px);
-  padding: 10px 14px;
+.import-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* Header — يستخدم ستايل admin */
+header.import-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
 }
-header .logo { display: flex; align-items: center; gap: 8px; font-weight: 900; color: var(--primary-dark); font-size: 1rem; min-width: 0; flex: 1; }
-header .logo img { height: 2rem; width: auto; max-width: 60px; object-fit: contain; }
-header .logo span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-header .back-btn { background: var(--bg); border: 1.5px solid var(--border); border-radius: 40px; padding: 8px 14px; font-family: var(--font); font-weight: 700; font-size: .8rem; color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 6px; text-decoration: none; flex-shrink: 0; }
-header .back-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+header.import-header .logo {
+  min-width: 0;
+  flex: 1;
+}
+header.import-header .logo img {
+  height: 2.4rem;
+  width: auto;
+  max-width: 70px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+header.import-header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--dur) var(--ease);
+  flex-shrink: 0;
+}
+.back-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
 
-.container { max-width: 1100px; margin: 0 auto; padding: 16px 12px; }
+/* Step Card */
+.step-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+  animation: fadeIn var(--dur) var(--ease);
+}
+.step-card.hidden { display: none !important; }
 
-.step-card { background: var(--card); border-radius: var(--radius); padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,.04); border: 1px solid var(--border); margin-bottom: 14px; }
-.step-title { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1rem; color: var(--primary-dark); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--bg); }
-.step-num { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -.01em;
+}
+.step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
 
-.upload-zone { border: 3px dashed #cbd5e1; border-radius: 20px; padding: 40px 20px; text-align: center; background: #f8fafc; cursor: pointer; transition: .2s; display: block; width: 100%; }
-.upload-zone:hover, .upload-zone.drag-over { border-color: var(--primary); background: #f0fdf4; }
-.upload-zone i { font-size: 3rem; color: var(--primary); margin-bottom: 12px; display: block; }
-.upload-zone h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
-.upload-zone p { font-size: .9rem; color: var(--muted); }
+/* Upload Zone */
+.upload-zone {
+  display: block;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 44px 24px;
+  text-align: center;
+  background: var(--bg-2);
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+  width: 100%;
+}
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--primary);
+  background: var(--primary-tint);
+  transform: translateY(-1px);
+}
+.upload-zone i {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 14px;
+  display: block;
+}
+.upload-zone h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.upload-zone p {
+  font-size: .88rem;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+.upload-zone .formats {
+  margin-top: 12px;
+  font-size: .78rem;
+  color: var(--muted);
+  font-weight: 600;
+}
 
-.file-info { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-.file-info i { color: #059669; font-size: 1.3rem; flex-shrink: 0; }
-.file-info .fname { font-weight: 800; font-size: .9rem; flex: 1; min-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-info .fsize { font-size: .75rem; color: var(--muted); font-weight: 700; }
+/* File Info Bar */
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--primary-tint);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.file-info > i {
+  font-size: 1.4rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.file-info .fname {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-info .fsize {
+  font-size: .78rem;
+  color: var(--text-3);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.file-info .reset-btn {
+  padding: 7px 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--danger);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--dur) var(--ease);
+}
+.file-info .reset-btn:hover {
+  background: var(--danger-tint);
+  border-color: var(--danger);
+}
 
-.mapping-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.mapping-card { background: #f8fafc; border: 1.5px solid var(--border); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px; transition: .2s; }
-.mapping-card:hover { border-color: #cbd5e1; background: #fff; }
-.mapping-card .col-header { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0; }
-.mapping-card .col-index { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 800; flex-shrink: 0; }
-.mapping-card .col-name { font-weight: 800; font-size: .92rem; word-break: break-word; overflow-wrap: anywhere; flex: 1; min-width: 0; }
-.mapping-field { display: flex; flex-direction: column; gap: 6px; }
-.mapping-field-label { font-size: .72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+/* Mapping Cards */
+.mapping-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .mapping-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .mapping-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.mapping-card {
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color var(--dur) var(--ease),
+              background var(--dur) var(--ease);
+}
+.mapping-card:hover {
+  background: #fff;
+  border-color: var(--border-strong);
+}
+.mapping-card .col-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--border);
+}
+.mapping-card .col-index {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), var(--primary-600));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .72rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.mapping-card .col-name {
+  font-weight: 800;
+  font-size: .9rem;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.mapping-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mapping-field-label {
+  font-size: .7rem;
+  font-weight: 800;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
 
 .type-select {
   width: 100%;
-  height: 46px;
-  padding: 10px 40px 10px 14px;
+  height: 44px;
+  padding: 10px 38px 10px 14px;
   border: 1.5px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   font-family: var(--font);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   background: var(--bg);
   color: var(--text);
@@ -83,115 +293,352 @@ header .back-btn:hover { background: var(--primary); color: #fff; border-color: 
   background-repeat: no-repeat;
   background-position: left 14px center;
   background-size: 14px;
-  transition: .2s;
+  transition: all var(--dur) var(--ease);
 }
-.type-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11,110,79,.12); background-color: #fff; }
-.type-select.detected { background-color: #f0fdf4; border-color: #86efac; color: #065f46; }
-.type-select.manual { background-color: #fff7ed; border-color: #fed7aa; color: #9a3412; }
-.type-select.ignored { background-color: #f1f5f9; border-color: #cbd5e1; color: #64748b; }
+.type-select:focus {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-focus);
+  background-color: #fff;
+}
+.type-select.detected {
+  background-color: var(--primary-50);
+  border-color: var(--primary-200);
+  color: var(--primary-600);
+}
+.type-select.manual {
+  background-color: var(--warning-tint);
+  border-color: #fed7aa;
+  color: #9a3412;
+}
+.type-select.ignored {
+  background-color: var(--bg-2);
+  border-color: var(--border-strong);
+  color: var(--text-3);
+}
 
-.mapping-sample { font-size: .78rem; color: #475569; background: #fff; border: 1px solid var(--border); padding: 8px 10px; border-radius: 10px; word-break: break-word; overflow-wrap: anywhere; line-height: 1.5; min-height: 40px; display: flex; align-items: center; }
-.mapping-sample.empty { color: #cbd5e1; font-style: italic; }
+.mapping-sample {
+  font-size: .76rem;
+  color: var(--text-2);
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+.mapping-sample.empty {
+  color: var(--muted);
+  font-style: italic;
+}
 
-.preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
-.preview-card { background: #fff; border: 1.5px solid var(--border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: .2s; }
-.preview-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.06); }
-.preview-card img, .preview-card .no-img { width: 100%; height: 140px; object-fit: cover; background: #f8fafc; flex-shrink: 0; }
-.preview-card .no-img { display: flex; align-items: center; justify-content: center; color: #cbd5e1; font-size: 2.5rem; }
-.preview-card .info { padding: 10px 12px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
-.preview-card .pname { font-weight: 800; font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 2px; }
-.preview-card .pline { font-size: .75rem; color: var(--muted); display: flex; justify-content: space-between; gap: 6px; align-items: baseline; }
-.preview-card .pline b { color: var(--text); font-weight: 800; }
-.preview-card .pline.price b { color: var(--primary); font-size: .88rem; }
-.preview-card .pline.purchase b { color: var(--danger); }
-.preview-card .pline.wholesale b { color: #8e44ad; }
-
-.alert-box { padding: 12px 14px; border-radius: 12px; display: flex; align-items: flex-start; gap: 10px; font-size: .85rem; font-weight: 700; margin-bottom: 12px; line-height: 1.5; }
-.alert-box i { font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
-.alert-warn { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
-.alert-warn i { color: #d97706; }
-.alert-error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
-.alert-error i { color: #dc2626; }
-.alert-success { background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; }
+/* Alert Boxes */
+.alert-box {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .85rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.55;
+  border: 1px solid;
+}
+.alert-box i {
+  font-size: 1rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.alert-box > div { flex: 1; min-width: 0; }
+.alert-warn { background: var(--warning-tint); border-color: #fcd34d; color: #92400e; }
+.alert-warn i { color: var(--warning); }
+.alert-error { background: var(--danger-tint); border-color: #fca5a5; color: #991b1b; }
+.alert-error i { color: var(--danger); }
+.alert-success { background: var(--success-tint); border-color: #6ee7b7; color: #065f46; }
 .alert-success i { color: #059669; }
-.alert-info { background: #dbeafe; border: 1px solid #93c5fd; color: #1e40af; }
-.alert-info i { color: #2563eb; }
+.alert-info { background: var(--info-tint); border-color: #93c5fd; color: #1e40af; }
+.alert-info i { color: var(--info); }
 
-.actions-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-.btn { padding: 14px 22px; border: none; border-radius: 40px; font-family: var(--font); font-weight: 800; font-size: .92rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: .2s; flex: 1; min-width: 130px; min-height: 50px; text-decoration: none; }
-.btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; box-shadow: 0 6px 16px rgba(11,110,79,.25); }
-.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,110,79,.35); }
-.btn-secondary { background: var(--bg); color: var(--text); border: 1.5px solid var(--border); }
-.btn-secondary:hover:not(:disabled) { background: #e2e8f0; }
-.btn-success { background: linear-gradient(135deg, #059669, #10b981); color: #fff; box-shadow: 0 6px 16px rgba(5,150,105,.25); }
-.btn-success:hover:not(:disabled) { transform: translateY(-2px); }
-.hidden { display: none !important; }
-
-#toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 12px 24px; border-radius: 40px; font-weight: 700; font-size: .88rem; z-index: 9999; display: none; max-width: 92%; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
-#toast.show { display: block; animation: slideUp .3s; }
-@keyframes slideUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
-
-.loading-overlay { position: fixed; inset: 0; background: rgba(15,23,42,.6); backdrop-filter: blur(4px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5000; color: #fff; gap: 16px; font-weight: 700; }
-.loading-overlay .spin { width: 44px; height: 44px; border: 4px solid rgba(255,255,255,.2); border-top-color: #fff; border-radius: 50%; animation: spin .9s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@media (min-width: 640px) {
-  .container { padding: 20px 16px; }
-  .step-card { padding: 22px; }
-  .mapping-list { grid-template-columns: repeat(2, 1fr); }
-  .preview-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
-  .btn { min-width: 160px; }
+/* Preview Grid */
+.preview-section {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
 }
-@media (min-width: 1024px) {
-  .container { padding: 24px 20px; }
-  .mapping-list { grid-template-columns: repeat(3, 1fr); }
-  .preview-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-  header { padding: 12px 24px; }
-  header .logo { font-size: 1.1rem; }
+.preview-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: .9rem;
+  color: var(--text);
+  margin-bottom: 12px;
 }
-@media (max-width: 400px) {
-  .upload-zone { padding: 28px 14px; }
+.preview-section-title i { color: var(--primary); }
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+}
+.preview-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--dur) var(--ease);
+  box-shadow: var(--shadow-xs);
+}
+.preview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--border-strong);
+}
+.preview-card img,
+.preview-card .no-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  background: var(--bg-2);
+  flex-shrink: 0;
+}
+.preview-card .no-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--border-strong);
+  font-size: 2.4rem;
+}
+.preview-card .info {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+.preview-card .pname {
+  font-weight: 800;
+  font-size: .84rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.preview-card .pline {
+  font-size: .74rem;
+  color: var(--text-3);
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  align-items: baseline;
+}
+.preview-card .pline b {
+  color: var(--text);
+  font-weight: 800;
+}
+.preview-card .pline.price b { color: var(--primary); font-size: .86rem; }
+.preview-card .pline.purchase b { color: var(--danger); }
+.preview-card .pline.wholesale b { color: #7c3aed; }
+
+/* Actions Row */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.actions-row .btn-primary,
+.actions-row .btn-secondary,
+.actions-row .btn-success {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* Progress Bar */
+.import-progress {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-top: 18px;
+  box-shadow: var(--shadow-xs);
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 800;
+  font-size: .88rem;
+  color: var(--text);
+}
+.progress-header .percent {
+  color: var(--primary);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.progress-bar-track {
+  width: 100%;
+  height: 10px;
+  background: var(--bg-2);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary), #34d399);
+  border-radius: 9999px;
+  transition: width .25s var(--ease);
+}
+.progress-detail {
+  margin-top: 10px;
+  font-size: .78rem;
+  color: var(--text-3);
+  font-family: monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Result Stats */
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.result-stat {
+  text-align: center;
+  padding: 18px 12px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.result-stat .val {
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.result-stat .lbl {
+  font-size: .76rem;
+  font-weight: 700;
+}
+.result-stat.success { background: var(--success-tint); border-color: #86efac; }
+.result-stat.success .val, .result-stat.success .lbl { color: #065f46; }
+.result-stat.info { background: var(--info-tint); border-color: #93c5fd; }
+.result-stat.info .val, .result-stat.info .lbl { color: #1e40af; }
+.result-stat.warning { background: var(--warning-tint); border-color: #fcd34d; }
+.result-stat.warning .val, .result-stat.warning .lbl { color: #92400e; }
+.result-stat.muted { background: var(--bg-2); border-color: var(--border-strong); }
+.result-stat.muted .val, .result-stat.muted .lbl { color: var(--text-3); }
+
+.added-list-box {
+  margin-top: 16px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.added-list-title {
+  font-weight: 800;
+  font-size: .86rem;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.added-list-title i { color: var(--primary); }
+.added-list-content {
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: .82rem;
+  line-height: 1.9;
+  color: var(--text-2);
+  padding-inline-end: 6px;
+}
+.added-list-content .item {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  padding: 2px 0;
+  border-bottom: 1px dashed var(--border-2);
+}
+.added-list-content .item:last-child { border-bottom: none; }
+.added-list-content .item b {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: .74rem;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .import-container { padding: 14px 12px 30px; }
+  .step-card { padding: 16px; }
+  .upload-zone { padding: 32px 16px; }
   .upload-zone i { font-size: 2.4rem; }
   .upload-zone h3 { font-size: .95rem; }
-  .upload-zone p { font-size: .82rem; }
-  .step-card { padding: 14px; }
-  .step-title { font-size: .92rem; }
-  .btn { padding: 12px 16px; font-size: .85rem; min-height: 46px; }
-  .preview-grid { grid-template-columns: 1fr; }
-  header .logo { font-size: .9rem; }
+  .preview-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); }
+  .result-stat .val { font-size: 1.4rem; }
+  .actions-row .btn-primary,
+  .actions-row .btn-secondary,
+  .actions-row .btn-success { width: 100%; min-width: 0; }
+  header.import-header { padding: 10px 12px; }
+  header.import-header .logo img { height: 2rem; max-width: 50px; }
+  .back-btn span { display: none; }
+  .back-btn { padding: 8px 10px; }
 }
 </style>
 </head>
 <body>
 
-<header>
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="import-header">
   <div class="logo">
     <img id="headerLogo" style="display:none;" alt="" />
     <span id="headerStoreName">...</span>
   </div>
-  <a class="back-btn" href="admin.html">
-    <i class="fas fa-arrow-right"></i>
-    <span>رجوع</span>
-  </a>
+  <div class="header-actions">
+    <a href="admin.html" class="back-btn" title="رجوع">
+      <i class="fas fa-arrow-right" id="backIcon"></i>
+      <span>رجوع</span>
+    </a>
+  </div>
 </header>
 
-<div class="container">
+<!-- ═══════════════ MAIN ═══════════════ -->
+<div class="import-container">
 
+  <!-- Step 1: Upload -->
   <div class="step-card" id="stepUpload">
     <div class="step-title">
       <span class="step-num">1</span>
       <span>رفع ملف Excel</span>
     </div>
     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;" />
-    <div class="upload-zone" id="uploadZone">
+    <label class="upload-zone" id="uploadZone" for="fileInput">
       <i class="fas fa-file-excel"></i>
       <h3>اضغط هنا لاختيار الملف</h3>
       <p>أو اسحب الملف وأفلته هنا</p>
-      <p style="margin-top:8px; font-size:.78rem;">الصيغ المدعومة: .xlsx, .xls, .csv</p>
-    </div>
+      <p class="formats">الصيغ المدعومة: .xlsx, .xls, .csv</p>
+    </label>
   </div>
 
+  <!-- Step 2: Mapping -->
   <div class="step-card hidden" id="stepMapping">
     <div class="step-title">
       <span class="step-num">2</span>
@@ -202,33 +649,45 @@ header .back-btn:hover { background: var(--primary); color: #fff; border-color: 
       <i class="fas fa-file-excel"></i>
       <span class="fname" id="fileName">-</span>
       <span class="fsize" id="fileSize">-</span>
-      <button class="btn btn-secondary" id="btnReset" style="flex:0; padding:8px 14px; font-size:.78rem; min-width:auto; min-height:auto;">
+      <button type="button" class="reset-btn" id="btnReset">
         <i class="fas fa-times"></i> ملف آخر
       </button>
     </div>
 
     <div id="mappingAlert"></div>
-
     <div class="mapping-list" id="mappingList"></div>
 
-    <div style="margin-top:20px; padding-top:16px; border-top:2px solid var(--bg);">
-      <div style="font-weight:800; font-size:.9rem; margin-bottom:10px; color:var(--primary-dark);">
-        <i class="fas fa-eye"></i> معاينة أول 5 منتجات
+    <div class="preview-section">
+      <div class="preview-section-title">
+        <i class="fas fa-eye"></i>
+        <span>معاينة أول 5 منتجات</span>
       </div>
       <div id="previewAlert"></div>
       <div class="preview-grid" id="previewGrid"></div>
     </div>
 
     <div class="actions-row">
-      <button class="btn btn-secondary" id="btnCancel">
+      <button type="button" class="btn-secondary" id="btnCancel">
         <i class="fas fa-times"></i> إلغاء
       </button>
-      <button class="btn btn-success" id="btnImport">
-        <i class="fas fa-check-circle"></i> <span>تأكيد الاستيراد</span>
+      <button type="button" class="btn-success" id="btnImport">
+        <i class="fas fa-check-circle"></i> تأكيد الاستيراد
       </button>
+    </div>
+
+    <div class="import-progress" id="importProgress" style="display:none;">
+      <div class="progress-header">
+        <span>جاري الاستيراد...</span>
+        <span class="percent" id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-detail" id="progressDetail">0 / 0</div>
     </div>
   </div>
 
+  <!-- Step 3: Result -->
   <div class="step-card hidden" id="stepResult">
     <div class="step-title">
       <span class="step-num">3</span>
@@ -236,10 +695,10 @@ header .back-btn:hover { background: var(--primary); color: #fff; border-color: 
     </div>
     <div id="resultContent"></div>
     <div class="actions-row">
-      <button class="btn btn-secondary" id="btnAnother">
+      <button type="button" class="btn-secondary" id="btnAnother">
         <i class="fas fa-upload"></i> استيراد ملف آخر
       </button>
-      <a href="admin.html" class="btn btn-primary">
+      <a href="admin.html" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">
         <i class="fas fa-home"></i> رجوع للوحة
       </a>
     </div>
@@ -247,9 +706,12 @@ header .back-btn:hover { background: var(--primary); color: #fff; border-color: 
 
 </div>
 
-<div id="toast"></div>
+<div class="toast" id="toastMessage"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- 🌐 نفس نظام الترجمة المستخدم في لوحة الإدارة -->
+<script src="i18n.js"></script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -264,7 +726,7 @@ if (!BOOT || !BOOT.firebaseConfig || String(BOOT.firebaseConfig.apiKey).includes
 }
 
 if (localStorage.getItem('auth') !== 'true') {
-  document.body.innerHTML = '<div style="text-align:center; padding:60px; font-family:Cairo,sans-serif; color:#e74c3c; font-weight:700;"><h2>يجب تسجيل الدخول أولاً</h2><p style="margin-top:12px; color:#64748b;">سيتم توجيهك تلقائياً...</p></div>';
+  document.body.innerHTML = '<div style="text-align:center; padding:60px; font-family:Cairo,sans-serif; color:#dc2626; font-weight:700;"><h2>يجب تسجيل الدخول أولاً</h2><p style="margin-top:12px; color:#64748b;">سيتم توجيهك تلقائياً...</p></div>';
   setTimeout(() => window.location.href = 'admin.html', 2000);
   throw new Error("not logged in");
 }
@@ -272,18 +734,144 @@ if (localStorage.getItem('auth') !== 'true') {
 const app = initializeApp(BOOT.firebaseConfig);
 const db = getDatabase(app);
 
+/* ═══════════════════════════════════════════════════════════
+   🌐 نصوص الصفحة — تُترجم تلقائياً بواسطة i18n.js
+   نضعها هنا لتسهيل الصيانة فقط
+   ═══════════════════════════════════════════════════════════ */
+const T = {
+  ar: {
+    step1Title: "رفع ملف Excel",
+    uploadTitle: "اضغط هنا لاختيار الملف",
+    uploadHint: "أو اسحب الملف وأفلته هنا",
+    uploadFormats: "الصيغ المدعومة: .xlsx, .xls, .csv",
+    step2Title: "مراجعة الأعمدة",
+    resetBtn: "ملف آخر",
+    previewTitle: "معاينة أول 5 منتجات",
+    cancelBtn: "إلغاء",
+    importBtn: "تأكيد الاستيراد",
+    step3Title: "النتيجة",
+    importSuccess: "تم الاستيراد بنجاح",
+    statAdded: "منتج جديد أُضيف",
+    statExisting: "موجود مسبقاً (تُجوهل)",
+    statDuplicate: "مكرر في الملف",
+    statNoName: "بدون اسم (تُجوهل)",
+    addedListTitle: "قائمة المنتجات المُضافة",
+    anotherBtn: "استيراد ملف آخر",
+    backBtn: "رجوع للوحة",
+    typeLabel: "النوع",
+    colPlaceholder: "عمود",
+    emptySample: "— فارغ —",
+    typeIgnore: "تجاهل",
+    typeName: "اسم المنتج",
+    typeSerial: "الرقم التسلسلي / SKU",
+    typeSalePrice: "سعر البيع",
+    typePurchasePrice: "ثمن الشراء",
+    typeWholesalePrice: "سعر الجملة",
+    typeQuantity: "الكمية",
+    typeQuantityPerBox: "الكمية في العلبة",
+    typeFamily: "العائلة",
+    typeImage: "صورة (رابط)",
+    typeDescription: "الوصف",
+    alertNoNameTitle: 'لم يتم تحديد عمود "اسم المنتج"',
+    alertNoNameDesc: "الرجاء اختيار العمود الذي يحتوي على أسماء المنتجات قبل المتابعة.",
+    alertNoPriceTitle: "لم يتم تحديد أي عمود سعر",
+    alertNoPriceDesc: "الرجاء تحديد سعر البيع على الأقل.",
+    alertReadyTitle: "كل شيء جاهز",
+    alertReadyDesc: 'راجع الأعمدة أدناه ثم اضغط "تأكيد الاستيراد".',
+    alertImageWarnTitle: "عمود الصورة يحتوي على قيم ليست روابط",
+    alertImageWarnDesc: "الخلايا التي لا تبدأ بـ http لن تُستخدم كصور.",
+    noData: "لا توجد بيانات للعرض",
+    noNameCell: "بدون اسم",
+    progressTitle: "جاري الاستيراد...",
+    progressDetail: "دفعة {done} من {total}",
+    toastFileEmpty: "الملف فارغ",
+    toastReadError: "فشل قراءة الملف: ",
+    toastSelectName: "يجب تحديد عمود اسم المنتج",
+    toastImportError: "خطأ أثناء الاستيراد: ",
+    toastAllDone: "تم الاستيراد بنجاح"
+  },
+  fr: {
+    step1Title: "Charger un fichier Excel",
+    uploadTitle: "Cliquez ici pour choisir un fichier",
+    uploadHint: "Ou glissez-déposez le fichier ici",
+    uploadFormats: "Formats supportés : .xlsx, .xls, .csv",
+    step2Title: "Vérification des colonnes",
+    resetBtn: "Autre fichier",
+    previewTitle: "Aperçu des 5 premiers produits",
+    cancelBtn: "Annuler",
+    importBtn: "Confirmer l'import",
+    step3Title: "Résultat",
+    importSuccess: "Import réussi",
+    statAdded: "Nouveaux produits ajoutés",
+    statExisting: "Déjà existant (ignoré)",
+    statDuplicate: "Doublon dans le fichier",
+    statNoName: "Sans nom (ignoré)",
+    addedListTitle: "Liste des produits ajoutés",
+    anotherBtn: "Importer un autre fichier",
+    backBtn: "Retour au panneau",
+    typeLabel: "Type",
+    colPlaceholder: "Colonne",
+    emptySample: "— vide —",
+    typeIgnore: "Ignorer",
+    typeName: "Nom du produit",
+    typeSerial: "Référence / SKU",
+    typeSalePrice: "Prix de vente",
+    typePurchasePrice: "Prix d'achat",
+    typeWholesalePrice: "Prix de gros",
+    typeQuantity: "Quantité",
+    typeQuantityPerBox: "Qté par boîte",
+    typeFamily: "Famille",
+    typeImage: "Image (URL)",
+    typeDescription: "Description",
+    alertNoNameTitle: 'Aucune colonne "Nom du produit" sélectionnée',
+    alertNoNameDesc: "Veuillez choisir la colonne contenant les noms des produits avant de continuer.",
+    alertNoPriceTitle: "Aucune colonne de prix sélectionnée",
+    alertNoPriceDesc: "Veuillez sélectionner au moins un prix de vente.",
+    alertReadyTitle: "Tout est prêt",
+    alertReadyDesc: 'Vérifiez les colonnes ci-dessous puis cliquez sur "Confirmer l\'import".',
+    alertImageWarnTitle: "La colonne image contient des valeurs qui ne sont pas des liens",
+    alertImageWarnDesc: "Les cellules ne commençant pas par http ne seront pas utilisées comme images.",
+    noData: "Aucune donnée à afficher",
+    noNameCell: "Sans nom",
+    progressTitle: "Importation en cours...",
+    progressDetail: "Lot {done} sur {total}",
+    toastFileEmpty: "Fichier vide",
+    toastReadError: "Échec de lecture du fichier : ",
+    toastSelectName: "Vous devez sélectionner la colonne du nom du produit",
+    toastImportError: "Erreur lors de l'import : ",
+    toastAllDone: "Import réussi"
+  }
+};
+
+/* 🌐 نستخدم نظام i18n.js الموجود */
+const LANG = localStorage.getItem('store_lang') || 'ar';
+window.currentLang = LANG;
+
+function tt(key, vars) {
+  let str = (T[LANG] && T[LANG][key]) || (T.ar[key]) || key;
+  if (vars) {
+    Object.entries(vars).forEach(([k, v]) => {
+      str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), v);
+    });
+  }
+  return str;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Constants
+   ═══════════════════════════════════════════════════════════ */
 const COLUMN_TYPES = [
-  { id: 'ignore',         label: 'تجاهل' },
-  { id: 'name',           label: 'اسم المنتج' },
-  { id: 'serial',         label: 'الرقم التسلسلي / SKU' },
-  { id: 'salePrice',      label: 'سعر البيع' },
-  { id: 'purchasePrice',  label: 'ثمن الشراء' },
-  { id: 'wholesalePrice', label: 'سعر الجملة' },
-  { id: 'quantity',       label: 'الكمية' },
-  { id: 'quantityPerBox', label: 'الكمية في العلبة' },
-  { id: 'family',         label: 'العائلة' },
-  { id: 'image',          label: 'صورة (رابط)' },
-  { id: 'description',    label: 'الوصف' }
+  { id: 'ignore' },
+  { id: 'name' },
+  { id: 'serial' },
+  { id: 'salePrice' },
+  { id: 'purchasePrice' },
+  { id: 'wholesalePrice' },
+  { id: 'quantity' },
+  { id: 'quantityPerBox' },
+  { id: 'family' },
+  { id: 'image' },
+  { id: 'description' }
 ];
 
 const KEYWORDS = {
@@ -299,6 +887,11 @@ const KEYWORDS = {
   description:    ['description','desc','details','detail','remarque','note','commentaire','وصف','الوصف','تفاصيل','ملاحظة']
 };
 
+const BATCH_SIZE = 100;
+
+/* ═══════════════════════════════════════════════════════════
+   State
+   ═══════════════════════════════════════════════════════════ */
 let workbook = null;
 let headerRowIndex = -1;
 let rawHeaders = [];
@@ -307,6 +900,9 @@ let columnTypes = [];
 let columnDetected = [];
 let storeInfo = { name: '', logoUrl: '', currency: 'دج' };
 
+/* ═══════════════════════════════════════════════════════════
+   Helpers
+   ═══════════════════════════════════════════════════════════ */
 function normalize(s) {
   return String(s || '')
     .toLowerCase()
@@ -388,7 +984,7 @@ function findHeaderRow(rows) {
   return bestIdx;
 }
 
-async function readFile(file) {
+function readFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = e => {
@@ -403,45 +999,99 @@ async function readFile(file) {
   });
 }
 
+function escapeHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+function parseNumber(v) {
+  if (v === undefined || v === null) return 0;
+  if (typeof v === 'number') return v;
+  const cleaned = String(v).replace(/[^\d.,\-]/g, '').replace(/,/g, '.');
+  const n = parseFloat(cleaned);
+  return isNaN(n) ? 0 : n;
+}
+function fmt(n) { return Number(n || 0).toLocaleString('fr-FR'); }
+
+function showToast(msg) {
+  const el = $('toastMessage');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   تحميل معلومات المتجر
+   ═══════════════════════════════════════════════════════════ */
+async function loadStoreInfo() {
+  try {
+    const snap = await get(ref(db, 'store/info'));
+    if (snap.exists()) {
+      const d = snap.val();
+      storeInfo = { name: d.name || '', logoUrl: d.logoUrl || '', currency: d.currency || 'دج' };
+    }
+  } catch (e) { console.warn(e); }
+  $('headerStoreName').textContent = storeInfo.name || 'المتجر';
+  if (storeInfo.logoUrl) {
+    $('headerLogo').src = storeInfo.logoUrl;
+    $('headerLogo').style.display = 'inline-block';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Render Mapping
+   ═══════════════════════════════════════════════════════════ */
 function renderMapping() {
   const list = $('mappingList');
   list.innerHTML = '';
+
   rawHeaders.forEach((header, idx) => {
-    const samples = dataRows.slice(0, 3).map(r => r[idx]).filter(v => v !== undefined && v !== null && String(v).trim() !== '');
+    const samples = dataRows.slice(0, 3)
+      .map(r => r[idx])
+      .filter(v => v !== undefined && v !== null && String(v).trim() !== '');
     const sampleText = samples.map(v => String(v).slice(0, 40)).join(' • ');
 
     const card = document.createElement('div');
     card.className = 'mapping-card';
+    card.dataset.colIdx = idx;
 
     const headerDiv = document.createElement('div');
     headerDiv.className = 'col-header';
-    headerDiv.innerHTML = `<div class="col-index">${idx + 1}</div><div class="col-name">${escapeHtml(header || `عمود ${idx + 1}`)}</div>`;
+    headerDiv.innerHTML = `<div class="col-index">${idx + 1}</div><div class="col-name">${escapeHtml(header || (tt('colPlaceholder') + ' ' + (idx + 1)))}</div>`;
     card.appendChild(headerDiv);
 
     const field = document.createElement('div');
     field.className = 'mapping-field';
-    field.innerHTML = `<span class="mapping-field-label">النوع</span>`;
+    field.innerHTML = `<span class="mapping-field-label">${tt('typeLabel')}</span>`;
+
     const select = document.createElement('select');
     select.className = 'type-select ' + (columnTypes[idx] === 'ignore' ? 'ignored' : (columnTypes[idx] === columnDetected[idx] ? 'detected' : 'manual'));
-    COLUMN_TYPES.forEach(t => {
+    select.dataset.colIdx = idx;
+
+    COLUMN_TYPES.forEach(tp => {
       const opt = document.createElement('option');
-      opt.value = t.id;
-      opt.textContent = t.label;
-      if (t.id === columnTypes[idx]) opt.selected = true;
+      opt.value = tp.id;
+      opt.textContent = tt('type' + tp.id.charAt(0).toUpperCase() + tp.id.slice(1));
+      if (tp.id === columnTypes[idx]) opt.selected = true;
       select.appendChild(opt);
     });
+
+    /* ⚡ تحسين الأداء: نعدّل البطاقة فقط بدل إعادة البناء */
     select.addEventListener('change', e => {
-      columnTypes[idx] = e.target.value;
-      renderMapping();
+      const newType = e.target.value;
+      columnTypes[idx] = newType;
+      select.className = 'type-select ' + (newType === 'ignore' ? 'ignored' : (newType === columnDetected[idx] ? 'detected' : 'manual'));
       renderPreview();
       updateMappingAlert();
     });
+
     field.appendChild(select);
     card.appendChild(field);
 
     const sampleDiv = document.createElement('div');
     sampleDiv.className = 'mapping-sample' + (sampleText ? '' : ' empty');
-    sampleDiv.textContent = sampleText || '— فارغ —';
+    sampleDiv.textContent = sampleText || tt('emptySample');
     card.appendChild(sampleDiv);
 
     list.appendChild(card);
@@ -454,14 +1104,17 @@ function updateMappingAlert() {
   const hasPrice = columnTypes.includes('salePrice') || columnTypes.includes('purchasePrice') || columnTypes.includes('wholesalePrice');
 
   if (!hasName) {
-    alert.innerHTML = `<div class="alert-box alert-error"><i class="fas fa-exclamation-circle"></i><div><b>لم يتم تحديد عمود "اسم المنتج"</b><br>الرجاء اختيار العمود الذي يحتوي على أسماء المنتجات قبل المتابعة.</div></div>`;
+    alert.innerHTML = `<div class="alert-box alert-error"><i class="fas fa-exclamation-circle"></i><div><b>${tt('alertNoNameTitle')}</b><br>${tt('alertNoNameDesc')}</div></div>`;
   } else if (!hasPrice) {
-    alert.innerHTML = `<div class="alert-box alert-warn"><i class="fas fa-exclamation-triangle"></i><div><b>لم يتم تحديد أي عمود سعر</b><br>الرجاء تحديد سعر البيع على الأقل.</div></div>`;
+    alert.innerHTML = `<div class="alert-box alert-warn"><i class="fas fa-exclamation-triangle"></i><div><b>${tt('alertNoPriceTitle')}</b><br>${tt('alertNoPriceDesc')}</div></div>`;
   } else {
-    alert.innerHTML = `<div class="alert-box alert-success"><i class="fas fa-check-circle"></i><div><b>كل شيء جاهز</b><br>راجع الأعمدة أدناه ثم اضغط "تأكيد الاستيراد".</div></div>`;
+    alert.innerHTML = `<div class="alert-box alert-success"><i class="fas fa-check-circle"></i><div><b>${tt('alertReadyTitle')}</b><br>${tt('alertReadyDesc')}</div></div>`;
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   Render Preview
+   ═══════════════════════════════════════════════════════════ */
 function renderPreview() {
   const grid = $('previewGrid');
   grid.innerHTML = '';
@@ -476,10 +1129,9 @@ function renderPreview() {
   const familyIdx = columnTypes.indexOf('family');
   const imageIdx = columnTypes.indexOf('image');
 
-  const previewRows = dataRows.slice(0, 5);
   $('previewAlert').innerHTML = '';
 
-  previewRows.forEach(row => {
+  dataRows.slice(0, 5).forEach(row => {
     const name = nameIdx !== -1 ? String(row[nameIdx] || '').trim() : '';
     const serial = serialIdx !== -1 ? String(row[serialIdx] || '').trim() : '';
     if (!name && !serial) return;
@@ -502,14 +1154,14 @@ function renderPreview() {
     card.innerHTML = `
       ${imgHtml}
       <div class="info">
-        <div class="pname" title="${escapeAttr(name)}">${escapeHtml(name) || '<span style="color:#cbd5e1;">بدون اسم</span>'}</div>
+        <div class="pname" title="${escapeAttr(name)}">${escapeHtml(name) || '<span style="color:#cbd5e1;">' + tt('noNameCell') + '</span>'}</div>
         ${serial ? `<div class="pline"><span>SKU:</span><b>${escapeHtml(serial)}</b></div>` : ''}
-        ${salePrice > 0 ? `<div class="pline price"><span>سعر البيع:</span><b>${fmt(salePrice)} ${cur}</b></div>` : ''}
-        ${purchasePrice > 0 ? `<div class="pline purchase"><span>ثمن الشراء:</span><b>${fmt(purchasePrice)} ${cur}</b></div>` : ''}
-        ${wholesalePrice > 0 ? `<div class="pline wholesale"><span>سعر الجملة:</span><b>${fmt(wholesalePrice)} ${cur}</b></div>` : ''}
-        ${quantity > 0 ? `<div class="pline"><span>الكمية:</span><b>${quantity}</b></div>` : ''}
-        ${qtyPerBox > 0 ? `<div class="pline"><span>في العلبة:</span><b>${qtyPerBox}</b></div>` : ''}
-        ${family ? `<div class="pline"><span>العائلة:</span><b>${escapeHtml(family)}</b></div>` : ''}
+        ${salePrice > 0 ? `<div class="pline price"><span>${tt('typeSalePrice')}:</span><b>${fmt(salePrice)} ${cur}</b></div>` : ''}
+        ${purchasePrice > 0 ? `<div class="pline purchase"><span>${tt('typePurchasePrice')}:</span><b>${fmt(purchasePrice)} ${cur}</b></div>` : ''}
+        ${wholesalePrice > 0 ? `<div class="pline wholesale"><span>${tt('typeWholesalePrice')}:</span><b>${fmt(wholesalePrice)} ${cur}</b></div>` : ''}
+        ${quantity > 0 ? `<div class="pline"><span>${tt('typeQuantity')}:</span><b>${quantity}</b></div>` : ''}
+        ${qtyPerBox > 0 ? `<div class="pline"><span>${tt('typeQuantityPerBox')}:</span><b>${qtyPerBox}</b></div>` : ''}
+        ${family ? `<div class="pline"><span>${tt('typeFamily')}:</span><b>${escapeHtml(family)}</b></div>` : ''}
       </div>`;
     grid.appendChild(card);
   });
@@ -520,26 +1172,32 @@ function renderPreview() {
       return v && !/^https?:\/\//i.test(v);
     }).length;
     if (nonUrls > 0) {
-      $('previewAlert').innerHTML = `<div class="alert-box alert-warn"><i class="fas fa-exclamation-triangle"></i><div><b>عمود الصورة يحتوي على قيم ليست روابط</b><br>الخلايا التالية لن تُستخدم كصور. تأكد أن ملف الإكسل يحتوي على <b>رابط الصورة</b> (يبدأ بـ http) وليس اسمها.</div></div>`;
+      $('previewAlert').innerHTML = `<div class="alert-box alert-warn"><i class="fas fa-exclamation-triangle"></i><div><b>${tt('alertImageWarnTitle')}</b><br>${tt('alertImageWarnDesc')}</div></div>`;
     }
   }
 
   if (grid.children.length === 0) {
-    grid.innerHTML = `<div style="text-align:center; padding:24px; color:#cbd5e1; font-weight:700; grid-column:1/-1;">لا توجد بيانات للعرض — راجع الأعمدة</div>`;
+    grid.innerHTML = `<div style="text-align:center; padding:24px; color:#cbd5e1; font-weight:700; grid-column:1/-1;">${tt('noData')}</div>`;
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   ⚡ الاستيراد مع منع التكرار
-   ══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   Import — مع دفعات + شريط تقدم
+   ═══════════════════════════════════════════════════════════ */
 async function doImport() {
   const nameIdx = columnTypes.indexOf('name');
-  if (nameIdx === -1) { showToast('يجب تحديد عمود اسم المنتج'); return; }
+  if (nameIdx === -1) { showToast(tt('toastSelectName')); return; }
 
-  const overlay = document.createElement('div');
-  overlay.className = 'loading-overlay';
-  overlay.innerHTML = '<div class="spin"></div><div>جاري الاستيراد...</div>';
-  document.body.appendChild(overlay);
+  const btn = $('btnImport');
+  const progress = $('importProgress');
+  const progressFill = $('progressFill');
+  const progressPercent = $('progressPercent');
+  const progressDetail = $('progressDetail');
+
+  btn.disabled = true;
+  const origHtml = btn.innerHTML;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...';
+  progress.style.display = 'block';
 
   try {
     const serialIdx = columnTypes.indexOf('serial');
@@ -552,7 +1210,7 @@ async function doImport() {
     const imageIdx = columnTypes.indexOf('image');
     const descIdx = columnTypes.indexOf('description');
 
-    /* ═══ 1. قراءة المنتجات الموجودة من قاعدة البيانات ═══ */
+    /* 1. قراءة المنتجات الموجودة */
     const snap = await get(ref(db, 'products'));
     const currentProducts = snap.val() || {};
 
@@ -563,18 +1221,15 @@ async function doImport() {
       if (p.name) existingNames.add(normalize(p.name));
     });
 
-    /* ═══ 2. تجنب التكرار داخل الملف نفسه ═══ */
+    /* 2. بناء قائمة المنتجات الجديدة */
+    const newProducts = [];
     const newSerials = new Set();
     const newNames = new Set();
 
-    let added = 0;
     let skippedExisting = 0;
     let skippedDuplicateInFile = 0;
     let skippedNoName = 0;
-    const updateBatch = {};
-    const addedNames = [];
 
-    /* ═══ 3. المرور على كل صف ═══ */
     for (const row of dataRows) {
       const name = String(row[nameIdx] || '').trim();
       if (!name) { skippedNoName++; continue; }
@@ -583,29 +1238,20 @@ async function doImport() {
       const nameNorm = normalize(name);
       const serialNorm = serial ? serial.toLowerCase() : '';
 
-      /* ✅ تكرار داخل نفس الملف */
       const isDupInFile =
         (serialNorm && newSerials.has(serialNorm)) ||
         (!serialNorm && newNames.has(nameNorm)) ||
         (serialNorm && newNames.has(nameNorm));
 
-      if (isDupInFile) {
-        skippedDuplicateInFile++;
-        continue;
-      }
+      if (isDupInFile) { skippedDuplicateInFile++; continue; }
 
-      /* ✅ موجود مسبقاً في المتجر → تجاهل تماماً ولا نلمسه */
       const isExisting =
         (serialNorm && existingSerials.has(serialNorm)) ||
         (!serialNorm && existingNames.has(nameNorm)) ||
         (serialNorm && existingNames.has(nameNorm));
 
-      if (isExisting) {
-        skippedExisting++;
-        continue;
-      }
+      if (isExisting) { skippedExisting++; continue; }
 
-      /* ✅ غير موجود → ننشئ منتجاً جديداً */
       const salePrice = salePriceIdx !== -1 ? parseNumber(row[salePriceIdx]) : 0;
       const purchasePrice = purchasePriceIdx !== -1 ? parseNumber(row[purchasePriceIdx]) : null;
       const wholesalePrice = wholesalePriceIdx !== -1 ? parseNumber(row[wholesalePriceIdx]) : null;
@@ -624,7 +1270,8 @@ async function doImport() {
         quantityPerBox: qtyPerBox && qtyPerBox > 0 ? qtyPerBox : null,
         family: family || '',
         imageUrl: imageUrl || '',
-        hidden: false
+        hidden: false,
+        createdAt: Date.now()
       };
       if (purchasePrice !== null && !isNaN(purchasePrice)) productData.costPrice = purchasePrice;
       if (quantity !== null && !isNaN(quantity)) {
@@ -633,98 +1280,103 @@ async function doImport() {
       }
       if (description) productData.description = description;
 
-      const newRef = push(ref(db, 'products'));
-      updateBatch[`products/${newRef.key}`] = productData;
-
+      newProducts.push({ data: productData, name, serialNorm, nameNorm });
       if (serialNorm) newSerials.add(serialNorm);
       newNames.add(nameNorm);
-      addedNames.push(name);
-      added++;
     }
 
-    /* ═══ 4. كتابة الدفعة مرة واحدة ═══ */
-    if (Object.keys(updateBatch).length > 0) {
-      await update(ref(db), updateBatch);
+    /* 3. الكتابة على دفعات */
+    const totalBatches = Math.ceil(newProducts.length / BATCH_SIZE);
+    let addedCount = 0;
+    const addedNames = [];
+
+    for (let b = 0; b < totalBatches; b++) {
+      const batch = newProducts.slice(b * BATCH_SIZE, (b + 1) * BATCH_SIZE);
+      const updates = {};
+      for (const item of batch) {
+        const newRef = push(ref(db, 'products'));
+        updates['products/' + newRef.key] = item.data;
+      }
+      await update(ref(db), updates);
+      addedCount += batch.length;
+      batch.forEach(it => addedNames.push(it.name));
+
+      const pct = Math.round(((b + 1) / totalBatches) * 100);
+      progressFill.style.width = pct + '%';
+      progressPercent.textContent = pct + '%';
+      progressDetail.textContent = tt('progressDetail', { done: b + 1, total: totalBatches });
     }
 
-    /* ═══ 5. عرض النتيجة ═══ */
-    $('resultContent').innerHTML = `
-      <div class="alert-box alert-success"><i class="fas fa-check-circle"></i><div><b>تم الاستيراد بنجاح</b></div></div>
+    if (totalBatches === 0) {
+      progressFill.style.width = '100%';
+      progressPercent.textContent = '100%';
+    }
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-top:12px;">
-        <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:12px; padding:14px; text-align:center;">
-          <div style="font-size:1.6rem; font-weight:900; color:#059669;">${added}</div>
-          <div style="font-size:.78rem; font-weight:700; color:#065f46;">منتج جديد أُضيف</div>
-        </div>
-        <div style="background:#dbeafe; border:1.5px solid #93c5fd; border-radius:12px; padding:14px; text-align:center;">
-          <div style="font-size:1.6rem; font-weight:900; color:#2563eb;">${skippedExisting}</div>
-          <div style="font-size:.78rem; font-weight:700; color:#1e40af;">موجود مسبقاً (تُجوهل)</div>
-        </div>
-        <div style="background:#fef3c7; border:1.5px solid #fcd34d; border-radius:12px; padding:14px; text-align:center;">
-          <div style="font-size:1.6rem; font-weight:900; color:#d97706;">${skippedDuplicateInFile}</div>
-          <div style="font-size:.78rem; font-weight:700; color:#92400e;">مكرر في الملف</div>
-        </div>
-        <div style="background:#f1f5f9; border:1.5px solid #cbd5e1; border-radius:12px; padding:14px; text-align:center;">
-          <div style="font-size:1.6rem; font-weight:900; color:#64748b;">${skippedNoName}</div>
-          <div style="font-size:.78rem; font-weight:700; color:#475569;">بدون اسم (تُجوهل)</div>
-        </div>
-      </div>
-
-      ${addedNames.length > 0 ? `
-      <div style="margin-top:16px; background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:12px 14px;">
-        <div style="font-weight:800; font-size:.85rem; margin-bottom:8px; color:var(--primary-dark);">
-          <i class="fas fa-list"></i> قائمة المنتجات المُضافة (${addedNames.length})
-        </div>
-        <div style="max-height:220px; overflow-y:auto; font-size:.82rem; line-height:1.8; color:#334155;">
-          ${addedNames.map((n, i) => `${i + 1}. ${escapeHtml(n)}`).join('<br>')}
-        </div>
-      </div>` : ''}
-    `;
+    /* 4. عرض النتيجة */
+    renderResult({
+      added: addedCount,
+      skippedExisting,
+      skippedDuplicateInFile,
+      skippedNoName,
+      addedNames
+    });
 
     $('stepMapping').classList.add('hidden');
     $('stepResult').classList.remove('hidden');
+    showToast(tt('toastAllDone'));
 
   } catch (err) {
     console.error(err);
-    showToast('خطأ: ' + err.message);
+    showToast(tt('toastImportError') + err.message);
   } finally {
-    overlay.remove();
+    btn.disabled = false;
+    btn.innerHTML = origHtml;
   }
 }
 
-function parseNumber(v) {
-  if (v === undefined || v === null) return 0;
-  if (typeof v === 'number') return v;
-  const cleaned = String(v).replace(/[^\d.,\-]/g, '').replace(/,/g, '.');
-  const n = parseFloat(cleaned);
-  return isNaN(n) ? 0 : n;
-}
-function fmt(n) { return Number(n || 0).toLocaleString('fr-FR'); }
-function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
-function escapeAttr(s) { return escapeHtml(s); }
-function showToast(msg) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(window._tt);
-  window._tt = setTimeout(() => t.classList.remove('show'), 3000);
+function renderResult(stats) {
+  const addedNames = stats.addedNames || [];
+  $('resultContent').innerHTML = `
+    <div class="alert-box alert-success">
+      <i class="fas fa-check-circle"></i>
+      <div><b>${tt('importSuccess')}</b></div>
+    </div>
+
+    <div class="result-stats">
+      <div class="result-stat success">
+        <div class="val">${stats.added}</div>
+        <div class="lbl">${tt('statAdded')}</div>
+      </div>
+      <div class="result-stat info">
+        <div class="val">${stats.skippedExisting}</div>
+        <div class="lbl">${tt('statExisting')}</div>
+      </div>
+      <div class="result-stat warning">
+        <div class="val">${stats.skippedDuplicateInFile}</div>
+        <div class="lbl">${tt('statDuplicate')}</div>
+      </div>
+      <div class="result-stat muted">
+        <div class="val">${stats.skippedNoName}</div>
+        <div class="lbl">${tt('statNoName')}</div>
+      </div>
+    </div>
+
+    ${addedNames.length > 0 ? `
+    <div class="added-list-box">
+      <div class="added-list-title">
+        <i class="fas fa-list"></i>
+        ${tt('addedListTitle')} (${addedNames.length})
+      </div>
+      <div class="added-list-content">
+        ${addedNames.map((n, i) => `<div class="item"><b>${i + 1}.</b> ${escapeHtml(n)}</div>`).join('')}
+      </div>
+    </div>` : ''}
+  `;
 }
 
-async function loadStoreInfo() {
-  try {
-    const snap = await get(ref(db, 'store/info'));
-    if (snap.exists()) {
-      const d = snap.val();
-      storeInfo = { name: d.name || '', logoUrl: d.logoUrl || '', currency: d.currency || 'دج' };
-    }
-  } catch (e) { console.warn(e); }
-  $('headerStoreName').textContent = storeInfo.name || 'المتجر';
-  if (storeInfo.logoUrl) {
-    $('headerLogo').src = storeInfo.logoUrl;
-    $('headerLogo').style.display = 'inline-block';
-  }
-}
-
+/* ═══════════════════════════════════════════════════════════
+   File Handling
+   ═══════════════════════════════════════════════════════════ */
 async function handleFile(file) {
   if (!file) return;
   $('fileName').textContent = file.name;
@@ -736,7 +1388,7 @@ async function handleFile(file) {
     const sheet = workbook.Sheets[sheetName];
     const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '', raw: true });
 
-    if (!rows.length) { showToast('الملف فارغ'); return; }
+    if (!rows.length) { showToast(tt('toastFileEmpty')); return; }
 
     headerRowIndex = findHeaderRow(rows);
     if (headerRowIndex === -1) headerRowIndex = 0;
@@ -754,12 +1406,12 @@ async function handleFile(file) {
     columnDetected = [...columnTypes];
 
     const nameSeen = new Set();
-    columnTypes = columnTypes.map(t => {
-      if (t === 'name') {
+    columnTypes = columnTypes.map(tp => {
+      if (tp === 'name') {
         if (nameSeen.has('name')) return 'ignore';
         nameSeen.add('name');
       }
-      return t;
+      return tp;
     });
 
     renderMapping();
@@ -771,10 +1423,13 @@ async function handleFile(file) {
 
   } catch (err) {
     console.error(err);
-    showToast('فشل قراءة الملف: ' + err.message);
+    showToast(tt('toastReadError') + err.message);
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   Events
+   ═══════════════════════════════════════════════════════════ */
 $('uploadZone').addEventListener('click', () => $('fileInput').click());
 $('fileInput').addEventListener('change', e => {
   if (e.target.files[0]) handleFile(e.target.files[0]);
@@ -801,13 +1456,17 @@ $('uploadZone').addEventListener('drop', e => {
 $('btnReset').addEventListener('click', () => {
   workbook = null; headerRowIndex = -1; rawHeaders = []; dataRows = [];
   columnTypes = []; columnDetected = [];
+  $('importProgress').style.display = 'none';
+  $('progressFill').style.width = '0%';
   $('stepMapping').classList.add('hidden');
   $('stepUpload').classList.remove('hidden');
   $('fileInput').value = '';
 });
 
 $('btnCancel').addEventListener('click', () => {
-  if (confirm('إلغاء الاستيراد والعودة؟')) window.location.href = 'admin.html';
+  if (confirm(LANG === 'fr' ? 'Annuler l\'import et revenir ?' : 'إلغاء الاستيراد والعودة؟')) {
+    window.location.href = 'admin.html';
+  }
 });
 
 $('btnImport').addEventListener('click', doImport);
@@ -817,6 +1476,11 @@ $('btnAnother').addEventListener('click', () => {
   $('stepUpload').classList.remove('hidden');
   $('btnReset').click();
 });
+
+/* تحديث أيقونة الرجوع حسب اللغة */
+if (LANG === 'fr') {
+  $('backIcon').className = 'fas fa-arrow-left';
+}
 
 loadStoreInfo();
 </script>
