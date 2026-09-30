@@ -294,15 +294,7 @@
 
   #addUserBtn { width: auto !important; min-width: 160px; }
 
-  #saveStoreSettingsBtn,
-  #savePixelsBtn,
-  #savePoliciesBtn,
-  #saveOwnerBtn,
-  #saveWholesaleCodeBtn,
-  #saveLandingSettingsBtn {
-    width: auto !important;
-    min-width: 200px;
-  }
+
 
   #addZoneBtn,
   #btnExcelImport,
@@ -334,5 +326,55 @@
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 24px;
+  }
+}
+/* ═══════════════════════════════════════════════════════════
+   🎨 FIX — زر "Enregistrer les politiques" يصبح بحجم
+   "Ajouter une politique" على الحاسوب
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 900px) {
+  #savePoliciesBtn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 12px 18px !important;
+    margin-top: 10px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--primary) !important;
+    color: #fff !important;
+    border: 1px solid var(--primary) !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .15) inset, var(--shadow-xs) !important;
+    letter-spacing: -0.005em !important;
+  }
+  
+  #savePoliciesBtn:hover {
+    background: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+  }
+}
+/* ═══════════════════════════════════════════════════════════
+   🎨 FIX — زرا السياسات يصبحان بنفس الحجم الصغير
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width: 900px) {
+  #stab-policies .add-item-btn,
+  #stab-policies #savePoliciesBtn {
+    width: auto !important;
+    min-width: 200px !important;
+    max-width: fit-content !important;
+    padding: 12px 24px !important;
+    margin: 10px 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-sm) !important;
   }
 }
