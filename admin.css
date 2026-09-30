@@ -1679,23 +1679,30 @@ header {
   border-color: var(--danger);
 }
 .add-item-btn {
-  padding: 10px 16px;
-  border: 1px dashed var(--primary);
+  padding: 12px 18px;
+  border: 1px solid var(--primary);
   border-radius: var(--radius-sm);
-  background: #fff;
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 13px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 12px;
   width: 100%;
   justify-content: center;
-  transition: background var(--dur-fast) var(--ease);
+  box-shadow: 0 1px 0 rgba(255,255,255,.15) inset, var(--shadow-xs);
+  transition: background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
 }
-.add-item-btn:hover { background: var(--primary-tint); }
+.add-item-btn:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+.add-item-btn i { color: #fff; font-size: 14px; }
+.add-item-btn i { color: var(--primary); font-size: 13px; }
 
 .dyn-item-policy {
   background: #fff;
@@ -1706,17 +1713,20 @@ header {
 }
 .dyn-item-policy .row {
   display: flex;
-  gap: 6px;
-  align-items: center;
+  gap: 8px;
+  align-items: stretch;
   margin-bottom: 10px;
 }
 .dyn-item-policy .row input {
   flex: 1;
-  padding: 10px 12px;
+  height: 42px;
+  padding: 0 14px;
   font-size: 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+  background: #fff;
   font-weight: 600;
+  color: var(--text);
   outline: none;
   transition: border-color var(--dur) var(--ease),
               box-shadow var(--dur) var(--ease);
@@ -1726,21 +1736,29 @@ header {
   box-shadow: var(--shadow-focus);
 }
 .dyn-item-policy .row .rm-btn {
-  width: 40px; height: 42px;
-  border: 1px solid var(--border);
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  padding: 0;
+  border: 1px solid var(--danger);
   border-radius: var(--radius-sm);
-  background: #fff;
-  color: var(--danger);
+  background: var(--danger);
+  color: #fff;
   cursor: pointer;
   font-size: 14px;
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0 rgba(255,255,255,.15) inset, var(--shadow-xs);
   transition: background var(--dur-fast) var(--ease),
               border-color var(--dur-fast) var(--ease);
 }
 .dyn-item-policy .row .rm-btn:hover {
-  background: var(--danger-tint);
-  border-color: var(--danger);
+  background: #b91c1c;
+  border-color: #b91c1c;
 }
+.dyn-item-policy .row .rm-btn i { color: #fff; }
+.dyn-item-policy .row .rm-btn i { color: #fff; }
 .dyn-item-policy textarea {
   width: 100%;
   padding: 10px 12px;
@@ -3583,4 +3601,10 @@ body {
     padding: 4px 9px !important;
     font-size: 10px !important;
   }
+}
+/* ═══════════════════════════════════════════════════════════
+   🎨 FIX — المسافة بين أزرار السياسات
+   ═══════════════════════════════════════════════════════════ */
+.add-item-btn {
+  margin-bottom: 10px !important;
 }
