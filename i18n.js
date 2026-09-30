@@ -658,6 +658,14 @@
     "للقطعة":"par pièce",
     "مع":"avec",
     "خدمة العملاء:":"Service client :",
+    /* ═══════════════════════════════════════════
+   إعدادات الصفحات (جديد)
+   ═══════════════════════════════════════════ */
+"إعدادات الصفحات":"Paramètres des pages",
+"تفعيل أو تعطيل الميزات المتعلقة بصفحات المتجر والترويج.":"Activer ou désactiver les fonctionnalités liées aux pages de la boutique et de promotion.",
+"إظهار التقييمات في صفحات الترويج":"Afficher les avis sur les pages promotionnelles",
+"يتطلب تفعيل التقييمات بالأعلى.":"Nécessite l'activation des avis ci-dessus.",
+"يعرض عدد الزوار الحاليين على صفحة الترويج.":"Affiche le nombre actuel de visiteurs sur la page promotionnelle.",
 
     /* ═══════════════════════════════════════════
        INDEX (store)
@@ -704,6 +712,9 @@
     "العودة للوحة الإدارة":"Retour au panneau d'admin",
     "عرض المتجر":"Voir la boutique",
     "هذا الحساب سيُستخدم للدخول إلى لوحة الإدارة. استخدم أحرفاً إنجليزية وأرقاماً فقط.":"Ce compte servira à accéder au panneau d'administration. Utilisez uniquement des lettres et chiffres.",
+    "ميزات إضافية":"Fonctionnalités supplémentaires",
+"ميزات إضافية (تلقائي)":"Fonctionnalités supplémentaires (auto)",
+"يتم الحفظ تلقائياً عند التبديل":"Enregistrement automatique lors du basculement",
 
     /* ═══════════════════════════════════════════
        ERRORS / VALIDATION
@@ -715,6 +726,7 @@
     "نجاح":"Succès",
     "معلومة":"Information"
   };
+  
 
   /* ═══════════════════════════════════════════════════════════
      PATTERNS — الترجمات الديناميكية (regex)
