@@ -466,60 +466,60 @@
       <span class="toggle-switch"><input type="checkbox" id="landingEnableReviews" /><span class="toggle-slider"></span></span>
     </label>
     
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-users"></i> إظهار عداد الزوار</h4>
-        <p>يعرض عدد الزوار الحاليين على صفحة الترويج.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="landingEnableVisitors" /><span class="toggle-slider"></span></span>
-    </label>
+            <label class="toggle-row">
+  <div class="toggle-row-info">
+    <h4><i class="fas fa-users"></i> إظهار عداد الزوار</h4>
+    <p>يعرض عدد الزوار الحاليين على صفحة الترويج.</p>
+  </div>
+  <span class="toggle-switch"><input type="checkbox" id="landingEnableVisitors" /><span class="toggle-slider"></span></span>
+</label>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     🛍️ أزرار صفحة المنتج (Product)
+     ═══════════════════════════════════════════ -->
+<div class="settings-card">
+  <h3><i class="fas fa-shopping-bag"></i> أزرار صفحة المنتج</h3>
+  <div class="helper-text">تحكم في أزرار الواتساب والمشاركة والتواصل التي تظهر في صفحات المنتجات فقط.</div>
+
+  <label class="toggle-row">
+    <div class="toggle-row-info">
+      <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب (Product)</h4>
+      <p>زر عائم يفتح محادثة واتساب مباشرة في صفحة المنتج.</p>
+    </div>
+    <span class="toggle-switch"><input type="checkbox" id="featContactWhatsappProduct" data-feat="contactWhatsappProduct" /><span class="toggle-slider"></span></span>
+  </label>
+
+  <label class="toggle-row">
+    <div class="toggle-row-info">
+      <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Product)</h4>
+      <p>زر لمشاركة رابط المنتج على وسائل التواصل.</p>
+    </div>
+    <span class="toggle-switch"><input type="checkbox" id="featShareButtonProduct" data-feat="shareButtonProduct" /><span class="toggle-slider"></span></span>
+  </label>
+
+  <label class="toggle-row">
+    <div class="toggle-row-info">
+      <h4><i class="fas fa-share-alt"></i> أيقونات التواصل (Product)</h4>
+      <p>أيقونات تظهر في أسفل صفحة المنتج.</p>
+    </div>
+    <span class="toggle-switch"><input type="checkbox" id="featSocialLinksProduct" data-feat="socialLinksProduct" /><span class="toggle-slider"></span></span>
+  </label>
+
+  <div id="socialLinksManagerProduct" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <strong style="font-size:13px; color:var(--text);">
+        <i class="fas fa-list" style="color:var(--primary);"></i>
+        <span>الحسابات المضافة (Product)</span>
+      </strong>
+      <button type="button" id="addSocialLinkBtnProduct" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
+        <i class="fas fa-plus"></i> <span>إضافة</span>
+      </button>
+    </div>
+    <div id="socialLinksListProduct" style="display:flex; flex-direction:column; gap:8px;"></div>
   </div>
 
-  <!-- ═══════════════════════════════════════════
-       🛍️ أزرار صفحة المنتج (Product)
-       ═══════════════════════════════════════════ -->
-  <div class="settings-card">
-    <h3><i class="fas fa-shopping-bag"></i> أزرار صفحة المنتج</h3>
-    <div class="helper-text">تحكم في أزرار الواتساب والمشاركة والتواصل التي تظهر في صفحات المنتجات فقط.</div>
-
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب (Product)</h4>
-        <p>زر عائم يفتح محادثة واتساب مباشرة في صفحة المنتج.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featContactWhatsappProduct" data-feat="contactWhatsappProduct" /><span class="toggle-slider"></span></span>
-    </label>
-
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Product)</h4>
-        <p>زر لمشاركة رابط المنتج على وسائل التواصل.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featShareButtonProduct" data-feat="shareButtonProduct" /><span class="toggle-slider"></span></span>
-    </label>
-
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-share-alt"></i> أيقونات التواصل (Product)</h4>
-        <p>أيقونات تظهر في أسفل صفحة المنتج.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featSocialLinksProduct" data-feat="socialLinksProduct" /><span class="toggle-slider"></span></span>
-    </label>
-
-    <div id="socialLinksManagerProduct" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <strong style="font-size:13px; color:var(--text);">
-          <i class="fas fa-list" style="color:var(--primary);"></i>
-          <span>الحسابات المضافة (Product)</span>
-        </strong>
-        <button type="button" id="addSocialLinkBtnProduct" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
-          <i class="fas fa-plus"></i> <span>إضافة</span>
-        </button>
-      </div>
-      <div id="socialLinksListProduct" style="display:flex; flex-direction:column; gap:8px;"></div>
-    </div>
-
-  </div><!-- ✅ إغلاق settings-card أزرار المنتج -->
+</div><!-- ✅ إغلاق settings-card أزرار المنتج -->
 
 </div><!-- ✅ إغلاق stab-landingSettings -->
     
@@ -928,6 +928,24 @@ let currentBundleTiers = [];
 const ORDERS_WARN_LIMIT = 1000;
 const CLEANUP_KEEP_DAYS = 30;
 
+/* ═══════════════════════════════════════════════════════════
+   🆕 حفظ واستعادة حالة التبويبات (localStorage)
+   ═══════════════════════════════════════════════════════════ */
+const LS_KEYS = {
+  mainPage: 'admin_last_main_page',
+  settingsTab: 'admin_last_settings_tab',
+  ordersFilter: 'admin_last_orders_filter',
+  invTab: 'admin_last_inv_tab',
+  invPeriod: 'admin_last_inv_period'
+};
+
+function saveState(key, value) {
+  try { if (value !== undefined && value !== null) localStorage.setItem(key, String(value)); } catch(e) {}
+}
+function loadState(key, fallback) {
+  try { const v = localStorage.getItem(key); return v !== null ? v : fallback; } catch(e) { return fallback; }
+}
+
 const PAGE_THEMES = [
   { id: 'default', name: 'أخضر', bg: '#f8fafc', card: '#ffffff', line: '#a7f3d0', primary: '#0b6e4f', border: '#a7f3d0' },
   { id: 'white', name: 'أبيض', bg: '#ffffff', card: '#f8fafc', line: '#e2e8f0', primary: '#0b6e4f', border: '#e2e8f0' },
@@ -1068,11 +1086,12 @@ function applyPermissions() {
   }
 }
 
-function switchPage(pageName) {
+function switchPage(pageName, skipSave) {
   if (!can('nav.' + pageName)) {
     if (pageName === 'settings') return;
     showToast(t('notAllowed')); return;
   }
+  if (!skipSave) saveState(LS_KEYS.mainPage, pageName);
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === pageName));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = $('page-' + pageName);
@@ -1084,18 +1103,29 @@ function switchPage(pageName) {
   if (pageName === 'products') applyFiltersAndRender();
 if (pageName === 'families') renderFamiliesPage();
   if (pageName === 'settings') {
-    const firstTab = Array.from(document.querySelectorAll('.settings-tab')).find(tab => {
+    /* 🆕 استعادة آخر تبويب إعدادات مفتوح */
+    const savedTab = loadState(LS_KEYS.settingsTab, 'general');
+    const tabToOpen = Array.from(document.querySelectorAll('.settings-tab')).find(tab => {
+      if (tab.dataset.stab !== savedTab) return false;
       const p = tab.getAttribute('data-perm');
       const f = tab.getAttribute('data-feature');
       if (p && !can(p)) return false;
       if (f && !canFeature(f)) return false;
       return tab.style.display !== 'none';
     });
-    if (firstTab) {
+    const fallbackTab = Array.from(document.querySelectorAll('.settings-tab')).find(tab => {
+      const p = tab.getAttribute('data-perm');
+      const f = tab.getAttribute('data-feature');
+      if (p && !can(p)) return false;
+      if (f && !canFeature(f)) return false;
+      return tab.style.display !== 'none';
+    });
+    const activeTab = tabToOpen || fallbackTab;
+    if (activeTab) {
       document.querySelectorAll('.settings-tab').forEach(x => x.classList.remove('active'));
-      firstTab.classList.add('active');
+      activeTab.classList.add('active');
       document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
-      const panel = $('stab-' + firstTab.dataset.stab);
+      const panel = $('stab-' + activeTab.dataset.stab);
       if (panel) panel.classList.add('active');
     }
   }
@@ -1263,9 +1293,6 @@ onValue(ref(db, 'store/features'), snap => {
   if ($("page-products") && $("page-products").classList.contains('active')) applyFiltersAndRender();
 });
 
-/* ═══════════════════════════════════════════════════════════
-   💾 ميزات — حفظ تلقائي فوري عند التبديل
-   ═══════════════════════════════════════════════════════════ */
 document.addEventListener('change', async function(e) {
   const inp = e.target;
   if (!inp || !inp.matches || !inp.matches('input[data-feat]')) return;
@@ -1288,7 +1315,6 @@ document.addEventListener('change', async function(e) {
   }
 }, true);
 
-/* ✅ معالج خاص لحقل "عدد أيام المنتجات الجديدة" */
 document.addEventListener('change', async e => {
   if (e.target && e.target.id === 'featNewProductsDays') {
     let days = parseInt(e.target.value) || 30;
@@ -1302,7 +1328,6 @@ document.addEventListener('change', async e => {
   }
 }, true);
 
-/* ✅ إظهار/إخفاء صندوق الأيام عند تبديل الميزة */
 document.addEventListener('change', e => {
   if (e.target && e.target.id === 'featNewProducts') {
     const box = $("newProductsDaysBox");
@@ -2455,6 +2480,7 @@ if (confirmBtn) {
     const filter = chip.dataset.ofilter;
     if (filter === 'confirmed' && !can('orders.viewConfirmed')) return showToast(t('notAllowed'));
     currentOrdersFilter = filter;
+    saveState(LS_KEYS.ordersFilter, filter);
     document.querySelectorAll('.orders-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     renderOrdersList();
@@ -2471,6 +2497,7 @@ document.querySelectorAll('#invPeriodChips .orders-chip').forEach(chip => {
     document.querySelectorAll('#invPeriodChips .orders-chip').forEach(c => c.classList.remove('active'));
     chip.classList.add('active');
     invPeriod = chip.dataset.period;
+    saveState(LS_KEYS.invPeriod, invPeriod);
     closeInvDrawer();
     renderInventoryPage();
   });
@@ -2480,6 +2507,7 @@ document.querySelectorAll('#invTabs .inv-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('#invTabs .inv-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
+    saveState(LS_KEYS.invTab, tab.dataset.itab);
     document.querySelectorAll('.inv-tab-panel').forEach(p => p.classList.remove('active'));
     const panel = $('itab-' + tab.dataset.itab);
     if (panel) panel.classList.add('active');
@@ -3190,6 +3218,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => { btn.addEventListener('cli
 document.querySelectorAll('.settings-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     if (!can(tab.getAttribute('data-perm') || '')) return showToast(t('notAllowed'));
+    saveState(LS_KEYS.settingsTab, tab.dataset.stab);
     document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
@@ -3226,6 +3255,46 @@ function initApp() {
   $("userNameDisplay").innerHTML = `<i class="fas fa-user-circle"></i> ${localStorage.getItem("user")} <span class="role-tag ${currentRole}">${roleLabel}</span>`;
   applyPermissions();
   if (currentRole === 'owner') loadUsersList();
+  restoreLastTab();
+}
+
+/* 🆕 استعادة التبويبات المحفوظة */
+function restoreLastTab() {
+  /* استعادة التبويب الرئيسي */
+  const lastPage = loadState(LS_KEYS.mainPage, 'products');
+  if (lastPage && lastPage !== 'products' && can('nav.' + lastPage)) {
+    switchPage(lastPage, true);
+  }
+
+  /* استعادة تبويب الطلبات */
+  const lastOrdersFilter = loadState(LS_KEYS.ordersFilter, 'new');
+  if (lastOrdersFilter === 'confirmed' && can('orders.viewConfirmed')) {
+    currentOrdersFilter = 'confirmed';
+    document.querySelectorAll('.orders-chip').forEach(c => {
+      const match = c.dataset.ofilter === 'confirmed';
+      c.classList.toggle('active', match);
+    });
+  }
+
+  /* استعادة تبويب المخزون */
+  const lastInvTab = loadState(LS_KEYS.invTab, 'overview');
+  const invTabEl = Array.from(document.querySelectorAll('.inv-tab')).find(t => t.dataset.itab === lastInvTab);
+  if (invTabEl) {
+    document.querySelectorAll('.inv-tab').forEach(t => t.classList.remove('active'));
+    invTabEl.classList.add('active');
+    document.querySelectorAll('.inv-tab-panel').forEach(p => p.classList.remove('active'));
+    const panel = $('itab-' + lastInvTab);
+    if (panel) panel.classList.add('active');
+  }
+
+  /* استعادة فترة المخزون */
+  const lastInvPeriod = loadState(LS_KEYS.invPeriod, 'today');
+  const periodEl = Array.from(document.querySelectorAll('#invPeriodChips .orders-chip')).find(c => c.dataset.period === lastInvPeriod);
+  if (periodEl) {
+    document.querySelectorAll('#invPeriodChips .orders-chip').forEach(c => c.classList.remove('active'));
+    periodEl.classList.add('active');
+    invPeriod = lastInvPeriod;
+  }
 }
 
 function bootApp() {
