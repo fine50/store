@@ -73,7 +73,6 @@
   --font:'Cairo',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
 }
 
-/* ═══ Theme: white ═══ */
 body[data-theme="white"]{
   --bg:#ffffff;--card:#f8fafc;
   --primary:#0b6e4f;--primary-light:#1a8a6a;--primary-dark:#064e3b;
@@ -1634,6 +1633,126 @@ footer a:hover{
     transition-duration:.001ms !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🌐 أزرار التواصل في Footer — النسخة النهائية الموحّدة
+   ═══════════════════════════════════════════════════════════ */
+.footer-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-action-btn,
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: var(--card);
+  color: var(--primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1;
+  vertical-align: middle;
+  overflow: hidden;
+  transition: background .2s ease,
+              color .2s ease,
+              border-color .2s ease,
+              transform .15s ease;
+}
+
+/* 🎯 توحيد أيقونات Font Awesome (fab + fas) */
+.footer-action-btn > i,
+.social-links a > i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  transform: none;
+}
+
+/* 🎯 معالجة خاصة لأيقونة WhatsApp (Brands) - حجم متوازن */
+.footer-action-btn > i.fa-whatsapp,
+.social-links a > i.fa-whatsapp {
+  width: 22px;
+  height: 22px;
+  font-size: 20px;
+}
+
+.footer-action-btn:hover,
+.social-links a:hover {
+  background: var(--primary);
+  color: #fff !important;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.footer-action-btn:active,
+.social-links a:active {
+  transform: translateY(0);
+}
+
+/* ✅ أيقونة مرفوعة (صورة) */
+.social-links a img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(72%) saturate(1243%) hue-rotate(130deg) brightness(95%) contrast(95%);
+  transition: filter .2s ease;
+}
+.social-links a:hover img {
+  filter: brightness(0) invert(1);
+}
+
+/* ✅ حاوية أيقونات التواصل */
+.social-links {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+/* 📱 الجوال */
+@media (max-width: 640px) {
+  .footer-actions { gap: 6px; margin-bottom: 16px; }
+  .footer-action-btn,
+  .social-links a {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  .footer-action-btn > i,
+  .social-links a > i {
+    width: 18px;
+    height: 18px;
+    font-size: 16px;
+  }
+  .footer-action-btn > i.fa-whatsapp,
+  .social-links a > i.fa-whatsapp {
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+  }
+  .social-links { gap: 6px; }
+}
 </style>
 </head>
 <body>
@@ -1841,9 +1960,21 @@ footer a:hover{
   </main>
 
   <footer>
-    <div id="footerPhoneContainer"></div>
-    <p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p>
-  </footer>
+  <div class="footer-actions">
+    <a id="waContactBtn" class="footer-action-btn" href="#" target="_blank" rel="noopener" style="display:none;" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <button type="button" id="shareBtn" class="footer-action-btn" style="display:none;" aria-label="Share">
+      <i class="fas fa-share-nodes"></i>
+    </button>
+    
+    <div class="social-links" id="socialLinks" style="display:none;"></div>
+  </div>
+  
+  <div id="footerPhoneContainer"></div>
+  <p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p>
+</footer>
 
   <div class="floating-bar" id="floatingBar">
     <div class="floating-inner">
@@ -1908,7 +2039,8 @@ let storeInfo = { name:"", logoUrl:"", phoneInvoice:"", whatsappNumber:"", enabl
 
 let storeFeatures = {
   costPrice: true, inventory: true, quantityPerBox: true, wholesale: true,
-  discounts: true, landing: true, reviews: true, shipping: true
+  discounts: true, landing: true, reviews: true, shipping: true,
+  contactWhatsappProduct: false, shareButtonProduct: false, socialLinksProduct: false
 };
 
 let product = null;
@@ -1933,7 +2065,21 @@ const fmt = n => Number(n || 0).toLocaleString('fr-FR');
 const WILAYAS = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تيميمون","برج باجي مختار","أولاد جلال","بني عباس","إن صالح","إن قزام","تقرت","جانت","المغير","المنيعة"];
 
 /* ═══════════════════════════════════════════════════════════
-   🎯 بيكسل — Facebook + TikTok (مع تحويل العملة)
+   📞 تطبيع رقم واتساب
+   ═══════════════════════════════════════════════════════════ */
+function normalizeWhatsappNumber(raw) {
+  if (!raw) return "";
+  let num = String(raw).replace(/[^0-9]/g, "");
+  if (!num) return "";
+  num = num.replace(/^0+/, "");
+  if (num.startsWith("00213")) num = num.substring(2);
+  if (!num.startsWith("213")) num = "213" + num;
+  if (num.startsWith("213") && num.length > 12) num = num.substring(0, 12);
+  return num;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🎯 بيكسل — Facebook + TikTok
    ═══════════════════════════════════════════════════════════ */
 function pixelCurrency() {
   const c = storeInfo.currency || 'DZD';
@@ -2025,7 +2171,10 @@ async function loadAll() {
           discounts: f.discounts !== false,
           landing: f.landing !== false,
           reviews: f.reviews !== false,
-          shipping: f.shipping !== false
+          shipping: f.shipping !== false,
+          contactWhatsappProduct: f.contactWhatsappProduct === true,
+          shareButtonProduct: f.shareButtonProduct === true,
+          socialLinksProduct: f.socialLinksProduct === true
         };
       }
     } catch(e) { console.warn('features load:', e); }
@@ -2435,7 +2584,8 @@ function renderPage(landingSettings) {
   setupCheckout();
   renderBundleBox();
   updateTotals();
-
+  setupFooterActions();
+  
   $("loadingScreen").style.display = "none";
   $("appContainer").style.display = "block";
 }
@@ -2842,6 +2992,125 @@ function cleanupStalePresence() {
     });
   });
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🌐 أيقونات التواصل الاجتماعي — خاصة بصفحة المنتج
+   تقرأ من: store/social_links_product
+   ═══════════════════════════════════════════════════════════ */
+let socialLinksData = {};
+
+function renderSocialLinks() {
+  const container = document.getElementById('socialLinks');
+  if (!container) return;
+
+  if (!storeFeatures.socialLinksProduct) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+
+  const items = Object.entries(socialLinksData)
+    .map(([key, val]) => {
+      if (val && val.url && !/^https?:\/\//i.test(val.url)) {
+        val.url = 'https://' + val.url.replace(/^\/+/, '');
+      }
+      return { key, ...val };
+    })
+    .filter(item => item && item.icon && item.url)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  if (!items.length) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = items.map(item => {
+    const iconHtml = item.icon.startsWith('http') ?
+      `<img src="${esc(item.icon)}" alt="">` :
+      `<i class="${esc(item.icon)}"></i>`;
+    return `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Social">${iconHtml}</a>`;
+  }).join('');
+
+  container.style.display = 'inline-flex';
+}
+
+onValue(ref(db, 'store/social_links_product'), (snap) => {
+  socialLinksData = snap.val() || {};
+  renderSocialLinks();
+});
+
+let socialRetryCount = 0;
+const socialRetryInterval = setInterval(() => {
+  socialRetryCount++;
+  renderSocialLinks();
+  if (socialRetryCount >= 10 ||
+    (storeFeatures.socialLinksProduct && Object.keys(socialLinksData).length > 0)) {
+    clearInterval(socialRetryInterval);
+  }
+}, 500);
+
+/* ═══════════════════════════════════════════════════════════
+   💬 إظهار/إخفاء أزرار واتساب والمشاركة (Product)
+   ═══════════════════════════════════════════════════════════ */
+function setupFooterActions() {
+  const waBtn = document.getElementById('waContactBtn');
+  if (waBtn) {
+    const waNumber = storeInfo.whatsappNumber;
+    if (storeFeatures.contactWhatsappProduct && waNumber) {
+      const n = normalizeWhatsappNumber(waNumber);
+      const isFR = (localStorage.getItem('store_lang') || 'ar') === 'fr';
+      const productName = product?.landing?.productName || product?.name || '';
+      const pageUrl = location.href;
+
+      const msg = isFR ?
+        `Bonjour 👋\nJe voudrais me renseigner sur ce produit :\n\n• ${productName}\n\nLien : ${pageUrl}` :
+        `مرحباً 👋\nلدي استفسار عن هذا المنتج:\n\n• ${productName}\n\nالرابط: ${pageUrl}`;
+
+      waBtn.href = `https://wa.me/${n}?text=${encodeURIComponent(msg)}`;
+      waBtn.style.display = 'inline-flex';
+    } else {
+      waBtn.style.display = 'none';
+    }
+  }
+
+  const shBtn = document.getElementById('shareBtn');
+  if (shBtn) {
+    shBtn.style.display = storeFeatures.shareButtonProduct ? 'inline-flex' : 'none';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🖱️ سلوك زر المشاركة
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('#shareBtn');
+  if (!btn) return;
+
+  const isFR = (localStorage.getItem('store_lang') || 'ar') === 'fr';
+  const productName = product?.landing?.productName || product?.name || '';
+
+  const shareData = {
+    title: productName || document.title,
+    text: isFR ?
+      `Regardez ce produit : ${productName}` :
+      `شاهد هذا المنتج: ${productName}`,
+    url: location.href
+  };
+
+  if (navigator.share) {
+    try { await navigator.share(shareData); return; } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(location.href);
+    alert(isFR ? '✅ Lien copié !' : '✅ تم نسخ الرابط!');
+  } catch (err) {
+    prompt('URL:', location.href);
+  }
+});
 
 loadAll();
 </script>
