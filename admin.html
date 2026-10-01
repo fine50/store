@@ -357,7 +357,7 @@
       <span class="toggle-switch"><input type="checkbox" id="featNewProducts" data-feat="newProducts" /><span class="toggle-slider"></span></span>
     </label>
 
-    <div id="newProductsDaysBox" style="display:none; margin: 8px 0 16px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+        <div id="newProductsDaysBox" style="display:none; margin: 8px 0 16px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
       <label style="display:block; font-weight:600; font-size:13px; margin-bottom:8px; color:var(--text);">
         <i class="fas fa-clock" style="color:var(--primary);"></i>
         <span data-i18n="newProductsDaysLabel">عرض المنتجات المُضافة خلال:</span>
@@ -372,8 +372,56 @@
         <span data-i18n="newProductsHint">المنتجات التي أُضيفت خلال هذه المدة ستظهر في تبويب "الجديدة".</span>
       </p>
     </div>
+</div><!-- ✅ إغلاق settings-card بعد الأزرار الجديدة -->
+
+<!-- ═══════════════════════════════════════════
+     🆕 التواصل والمشاركة (تحكم في Index)
+     ═══════════════════════════════════════════ -->
+<div class="settings-card">
+  <h3><i class="fas fa-share-alt"></i> التواصل والمشاركة (Index)</h3>
+  <div class="helper-text">تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (Index).</div>
+  
+  <label class="toggle-row">
+    <div class="toggle-row-info">
+      <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب</h4>
+      <p>زر عائم يفتح محادثة واتساب مباشرة مع المتجر (Index).</p>
+    </div>
+    <span class="toggle-switch"><input type="checkbox" id="featContactWhatsapp" data-feat="contactWhatsapp" /><span class="toggle-slider"></span></span>
+  </label>
+  
+  <label class="toggle-row">
+    <div class="toggle-row-info">
+      <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Partager)</h4>
+      <p>زر عائم لمشاركة رابط المتجر على وسائل التواصل (Index).</p>
+    </div>
+    <span class="toggle-switch"><input type="checkbox" id="featShareButton" data-feat="shareButton" /><span class="toggle-slider"></span></span>
+  </label>
+  
+  <label class="toggle-row">
+    <div class="toggle-row-info">
+      <h4><i class="fas fa-share-alt"></i> أيقونات التواصل الاجتماعي</h4>
+      <p>أيقونات تظهر في أسفل الصفحة الرئيسية (Index).</p>
+    </div>
+    <span class="toggle-switch"><input type="checkbox" id="featSocialLinks" data-feat="socialLinks" /><span class="toggle-slider"></span></span>
+  </label>
+  
+  <div id="socialLinksManager" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <strong style="font-size:13px; color:var(--text);">
+        <i class="fas fa-list" style="color:var(--primary);"></i>
+        <span data-i18n="socialAdded">الحسابات المضافة (Index)</span>
+      </strong>
+      <button type="button" id="addSocialLinkBtn" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
+        <i class="fas fa-plus"></i> <span data-i18n="socialAdd">إضافة</span>
+      </button>
+    </div>
+    <div id="socialLinksList" style="display:flex; flex-direction:column; gap:8px;"></div>
   </div>
-</div>
+  
+</div><!-- ✅ إغلاق settings-card التواصل -->
+
+</div><!-- ✅ إغلاق stab-features -->
+
 
 <div id="stab-landingSettings" class="settings-panel">
   <div class="settings-card">
@@ -426,9 +474,56 @@
       <span class="toggle-switch"><input type="checkbox" id="landingEnableVisitors" /><span class="toggle-slider"></span></span>
     </label>
   </div>
-</div>
 
-  <div id="stab-policies" class="settings-panel">
+  <!-- ═══════════════════════════════════════════
+       🛍️ أزرار صفحة المنتج (Product)
+       ═══════════════════════════════════════════ -->
+  <div class="settings-card">
+    <h3><i class="fas fa-shopping-bag"></i> أزرار صفحة المنتج</h3>
+    <div class="helper-text">تحكم في أزرار الواتساب والمشاركة والتواصل التي تظهر في صفحات المنتجات فقط.</div>
+
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب (Product)</h4>
+        <p>زر عائم يفتح محادثة واتساب مباشرة في صفحة المنتج.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featContactWhatsappProduct" data-feat="contactWhatsappProduct" /><span class="toggle-slider"></span></span>
+    </label>
+
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Product)</h4>
+        <p>زر لمشاركة رابط المنتج على وسائل التواصل.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featShareButtonProduct" data-feat="shareButtonProduct" /><span class="toggle-slider"></span></span>
+    </label>
+
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-share-alt"></i> أيقونات التواصل (Product)</h4>
+        <p>أيقونات تظهر في أسفل صفحة المنتج.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featSocialLinksProduct" data-feat="socialLinksProduct" /><span class="toggle-slider"></span></span>
+    </label>
+
+    <div id="socialLinksManagerProduct" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <strong style="font-size:13px; color:var(--text);">
+          <i class="fas fa-list" style="color:var(--primary);"></i>
+          <span>الحسابات المضافة (Product)</span>
+        </strong>
+        <button type="button" id="addSocialLinkBtnProduct" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
+          <i class="fas fa-plus"></i> <span>إضافة</span>
+        </button>
+      </div>
+      <div id="socialLinksListProduct" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+
+  </div><!-- ✅ إغلاق settings-card أزرار المنتج -->
+
+</div><!-- ✅ إغلاق stab-landingSettings -->
+    
+    <div id="stab-policies" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-file-contract"></i> سياسات المتجر</h3>
       <p style="font-size:13px;color:var(--text-2);margin-bottom:12px;">كل سياسة تحتوي على عنوان + نص الشرح.</p>
@@ -755,7 +850,13 @@
     <input type="file" id="customIconFile" accept="image/*" style="display:none;" />
   </div>
 </div>
-
+<div id="socialIconPickerModal" class="modal">
+  <div class="modal-content" style="max-width: 520px;">
+    <button class="close-x" data-close="socialIconPickerModal">&times;</button>
+    <h3><i class="fas fa-icons"></i> اختر أيقونة</h3>
+    <div id="socialIconGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(56px, 1fr)); gap:8px;"></div>
+  </div>
+</div>
 <div class="toast" id="toastMessage"></div>
 
 <footer><p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p></footer>
@@ -763,7 +864,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="i18n.js"></script>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getDatabase, ref, onValue, set, remove, update, push, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
@@ -797,7 +897,7 @@ const discountsRef = ref(db, "discounts");
 const reviewsRef = ref(db, "reviews");
 
 let storeInfo = { name:"", logoUrl:"", phoneInvoice:"", address:"", whatsappNumber:"", enableWhatsapp:true, enableLocation:true, currency:"دج", lowStockAlert:5, tagline:"" };
-let storeFeatures = { costPrice:true, inventory:true, quantityPerBox:true, wholesale:true, discounts:true, landing:true, reviews:true, shipping:true, serial:false, activityLog:true, newProducts:true, newProductsDays:30 };
+let storeFeatures = { costPrice:true, inventory:true, quantityPerBox:true, wholesale:true, discounts:true, landing:true, reviews:true, shipping:true, serial:false, activityLog:true, newProducts:true, newProductsDays:30, contactWhatsapp:false, shareButton:false, socialLinks:false, contactWhatsappProduct:false, shareButtonProduct:false, socialLinksProduct:false };
 window.storeFeatures = storeFeatures;
 let imgbbKey = BOOT.imgbbApiKey || "";
 let wholesaleCode = null;
@@ -1104,7 +1204,13 @@ onValue(ref(db, 'store/features'), snap => {
     serial: d.serial === true,
     activityLog: d.activityLog !== false,
     newProducts: d.newProducts !== false,
-    newProductsDays: Number(d.newProductsDays) || 30
+    newProductsDays: Number(d.newProductsDays) || 30,
+    contactWhatsapp: d.contactWhatsapp === true,
+    shareButton: d.shareButton === true,
+    socialLinks: d.socialLinks === true,
+    contactWhatsappProduct: d.contactWhatsappProduct === true,
+    shareButtonProduct: d.shareButtonProduct === true,
+    socialLinksProduct: d.socialLinksProduct === true
   };
   window.storeFeatures = storeFeatures;
   $("featCostPrice").checked = storeFeatures.costPrice;
@@ -1126,6 +1232,30 @@ onValue(ref(db, 'store/features'), snap => {
   const npDays = $("featNewProductsDays");
   if (npDays) npDays.value = storeFeatures.newProductsDays;
   
+  /* ✅ أزرار التواصل والمشاركة (Index) */
+  const featCW = $("featContactWhatsapp");
+  if (featCW) featCW.checked = storeFeatures.contactWhatsapp;
+  const featSB = $("featShareButton");
+  if (featSB) featSB.checked = storeFeatures.shareButton;
+  const featSL = $("featSocialLinks");
+  if (featSL) {
+    featSL.checked = storeFeatures.socialLinks;
+    const mgr = $("socialLinksManager");
+    if (mgr) mgr.style.display = storeFeatures.socialLinks ? 'block' : 'none';
+  }
+
+  /* ✅ أزرار صفحة المنتج (Product) */
+  const featCWP = $("featContactWhatsappProduct");
+  if (featCWP) featCWP.checked = storeFeatures.contactWhatsappProduct;
+  const featSBP = $("featShareButtonProduct");
+  if (featSBP) featSBP.checked = storeFeatures.shareButtonProduct;
+  const featSLP = $("featSocialLinksProduct");
+  if (featSLP) {
+    featSLP.checked = storeFeatures.socialLinksProduct;
+    const mgrP = $("socialLinksManagerProduct");
+    if (mgrP) mgrP.style.display = storeFeatures.socialLinksProduct ? 'block' : 'none';
+  }
+
   applyPermissions();
   if ($("page-inventory") && $("page-inventory").classList.contains('active')) renderInventoryPage();
   if ($("page-landing") && $("page-landing").classList.contains('active')) renderLandingList();
@@ -1135,7 +1265,6 @@ onValue(ref(db, 'store/features'), snap => {
 
 /* ═══════════════════════════════════════════════════════════
    💾 ميزات — حفظ تلقائي فوري عند التبديل
-   (Delegated listener يعمل مع كل العناصر حتى الديناميكية)
    ═══════════════════════════════════════════════════════════ */
 document.addEventListener('change', async function(e) {
   const inp = e.target;
@@ -1144,7 +1273,6 @@ document.addEventListener('change', async function(e) {
   const key = inp.dataset.feat;
   const value = inp.checked;
 
-  /* نمنع الحفظ إذا كان العنصر مخفي (بائع لا يملك صلاحية) */
   if (!can('settings.features') && !can('settings.landingSettings')) {
     inp.checked = !value;
     return showToast(t('notAllowed'));
@@ -1156,7 +1284,7 @@ document.addEventListener('change', async function(e) {
   } catch (err) {
     console.error('saveFeature error:', err);
     showToast("خطأ: " + (err.message || ''));
-    inp.checked = !value; // نرجّع الحالة
+    inp.checked = !value;
   }
 }, true);
 
@@ -1181,6 +1309,7 @@ document.addEventListener('change', e => {
     if (box) box.style.display = e.target.checked ? 'block' : 'none';
   }
 }, true);
+
 onValue(ref(db, 'store/cover'), snap => {
   const d = snap.val() || {};
   const enabled = d.enabled !== false;
@@ -1429,14 +1558,12 @@ function filterByFamily(f) {
   currentFamilyFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.family === f));
   
-  /* ✅ تحديث حالة زر "العائلات" */
   const ddBtn = $("familyDropdownBtn");
   const ddLabel = $("familyDropdownLabel");
   const isFamily = f !== "الكل" && f !== "__new__" && f !== "__discounts__" && f !== "__hidden__";
   if (ddBtn) ddBtn.classList.toggle('active', isFamily);
   if (ddLabel) ddLabel.textContent = isFamily ? f : "العائلات";
   
-  /* ✅ تحديث العنصر النشط في القائمة المنسدلة */
   document.querySelectorAll('.family-dropdown-item').forEach(el => {
     el.classList.toggle('active', el.dataset.family === f);
   });
@@ -1450,9 +1577,6 @@ function filterByFamily(f) {
   }
   applyFiltersAndRender();
 }
-/* ═══════════════════════════════════════════════════════════
-   Family Dropdown Events
-   ═══════════════════════════════════════════════════════════ */
 document.addEventListener('click', e => {
   const dd = $("familyDropdown");
   if (!dd) return;
@@ -2116,9 +2240,6 @@ $("saveLandingBtn").addEventListener('click', async () => {
   catch (e) { showToast("خطأ: " + e.message); }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   💾 الحفظ التلقائي لإعدادات الصفحات
-   ═══════════════════════════════════════════════════════════ */
 async function autoSaveLandingSettings() {
   if (!can('settings.landingSettings')) {
     showToast(t('notAllowed'));
@@ -2148,14 +2269,12 @@ async function autoSaveLandingSettings() {
   }
 }
 
-/* ✅ Toggles الشريط الإعلاني → حفظ فوري */
 ["landingEnableReviews", "landingEnableVisitors"].forEach(id => {
   const el = $(id);
   if (!el) return;
   el.addEventListener('change', autoSaveLandingSettings);
 });
 
-/* ✅ نص الشريط الإعلاني → حفظ بعد التوقف عن الكتابة */
 const annInput = $("landingAnnouncement");
 if (annInput) {
   let announceTimer = null;
@@ -2249,7 +2368,6 @@ function updateOrdersCounts() {
     }
   }
 
-  /* ✅ إظهار زر "حذف جميع الطلبات المؤكدة" فقط في تبويب "مؤكدة" */
   const delBtn = $("deleteAllConfirmedBtn");
   if (delBtn) {
     const shouldShow = currentOrdersFilter === 'confirmed' && can('orders.deleteAll') && confCount > 0;
@@ -2622,7 +2740,6 @@ function openInvDrawer(type) {
   const target = $("invDetailContainer");
   if (!target) return;
   
-  /* إذا ضغط على نفس البطاقة → أغلقها (Toggle) */
   if (target.dataset.currentType === type && target.style.display !== 'none') {
     closeInvDrawer();
     return;
@@ -2633,7 +2750,6 @@ function openInvDrawer(type) {
   const cur = curLbl();
   const canSeeCost = data.canSeeCost;
   
-  /* بناء الجدول */
   let tableHtml = '';
   if (!data.rows.length) {
     tableHtml = `<div class="inv-empty" style="padding:40px 20px;"><i class="fas fa-inbox" style="font-size:40px;color:#c9cccf;display:block;margin-bottom:10px;"></i>لا توجد بيانات في هذه الفترة</div>`;
@@ -2662,7 +2778,6 @@ function openInvDrawer(type) {
     }
   }
   
-  /* نحقن الـ HTML داخل القسم الجديد */
   target.innerHTML = `
     <div class="inv-section-header">
       <h3><i class="fas fa-chart-bar"></i> ${data.title}</h3>
@@ -2685,19 +2800,16 @@ function openInvDrawer(type) {
   target.dataset.currentType = type;
   target.style.display = 'block';
   
-  /* إبراز البطاقة النشطة */
   document.querySelectorAll('.inv-stat').forEach(el => el.classList.remove('active-detail'));
   const activeCard = document.querySelector(`.inv-stat[data-detail="${type}"]`);
   if (activeCard) activeCard.classList.add('active-detail');
   
-  /* ربط الأزرار الجديدة */
   const closeBtn = $("invDetailClose");
   if (closeBtn) closeBtn.addEventListener('click', closeInvDrawer);
   
   const printBtn = $("invDetailPrint");
   if (printBtn) printBtn.addEventListener('click', printInvDetail);
   
-  /* تمرير سلس للقسم */
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -3124,6 +3236,279 @@ function bootApp() {
   if (localStorage.getItem("auth") === "true") initApp();
   else applyPermissions();
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🌐 مدير أيقونات التواصل الاجتماعي — Index
+   ═══════════════════════════════════════════════════════════ */
+let currentSocialLinks = [];
+let socialIconPickerTarget = null;
+
+const SOCIAL_ICONS = [
+  { icon: 'fab fa-facebook-f',      label: 'Facebook'    },
+  { icon: 'fab fa-instagram',       label: 'Instagram'   },
+  { icon: 'fab fa-tiktok',          label: 'TikTok'      },
+  { icon: 'fab fa-youtube',         label: 'YouTube'     },
+  { icon: 'fab fa-whatsapp',        label: 'WhatsApp'    },
+  { icon: 'fab fa-telegram',        label: 'Telegram'    },
+  { icon: 'fab fa-twitter',         label: 'Twitter'     },
+  { icon: 'fab fa-x-twitter',       label: 'X'           },
+  { icon: 'fab fa-linkedin-in',     label: 'LinkedIn'    },
+  { icon: 'fab fa-snapchat-ghost',  label: 'Snapchat'    },
+  { icon: 'fab fa-pinterest-p',     label: 'Pinterest'   },
+  { icon: 'fab fa-discord',         label: 'Discord'     },
+  { icon: 'fab fa-twitch',          label: 'Twitch'      },
+  { icon: 'fab fa-reddit-alien',    label: 'Reddit'      },
+  { icon: 'fab fa-viber',           label: 'Viber'       },
+  { icon: 'fas fa-envelope',        label: 'Email'       },
+  { icon: 'fas fa-phone',           label: 'Phone'       },
+  { icon: 'fas fa-globe',           label: 'Website'     },
+  { icon: 'fas fa-map-marker-alt',  label: 'Location'    },
+  { icon: 'fas fa-shopping-bag',    label: 'Shop'        }
+];
+
+function renderSocialLinksList() {
+  const c = $('socialLinksList');
+  if (!c) return;
+  if (!currentSocialLinks.length) {
+    c.innerHTML = '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:14px;">لا توجد أيقونات — اضغط "إضافة"</div>';
+    return;
+  }
+  c.innerHTML = currentSocialLinks.map((item, i) => `
+    <div class="dyn-item" style="align-items:center;display:flex;gap:6px;">
+      <button type="button" class="icon-btn" data-social-icon="${i}" title="تغيير الأيقونة">
+        <i class="${escapeHtml(item.icon)}"></i>
+      </button>
+      <input type="text" dir="ltr" placeholder="https://..." value="${escapeHtml(item.url || '')}" data-social-url="${i}" style="flex:1;" />
+      <button type="button" class="rm-btn" data-social-rm="${i}" title="حذف"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+
+  c.querySelectorAll('[data-social-icon]').forEach(b => {
+    b.addEventListener('click', () => openSocialIconPicker(parseInt(b.dataset.socialIcon)));
+  });
+
+  c.querySelectorAll('[data-social-url]').forEach(inp => {
+    const save = () => {
+      const i = parseInt(inp.dataset.socialUrl);
+      if (!currentSocialLinks[i]) return;
+      currentSocialLinks[i].url = inp.value.trim();
+      saveSocialLinks();
+    };
+    inp.addEventListener('blur', save);
+    let timer;
+    inp.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(save, 1500);
+    });
+  });
+
+  c.querySelectorAll('[data-social-rm]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (!confirm('حذف هذه الأيقونة؟')) return;
+      currentSocialLinks.splice(parseInt(b.dataset.socialRm), 1);
+      renderSocialLinksList();
+      saveSocialLinks();
+    });
+  });
+}
+
+function openSocialIconPicker(idx) {
+  socialIconPickerTarget = idx;
+  const g = $('socialIconGrid');
+  if (!g) return;
+  g.innerHTML = SOCIAL_ICONS.map(ico => `
+    <button type="button" data-ico="${ico.icon}" title="${ico.label}"
+            style="aspect-ratio:1/1;border:1px solid var(--border);border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--primary);cursor:pointer;transition:.15s;padding:0;"
+            onmouseover="this.style.background='var(--primary-tint)';this.style.borderColor='var(--primary)';"
+            onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)';">
+      <i class="${ico.icon}"></i>
+    </button>
+  `).join('');
+  g.querySelectorAll('[data-ico]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (socialIconPickerTarget === null || !currentSocialLinks[socialIconPickerTarget]) return;
+      currentSocialLinks[socialIconPickerTarget].icon = b.dataset.ico;
+      renderSocialLinksList();
+      saveSocialLinks();
+      closeModal('socialIconPickerModal');
+      socialIconPickerTarget = null;
+    });
+  });
+  openModal('socialIconPickerModal');
+}
+
+async function saveSocialLinks() {
+  try {
+    const data = {};
+    currentSocialLinks.forEach((item, i) => {
+      if (item.icon) {
+        data['sl_' + i] = {
+          icon: item.icon,
+          url: (item.url || '').trim(),
+          order: i
+        };
+      }
+    });
+    await set(ref(db, 'store/social_links'), data);
+    showToast('تم الحفظ');
+  } catch (e) {
+    console.error('social save:', e);
+    showToast('فشل الحفظ');
+  }
+}
+
+onValue(ref(db, 'store/social_links'), (snap) => {
+  const d = snap.val() || {};
+  currentSocialLinks = Object.entries(d)
+    .map(([k, v]) => ({ ...v }))
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+  renderSocialLinksList();
+});
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#addSocialLinkBtn')) {
+    if (!can('settings.features')) return showToast(t('notAllowed'));
+    currentSocialLinks.push({ icon: 'fab fa-facebook-f', url: '' });
+    renderSocialLinksList();
+    setTimeout(() => {
+      const c = $('socialLinksList');
+      const inputs = c?.querySelectorAll('[data-social-url]');
+      if (inputs && inputs.length) inputs[inputs.length - 1].focus();
+    }, 50);
+  }
+}, true);
+
+document.addEventListener('change', (e) => {
+  if (e.target?.id === 'featSocialLinks') {
+    const mgr = $('socialLinksManager');
+    if (mgr) mgr.style.display = e.target.checked ? 'block' : 'none';
+  }
+}, true);
+
+/* ═══════════════════════════════════════════════════════════
+   🌐 مدير أيقونات التواصل — نسخة Product (مستقلة تماماً)
+   ═══════════════════════════════════════════════════════════ */
+let currentSocialLinksProduct = [];
+let socialIconPickerTargetProduct = null;
+
+function renderSocialLinksListProduct() {
+  const c = $('socialLinksListProduct');
+  if (!c) return;
+  if (!currentSocialLinksProduct.length) {
+    c.innerHTML = '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:14px;">لا توجد أيقونات — اضغط "إضافة"</div>';
+    return;
+  }
+  c.innerHTML = currentSocialLinksProduct.map((item, i) => `
+    <div class="dyn-item" style="align-items:center;display:flex;gap:6px;">
+      <button type="button" class="icon-btn" data-social-icon-p="${i}" title="تغيير الأيقونة">
+        <i class="${escapeHtml(item.icon)}"></i>
+      </button>
+      <input type="text" dir="ltr" placeholder="https://..." value="${escapeHtml(item.url || '')}" data-social-url-p="${i}" style="flex:1;" />
+      <button type="button" class="rm-btn" data-social-rm-p="${i}" title="حذف"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+
+  c.querySelectorAll('[data-social-icon-p]').forEach(b => {
+    b.addEventListener('click', () => openSocialIconPickerProduct(parseInt(b.dataset.socialIconP)));
+  });
+
+  c.querySelectorAll('[data-social-url-p]').forEach(inp => {
+    const save = () => {
+      const i = parseInt(inp.dataset.socialUrlP);
+      if (!currentSocialLinksProduct[i]) return;
+      currentSocialLinksProduct[i].url = inp.value.trim();
+      saveSocialLinksProduct();
+    };
+    inp.addEventListener('blur', save);
+    let timer;
+    inp.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(save, 1500);
+    });
+  });
+
+  c.querySelectorAll('[data-social-rm-p]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (!confirm('حذف هذه الأيقونة؟')) return;
+      currentSocialLinksProduct.splice(parseInt(b.dataset.socialRmP), 1);
+      renderSocialLinksListProduct();
+      saveSocialLinksProduct();
+    });
+  });
+}
+
+function openSocialIconPickerProduct(idx) {
+  socialIconPickerTargetProduct = idx;
+  const g = $('socialIconGrid');
+  if (!g) return;
+  g.innerHTML = SOCIAL_ICONS.map(ico => `
+    <button type="button" data-ico-p="${ico.icon}" title="${ico.label}"
+            style="aspect-ratio:1/1;border:1px solid var(--border);border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--primary);cursor:pointer;transition:.15s;padding:0;"
+            onmouseover="this.style.background='var(--primary-tint)';this.style.borderColor='var(--primary)';"
+            onmouseout="this.style.background='#fff';this.style.borderColor='var(--border)';">
+      <i class="${ico.icon}"></i>
+    </button>
+  `).join('');
+  g.querySelectorAll('[data-ico-p]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (socialIconPickerTargetProduct === null || !currentSocialLinksProduct[socialIconPickerTargetProduct]) return;
+      currentSocialLinksProduct[socialIconPickerTargetProduct].icon = b.dataset.icoP;
+      renderSocialLinksListProduct();
+      saveSocialLinksProduct();
+      closeModal('socialIconPickerModal');
+      socialIconPickerTargetProduct = null;
+    });
+  });
+  openModal('socialIconPickerModal');
+}
+
+async function saveSocialLinksProduct() {
+  try {
+    const data = {};
+    currentSocialLinksProduct.forEach((item, i) => {
+      if (item.icon) {
+        data['slp_' + i] = {
+          icon: item.icon,
+          url: (item.url || '').trim(),
+          order: i
+        };
+      }
+    });
+    await set(ref(db, 'store/social_links_product'), data);
+    showToast('تم الحفظ');
+  } catch (e) {
+    console.error('social save product:', e);
+    showToast('فشل الحفظ');
+  }
+}
+
+onValue(ref(db, 'store/social_links_product'), (snap) => {
+  const d = snap.val() || {};
+  currentSocialLinksProduct = Object.entries(d)
+    .map(([k, v]) => ({ ...v }))
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+  renderSocialLinksListProduct();
+});
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#addSocialLinkBtnProduct')) {
+    if (!can('settings.landingSettings')) return showToast(t('notAllowed'));
+    currentSocialLinksProduct.push({ icon: 'fab fa-facebook-f', url: '' });
+    renderSocialLinksListProduct();
+    setTimeout(() => {
+      const c = $('socialLinksListProduct');
+      const inputs = c?.querySelectorAll('[data-social-url-p]');
+      if (inputs && inputs.length) inputs[inputs.length - 1].focus();
+    }, 50);
+  }
+}, true);
+
+document.addEventListener('change', (e) => {
+  if (e.target?.id === 'featSocialLinksProduct') {
+    const mgr = $('socialLinksManagerProduct');
+    if (mgr) mgr.style.display = e.target.checked ? 'block' : 'none';
+  }
+}, true);
 </script>
 
 <script src="logger.js"></script>
