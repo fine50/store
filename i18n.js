@@ -100,15 +100,15 @@
       "الجديدة":"الجديدة",
 
       /* ═══ التواصل والمشاركة (Index) ═══ */
-      "التواصل والمشاركة (Index)":"التواصل والمشاركة (Index)",
-      "تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (Index).":"تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (Index).",
+      "التواصل والمشاركة (footer)":"التواصل والمشاركة (footer)",
+      "تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (footer).":"تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (footer).",
       "زر الاتصال عبر واتساب":"زر الاتصال عبر واتساب",
-      "زر عائم يفتح محادثة واتساب مباشرة مع المتجر (Index).":"زر عائم يفتح محادثة واتساب مباشرة مع المتجر (Index).",
+      "زر عائم يفتح محادثة واتساب مباشرة مع المتجر (footer).":"زر عائم يفتح محادثة واتساب مباشرة مع المتجر (footer).",
       "زر المشاركة (Partager)":"زر المشاركة (Partager)",
-      "زر عائم لمشاركة رابط المتجر على وسائل التواصل (Index).":"زر عائم لمشاركة رابط المتجر على وسائل التواصل (Index).",
+      "زر عائم لمشاركة رابط المتجر على وسائل التواصل (footer).":"زر عائم لمشاركة رابط المتجر على وسائل التواصل (footer).",
       "أيقونات التواصل الاجتماعي":"أيقونات التواصل الاجتماعي",
-      "أيقونات تظهر في أسفل الصفحة الرئيسية (Index).":"أيقونات تظهر في أسفل الصفحة الرئيسية (Index).",
-      "الحسابات المضافة (Index)":"الحسابات المضافة (Index)",
+      "أيقونات تظهر في أسفل الصفحة الرئيسية (footer).":"أيقونات تظهر في أسفل الصفحة الرئيسية (footer).",
+      "الحسابات المضافة (footer)":"الحسابات المضافة (footer)",
 
       /* ═══ التواصل والمشاركة (Product) ═══ */
       "أزرار صفحة المنتج":"أزرار صفحة المنتج",
@@ -616,15 +616,15 @@
       "الجديدة":"Nouveaux",
 
       /* ═══ التواصل والمشاركة (Index) ═══ */
-      "التواصل والمشاركة (Index)":"Contact & partage (Index)",
-      "تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (Index).":"Activer les boutons de contact et de partage sur la page principale (Index).",
+      "التواصل والمشاركة (footer)":"Contact & partage (footer)",
+      "تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (footer).":"Activer les boutons de contact et de partage sur la page principale (footer).",
       "زر الاتصال عبر واتساب":"Bouton de contact WhatsApp",
-      "زر عائم يفتح محادثة واتساب مباشرة مع المتجر (Index).":"Bouton flottant qui ouvre une conversation WhatsApp directe (Index).",
+      "زر عائم يفتح محادثة واتساب مباشرة مع المتجر (footer).":"Bouton flottant qui ouvre une conversation WhatsApp directe (footer).",
       "زر المشاركة (Partager)":"Bouton Partager",
-      "زر عائم لمشاركة رابط المتجر على وسائل التواصل (Index).":"Bouton flottant pour partager le lien de la boutique (Index).",
+      "زر عائم لمشاركة رابط المتجر على وسائل التواصل (footer).":"Bouton flottant pour partager le lien de la boutique (footer).",
       "أيقونات التواصل الاجتماعي":"Icônes des réseaux sociaux",
-      "أيقونات تظهر في أسفل الصفحة الرئيسية (Index).":"Icônes affichées en bas de la page principale (Index).",
-      "الحسابات المضافة (Index)":"Comptes ajoutés (Index)",
+      "أيقونات تظهر في أسفل الصفحة الرئيسية (footer).":"Icônes affichées en bas de la page principale (footer).",
+      "الحسابات المضافة (footer)":"Comptes ajoutés (footer)",
 
       /* ═══ التواصل والمشاركة (Product) ═══ */
       "أزرار صفحة المنتج":"Boutons de la page produit",
