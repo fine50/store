@@ -1464,6 +1464,93 @@ select{
   appearance:none;
   -webkit-appearance:none;
 }
+/* ═══════════════════════════════════════════════════════════
+   🌐 أزرار التواصل في Footer (واتساب + مشاركة + سوشيال)
+   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   🌐 أزرار التواصل في Footer — بنفس ستايل الأدمن
+   ═══════════════════════════════════════════════════════════ */
+.footer-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-action-btn,
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: #fff;
+  color: var(--primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background .2s ease,
+              color .2s ease,
+              border-color .2s ease,
+              transform .15s ease;
+}
+
+.footer-action-btn:hover,
+.social-links a:hover {
+  background: var(--primary);
+  color: #fff !important;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.footer-action-btn:active,
+.social-links a:active {
+  transform: translateY(0);
+}
+/* ✅ تصحيح بصري لأيقونة واتساب (Fab vs Fas metrics) */
+.footer-action-btn .fa-whatsapp,
+.social-links a .fa-whatsapp {
+  font-size: 1.15em;
+  transform: translateY(-1px);
+}
+
+/* ✅ أيقونة مرفوعة (صورة) */
+.social-links a img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(31%) sepia(72%) saturate(1243%) hue-rotate(130deg) brightness(95%) contrast(95%);
+  transition: filter .2s ease;
+}
+.social-links a:hover img {
+  filter: brightness(0) invert(1);
+}
+
+/* ✅ حاوية أيقونات التواصل */
+.social-links {
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+}
+
+/* 📱 الجوال */
+@media (max-width: 640px) {
+  .footer-actions { gap: 6px; margin-bottom: 16px; }
+  .footer-action-btn,
+  .social-links a {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+  .social-links { gap: 6px; }
+}
 </style>
 </head>
 <body>
@@ -1599,12 +1686,29 @@ select{
   </div>
 
   <footer>
-    <p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p>
-    <p id="footerPhoneLine" style="display:none;"><i class="fa-solid fa-phone"></i> <a href="#" id="footerPhoneLink"></a></p>
-  </footer>
+  <div class="footer-actions">
+    <!-- واتساب -->
+    <a id="waContactBtn" class="footer-action-btn" href="#" target="_blank" rel="noopener" style="display:none;" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <!-- مشاركة -->
+    <button type="button" id="shareBtn" class="footer-action-btn" style="display:none;" aria-label="Share">
+      <i class="fas fa-share-nodes"></i>
+    </button>
+    
+    <!-- أيقونات التواصل (ديناميكية من الأدمن) -->
+    <div class="social-links" id="socialLinks" style="display:none;"></div>
+  </div>
+  
+  <p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p>
+  <p id="footerPhoneLine" style="display:none;"><i class="fa-solid fa-phone"></i> <a href="#" id="footerPhoneLink"></a></p>
+</footer>
 
 </div>
-
+<!-- ═══════════════════════════════════════════
+     💬 الأزرار العائمة (واتساب + مشاركة)
+     ═══════════════════════════════════════════ -->
 <div class="toast" id="toastMessage"></div>
 
 <script>
@@ -1810,7 +1914,8 @@ let storeInfo = {
 
 let storeFeatures = {
   costPrice: true, inventory: true, quantityPerBox: true, wholesale: true,
-  discounts: true, landing: true, reviews: true, shipping: true
+  discounts: true, landing: true, reviews: true, shipping: true,
+  contactWhatsapp: false, shareButton: false, socialLinks: false
 };
 
 let storeConfigured = false;
@@ -2030,12 +2135,15 @@ onValue(ref(db, 'store/features'), (snap) => {
     discounts: d.discounts !== false,
     landing: d.landing !== false,
     reviews: d.reviews !== false,
-    shipping: d.shipping !== false
+    shipping: d.shipping !== false,
+    contactWhatsapp: d.contactWhatsapp === true,
+    shareButton: d.shareButton === true,
+    socialLinks: d.socialLinks === true
   };
-
+  
   newProductsEnabled = d.newProducts !== false;
   newProductDays = Number(d.newProductsDays) || 30;
-
+  
   if (!storeFeatures.wholesale) {
     isWholesaleActive = false;
     localStorage.setItem('wholesale_active', 'false');
@@ -2047,6 +2155,35 @@ onValue(ref(db, 'store/features'), (snap) => {
   updateFamilyCounts();
   refreshCartPrices();
   updateCartBadge();
+  
+  /* ═══════════════════════════════════════════════════════
+     💬 التحكم في أزرار Footer (واتساب + مشاركة)
+     ═══════════════════════════════════════════════════════ */
+  const waBtn = document.getElementById('waContactBtn');
+  if (waBtn) {
+    const waNumber = storeInfo.whatsappNumber;
+    if (storeFeatures.contactWhatsapp && waNumber) {
+      const n = normalizeWhatsappNumber(waNumber);
+      const isFR = (window.currentLang || 'ar') === 'fr';
+      const msg = isFR ?
+        `Bonjour 👋\nJe voudrais me renseigner sur vos produits.` :
+        `مرحباً 👋\nلدي استفسار عن منتجاتكم.`;
+      waBtn.href = `https://wa.me/${n}?text=${encodeURIComponent(msg)}`;
+      waBtn.style.display = 'inline-flex';
+    } else {
+      waBtn.style.display = 'none';
+    }
+  }
+  
+  const shBtn = document.getElementById('shareBtn');
+  if (shBtn) {
+    shBtn.style.display = storeFeatures.shareButton ? 'inline-flex' : 'none';
+  }
+  
+  /* ✅ أعد رسم أيقونات التواصل */
+  if (typeof renderSocialLinks === 'function') {
+    renderSocialLinks();
+  }
 });
 
 onValue(ref(db, 'store/landing'), (snap) => {
@@ -2125,6 +2262,50 @@ onValue(ref(db, 'families'), (snap) => {
     renderFamiliesDropdown();
   }
   setTimeout(updateScrollHint, 100);
+});
+
+/* ═══════════════════════════════════════════════════════════
+   🌐 أيقونات التواصل الاجتماعي — نظام مرن
+   ═══════════════════════════════════════════════════════════ */
+let socialLinksData = {};
+
+function renderSocialLinks() {
+  const container = document.getElementById('socialLinks');
+  if (!container) return;
+  
+  /* شرط 1: الميزة مفعّلة */
+  if (!storeFeatures.socialLinks) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+  
+  /* شرط 2: يوجد روابط صحيحة */
+  const items = Object.entries(socialLinksData)
+    .map(([key, val]) => ({ key, ...val }))
+    .filter(item => item && item.icon && item.url && /^https?:\/\//i.test(item.url))
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
+  
+  if (!items.length) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+  
+  container.innerHTML = items.map(item => {
+    const iconHtml = item.icon.startsWith('http') ?
+      `<img src="${escapeHtml(item.icon)}" alt="">` :
+      `<i class="${escapeHtml(item.icon)}"></i>`;
+    return `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Social">${iconHtml}</a>`;
+  }).join('');
+  
+  container.style.display = 'inline-flex';
+}
+
+/* استقبال البيانات من Firebase */
+onValue(ref(db, 'store/social_links'), (snap) => {
+  socialLinksData = snap.val() || {};
+  renderSocialLinks();
 });
 
 /* ═══════════════════════════════════════════════════════════
@@ -2835,6 +3016,7 @@ function scrollBarToNext() {
   setTimeout(updateScrollHint, 800);
   setTimeout(updateScrollHint, 1500);
 })();
+
 </script>
 
 <script>
@@ -2853,6 +3035,67 @@ function scrollBarToNext() {
     setTimeout(updateHeaderHeight, 300);
     setTimeout(updateHeaderHeight, 1000);
   })();
+  /* ═══════════════════════════════════════════════════════════
+   💬 إظهار/إخفاء أزرار واتساب والمشاركة في Footer
+   ═══════════════════════════════════════════════════════════ */
+onValue(ref(db, 'store/features'), (snap) => {
+  const d = snap.val() || {};
+  const contactWA = d.contactWhatsapp === true;
+  const shareBtnOn = d.shareButton === true;
+  
+  /* ─── زر واتساب في Footer ─── */
+  const waBtn = document.getElementById('waContactBtn');
+  if (waBtn) {
+    const waNumber = storeInfo.whatsappNumber;
+    if (contactWA && waNumber) {
+      const n = normalizeWhatsappNumber(waNumber);
+      const isFR = (window.currentLang || 'ar') === 'fr';
+      const msg = isFR ?
+        `Bonjour 👋\nJe voudrais me renseigner sur vos produits.` :
+        `مرحباً 👋\nلدي استفسار عن منتجاتكم.`;
+      waBtn.href = `https://wa.me/${n}?text=${encodeURIComponent(msg)}`;
+      waBtn.style.display = 'inline-flex';
+    } else {
+      waBtn.style.display = 'none';
+    }
+  }
+  
+  /* ─── زر المشاركة في Footer ─── */
+  const shBtn = document.getElementById('shareBtn');
+  if (shBtn) {
+    shBtn.style.display = shareBtnOn ? 'inline-flex' : 'none';
+  }
+});
+
+/* ─── سلوك زر المشاركة عند الضغط ─── */
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('#shareBtn');
+  if (!btn) return;
+  
+  const isFR = (window.currentLang || 'ar') === 'fr';
+  const shareData = {
+    title: storeInfo.name || document.title,
+    text: isFR ?
+      `Découvrez ${storeInfo.name}` :
+      `اكتشف متجر ${storeInfo.name}`,
+    url: location.href
+  };
+  
+  /* Native Share API (الجوال) */
+  if (navigator.share) {
+    try { await navigator.share(shareData); return; } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+  
+  /* Fallback: نسخ الرابط */
+  try {
+    await navigator.clipboard.writeText(location.href);
+    showToast(isFR ? '✅ Lien copié !' : '✅ تم نسخ الرابط!');
+  } catch (err) {
+    prompt('URL:', location.href);
+  }
+});
 </script>
 </body>
 </html>
