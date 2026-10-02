@@ -2307,7 +2307,33 @@ onValue(ref(db, 'store/social_links'), (snap) => {
   socialLinksData = snap.val() || {};
   renderSocialLinks();
 });
+/* ✅ معالج زر المشاركة */
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('#shareBtn');
+  if (!btn) return;
 
+  const isFR = (window.currentLang || 'ar') === 'fr';
+  const shareData = {
+    title: storeInfo.name || document.title,
+    text: isFR ?
+      `Découvrez ${storeInfo.name}` :
+      `اكتشف متجر ${storeInfo.name}`,
+    url: location.href
+  };
+
+  if (navigator.share) {
+    try { await navigator.share(shareData); return; } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(location.href);
+    showToast(isFR ? '✅ Lien copié !' : '✅ تم نسخ الرابط!');
+  } catch (err) {
+    prompt('URL:', location.href);
+  }
+});
 /* ═══════════════════════════════════════════════════════════
    🎛️ إدارة الفلاتر
    ═══════════════════════════════════════════════════════════ */
@@ -3035,67 +3061,6 @@ function scrollBarToNext() {
     setTimeout(updateHeaderHeight, 300);
     setTimeout(updateHeaderHeight, 1000);
   })();
-  /* ═══════════════════════════════════════════════════════════
-   💬 إظهار/إخفاء أزرار واتساب والمشاركة في Footer
-   ═══════════════════════════════════════════════════════════ */
-onValue(ref(db, 'store/features'), (snap) => {
-  const d = snap.val() || {};
-  const contactWA = d.contactWhatsapp === true;
-  const shareBtnOn = d.shareButton === true;
-  
-  /* ─── زر واتساب في Footer ─── */
-  const waBtn = document.getElementById('waContactBtn');
-  if (waBtn) {
-    const waNumber = storeInfo.whatsappNumber;
-    if (contactWA && waNumber) {
-      const n = normalizeWhatsappNumber(waNumber);
-      const isFR = (window.currentLang || 'ar') === 'fr';
-      const msg = isFR ?
-        `Bonjour 👋\nJe voudrais me renseigner sur vos produits.` :
-        `مرحباً 👋\nلدي استفسار عن منتجاتكم.`;
-      waBtn.href = `https://wa.me/${n}?text=${encodeURIComponent(msg)}`;
-      waBtn.style.display = 'inline-flex';
-    } else {
-      waBtn.style.display = 'none';
-    }
-  }
-  
-  /* ─── زر المشاركة في Footer ─── */
-  const shBtn = document.getElementById('shareBtn');
-  if (shBtn) {
-    shBtn.style.display = shareBtnOn ? 'inline-flex' : 'none';
-  }
-});
-
-/* ─── سلوك زر المشاركة عند الضغط ─── */
-document.addEventListener('click', async (e) => {
-  const btn = e.target.closest('#shareBtn');
-  if (!btn) return;
-  
-  const isFR = (window.currentLang || 'ar') === 'fr';
-  const shareData = {
-    title: storeInfo.name || document.title,
-    text: isFR ?
-      `Découvrez ${storeInfo.name}` :
-      `اكتشف متجر ${storeInfo.name}`,
-    url: location.href
-  };
-  
-  /* Native Share API (الجوال) */
-  if (navigator.share) {
-    try { await navigator.share(shareData); return; } catch (err) {
-      if (err.name === 'AbortError') return;
-    }
-  }
-  
-  /* Fallback: نسخ الرابط */
-  try {
-    await navigator.clipboard.writeText(location.href);
-    showToast(isFR ? '✅ Lien copié !' : '✅ تم نسخ الرابط!');
-  } catch (err) {
-    prompt('URL:', location.href);
-  }
-});
 </script>
 </body>
 </html>
