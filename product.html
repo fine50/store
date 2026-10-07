@@ -389,12 +389,23 @@ body[data-theme="gold"] header.store-header{background:rgba(20,20,22,.85);}
   cursor:zoom-in;
   display:block;
 }
+.swiper-pagination{
+  bottom:12px !important;
+  z-index:10 !important;
+}
 .swiper-pagination-bullet{
-  background:#fff !important;
-  opacity:.5 !important;
+  background:#0f172a !important;
+  opacity:.35 !important;
   width:8px !important;
   height:8px !important;
   transition:all var(--dur) var(--ease) !important;
+  box-shadow:0 1px 3px rgba(0,0,0,.15) !important;
+}
+.swiper-pagination-bullet-active{
+  background:var(--primary) !important;
+  opacity:1 !important;
+  width:22px !important;
+  border-radius:4px !important;
 }
 .swiper-pagination-bullet-active{
   background:var(--primary) !important;
@@ -1627,6 +1638,211 @@ footer a:hover{
   .checkout-card{padding:18px 12px 16px}
 }
 
+/* ═══════════════════════════════════════════════════════════
+   🎨 Variants — الألوان والمقاسات في صفحة المنتج
+   ═══════════════════════════════════════════════════════════ */
+.variants-box {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.variants-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.variants-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.variants-label {
+  font-size: .88rem;
+  font-weight: 800;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -.005em;
+}
+.variants-label i {
+  color: var(--primary);
+  font-size: .82rem;
+}
+.variants-label .selected-name {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: .85rem;
+  margin-inline-start: 4px;
+}
+
+.size-chart-btn {
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--soft-bg);
+  border: 1px solid var(--soft-border);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--dur) var(--ease);
+}
+.size-chart-btn:hover {
+  background: var(--soft-bg-2);
+  border-color: var(--primary);
+}
+.size-chart-btn i { font-size: .72rem; }
+
+/* ─── دوائر الألوان ─── */
+.colors-swatches {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.color-swatch-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.color-swatch {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,.10);
+  cursor: pointer;
+  padding: 0;
+  background-clip: content-box;
+  transition: transform .15s var(--ease), box-shadow .15s var(--ease), border-color .15s var(--ease);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.05);
+}
+.color-swatch:hover {
+  transform: scale(1.10);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.18);
+}
+.color-swatch-wrapper.selected .color-swatch {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0,128,96,.2), inset 0 2px 4px rgba(0,0,0,.06);
+  transform: scale(1.08);
+}
+.color-swatch-wrapper.selected .color-swatch::after {
+  content: '\f00c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6);
+  pointer-events: none;
+}
+.color-swatch-wrapper.selected .color-swatch.light-color::after {
+  color: #111;
+  text-shadow: 0 1px 2px rgba(255,255,255,.7);
+}
+.color-swatch-name {
+  font-size: .68rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-align: center;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+.color-swatch-wrapper.selected .color-swatch-name {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* ─── أزرار المقاسات ─── */
+.sizes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 8px;
+  max-width: 100%;
+}
+.size-btn {
+  position: relative;
+  padding: 12px 8px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+  text-align: center;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.size-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.size-btn.selected {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+  box-shadow: 0 4px 12px rgba(15,23,42,.2);
+}
+.size-btn:disabled,
+.size-btn.sold-out {
+  opacity: .4;
+  cursor: not-allowed;
+  color: var(--text-3);
+  background: var(--bg-2);
+  border-color: var(--border);
+}
+.size-btn.sold-out::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  right: 8%;
+  height: 1.5px;
+  background: var(--danger);
+  transform: translateY(-50%) rotate(-12deg);
+  pointer-events: none;
+}
+
+/* ─── استجابة الهاتف ─── */
+@media (max-width: 640px) {
+  .variants-box { padding: 16px 14px; gap: 14px; border-radius: var(--radius-md); }
+  .variants-label { font-size: .82rem; }
+  .color-swatch { width: 38px; height: 38px; }
+  .color-swatch-name { font-size: .64rem; max-width: 50px; }
+  .size-btn { padding: 10px 6px; font-size: .8rem; min-height: 40px; }
+  .sizes-grid { grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 6px; }
+  .size-chart-btn { font-size: .7rem; padding: 5px 10px; }
+}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation-duration:.001ms !important;
@@ -1806,12 +2022,43 @@ footer a:hover{
           <span><i class="fas fa-eye"></i> يشاهد المنتج الآن: <strong id="liveCount">1</strong></span>
         </div>
         <div class="countdown-box" id="countdownBox" style="display:none;">
-          <div class="label"><i class="far fa-clock"></i> ينتهي العرض الخاص بعد</div>
-          <div class="timer" id="countdownTimer">--:--:--</div>
+    <div class="label"><i class="far fa-clock"></i> ينتهي العرض الخاص بعد</div>
+    <div class="timer" id="countdownTimer">--:--:--</div>
+  </div>
+  </div>
+  
+  <!-- ═══ 🎨 الألوان والمقاسات ═══ -->
+  <div class="variants-box" id="variantsBox" style="display:none;">
+    <!-- الألوان -->
+    <div class="variants-section" id="colorsSection" style="display:none;">
+      <div class="variants-head">
+        <div class="variants-label">
+          <i class="fas fa-tint"></i>
+          <span data-i18n="variantsPageColorsLabel">اللون:</span>
+          <span class="selected-name" id="selectedColorName">—</span>
         </div>
       </div>
-
-      <div class="checkout-card" id="checkoutPanel">
+      <div class="colors-swatches" id="colorsSwatches"></div>
+    </div>
+    
+    <!-- المقاسات -->
+    <div class="variants-section" id="sizesSection" style="display:none;">
+      <div class="variants-head">
+        <div class="variants-label">
+          <i class="fas fa-ruler-combined"></i>
+          <span data-i18n="variantsPageSizesLabel">المقاس:</span>
+          <span class="selected-name" id="selectedSizeName">—</span>
+        </div>
+        <button type="button" class="size-chart-btn" id="sizeChartBtn" style="display:none;">
+          <i class="fas fa-table"></i>
+          <span data-i18n="sizeChartBtnLabel">دليل المقاسات</span>
+        </button>
+      </div>
+      <div class="sizes-grid" id="sizesGrid"></div>
+    </div>
+  </div>
+  
+  <div class="checkout-card" id="checkoutPanel">
         <div class="checkout-heading">
           <div class="title-row">
             <i class="fas fa-shield-alt"></i>
@@ -2001,11 +2248,20 @@ footer a:hover{
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getDatabase, ref, get, push, set, remove, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+let Swiper = null;
+try {
+  const swiperMod = await import("https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.mjs");
+  Swiper = swiperMod.default;
+  console.log('✅ Swiper loaded');
+} catch (e) {
+  console.error('❌ Swiper load failed:', e);
+}
+
 
 const $ = id => document.getElementById(id);
 const BOOT = window.STORE_BOOTSTRAP;
@@ -2026,10 +2282,11 @@ if (!fc.apiKey || String(fc.apiKey).includes("YOUR_")) {
 const app = initializeApp(fc);
 const db = getDatabase(app);
 const auth = getAuth(app);
-signInAnonymously(auth).catch(e => console.warn("Auth:", e.message));
-
+/* signInAnonymously معطّل */
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("id");
+const urlColorId = params.get("colorId");
+const urlSizeId = params.get("sizeId");
 if (!productId) {
   showNotice("🔗","رابط غير صالح","لم يتم تحديد المنتج.");
   throw new Error("no id");
@@ -2140,6 +2397,41 @@ function trackPurchase(data) {
     try { ttq.track('CompletePayment', { content_id: String(data.id), content_type: 'product', content_name: data.name, value: data.value, quantity: data.qty, currency: cur }); } catch(e) {}
   }
 }
+/* ═══════════════════════════════════════════════════════════
+   🎨 Swiper Rebuild — دالة مشتركة (في نطاق الملف)
+   ═══════════════════════════════════════════════════════════ */
+function rebuildSwiper(newImages) {
+  const wrapper = document.getElementById('swiperWrapper');
+  if (!wrapper) return;
+
+  wrapper.innerHTML = newImages.map(u =>
+    `<div class="swiper-slide"><img src="${esc(u)}" alt="" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23f1f5f9%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'"></div>`
+  ).join('');
+
+  if (!Swiper) {
+    console.error('❌ Swiper module NOT available');
+    return;
+  }
+
+  if (window.__mainSwiper && typeof window.__mainSwiper.destroy === 'function') {
+    try { window.__mainSwiper.destroy(true, true); } catch (e) {}
+  }
+
+  window.__mainSwiper = new Swiper(".mainSwiper", {
+    pagination: { el: ".swiper-pagination", clickable: true },
+    loop: newImages.length > 1,
+    allowTouchMove: true,
+    slidesPerView: 1,
+    spaceBetween: 0,
+    grabCursor: true,
+    observer: true,
+    observeParents: true,
+    watchOverflow: true
+  });
+
+  console.log('✅ Swiper rebuilt with', newImages.length, 'images');
+}
+
 /* ═══════════════════════════════════════════════════════════ */
 
 async function loadAll() {
@@ -2164,18 +2456,21 @@ async function loadAll() {
       if (featSnap.exists()) {
         const f = featSnap.val() || {};
         storeFeatures = {
-          costPrice: f.costPrice !== false,
-          inventory: f.inventory !== false,
-          quantityPerBox: f.quantityPerBox !== false,
-          wholesale: f.wholesale !== false,
-          discounts: f.discounts !== false,
-          landing: f.landing !== false,
-          reviews: f.reviews !== false,
-          shipping: f.shipping !== false,
-          contactWhatsappProduct: f.contactWhatsappProduct === true,
-          shareButtonProduct: f.shareButtonProduct === true,
-          socialLinksProduct: f.socialLinksProduct === true
-        };
+  costPrice: f.costPrice !== false,
+  inventory: f.inventory !== false,
+  quantityPerBox: f.quantityPerBox !== false,
+  wholesale: f.wholesale !== false,
+  discounts: f.discounts !== false,
+  landing: f.landing !== false,
+  reviews: f.reviews !== false,
+  shipping: f.shipping !== false,
+  variantsColors: f.variantsColors === true,
+  variantsSizes: f.variantsSizes === true,
+  showVariantsProduct: f.showVariantsProduct !== false,
+  contactWhatsappProduct: f.contactWhatsappProduct === true,
+  shareButtonProduct: f.shareButtonProduct === true,
+  socialLinksProduct: f.socialLinksProduct === true
+};
       }
     } catch(e) { console.warn('features load:', e); }
 
@@ -2185,9 +2480,16 @@ async function loadAll() {
     }
 
     const prodSnap = await get(ref(db, 'products/' + productId));
-    if (!prodSnap.exists()) { showNotice("📦","المنتج غير موجود","ربما حُذف أو الرابط غير صحيح."); return; }
-    product = { id: productId, ...prodSnap.val() };
-    if (product.hidden) { showNotice("🔒","المنتج غير متاح","هذا المنتج غير متاح حالياً."); return; }
+if (!prodSnap.exists()) { showNotice("📦", "المنتج غير موجود", "ربما حُذف أو الرابط غير صحيح."); return; }
+product = { id: productId, ...prodSnap.val() };
+if (product.hidden) { showNotice("🔒", "المنتج غير متاح", "هذا المنتج غير متاح حالياً."); return; }
+
+/* ✅ التحقق من أن المنتج مُفعَّل للترويج */
+const promotedSnap = await get(ref(db, 'store/promoted/' + productId));
+if (!promotedSnap.exists()) {
+  showNotice("🔒", "الصفحة غير متاحة", "هذه الصفحة غير مُفعَّلة حالياً.");
+  return;
+}
 
     try {
       const discSnap = await get(ref(db, 'discounts/' + productId));
@@ -2480,12 +2782,15 @@ function renderPage(landingSettings) {
   $("currentPrice").textContent = fmt(baseUnitPrice);
   $("currencyLabel").textContent = storeInfo.currency;
 
-  if (oldPriceDisplay !== null && oldPriceDisplay > finalBasePrice) {
-    $("oldPrice").textContent = fmt(oldPriceDisplay) + " " + storeInfo.currency;
-    $("oldPrice").style.display = "inline";
-  } else {
-    $("oldPrice").style.display = "none";
-  }
+  /* 🎯 السعر المشطوب: نُظهره فقط إذا أدخله المالك يدوياً */
+const manualOldPrice = (product.oldPrice !== undefined && product.oldPrice !== null && Number(product.oldPrice) > 0) ? Number(product.oldPrice) : null;
+if (manualOldPrice !== null && manualOldPrice > finalBasePrice) {
+  $("oldPrice").textContent = fmt(manualOldPrice) + " " + storeInfo.currency;
+  $("oldPrice").style.display = "inline";
+} else {
+  $("oldPrice").textContent = '';
+  $("oldPrice").style.display = "none";
+}
 
   const rb = $("discountRibbon");
   if (ribbonType === 'unlimited') {
@@ -2515,8 +2820,8 @@ function renderPage(landingSettings) {
   if (landing.images && Array.isArray(landing.images) && landing.images.length) images = landing.images;
   else if (product.imageUrl) images = [product.imageUrl];
   if (!images.length) images = [''];
-  $("swiperWrapper").innerHTML = images.map(u => `<div class="swiper-slide"><img src="${esc(u)}" alt="" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23f1f5f9%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'"></div>`).join('');
-  new Swiper(".mainSwiper", { pagination: { el: ".swiper-pagination", clickable: true } });
+  window.__defaultProductImages = images.slice();
+rebuildSwiper(images);
 
   $("inputWilaya").innerHTML = '<option value="">-- اختر --</option>' + WILAYAS.map((w, i) => `<option value="${w}">${i+1} - ${w}</option>`).join('');
 
@@ -2582,11 +2887,12 @@ function renderPage(landingSettings) {
   }
 
   setupCheckout();
-  renderBundleBox();
-  updateTotals();
-  setupFooterActions();
-  
-  $("loadingScreen").style.display = "none";
+renderBundleBox();
+renderVariants();
+updateTotals();
+setupFooterActions();
+
+$("loadingScreen").style.display = "none";
   $("appContainer").style.display = "block";
 }
 
@@ -2617,7 +2923,10 @@ function findShippingFor(wilaya, deliveryType) {
 
 function updateTotals() {
   const currentQty = selectedTier ? selectedTier.qty : qty;
-
+  
+  /* 🎯 سعر الوحدة يعتمد على التركيبة المختارة (لون + مقاس) */
+  const unitPrice = getCurrentUnitPrice();
+  
   let subtotal;
   let tierUsed = null;
   if (selectedTier) {
@@ -2628,7 +2937,7 @@ function updateTotals() {
     if (tierUsed) {
       subtotal = Math.floor(tierUsed.perUnit) * currentQty;
     } else {
-      subtotal = baseUnitPrice * currentQty;
+      subtotal = unitPrice * currentQty;
     }
   }
 
@@ -2661,13 +2970,18 @@ function updateTotals() {
   $("floatingCurrency").textContent = storeInfo.currency;
 
   const cp = $("currentPrice");
-  if (tierUsed && tierUsed.perUnit < baseUnitPrice) {
-    cp.classList.add("bundle-active");
-    cp.textContent = fmt(Math.floor(tierUsed.perUnit));
-  } else {
-    cp.classList.remove("bundle-active");
-    cp.textContent = fmt(baseUnitPrice);
-  }
+/* 🎯 الأولوية: سعر التركيبة → سعر الحزمة → السعر الأساسي */
+const skuPriceNow = getCurrentUnitPrice();
+if (skuPriceNow !== baseUnitPrice) {
+  cp.classList.remove("bundle-active");
+  cp.textContent = fmt(skuPriceNow);
+} else if (tierUsed && tierUsed.perUnit < baseUnitPrice) {
+  cp.classList.add("bundle-active");
+  cp.textContent = fmt(Math.floor(tierUsed.perUnit));
+} else {
+  cp.classList.remove("bundle-active");
+  cp.textContent = fmt(baseUnitPrice);
+}
 
   const savingsBadge = $("bundleSavingsBadge");
   const normalPrice = baseUnitPrice * currentQty;
@@ -2728,6 +3042,269 @@ function updateTotals() {
     $("qtyPlus").disabled = true;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🎨 نظام الخيارات (Variants) — عرض الألوان والمقاسات
+   ═══════════════════════════════════════════════════════════ */
+let selectedColor = null;
+let selectedSize = null;
+let variantsData = null;
+
+/* توليد مفتاح التركيبة (لون + مقاس) */
+function getSkuKey(colorId, sizeId) {
+  if (colorId && sizeId) return colorId + '__' + sizeId;
+  if (colorId) return colorId;
+  if (sizeId) return sizeId;
+  return null;
+}
+
+/* هل اللون فاتح؟ */
+function isLightColor(hex) {
+  if (!hex) return false;
+  const h = hex.replace('#', '');
+  if (h.length !== 6) return false;
+  const r = parseInt(h.substr(0, 2), 16);
+  const g = parseInt(h.substr(2, 2), 16);
+  const b = parseInt(h.substr(4, 2), 16);
+  return ((0.299 * r + 0.587 * g + 0.114 * b) / 255) > 0.75;
+}
+
+/* هل التركيبة متوفرة؟ */
+function isSkuAvailable(colorId, sizeId) {
+  if (!variantsData || !variantsData.skus) return true;
+  const key = getSkuKey(colorId, sizeId);
+  if (!key) return true;
+  const sku = variantsData.skus[key];
+  if (!sku) return true; /* لا توجد بيانات → نعتبرها متوفرة */
+  /* إذا كان الحقل stockQuantity موجوداً → نتحقق منه */
+  if (sku.stockQuantity === undefined || sku.stockQuantity === null) return true;
+  return Number(sku.stockQuantity) > 0;
+}
+
+/* سعر التركيبة (إذا كان مخصصاً) */
+function getSkuPrice(colorId, sizeId) {
+  if (!variantsData || !variantsData.skus) return null;
+  const key = getSkuKey(colorId, sizeId);
+  if (!key) return null;
+  const sku = variantsData.skus[key];
+  if (!sku || !sku.price) return null;
+  const p = Number(sku.price);
+  return (isNaN(p) || p <= 0) ? null : p;
+}
+
+/* الكمية المتاحة للتركيبة */
+function getSkuStock(colorId, sizeId) {
+  if (!variantsData || !variantsData.skus) return null;
+  const key = getSkuKey(colorId, sizeId);
+  if (!key) return null;
+  const sku = variantsData.skus[key];
+  if (!sku || sku.stockQuantity === undefined || sku.stockQuantity === null) return null;
+  return Number(sku.stockQuantity);
+}
+
+/* الاسم المعروض للون (حسب اللغة الحالية) */
+function getColorDisplayName(color) {
+  const lang = window.currentLang || localStorage.getItem('store_lang') || 'ar';
+  if (lang === 'fr') return color.nameFr || color.name || '';
+  return color.name || color.nameFr || '';
+}
+
+/* عرض Variants في الصفحة */
+function renderVariants() {
+  const v = product.variants;
+if (!v || v.enabled !== true) {
+  $("variantsBox").style.display = "none";
+  return;
+}
+
+/* ✅ التحقق من مفتاح الإظهار */
+if (!storeFeatures.showVariantsProduct) {
+  $("variantsBox").style.display = "none";
+  return;
+}
+  
+  const colors = Array.isArray(v.colors) ? v.colors.filter(c => c.name || c.nameFr) : [];
+  const sizes = Array.isArray(v.sizes) ? v.sizes.filter(s => s.name) : [];
+  
+  if (!colors.length && !sizes.length) {
+    $("variantsBox").style.display = "none";
+    return;
+  }
+  
+  variantsData = v;
+  $("variantsBox").style.display = "flex";
+  
+  /* ─── الألوان ─── */
+  if (colors.length) {
+    $("colorsSection").style.display = "flex";
+    $("colorsSwatches").innerHTML = colors.map((col, i) => {
+      const light = isLightColor(col.hex) ? ' light-color' : '';
+      return `<div class="color-swatch-wrapper" data-color-idx="${i}">
+        <button type="button" class="color-swatch${light}" style="background:${esc(col.hex || '#888')};" title="${esc(getColorDisplayName(col))}"></button>
+        <span class="color-swatch-name">${esc(getColorDisplayName(col))}</span>
+      </div>`;
+    }).join('');
+    
+    $("colorsSwatches").querySelectorAll('.color-swatch-wrapper').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.colorIdx);
+        selectColor(idx);
+      });
+    });
+    
+  /* ✅ اختيار اللون: من URL أولاً، وإلا الأول */
+let colorToSelect = 0;
+if (urlColorId) {
+  const idx = colors.findIndex(c => c.id === urlColorId);
+  if (idx > -1) colorToSelect = idx;
+}
+selectColor(colorToSelect, true);
+  } else {
+    $("colorsSection").style.display = "none";
+  }
+  
+  /* ─── المقاسات ─── */
+  if (sizes.length) {
+    $("sizesSection").style.display = "flex";
+    renderSizesGrid();
+    
+    /* اختيار أول مقاس متوفر تلقائياً */
+    /* ✅ اختيار المقاس: من URL أولاً، وإلا أول متوفر */
+let sizeToSelect = -1;
+if (urlSizeId) {
+  sizeToSelect = sizes.findIndex(sz => sz.id === urlSizeId && isSkuAvailable(selectedColor?.id, sz.id));
+}
+if (sizeToSelect === -1) {
+  sizeToSelect = sizes.findIndex((sz) => isSkuAvailable(selectedColor?.id, sz.id));
+}
+if (sizeToSelect > -1) selectSize(sizeToSelect, true);
+  } else {
+    $("sizesSection").style.display = "none";
+  }
+}
+
+/* عرض شبكة المقاسات (مع تحديث الحالة) */
+function renderSizesGrid() {
+  const v = variantsData;
+  if (!v || !Array.isArray(v.sizes)) return;
+  const sizes = v.sizes.filter(s => s.name);
+  
+  $("sizesGrid").innerHTML = sizes.map((sz, i) => {
+    const available = isSkuAvailable(selectedColor?.id, sz.id);
+    const soldOut = !available ? ' sold-out' : '';
+    return `<button type="button" class="size-btn${soldOut}" data-size-idx="${i}" ${!available ? 'disabled' : ''}>${esc(sz.name)}</button>`;
+  }).join('');
+  
+  $("sizesGrid").querySelectorAll('.size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled || btn.classList.contains('sold-out')) return;
+      const idx = parseInt(btn.dataset.sizeIdx);
+      selectSize(idx);
+    });
+  });
+  
+  /* تحديث حالة الاختيار */
+  $("sizesGrid").querySelectorAll('.size-btn').forEach((btn, i) => {
+    if (selectedSize && sizes[i] && selectedSize.id === sizes[i].id) {
+      btn.classList.add('selected');
+    }
+  });
+}
+
+/* اختيار لون */
+function selectColor(idx, silent) {
+  const v = variantsData;
+  if (!v || !Array.isArray(v.colors)) return;
+  const colors = v.colors.filter(c => c.name || c.nameFr);
+  const color = colors[idx];
+  if (!color) return;
+  
+  selectedColor = color;
+  
+  /* تحديث الـ UI */
+  $("colorsSwatches").querySelectorAll('.color-swatch-wrapper').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  $("selectedColorName").textContent = getColorDisplayName(color);
+  
+  /* 🎨 تبديل صور المعرض حسب اللون المختار */
+const colorImages = Array.isArray(color.images) ?
+  color.images.filter(u => u && typeof u === 'string') :
+  (color.imageUrl ? [color.imageUrl] : []);
+const defaultImgs = window.__defaultProductImages || [];
+const imagesToShow = colorImages.length ? colorImages : defaultImgs;
+if (typeof rebuildSwiper === 'function') {
+  rebuildSwiper(imagesToShow);
+}
+  
+  /* تحديث المقاسات (لأن التوفّر يعتمد على اللون) */
+  if (Array.isArray(v.sizes) && v.sizes.length) {
+    renderSizesGrid();
+    /* إذا كان المقاس المختار لم يعد متوفراً → اختر أول متوفر */
+    if (selectedSize && !isSkuAvailable(selectedColor.id, selectedSize.id)) {
+      const firstAvailable = v.sizes.filter(s => s.name).findIndex(sz => isSkuAvailable(selectedColor.id, sz.id));
+      if (firstAvailable > -1) selectSize(firstAvailable, true);
+      else selectedSize = null;
+    }
+  }
+  
+  /* تحديث السعر */
+  updateVariantPrice();
+  
+  if (!silent) trackAddToCart({ id: product.id, name: product.name, value: getCurrentUnitPrice() });
+}
+
+/* اختيار مقاس */
+function selectSize(idx, silent) {
+  const v = variantsData;
+  if (!v || !Array.isArray(v.sizes)) return;
+  const sizes = v.sizes.filter(s => s.name);
+  const size = sizes[idx];
+  if (!size) return;
+  
+  selectedSize = size;
+  
+  $("sizesGrid").querySelectorAll('.size-btn').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  $("selectedSizeName").textContent = size.name;
+  
+  /* تحديث السعر */
+  updateVariantPrice();
+  
+  if (!silent) trackAddToCart({ id: product.id, name: product.name, value: getCurrentUnitPrice() });
+}
+
+/* السعر الحالي للوحدة (يعتمد على التركيبة المختارة) */
+function getCurrentUnitPrice() {
+  if (variantsData && variantsData.enabled === true) {
+    const cid = selectedColor?.id || null;
+    const sid = selectedSize?.id || null;
+    const skuPrice = getSkuPrice(cid, sid);
+    if (skuPrice !== null) return skuPrice;
+  }
+  return baseUnitPrice;
+}
+/* تحديث السعر في الصفحة */
+function updateVariantPrice() {
+  const newPrice = getCurrentUnitPrice();
+  const oldPriceEl = $("oldPrice");
+  const manualOld = (product.oldPrice !== undefined && product.oldPrice !== null && Number(product.oldPrice) > 0) ? Number(product.oldPrice) : null;
+  
+  /* السعر الحالي */
+  $("currentPrice").textContent = fmt(newPrice);
+  
+  /* السعر المشطوب: نُظهره فقط إذا أدخله المالك يدوياً وكان أكبر من السعر الحالي */
+  if (manualOld !== null && manualOld > newPrice) {
+    oldPriceEl.textContent = fmt(manualOld) + " " + storeInfo.currency;
+    oldPriceEl.style.display = "inline";
+  } else {
+    oldPriceEl.textContent = '';
+    oldPriceEl.style.display = "none";
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════ */
 
 function setupCheckout() {
   $("inputWilaya").addEventListener("change", updateTotals);
@@ -2795,9 +3372,10 @@ async function executeOrder() {
     subtotal = selectedTier.totalPrice;
     tierUsed = { qty: selectedTier.qty, totalPrice: selectedTier.totalPrice, perUnit: selectedTier.totalPrice / selectedTier.qty };
   } else {
-    tierUsed = findCheapestTierForQty(currentQty);
-    subtotal = tierUsed ? Math.floor(tierUsed.perUnit) * currentQty : baseUnitPrice * currentQty;
-  }
+  tierUsed = findCheapestTierForQty(currentQty);
+  const unitP = getCurrentUnitPrice();
+  subtotal = tierUsed ? Math.floor(tierUsed.perUnit) * currentQty : unitP * currentQty;
+}
   const baseShipping = storeFeatures.shipping ? findShippingFor(wilaya, deliveryType) : 0;
   const freeActive = isFreeShippingActive(currentQty);
   const finalShipping = freeActive ? 0 : baseShipping;
@@ -2811,17 +3389,24 @@ async function executeOrder() {
   });
 
   if (!phone || phone.length < 8) return alert("⚠️ يرجى إدخال رقم هاتف صحيح");
-  if (!name || name.length < 2) return alert("⚠️ يرجى إدخال الاسم واللقب");
-  if (!wilaya) return alert("⚠️ يرجى اختيار الولاية");
-  if (!commune) return alert("⚠️ يرجى إدخال البلدية");
-  if (!address) return alert("⚠️ يرجى إدخال العنوان");
+if (!name || name.length < 2) return alert("⚠️ يرجى إدخال الاسم واللقب");
+if (!wilaya) return alert("⚠️ يرجى اختيار الولاية");
+if (!commune) return alert("⚠️ يرجى إدخال البلدية");
+if (!address) return alert("⚠️ يرجى إدخال العنوان");
+
+if (variantsData && variantsData.enabled === true) {
+  const hasColors = Array.isArray(variantsData.colors) && variantsData.colors.length > 0;
+  const hasSizes = Array.isArray(variantsData.sizes) && variantsData.sizes.length > 0;
+  if (hasColors && !selectedColor) return alert("⚠️ يرجى اختيار اللون");
+  if (hasSizes && !selectedSize) return alert("⚠️ يرجى اختيار المقاس");
+}
 
   const btn = $("submitBtn");
   btn.disabled = true;
   const orig = btn.innerHTML;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
 
-  const effectiveUnitPrice = tierUsed ? Math.floor(tierUsed.perUnit) : baseUnitPrice;
+  const effectiveUnitPrice = tierUsed ? Math.floor(tierUsed.perUnit) : getCurrentUnitPrice();
   const bundleApplied = !!(tierUsed && tierUsed.perUnit < baseUnitPrice);
 
   const orderData = {
@@ -2832,18 +3417,25 @@ async function executeOrder() {
     commune,
     deliveryType,
     items: [{
-      id: product.id,
-      name: product.landing?.productName || product.name,
-      price: effectiveUnitPrice,
-      originalPrice: baseUnitPrice,
-      bundleApplied: bundleApplied,
-      bundleQty: bundleApplied && tierUsed ? tierUsed.qty : null,
-      bundleTotal: bundleApplied && selectedTier ? selectedTier.totalPrice : null,
-      quantity: currentQty,
-      quantityBoxes: currentQty,
-      qtyPerBox: 1,
-      costPrice: (product.costPrice !== undefined && product.costPrice !== null) ? Number(product.costPrice) : 0
-    }],
+  id: product.id,
+  name: product.landing?.productName || product.name,
+  price: effectiveUnitPrice,
+  originalPrice: baseUnitPrice,
+  bundleApplied: bundleApplied,
+  bundleQty: bundleApplied && tierUsed ? tierUsed.qty : null,
+  bundleTotal: bundleApplied && selectedTier ? selectedTier.totalPrice : null,
+  quantity: currentQty,
+  quantityBoxes: currentQty,
+  qtyPerBox: 1,
+  costPrice: (product.costPrice !== undefined && product.costPrice !== null) ? Number(product.costPrice) : 0,
+  colorId: selectedColor ? selectedColor.id : null,
+  colorName: selectedColor ? (selectedColor.name || selectedColor.nameFr || null) : null,
+  colorNameFr: selectedColor ? (selectedColor.nameFr || selectedColor.name || null) : null,
+  colorHex: selectedColor ? (selectedColor.hex || null) : null,
+  sizeId: selectedSize ? selectedSize.id : null,
+  sizeName: selectedSize ? (selectedSize.name || null) : null,
+  skuKey: (selectedColor || selectedSize) ? getSkuKey(selectedColor ? selectedColor.id : null, selectedSize ? selectedSize.id : null) : null
+}],
     subtotal,
     shippingCost: finalShipping,
     originalShipping: baseShipping,

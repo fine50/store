@@ -24,6 +24,14 @@
   </div>
   <div class="user-info">
     <span class="username" id="userNameDisplay"></span>
+    <a href="index.html" target="_blank" class="hdr-store-btn" title="عرض المتجر">
+  <i class="fas fa-store"></i>
+  <span>عرض المتجر</span>
+</a>
+<a href="showcase.html" target="_blank" class="hdr-store-btn" title="صفحة العرض">
+  <i class="fas fa-rocket"></i>
+  <span>صفحة العرض</span>
+</a>
     <button class="lang-btn" id="langToggleBtn" type="button">
       <i class="fas fa-globe"></i>
       <span id="langBtnLabel">FR</span>
@@ -35,16 +43,19 @@
 </header>
 
 <nav class="main-nav" id="mainNav">
-  <button class="nav-btn active" data-page="products" data-perm="nav.products">المنتجات</button>
-<button class="nav-btn" data-page="families" data-perm="nav.products">العائلات</button>
+  <button class="nav-btn active" data-page="inventory" data-perm="nav.inventory" data-feature="inventory">المخزون</button>
 <button class="nav-btn" data-page="orders" data-perm="nav.orders">الطلبات <span class="badge" id="ordersBadge" style="display:none;">0</span></button>
-  <button class="nav-btn" data-page="inventory" data-perm="nav.inventory" data-feature="inventory">المخزون</button>
-  <button class="nav-btn" data-page="reviews" data-perm="nav.reviews" data-feature="reviews">التقييمات <span class="badge" id="reviewsBadge" style="display:none;">0</span></button>
-  <button class="nav-btn" data-page="landing" data-perm="nav.landing" data-feature="landing">الترويج</button>
-  <button class="nav-btn" data-page="settings" data-perm="nav.settings">الإعدادات</button>
+<button class="nav-btn" data-page="products" data-perm="nav.products">المنتجات</button>
+<button class="nav-btn" data-page="families" data-perm="nav.products">العائلات</button>
+<button class="nav-btn" data-page="landing" data-perm="nav.landing" data-feature="landing">الترويج</button>
+<button class="nav-btn" data-page="reviews" data-perm="nav.reviews" data-feature="reviews">التقييمات <span class="badge" id="reviewsBadge" style="display:none;">0</span></button>
+<button class="nav-btn" data-page="settings" data-perm="nav.settings">الإعدادات</button>
 </nav>
 
-<section id="page-products" class="page active">
+<!-- ═══════════════════════════════════════════════════
+     PAGE: PRODUCTS
+     ═══════════════════════════════════════════════════ -->
+<section id="page-products" class="page">
   <div class="admin-hero-preview" id="productsHero" style="display:none;">
     <img id="coverImage" class="admin-hero-img" src="" alt="" />
     <div class="admin-hero-overlay"></div>
@@ -85,22 +96,28 @@
   <div class="search-box"><input type="text" id="searchInput" placeholder="بحث..." /></div>
   <div class="products-grid" id="productsContainer"></div>
   <div id="pagination"></div>
-  </section>
-  
-  <section id="page-families" class="page">
-    <div class="families-header">
-      <div class="families-header-info">
-        <h2><i class="fas fa-tags"></i> العائلات</h2>
-        <p>أضف، عدّل، أو احذف عائلات المنتجات</p>
-      </div>
-      <button class="btn-primary add-family-main-btn" id="addFamilyMainBtn" type="button">
-        <i class="fas fa-plus"></i>
-        <span>إضافة عائلة جديدة</span>
-      </button>
-    </div>
-    <div class="families-grid" id="familiesGrid"></div>
-  </section>
+</section>
 
+<!-- ═══════════════════════════════════════════════════
+     PAGE: FAMILIES
+     ═══════════════════════════════════════════════════ -->
+<section id="page-families" class="page">
+  <div class="families-header">
+    <div class="families-header-info">
+      <h2><i class="fas fa-tags"></i> العائلات</h2>
+      <p>أضف، عدّل، أو احذف عائلات المنتجات</p>
+    </div>
+    <button class="btn-primary add-family-main-btn" id="addFamilyMainBtn" type="button">
+      <i class="fas fa-plus"></i>
+      <span>إضافة عائلة جديدة</span>
+    </button>
+  </div>
+  <div class="families-grid" id="familiesGrid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE: ORDERS
+     ═══════════════════════════════════════════════════ -->
 <section id="page-orders" class="page">
   <div class="orders-chips">
     <button class="orders-chip active" data-ofilter="new">طلبات جديدة <span class="cnt" id="newCount">0</span></button>
@@ -118,12 +135,15 @@
     </button>
   </div>
   <div id="deleteAllConfirmedWrap">
-  <button id="deleteAllConfirmedBtn" style="display:none;">حذف جميع الطلبات المؤكدة</button>
-</div>
+    <button id="deleteAllConfirmedBtn" style="display:none;">حذف جميع الطلبات المؤكدة</button>
+  </div>
   <div id="ordersListContainer"></div>
 </section>
 
-<section id="page-inventory" class="page">
+<!-- ═══════════════════════════════════════════════════
+     PAGE: INVENTORY (Default Dashboard)
+     ═══════════════════════════════════════════════════ -->
+<section id="page-inventory" class="page active">
   <div class="orders-chips" id="invPeriodChips">
     <button class="orders-chip active" data-period="today">اليوم</button>
     <button class="orders-chip" data-period="week">هذا الأسبوع</button>
@@ -139,44 +159,81 @@
   </div>
 
   <div id="itab-overview" class="inv-tab-panel active">
-    <div class="inv-stats-main">
-      <div class="inv-stat stat-success" data-detail="revenue">
-        <div class="stat-icon"><i class="fas fa-coins"></i></div>
-        <div class="stat-body"><div class="stat-label">إجمالي المبيعات</div><div class="stat-value" id="statRevenue">0</div></div>
-      </div>
-      <div class="inv-stat stat-info-blue" data-detail="profit">
-        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
-        <div class="stat-body"><div class="stat-label">الربح الصافي</div><div class="stat-value" id="statProfit">0</div></div>
-      </div>
-      <div class="inv-stat stat-warning" data-detail="cost">
-        <div class="stat-icon"><i class="fas fa-shopping-cart"></i></div>
-        <div class="stat-body"><div class="stat-label">تكلفة البضاعة</div><div class="stat-value" id="statCost">0</div></div>
-      </div>
-      <div class="inv-stat stat-vip" data-detail="orders">
-        <div class="stat-icon"><i class="fas fa-receipt"></i></div>
-        <div class="stat-body"><div class="stat-label">عدد الطلبات</div><div class="stat-value" id="statOrders">0</div></div>
+  <div class="inv-bento">
+    
+    <!-- 💰 Hero — إجمالي المبيعات (كبير) -->
+    <div class="bento-card bento-hero c-green" data-detail="revenue">
+      <div class="bento-icon"><i class="fas fa-coins"></i></div>
+      <div class="bento-body">
+        <div class="bento-label" data-i18n="invTotalSales">إجمالي المبيعات</div>
+        <div class="bento-value" id="statRevenue">0</div>
       </div>
     </div>
-      <div class="inv-info-bar" id="invInfoBar">
-    <div class="item"><i class="fas fa-boxes"></i> قيمة المخزون: <b id="statStockValue">0</b></div>
-    <div class="item"><i class="fas fa-box"></i> إجمالي القطع: <b id="statStockQty">0</b></div>
+    
+    <!-- 📦 عدد الطلبات -->
+    <div class="bento-card c-blue" data-detail="orders">
+      <div class="bento-icon"><i class="fas fa-receipt"></i></div>
+      <div class="bento-body">
+        <div class="bento-label" data-i18n="invOrdersCount">عدد الطلبات</div>
+        <div class="bento-value" id="statOrders">0</div>
+      </div>
+    </div>
+    
+    <!-- ⚠️ التنبيهات (ديناميكية) -->
+    <div id="invAlertsContainer"></div>
+    
+    <!-- 📈 الربح الصافي -->
+    <div class="bento-card c-cyan" data-detail="profit">
+      <div class="bento-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="bento-body">
+        <div class="bento-label" data-i18n="invNetProfit">الربح الصافي</div>
+        <div class="bento-value" id="statProfit">0</div>
+      </div>
+    </div>
+    
+    <!-- 🛒 تكلفة البضاعة -->
+    <div class="bento-card c-orange" data-detail="cost">
+      <div class="bento-icon"><i class="fas fa-shopping-cart"></i></div>
+      <div class="bento-body">
+        <div class="bento-label" data-i18n="invCostOfGoods">تكلفة البضاعة</div>
+        <div class="bento-value" id="statCost">0</div>
+      </div>
+    </div>
+    
+    <!-- 📊 قيمة المخزون -->
+    <div class="bento-card c-purple" data-detail="stockValue">
+      <div class="bento-icon"><i class="fas fa-boxes"></i></div>
+      <div class="bento-body">
+        <div class="bento-label" data-i18n="invStockValueLabel">قيمة المخزون</div>
+        <div class="bento-value" id="statStockValue">0</div>
+      </div>
+    </div>
+    
+    <!-- 🔢 إجمالي القطع -->
+    <div class="bento-card c-slate" data-detail="stockQty">
+      <div class="bento-icon"><i class="fas fa-cube"></i></div>
+      <div class="bento-body">
+        <div class="bento-label" data-i18n="invStockQtyLabel">إجمالي القطع</div>
+        <div class="bento-value" id="statStockQty">0</div>
+      </div>
+    </div>
+    
   </div>
-  <div id="invAlertsContainer"></div>
-  <div id="invDetailContainer" style="display:none;"></div>
+    <div id="invDetailContainer" style="display:none;"></div>
   </div>
 
   <div id="itab-inventory" class="inv-tab-panel">
     <div class="inv-section">
       <div class="inv-section-header">
-  <h3><i class="fas fa-warehouse"></i> حالة المخزون</h3>
-  <div class="inv-header-actions">
-    <input type="text" id="invSearchInput" placeholder="بحث..." />
-    <button class="btn-print-inv" id="printInvTableBtn" type="button">
-      <i class="fas fa-print"></i>
-      <span>طباعة</span>
-    </button>
-  </div>
-</div>
+        <h3><i class="fas fa-warehouse"></i> حالة المخزون</h3>
+        <div class="inv-header-actions">
+          <input type="text" id="invSearchInput" placeholder="بحث..." />
+          <button class="btn-print-inv" id="printInvTableBtn" type="button">
+            <i class="fas fa-print"></i>
+            <span>طباعة</span>
+          </button>
+        </div>
+      </div>
       <div id="invTableContainer"></div>
     </div>
   </div>
@@ -191,35 +248,85 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════
+     PAGE: REVIEWS
+     ═══════════════════════════════════════════════════ -->
 <section id="page-reviews" class="page">
   <div class="reviews-container" id="reviewsListContainer"></div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════
+     PAGE: LANDING
+     ═══════════════════════════════════════════════════ -->
 <section id="page-landing" class="page">
-  <div class="landing-intro">
-    <div class="icon"><i class="fas fa-rocket"></i></div>
-    <div>
-      <h3>صفحات الترويج المستقلة</h3>
-      <p>تظهر هنا <b>المنتجات المُفعَّلة فقط</b>. لتفعيل منتج، اذهب إلى <b>المنتجات</b> واضغط على زر.</p>
-    </div>
+  
+  <!-- ═══════════════════════════════════════
+       🎬 SUB-TABS داخل صفحة الترويج (4 تبويبات)
+       ═══════════════════════════════════════ -->
+  <div class="landing-subtabs" id="landingSubtabs">
+    <button class="landing-subtab active" data-ltab="pages" data-perm="nav.landing">
+      <i class="fas fa-rocket"></i> الصفحات المُفعَّلة
+    </button>
+    <button class="landing-subtab" data-ltab="settings" data-perm="settings.landingSettings">
+      <i class="fas fa-sliders-h"></i> الإعدادات العامة
+    </button>
+    <button class="landing-subtab" data-ltab="pixels" data-perm="settings.pixels">
+      <i class="fas fa-chart-line"></i> البكسل والإعلانات
+    </button>
+    <button class="landing-subtab" data-ltab="shipping" data-perm="settings.shipping" data-feature="shipping">
+      <i class="fas fa-truck"></i> الشحن والولايات
+    </button>
+    <button class="landing-subtab" data-ltab="policies" data-perm="settings.policies">
+  <i class="fas fa-file-contract"></i> السياسات
+</button>
   </div>
-  <div class="landing-list" id="landingListContainer"></div>
+  
+  <!-- ─── SUB-PANEL 1: قائمة الصفحات ─── -->
+  <div id="ltab-pages" class="landing-tab-panel active">
+    <div class="landing-intro">
+      <div class="icon"><i class="fas fa-rocket"></i></div>
+      <div>
+        <h3>صفحات الترويج المستقلة</h3>
+        <p>تظهر هنا <b>المنتجات المُفعَّلة فقط</b>. لتفعيل منتج، اذهب إلى <b>المنتجات</b> واضغط على زر.</p>
+      </div>
+    </div>
+    <div class="landing-list" id="landingListContainer"></div>
+  </div>
+  
+  <!-- ─── SUB-PANEL 2: الإعدادات العامة ─── -->
+  <div id="ltab-settings" class="landing-tab-panel">
+    <!-- سيُملأ تلقائياً بـ JS من stab-landingSettings -->
+  </div>
+  
+  <!-- ─── SUB-PANEL 3: البكسل ─── -->
+  <div id="ltab-pixels" class="landing-tab-panel">
+    <!-- سيُملأ تلقائياً بـ JS من stab-pixels -->
+  </div>
+  
+  <!-- ─── SUB-PANEL 4: الشحن ─── -->
+  <div id="ltab-shipping" class="landing-tab-panel">
+    <!-- سيُملأ تلقائياً بـ JS من stab-shipping -->
+  </div>
+  <div id="ltab-policies" class="landing-tab-panel">
+  <!-- سيُملأ تلقائياً بـ JS من stab-policies -->
+</div>
+  
 </section>
 
+<!-- ═══════════════════════════════════════════════════
+     PAGE: SETTINGS
+     ═══════════════════════════════════════════════════ -->
 <section id="page-settings" class="page">
   <div class="settings-tabs" id="settingsTabs">
     <button class="settings-tab active" data-stab="general" data-perm="settings.general"><i class="fas fa-store"></i> عام</button>
     <button class="settings-tab" data-stab="cover" data-perm="settings.cover"><i class="fas fa-image"></i> الغلاف</button>
     <button class="settings-tab" data-stab="features" data-perm="settings.features"><i class="fas fa-toggle-on"></i> الميزات</button>
-    <button class="settings-tab" data-stab="landingSettings" data-perm="settings.landingSettings"><i class="fas fa-rocket"></i> الصفحات</button>
-    <button class="settings-tab" data-stab="policies" data-perm="settings.policies"><i class="fas fa-file-contract"></i> السياسات</button>
-    <button class="settings-tab" data-stab="pixels" data-perm="settings.pixels"><i class="fas fa-chart-line"></i> البكسل</button>
-    <button class="settings-tab" data-stab="shipping" data-perm="settings.shipping" data-feature="shipping"><i class="fas fa-truck"></i> الشحن</button>
     <button class="settings-tab" data-stab="users" data-perm="settings.users"><i class="fas fa-users"></i> المستخدمون</button>
-    <button class="settings-tab" data-stab="owner" data-perm="settings.owner"><i class="fas fa-crown"></i> المالك</button>
+    <button class="settings-tab" data-stab="owner" data-perm="settings.owner"><i class="fas fa-crown"></i> <span data-i18n="tabOwner">المالك</span></button>
     <button class="settings-tab" data-stab="advanced" data-perm="settings.advanced"><i class="fas fa-tools"></i> متقدم</button>
   </div>
 
+  <!-- ═══ STAB: GENERAL ═══ -->
   <div id="stab-general" class="settings-panel active">
     <div class="settings-card">
       <h3><i class="fas fa-store"></i> معلومات المتجر</h3>
@@ -227,7 +334,6 @@
       <label>عنوان المتجر</label><input id="setAddress" />
       <label>رقم الهاتف (يظهر للعملاء)</label><input id="setPhone" />
       <label>رقم واتساب (لاستقبال الطلبات)</label><input id="setWhatsapp" dir="ltr" />
-      <label>مفتاح ImgBB (لرفع الصور)</label><input id="setImgbb" dir="ltr" />
       <label>العملة</label><input id="setCurrency" placeholder="دج" />
       <label class="toggle-row" style="margin-top:14px;">
         <div class="toggle-row-info"><h4><i class="fab fa-whatsapp"></i> تفعيل الطلبات عبر واتساب</h4></div>
@@ -262,6 +368,7 @@
     <button class="btn-primary" id="saveStoreSettingsBtn">حفظ الإعدادات</button>
   </div>
 
+  <!-- ═══ STAB: COVER ═══ -->
   <div id="stab-cover" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-image"></i> غلاف المتجر</h3>
@@ -296,137 +403,158 @@
     </div>
   </div>
 
+  <!-- ═══ STAB: FEATURES ═══ -->
   <div id="stab-features" class="settings-panel">
-  <div class="settings-card">
-    <h3><i class="fas fa-toggle-on"></i> إدارة الميزات</h3>
-    <div class="helper-text">تحكم في الميزات التي تظهر في متجرك ولوحة التحكم. التغييرات تُحفظ تلقائياً.</div>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-dollar-sign"></i> سعر الشراء</h4>
-        <p>تفعيل حساب تكلفة الشراء والأرباح لكل منتج.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featCostPrice" data-feat="costPrice" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-boxes"></i> تتبع المخزون</h4>
-        <p>تفعيل تتبع الكميات وإحصائيات المخزون.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featInventory" data-feat="inventory" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-box"></i> الكمية في العلبة</h4>
-        <p>تفعيل خيار تحديد عدد الوحدات داخل العلبة الواحدة.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featQuantityPerBox" data-feat="quantityPerBox" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-barcode"></i> الرقم التسلسلي (SKU)</h4>
-        <p>تفعيل خانة الرقم التسلسلي/المرجعي لكل منتج.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featSerial" data-feat="serial" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-crown"></i> سعر الجملة</h4>
-        <p>تفعيل أسعار الجملة والرمز السري الخاص بزبائن الجملة.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featWholesale" data-feat="wholesale" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-tags"></i> التخفيضات</h4>
-        <p>تفعيل نظام التخفيضات الزمنية على المنتجات.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featDiscounts" data-feat="discounts" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-history"></i> سجل النشاطات</h4>
-        <p>تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featActivityLog" data-feat="activityLog" /><span class="toggle-slider"></span></span>
-    </label>
-    <label class="toggle-row">
-      <div class="toggle-row-info">
-        <h4><i class="fas fa-sparkles"></i> المنتجات الجديدة</h4>
-        <p>إظهار تبويب "الجديدة" لتصفية المنتجات المُضافة حديثاً.</p>
-      </div>
-      <span class="toggle-switch"><input type="checkbox" id="featNewProducts" data-feat="newProducts" /><span class="toggle-slider"></span></span>
-    </label>
-
-        <div id="newProductsDaysBox" style="display:none; margin: 8px 0 16px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
-      <label style="display:block; font-weight:600; font-size:13px; margin-bottom:8px; color:var(--text);">
-        <i class="fas fa-clock" style="color:var(--primary);"></i>
-        <span data-i18n="newProductsDaysLabel">عرض المنتجات المُضافة خلال:</span>
+    <div class="settings-card">
+      <h3><i class="fas fa-toggle-on"></i> إدارة الميزات</h3>
+      <div class="helper-text">تحكم في الميزات التي تظهر في متجرك ولوحة التحكم. التغييرات تُحفظ تلقائياً.</div>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-dollar-sign"></i> سعر الشراء</h4>
+          <p>تفعيل حساب تكلفة الشراء والأرباح لكل منتج.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featCostPrice" data-feat="costPrice" /><span class="toggle-slider"></span></span>
       </label>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <input type="number" id="featNewProductsDays" min="1" max="365" value="30"
-               style="width:100px; padding:8px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font); font-size:14px; font-weight:700; text-align:center; outline:none;" />
-        <span style="font-weight:600; color:var(--text-2);" data-i18n="dayUnit">يوم</span>
-      </div>
-      <p style="font-size:12px; color:var(--text-2); line-height:1.6; margin-top:8px; margin-bottom:0;">
-        <i class="fas fa-info-circle" style="color:var(--info);"></i>
-        <span data-i18n="newProductsHint">المنتجات التي أُضيفت خلال هذه المدة ستظهر في تبويب "الجديدة".</span>
-      </p>
-    </div>
-</div><!-- ✅ إغلاق settings-card بعد الأزرار الجديدة -->
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-boxes"></i> تتبع المخزون</h4>
+          <p>تفعيل تتبع الكميات وإحصائيات المخزون.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featInventory" data-feat="inventory" /><span class="toggle-slider"></span></span>
+      </label>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-box"></i> الكمية في العلبة</h4>
+          <p>تفعيل خيار تحديد عدد الوحدات داخل العلبة الواحدة.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featQuantityPerBox" data-feat="quantityPerBox" /><span class="toggle-slider"></span></span>
+      </label>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-barcode"></i> الرقم التسلسلي (SKU)</h4>
+          <p>تفعيل خانة الرقم التسلسلي/المرجعي لكل منتج.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featSerial" data-feat="serial" /><span class="toggle-slider"></span></span>
+      </label>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-crown"></i> سعر الجملة</h4>
+          <p>تفعيل أسعار الجملة والرمز السري الخاص بزبائن الجملة.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featWholesale" data-feat="wholesale" /><span class="toggle-slider"></span></span>
+      </label>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-tags"></i> التخفيضات</h4>
+          <p>تفعيل نظام التخفيضات الزمنية على المنتجات.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featDiscounts" data-feat="discounts" /><span class="toggle-slider"></span></span>
+      </label>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-history"></i> سجل النشاطات</h4>
+          <p>تفعيل تسجيل عمليات المستخدمين (بائع/مدير) وعرضها للمالك.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featActivityLog" data-feat="activityLog" /><span class="toggle-slider"></span></span>
+      </label>
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-sparkles"></i> المنتجات الجديدة</h4>
+          <p>إظهار تبويب "الجديدة" لتصفية المنتجات المُضافة حديثاً.</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featNewProducts" data-feat="newProducts" /><span class="toggle-slider"></span></span>
+      </label>
 
-<!-- ═══════════════════════════════════════════
-     🆕 التواصل والمشاركة (تحكم في Index)
-     ═══════════════════════════════════════════ -->
-<div class="settings-card">
-  <h3><i class="fas fa-share-alt"></i> التواصل والمشاركة (footer)</h3>
-  <div class="helper-text">تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (footer).</div>
-  
-  <label class="toggle-row">
-    <div class="toggle-row-info">
-      <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب</h4>
-      <p>زر عائم يفتح محادثة واتساب مباشرة مع المتجر (footer).</p>
+      <div id="newProductsDaysBox" style="display:none; margin: 8px 0 16px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+        <label style="display:block; font-weight:600; font-size:13px; margin-bottom:8px; color:var(--text);">
+          <i class="fas fa-clock" style="color:var(--primary);"></i>
+          <span data-i18n="newProductsDaysLabel">عرض المنتجات المُضافة خلال:</span>
+        </label>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <input type="number" id="featNewProductsDays" min="1" max="365" value="30"
+                 style="width:100px; padding:8px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:var(--font); font-size:14px; font-weight:700; text-align:center; outline:none;" />
+          <span style="font-weight:600; color:var(--text-2);" data-i18n="dayUnit">يوم</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-2); line-height:1.6; margin-top:8px; margin-bottom:0;">
+      <i class="fas fa-info-circle" style="color:var(--info);"></i>
+      <span data-i18n="newProductsHint">المنتجات التي أُضيفت خلال هذه المدة ستظهر في تبويب "الجديدة".</span>
+    </p>
     </div>
-    <span class="toggle-switch"><input type="checkbox" id="featContactWhatsapp" data-feat="contactWhatsapp" /><span class="toggle-slider"></span></span>
-  </label>
-  
-  <label class="toggle-row">
-    <div class="toggle-row-info">
-      <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Partager)</h4>
-      <p>زر عائم لمشاركة رابط المتجر على وسائل التواصل (footer).</p>
-    </div>
-    <span class="toggle-switch"><input type="checkbox" id="featShareButton" data-feat="shareButton" /><span class="toggle-slider"></span></span>
-  </label>
-  
-  <label class="toggle-row">
-    <div class="toggle-row-info">
-      <h4><i class="fas fa-share-alt"></i> أيقونات التواصل الاجتماعي</h4>
-      <p>أيقونات تظهر في أسفل الصفحة الرئيسية (footer).</p>
-    </div>
-    <span class="toggle-switch"><input type="checkbox" id="featSocialLinks" data-feat="socialLinks" /><span class="toggle-slider"></span></span>
-  </label>
-  
-  <div id="socialLinksManager" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <strong style="font-size:13px; color:var(--text);">
-        <i class="fas fa-list" style="color:var(--primary);"></i>
-        <span data-i18n="socialAdded">الحسابات المضافة (footer)</span>
-      </strong>
-      <button type="button" id="addSocialLinkBtn" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
-        <i class="fas fa-plus"></i> <span data-i18n="socialAdd">إضافة</span>
-      </button>
-    </div>
-    <div id="socialLinksList" style="display:flex; flex-direction:column; gap:8px;"></div>
+    
+    <!-- ═══════════════════════════════════════════
+       🎨 نظام الخيارات (Variants) — المفتاح الرئيسي + 3 مفاتيح فرعية
+       ═══════════════════════════════════════════ -->
+    <label class="toggle-row">
+  <div class="toggle-row-info">
+    <h4><i class="fas fa-tint"></i> <span data-i18n="variantsColorsTitle">تفعيل الألوان</span></h4>
+    <p data-i18n="variantsColorsDesc">يسمح بإضافة ألوان للمنتجات.</p>
   </div>
-  
-</div><!-- ✅ إغلاق settings-card التواصل -->
+  <span class="toggle-switch"><input type="checkbox" id="featVariantsColors" data-feat="variantsColors" /><span class="toggle-slider"></span></span>
+</label>
 
-</div><!-- ✅ إغلاق stab-features -->
+<label class="toggle-row">
+  <div class="toggle-row-info">
+    <h4><i class="fas fa-ruler-combined"></i> <span data-i18n="variantsSizesTitle">تفعيل المقاسات</span></h4>
+    <p data-i18n="variantsSizesDesc">يسمح بإضافة مقاسات أو أحجام للمنتجات.</p>
+  </div>
+  <span class="toggle-switch"><input type="checkbox" id="featVariantsSizes" data-feat="variantsSizes" /><span class="toggle-slider"></span></span>
+</label>
+    
+    </div>
+    
+    <!-- 🆕 التواصل والمشاركة (Index) -->
+    <div class="settings-card">
+      <h3><i class="fas fa-share-alt"></i> التواصل والمشاركة (footer)</h3>
+      <div class="helper-text">تفعيل أزرار التواصل الاجتماعي وأزرار المشاركة في الصفحة الرئيسية (footer).</div>
+      
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب</h4>
+          <p>زر عائم يفتح محادثة واتساب مباشرة مع المتجر (footer).</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featContactWhatsapp" data-feat="contactWhatsapp" /><span class="toggle-slider"></span></span>
+      </label>
+      
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Partager)</h4>
+          <p>زر عائم لمشاركة رابط المتجر على وسائل التواصل (footer).</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featShareButton" data-feat="shareButton" /><span class="toggle-slider"></span></span>
+      </label>
+      
+      <label class="toggle-row">
+        <div class="toggle-row-info">
+          <h4><i class="fas fa-share-alt"></i> أيقونات التواصل الاجتماعي</h4>
+          <p>أيقونات تظهر في أسفل الصفحة الرئيسية (footer).</p>
+        </div>
+        <span class="toggle-switch"><input type="checkbox" id="featSocialLinks" data-feat="socialLinks" /><span class="toggle-slider"></span></span>
+      </label>
+      
+      <div id="socialLinksManager" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <strong style="font-size:13px; color:var(--text);">
+            <i class="fas fa-list" style="color:var(--primary);"></i>
+            <span data-i18n="socialAdded">الحسابات المضافة (footer)</span>
+          </strong>
+          <button type="button" id="addSocialLinkBtn" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
+            <i class="fas fa-plus"></i> <span data-i18n="socialAdd">إضافة</span>
+          </button>
+        </div>
+        <div id="socialLinksList" style="display:flex; flex-direction:column; gap:8px;"></div>
+      </div>
+    </div>
+  </div>
 
-
+  <!-- ═══ STAB: LANDING SETTINGS ═══ -->
 <div id="stab-landingSettings" class="settings-panel">
+  
+  <!-- ═══════════════════════════════════════════
+       1️⃣ الإعدادات الأساسية
+       ═══════════════════════════════════════════ -->
   <div class="settings-card">
-    <h3><i class="fas fa-sliders-h"></i> إعدادات الصفحات</h3>
-    <div class="helper-text">تفعيل أو تعطيل الميزات المتعلقة بصفحات المتجر والترويج.</div>
+    <h3><i class="fas fa-sliders-h"></i> الإعدادات الأساسية</h3>
+    <div class="helper-text">المفاتيح الرئيسية للتحكم في الميزات والنصوص العامة.</div>
     
     <label class="toggle-row">
       <div class="toggle-row-info">
@@ -451,12 +579,109 @@
       </div>
       <span class="toggle-switch"><input type="checkbox" id="featReviews" data-feat="reviews" /><span class="toggle-slider"></span></span>
     </label>
+    
+    <div style="height:1px;background:var(--border);margin:16px 0;"></div>
+    
+    <label>نص الشريط الإعلاني (عام لكل الصفحات)</label>
+    <input id="landingAnnouncement" placeholder="اكتب النص هنا" />
   </div>
   
-  <div class="settings-card">
-    <h3><i class="fas fa-bullhorn"></i> الشريط الإعلاني</h3>
-    <label>نص الشريط العلوي (عام لكل الصفحات)</label>
-    <input id="landingAnnouncement" placeholder="اكتب النص هنا" />
+  <!-- ═══════════════════════════════════════════
+       2️⃣ إعدادات واجهة العرض (Showcase)
+       ═══════════════════════════════════════════ -->
+  <div class="settings-card" id="showcaseSettingsCard">
+    <h3><i class="fas fa-window-maximize"></i> إعدادات واجهة العرض (Showcase)</h3>
+    <div class="helper-text">تحكم كامل في النصوص والعناصر التي تظهر في واجهة العرض الرئيسية للمتجر.</div>
+    
+    <!-- ▸ العنوان الرئيسي -->
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-heading"></i> العنوان الرئيسي</h4>
+        <p>النص الكبير الذي يظهر أعلى الصفحة الرئيسية.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="scMainTitleEnabled" /><span class="toggle-slider"></span></span>
+    </label>
+    <select class="sc-select" id="scMainTitleSelect" disabled>
+      <option value="">— اختر نصاً تجارياً —</option>
+      <option value="عروض حصرية">عروض حصرية</option>
+      <option value="تشكيلة الموسم">تشكيلة الموسم</option>
+      <option value="التصفية النهائية">التصفية النهائية</option>
+      <option value="الأكثر مبيعاً">الأكثر مبيعاً</option>
+      <option value="وصل حديثاً">وصل حديثاً</option>
+      <option value="عروض لا تُقاوم">عروض لا تُقاوم</option>
+      <option value="تخفيضات كبرى">تخفيضات كبرى</option>
+      <option value="اختيارات مميزة">اختيارات مميزة</option>
+      <option value="جديدنا لهذا الموسم">جديدنا لهذا الموسم</option>
+      <option value="أفضل الأسعار">أفضل الأسعار</option>
+    </select>
+    
+    <!-- ▸ النص الفرعي الأول -->
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-paragraph"></i> النص الفرعي الأول</h4>
+        <p>جملة قصيرة تظهر تحت العنوان الرئيسي.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="scSub1Enabled" /><span class="toggle-slider"></span></span>
+    </label>
+    <select class="sc-select" id="scSub1Select" disabled>
+      <option value="">— اختر نصاً تجارياً —</option>
+      <option value="اكتشف أحدث الموديلات">اكتشف أحدث الموديلات</option>
+      <option value="تسوق الآن بأفضل الأسعار">تسوق الآن بأفضل الأسعار</option>
+      <option value="خصومات تصل إلى 50%">خصومات تصل إلى 50%</option>
+      <option value="جودة عالية وأسعار منافسة">جودة عالية وأسعار منافسة</option>
+      <option value="منتجات مختارة بعناية">منتجات مختارة بعناية</option>
+      <option value="توصيل سريع لجميع الولايات">توصيل سريع لجميع الولايات</option>
+      <option value="عروض حصرية للعملاء الجدد">عروض حصرية للعملاء الجدد</option>
+      <option value="كل ما تحتاجه في مكان واحد">كل ما تحتاجه في مكان واحد</option>
+      <option value="أسعار الجملة متاحة للجميع">أسعار الجملة متاحة للجميع</option>
+      <option value="اختر من تشكيلتنا الواسعة">اختر من تشكيلتنا الواسعة</option>
+    </select>
+    
+    <!-- ▸ النص الفرعي الثاني -->
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-paragraph"></i> النص الفرعي الثاني</h4>
+        <p>سطر إضافي يظهر أسفل النص الأول (اختياري).</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="scSub2Enabled" /><span class="toggle-slider"></span></span>
+    </label>
+    <select class="sc-select" id="scSub2Select" disabled>
+      <option value="">— اختر نصاً تجارياً —</option>
+      <option value="شحن مجاني">شحن مجاني</option>
+      <option value="تسوق الآن وادفع عند الاستلام">تسوق الآن وادفع عند الاستلام</option>
+      <option value="الدفع عند الاستلام متاح">الدفع عند الاستلام متاح</option>
+      <option value="ضمان الجودة 100%">ضمان الجودة 100%</option>
+      <option value="خدمة عملاء على مدار الساعة">خدمة عملاء على مدار الساعة</option>
+      <option value="إرجاع مجاني خلال 7 أيام">إرجاع مجاني خلال 7 أيام</option>
+      <option value="توصيل خلال 24-48 ساعة">توصيل خلال 24-48 ساعة</option>
+      <option value="أسعار لا تُقبل المنافسة">أسعار لا تُقبل المنافسة</option>
+      <option value="عروض لفترة محدودة">عروض لفترة محدودة</option>
+      <option value="اطلب الآن قبل نفاذ الكمية">اطلب الآن قبل نفاذ الكمية</option>
+    </select>
+    
+    <!-- ▸ أزرار التنقل -->
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-list-ol"></i> أزرار التنقل (Pagination)</h4>
+        <p>إظهار أو إخفاء أرقام الصفحات في واجهة العرض.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="scPaginationEnabled" /><span class="toggle-slider"></span></span>
+    </label>
+    
+    <!-- ▸ إدارة المنتجات -->
+    <div class="sc-products-manager">
+      <div class="sc-products-header">
+        <strong><i class="fas fa-boxes"></i> المنتجات المعروضة في Showcase</strong>
+        <button type="button" id="scOpenProductsModal" class="btn-primary sc-select-btn">
+          <i class="fas fa-plus"></i> اختيار المنتجات
+        </button>
+      </div>
+      <div id="scSelectedProductsList" class="sc-products-list">
+        <div class="sc-empty">لم يتم اختيار أي منتج بعد</div>
+      </div>
+    </div>
+    
+    <div style="height:1px;background:var(--border);margin:16px 0;"></div>
     
     <label class="toggle-row">
       <div class="toggle-row-info">
@@ -466,64 +691,95 @@
       <span class="toggle-switch"><input type="checkbox" id="landingEnableReviews" /><span class="toggle-slider"></span></span>
     </label>
     
-            <label class="toggle-row">
-  <div class="toggle-row-info">
-    <h4><i class="fas fa-users"></i> إظهار عداد الزوار</h4>
-    <p>يعرض عدد الزوار الحاليين على صفحة الترويج.</p>
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-users"></i> إظهار عداد الزوار</h4>
+        <p>يعرض عدد الزوار الحاليين على صفحة الترويج.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="landingEnableVisitors" /><span class="toggle-slider"></span></span>
+    </label>
   </div>
-  <span class="toggle-switch"><input type="checkbox" id="landingEnableVisitors" /><span class="toggle-slider"></span></span>
-</label>
-</div>
-
-<!-- ═══════════════════════════════════════════
-     🛍️ أزرار صفحة المنتج (Product)
+ <!-- ═══════════════════════════════════════════
+     🎨 عرض الألوان والمقاسات (Variants Display)
      ═══════════════════════════════════════════ -->
 <div class="settings-card">
-  <h3><i class="fas fa-shopping-bag"></i> أزرار صفحة المنتج</h3>
-  <div class="helper-text">تحكم في أزرار الواتساب والمشاركة والتواصل التي تظهر في صفحات المنتجات فقط.</div>
-
+  <h3><i class="fas fa-palette"></i> <span data-i18n="variantsDisplayTitle">عرض الألوان والمقاسات</span></h3>
+  <div class="helper-text" data-i18n="variantsDisplayDesc">تحكّم في الأماكن التي تظهر فيها الألوان والمقاسات للعميل. يتطلب تفعيل "الألوان" أو "المقاسات" من الميزات.</div>
+  
   <label class="toggle-row">
     <div class="toggle-row-info">
-      <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب (Product)</h4>
-      <p>زر عائم يفتح محادثة واتساب مباشرة في صفحة المنتج.</p>
+      <h4><i class="fas fa-home"></i> <span data-i18n="variantsShowIndexTitle">إظهار في الصفحة الرئيسية</span></h4>
+      <p data-i18n="variantsShowIndexDesc">عرض الألوان والمقاسات في بطاقات الصفحة الرئيسية (index.html).</p>
     </div>
-    <span class="toggle-switch"><input type="checkbox" id="featContactWhatsappProduct" data-feat="contactWhatsappProduct" /><span class="toggle-slider"></span></span>
+    <span class="toggle-switch"><input type="checkbox" id="featShowVariantsIndex" data-feat="showVariantsIndex" /><span class="toggle-slider"></span></span>
   </label>
-
+  
   <label class="toggle-row">
     <div class="toggle-row-info">
-      <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Product)</h4>
-      <p>زر لمشاركة رابط المنتج على وسائل التواصل.</p>
+      <h4><i class="fas fa-window-maximize"></i> <span data-i18n="variantsShowShowcaseTitle">إظهار في صفحة العرض</span></h4>
+      <p data-i18n="variantsShowShowcaseDesc">عرض الألوان والمقاسات في بطاقات صفحة العرض (Showcase).</p>
     </div>
-    <span class="toggle-switch"><input type="checkbox" id="featShareButtonProduct" data-feat="shareButtonProduct" /><span class="toggle-slider"></span></span>
+    <span class="toggle-switch"><input type="checkbox" id="featShowVariantsShowcase" data-feat="showVariantsShowcase" /><span class="toggle-slider"></span></span>
   </label>
-
+  
   <label class="toggle-row">
     <div class="toggle-row-info">
-      <h4><i class="fas fa-share-alt"></i> أيقونات التواصل (Product)</h4>
-      <p>أيقونات تظهر في أسفل صفحة المنتج.</p>
+      <h4><i class="fas fa-tag"></i> <span data-i18n="variantsShowProductTitle">إظهار في صفحة المنتج</span></h4>
+      <p data-i18n="variantsShowProductDesc">عرض الألوان والمقاسات في صفحة تفاصيل المنتج (product.html).</p>
     </div>
-    <span class="toggle-switch"><input type="checkbox" id="featSocialLinksProduct" data-feat="socialLinksProduct" /><span class="toggle-slider"></span></span>
+    <span class="toggle-switch"><input type="checkbox" id="featShowVariantsProduct" data-feat="showVariantsProduct" /><span class="toggle-slider"></span></span>
   </label>
+</div>
 
-  <div id="socialLinksManagerProduct" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <strong style="font-size:13px; color:var(--text);">
-        <i class="fas fa-list" style="color:var(--primary);"></i>
-        <span>الحسابات المضافة (Product)</span>
-      </strong>
-      <button type="button" id="addSocialLinkBtnProduct" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
-        <i class="fas fa-plus"></i> <span>إضافة</span>
-      </button>
-    </div>
-    <div id="socialLinksListProduct" style="display:flex; flex-direction:column; gap:8px;"></div>
-  </div>
-
-</div><!-- ✅ إغلاق settings-card أزرار المنتج -->
-
-</div><!-- ✅ إغلاق stab-landingSettings -->
+  <!-- ═══════════════════════════════════════════
+       3️⃣ أزرار صفحة المنتج
+       ═══════════════════════════════════════════ -->
+  <div class="settings-card">
+    <h3><i class="fas fa-shopping-bag"></i> أزرار صفحة المنتج</h3>
+    <div class="helper-text">تحكم في أزرار الواتساب والمشاركة والتواصل التي تظهر في صفحات المنتجات فقط.</div>
     
-    <div id="stab-policies" class="settings-panel">
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fab fa-whatsapp"></i> زر الاتصال عبر واتساب (Product)</h4>
+        <p>زر عائم يفتح محادثة واتساب مباشرة في صفحة المنتج.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featContactWhatsappProduct" data-feat="contactWhatsappProduct" /><span class="toggle-slider"></span></span>
+    </label>
+    
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-share-nodes"></i> زر المشاركة (Product)</h4>
+        <p>زر لمشاركة رابط المنتج على وسائل التواصل.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featShareButtonProduct" data-feat="shareButtonProduct" /><span class="toggle-slider"></span></span>
+    </label>
+    
+    <label class="toggle-row">
+      <div class="toggle-row-info">
+        <h4><i class="fas fa-share-alt"></i> أيقونات التواصل (Product)</h4>
+        <p>أيقونات تظهر في أسفل صفحة المنتج.</p>
+      </div>
+      <span class="toggle-switch"><input type="checkbox" id="featSocialLinksProduct" data-feat="socialLinksProduct" /><span class="toggle-slider"></span></span>
+    </label>
+    
+    <div id="socialLinksManagerProduct" style="display:none; margin: 12px 0 8px; padding: 14px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <strong style="font-size:13px; color:var(--text);">
+          <i class="fas fa-list" style="color:var(--primary);"></i>
+          <span>الحسابات المضافة (Product)</span>
+        </strong>
+        <button type="button" id="addSocialLinkBtnProduct" class="btn-primary" style="padding:6px 14px; font-size:12px; width:auto; min-width:auto; display:inline-flex;">
+          <i class="fas fa-plus"></i> <span>إضافة</span>
+        </button>
+      </div>
+      <div id="socialLinksListProduct" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
+  
+</div>
+
+  <!-- ═══ STAB: POLICIES ═══ -->
+  <div id="stab-policies" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-file-contract"></i> سياسات المتجر</h3>
       <p style="font-size:13px;color:var(--text-2);margin-bottom:12px;">كل سياسة تحتوي على عنوان + نص الشرح.</p>
@@ -533,6 +789,7 @@
     </div>
   </div>
 
+  <!-- ═══ STAB: PIXELS ═══ -->
   <div id="stab-pixels" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook Pixel</h3>
@@ -557,6 +814,7 @@
     <button class="btn-primary" id="savePixelsBtn" style="background:#1877f2;">حفظ الإعدادات</button>
   </div>
 
+  <!-- ═══ STAB: SHIPPING ═══ -->
   <div id="stab-shipping" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-truck"></i> مناطق الشحن</h3>
@@ -565,6 +823,7 @@
     </div>
   </div>
 
+  <!-- ═══ STAB: USERS ═══ -->
   <div id="stab-users" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-user-plus"></i> إضافة مستخدم جديد</h3>
@@ -582,6 +841,7 @@
     </div>
   </div>
 
+  <!-- ═══ STAB: OWNER ═══ -->
   <div id="stab-owner" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-crown"></i> بيانات المالك</h3>
@@ -599,6 +859,7 @@
     </div>
   </div>
 
+  <!-- ═══ STAB: ADVANCED ═══ -->
   <div id="stab-advanced" class="settings-panel">
     <div class="settings-card">
       <h3><i class="fas fa-key"></i> الرقم السري للجملة</h3>
@@ -623,6 +884,11 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════
+     MODALS
+     ═══════════════════════════════════════════════════ -->
+
+<!-- Login Modal -->
 <div id="loginModal" class="modal show">
   <div class="modal-content" style="text-align:center;">
     <img id="loginLogo" style="width:80px;margin-bottom:16px;display:none;" />
@@ -633,6 +899,7 @@
   </div>
 </div>
 
+<!-- Product Modal -->
 <div id="productModal" class="modal">
   <div class="modal-content">
     <button class="close-x" data-close="productModal">&times;</button>
@@ -642,6 +909,7 @@
       <input type="text" id="name" placeholder="اسم المنتج" required />
       <input type="text" id="serial" placeholder="الرقم التسلسلي / المرجع (SKU)" data-feature-field="serial" />
       <input type="number" id="price" placeholder="سعر البيع (دج)" required />
+      <input type="number" id="oldPrice" placeholder="السعر المشطوب (اختياري)" min="0" step="any" />
       <input type="number" id="wholesalePrice" placeholder="سعر الجملة (اختياري)" data-feature-field="wholesale" />
       <input type="number" id="quantityPerBox" placeholder="الكمية في العلبة (اختياري)" min="0" data-feature-field="quantityPerBox" />
       <div id="stockFieldsBox">
@@ -653,6 +921,63 @@
         <button type="button" class="family-add-btn" id="addFamilyBtn"><i class="fas fa-plus"></i> إضافة</button>
       </div>
       <input type="text" id="newFamilyInput" placeholder="اسم العائلة الجديدة" style="display:none;" />
+
+<!-- ═══════════════════════════════════════════
+     🎨 خيارات المنتج (Variants)
+     ═══════════════════════════════════════════ -->
+<div id="variantsSection" style="display:none; margin-top:16px; padding:14px; background:var(--bg-2); border:1px dashed var(--border-strong); border-radius:var(--radius-md);">
+  <h4 style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:800; color:var(--text); margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--border);">
+    <i class="fas fa-palette" style="color:var(--primary);"></i>
+    <span data-i18n="variantsSectionTitle">خيارات المنتج</span>
+  </h4>
+  
+  <div id="variantsEditor" style="display:none;">
+    <!-- ═══ الألوان ═══ -->
+<div id="colorsSection" style="margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <strong style="font-size:13px; color:var(--text); display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-tint" style="color:var(--primary);"></i>
+          <span data-i18n="variantsColorsLabel">الألوان</span>
+        </strong>
+        <button type="button" id="addColorBtn" class="btn-primary" style="width:auto; min-width:auto; padding:6px 12px; font-size:12px; display:inline-flex; margin:0;">
+          <i class="fas fa-plus"></i> <span data-i18n="variantsAddColor">إضافة لون</span>
+        </button>
+      </div>
+      <div id="colorsList"></div>
+    </div>
+    
+    <!-- ═══ المقاسات / الأحجام ═══ -->
+<div id="sizesSectionWrapper">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <strong style="font-size:13px; color:var(--text); display:flex; align-items:center; gap:6px;">
+          <i class="fas fa-ruler-combined" style="color:var(--primary);"></i>
+          <span data-i18n="variantsSizesLabel">المقاسات / الأحجام</span>
+        </strong>
+        <button type="button" id="addSizeBtn" class="btn-primary" style="width:auto; min-width:auto; padding:6px 12px; font-size:12px; display:inline-flex; margin:0;">
+          <i class="fas fa-plus"></i> <span data-i18n="variantsAddSize">إضافة مقاس</span>
+        </button>
+      </div>
+      <div id="sizesList"></div>
+      </div>
+      
+      <!-- ═══ 🎨 جدول الكميات والأسعار لكل تركيبة ═══ -->
+<div id="skusSectionWrapper" style="margin-top:16px; padding-top:14px; border-top:1px dashed var(--border-strong);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <strong style="font-size:13px; color:var(--text); display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-th" style="color:var(--primary);"></i>
+            <span data-i18n="variantsSkusLabel">الكميات لكل تركيبة</span>
+          </strong>
+        </div>
+        <div style="font-size:11px; color:var(--text-3); margin-bottom:8px; line-height:1.6;">
+          <i class="fas fa-info-circle" style="color:var(--info);"></i>
+          <span data-i18n="variantsSkusHint">الخانة اليمنى: الكمية · الخانة اليسرى: سعر خاص (اتركها فارغة لاستخدام السعر الأساسي)</span>
+        </div>
+        <div id="skusTableContainer"></div>
+      </div>
+      
+      </div>
+      </div>
+      
       <div style="display:flex;gap:8px;">
         <input type="file" id="imageFile" accept="image/*" style="flex:1;margin-bottom:12px;" />
         <label for="cameraInput" style="background:var(--bg);padding:12px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;width:48px;margin-bottom:12px;"><i class="fas fa-camera"></i></label>
@@ -666,6 +991,7 @@
   </div>
 </div>
 
+<!-- Discount Modal -->
 <div id="discountModal" class="modal">
   <div class="modal-content">
     <button class="close-x" data-close="discountModal">&times;</button>
@@ -691,6 +1017,7 @@
   </div>
 </div>
 
+<!-- Landing Edit Modal -->
 <div id="landingEditModal" class="modal">
   <div class="modal-content" style="max-width:680px;">
     <button class="close-x" data-close="landingEditModal">&times;</button>
@@ -806,6 +1133,7 @@
   </div>
 </div>
 
+<!-- Zone Edit Modal -->
 <div id="zoneEditModal" class="modal">
   <div class="modal-content" style="max-width:600px;">
     <button class="close-x" data-close="zoneEditModal">&times;</button>
@@ -824,6 +1152,7 @@
   </div>
 </div>
 
+<!-- Order Detail Modal -->
 <div id="orderDetailModal" class="modal">
   <div class="modal-content" style="max-width:700px;">
     <button class="close-x" data-close="orderDetailModal">&times;</button>
@@ -831,6 +1160,7 @@
   </div>
 </div>
 
+<!-- Print Option Modal -->
 <div id="printOptionModal" class="modal">
   <div class="modal-content" style="max-width:400px;text-align:center;">
     <h3>اختر طريقة الطباعة</h3>
@@ -840,6 +1170,7 @@
   </div>
 </div>
 
+<!-- Icon Picker -->
 <div class="icon-picker" id="iconPicker">
   <div class="icon-picker-content">
     <button id="iconPickerClose" style="position:absolute;top:14px;inset-inline-end:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-2);">&times;</button>
@@ -850,6 +1181,18 @@
     <input type="file" id="customIconFile" accept="image/*" style="display:none;" />
   </div>
 </div>
+<!-- ═══════════════════════════════════════════
+     🎨 منتقي الألوان الاحترافي
+     ═══════════════════════════════════════════ -->
+<div id="colorPickerModal" class="modal">
+  <div class="modal-content" style="max-width:600px;">
+    <button class="close-x" data-close="colorPickerModal">&times;</button>
+    <h3><i class="fas fa-palette"></i> <span data-i18n="colorPickerTitle">اختر اللون</span></h3>
+    <div id="colorPickerBody"></div>
+  </div>
+</div>
+
+<!-- Social Icon Picker -->
 <div id="socialIconPickerModal" class="modal">
   <div class="modal-content" style="max-width: 520px;">
     <button class="close-x" data-close="socialIconPickerModal">&times;</button>
@@ -857,19 +1200,64 @@
     <div id="socialIconGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(56px, 1fr)); gap:8px;"></div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════
+     🎬 Modal — اختيار منتجات Showcase
+     ═══════════════════════════════════════════ -->
+<div id="scProductsModal" class="modal">
+  <div class="modal-content" style="max-width:680px;">
+    <button class="close-x" data-close="scProductsModal">&times;</button>
+    <h3><i class="fas fa-boxes"></i> اختيار المنتجات</h3>
+
+    <div class="sc-modal-toolbar">
+  <div class="sc-search-wrap">
+    <i class="fas fa-search"></i>
+    <input type="text" id="scProductsSearch" placeholder="ابحث بالاسم أو العائلة..." />
+  </div>
+  <div class="sc-selected-count">
+    <i class="fas fa-check-circle"></i>
+    <span>المحدد: <b id="scSelectedCount">0</b></span>
+  </div>
+  <button type="button" id="scSelectAllBtn" class="sc-bulk-btn sc-select-all">
+    <i class="fas fa-check-double"></i> تحديد الكل
+  </button>
+  <button type="button" id="scDeselectAllBtn" class="sc-bulk-btn sc-deselect-all">
+    <i class="fas fa-times-circle"></i> إلغاء الكل
+  </button>
+</div>
+
+    <div id="scProductsGrid" class="sc-products-grid"></div>
+
+    <div class="sc-modal-actions">
+      <button type="button" class="btn-secondary" data-close="scProductsModal">إلغاء</button>
+      <button type="button" id="scSaveProductsBtn" class="btn-primary">
+        <i class="fas fa-save"></i> حفظ المنتجات المحددة
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toastMessage"></div>
 
 <footer><p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p></footer>
 </div>
 
+<!-- ═══════════════════════════════════════════════════
+     EXTERNAL SCRIPTS
+     ═══════════════════════════════════════════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="i18n.js"></script>
+
+<!-- ═══════════════════════════════════════════════════
+     🔽 يتبع هنا الجزء 2 (السكريبت الرئيسي)
+     ═══════════════════════════════════════════════════ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getDatabase, ref, onValue, set, remove, update, push, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const $ = id => document.getElementById(id);
+const t = window.t || ((k) => k);
 const BOOT = window.STORE_BOOTSTRAP;
 function showNotice(icon, title, msg) {
   $("loadingScreen").style.display = "none";
@@ -883,11 +1271,43 @@ if (!fc.apiKey || String(fc.apiKey).includes("YOUR_")) { showNotice("!","الإ�
 const app = initializeApp(fc);
 const db = getDatabase(app);
 const auth = getAuth(app);
-signInAnonymously(auth).catch(() => {});
+/* signInAnonymously معطّل — التحذير البرتقالي تم إزالته */
 
 window.__db = db;
 window.__fbMod = { ref, push, set };
-
+/* 🆕 Migration v2: توحيد الترويج في store/promoted + مزامنة الحقل القديم */
+(async () => {
+  try {
+    const flag = await get(ref(db, 'store/migrated_to_promoted_v2'));
+    if (flag.exists()) return;
+    
+    const idsToPromote = new Set();
+    const showcaseSnap = await get(ref(db, 'store/showcase'));
+    const sc = showcaseSnap.val() || {};
+    (sc.productIds || []).forEach(id => idsToPromote.add(id));
+    
+    const productsSnap = await get(ref(db, 'products'));
+    const prods = productsSnap.val() || {};
+    Object.entries(prods).forEach(([id, p]) => {
+      if (p.landing && p.landing.enabled === true) idsToPromote.add(id);
+    });
+    
+    /* اكتب على المسار الموحّد */
+    const updates = {};
+    idsToPromote.forEach(id => { updates['store/promoted/' + id] = true; });
+    if (Object.keys(updates).length) await update(ref(db), updates);
+    
+    /* 🆕 زامن الحقل القديم للمنتجات المُروَّجة */
+    const legacyUpdates = {};
+    idsToPromote.forEach(id => { legacyUpdates['products/' + id + '/landing/enabled'] = true; });
+    if (Object.keys(legacyUpdates).length) {
+      try { await update(ref(db), legacyUpdates); } catch (e) { console.warn('legacy sync:', e); }
+    }
+    
+    await set(ref(db, 'store/migrated_to_promoted_v2'), true);
+    console.log('✅ تم توحيد', idsToPromote.size, 'منتج + مزامنة الحقل القديم');
+  } catch (e) { console.warn('Migration v2:', e); }
+})();
 const productsRef = ref(db, "products");
 const ordersRef = ref(db, "whatsappOrders");
 const confirmedRef = ref(db, "confirmedOrders");
@@ -912,6 +1332,8 @@ let familiesList = [];
 let currentFamilyFilter = "الكل";
 let landingGlobal = { announcement:"", enablePixel:false, pixelId:"", enableTiktokPixel:false, tiktokPixelId:"", enableReviews:true, enableVisitors:true, policies:[] };
 let shippingZones = [];
+let showcaseProductIds = []; /* للتوافق فقط */
+let promotedMap = {}; /* 🆕 المصدر الوحيد لحالة الترويج */ /* 🆕 منتجات Showcase */
 let currentLandingImages = [];
 let currentLandingLogo = "";
 let currentFeatures = [];
@@ -925,12 +1347,11 @@ let booted = false;
 let currentOrdersFilter = "new";
 let ordersData = {}, confirmedData = {};
 let currentBundleTiers = [];
+let currentVariants = { enabled: false, colors: [], sizes: [], skus: {}, sizeChart: { enabled: false, headers: [], rows: [] } };
 const ORDERS_WARN_LIMIT = 1000;
 const CLEANUP_KEEP_DAYS = 30;
 
-/* ═══════════════════════════════════════════════════════════
-   🆕 حفظ واستعادة حالة التبويبات (localStorage)
-   ═══════════════════════════════════════════════════════════ */
+/* ═══ LocalStorage Keys ═══ */
 const LS_KEYS = {
   mainPage: 'admin_last_main_page',
   settingsTab: 'admin_last_settings_tab',
@@ -938,7 +1359,6 @@ const LS_KEYS = {
   invTab: 'admin_last_inv_tab',
   invPeriod: 'admin_last_inv_period'
 };
-
 function saveState(key, value) {
   try { if (value !== undefined && value !== null) localStorage.setItem(key, String(value)); } catch(e) {}
 }
@@ -946,6 +1366,7 @@ function loadState(key, fallback) {
   try { const v = localStorage.getItem(key); return v !== null ? v : fallback; } catch(e) { return fallback; }
 }
 
+/* ═══ Themes ═══ */
 const PAGE_THEMES = [
   { id: 'default', name: 'أخضر', bg: '#f8fafc', card: '#ffffff', line: '#a7f3d0', primary: '#0b6e4f', border: '#a7f3d0' },
   { id: 'white', name: 'أبيض', bg: '#ffffff', card: '#f8fafc', line: '#e2e8f0', primary: '#0b6e4f', border: '#e2e8f0' },
@@ -1005,9 +1426,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/* ═══ Permissions ═══ */
 const PERMS = {
-    owner: {
-      nav: { products: true, families: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
+  owner: {
+    nav: { products: true, families: true, orders: true, inventory: true, reviews: true, landing: true, settings: true },
     settings: { general: true, cover: true, features: true, landingSettings: true, policies: true, pixels: true, shipping: true, users: true, owner: true, advanced: true },
     product: { add: true, edit: true, delete: true, discount: true, promote: true, viewCost: true },
     orders: { viewNew: true, viewConfirmed: true, confirm: true, delete: true, deleteAll: true },
@@ -1034,9 +1456,7 @@ const PERMS = {
 
 let currentPerms = PERMS.seller;
 let currentRole = "seller";
-
 function setRole(role) { currentRole = role; currentPerms = PERMS[role] || PERMS.seller; }
-
 function can(path) {
   const parts = path.split('.');
   let obj = currentPerms;
@@ -1044,7 +1464,6 @@ function can(path) {
   return obj === true;
 }
 window.can = can;
-
 function canFeature(f) { return storeFeatures[f] !== false; }
 
 function applyPermissions() {
@@ -1082,8 +1501,9 @@ function applyPermissions() {
   if (fab) fab.style.display = can('product.add') ? 'flex' : 'none';
   if (currentRole === 'seller') {
     const activeNav = document.querySelector('.nav-btn.active');
-    if (activeNav && !can('nav.' + activeNav.dataset.page)) switchPage('products');
+    if (activeNav && !can('nav.' + activeNav.dataset.page)) switchPage('inventory');
   }
+  if (typeof window.__applySubTabPermissions === 'function') { window.__applySubTabPermissions(); }
 }
 
 function switchPage(pageName, skipSave) {
@@ -1101,9 +1521,8 @@ function switchPage(pageName, skipSave) {
   if (pageName === 'reviews') renderReviewsSection();
   if (pageName === 'landing') renderLandingList();
   if (pageName === 'products') applyFiltersAndRender();
-if (pageName === 'families') renderFamiliesPage();
+  if (pageName === 'families') renderFamiliesPage();
   if (pageName === 'settings') {
-    /* 🆕 استعادة آخر تبويب إعدادات مفتوح */
     const savedTab = loadState(LS_KEYS.settingsTab, 'general');
     const tabToOpen = Array.from(document.querySelectorAll('.settings-tab')).find(tab => {
       if (tab.dataset.stab !== savedTab) return false;
@@ -1146,7 +1565,6 @@ function curLbl() {
   if (lng === 'fr' && (c === 'دج' || c === 'DZD' || c === 'دينار')) return 'DA';
   return c;
 }
-
 function normalizeWhatsappNumber(raw) {
   if (!raw) return "";
   let num = String(raw).replace(/[^0-9]/g, "");
@@ -1157,22 +1575,271 @@ function normalizeWhatsappNumber(raw) {
   if (num.startsWith("213") && num.length > 12) num = num.substring(0, 12);
   return num;
 }
-
 function showToast(msg) {
   const t2 = $("toastMessage");
   t2.textContent = msg; t2.classList.add('show');
   clearTimeout(window._tt);
   window._tt = setTimeout(() => t2.classList.remove('show'), 2800);
 }
+window.showToast = showToast;
 function openModal(id) { $(id).classList.add('show'); }
 function closeModal(id) { $(id).classList.remove('show'); }
+/* ═══════════════════════════════════════════════════════
+   🛡️ تنبيه "تغييرات غير محفوظة" في نافذة المنتج
+   ═══════════════════════════════════════════════════════ */
+let __productFormDirty = false;
 
+function markProductDirty() { __productFormDirty = true; }
+function resetProductDirty() { __productFormDirty = false; }
+
+document.addEventListener('input', e => {
+  if (e.target.closest('#productModal')) markProductDirty();
+}, true);
+
+document.addEventListener('change', e => {
+  if (e.target.closest('#productModal')) markProductDirty();
+}, true);
+
+function attemptCloseProductModal() {
+  if (__productFormDirty) {
+    const lang = window.currentLang || 'ar';
+    const msg = (lang === 'fr')
+      ? "⚠️ Vous avez des modifications non enregistrées.\n\nVoulez-vous vraiment quitter sans sauvegarder ?"
+      : "⚠️ لديك تغييرات غير محفوظة.\n\nهل تريد الخروج بدون حفظ؟";
+    if (!confirm(msg)) return;
+  }
+  resetProductDirty();
+  closeModal('productModal');
+}
+
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-close="productModal"]')) {
+    e.preventDefault(); e.stopPropagation();
+    attemptCloseProductModal();
+    return;
+  }
+  if (e.target.id === 'productModal' && e.target.classList.contains('show')) {
+    e.preventDefault(); e.stopPropagation();
+    attemptCloseProductModal();
+  }
+}, true);
 document.addEventListener('click', e => {
   const t2 = e.target.closest('[data-close]');
   if (t2) closeModal(t2.dataset.close);
   if (e.target.classList && e.target.classList.contains('modal')) e.target.classList.remove('show');
 });
 
+/* ═══════════════════════════════════════════════════════════
+   🎨 مكتبة الألوان الاحترافية (78 لون مقسّمة 8 فئات)
+   ═══════════════════════════════════════════════════════════ */
+const COLOR_CATEGORIES = {
+  neutrals: { ar: 'محايد', fr: 'Neutres', icon: 'fa-circle-half-stroke' },
+  reds:     { ar: 'أحمر ووردي', fr: 'Rouges & Roses', icon: 'fa-heart' },
+  oranges:  { ar: 'برتقالي', fr: 'Oranges', icon: 'fa-sun' },
+  yellows:  { ar: 'أصفر وذهبي', fr: 'Jaunes & Ors', icon: 'fa-star' },
+  greens:   { ar: 'أخضر', fr: 'Verts', icon: 'fa-leaf' },
+  blues:    { ar: 'أزرق', fr: 'Bleus', icon: 'fa-droplet' },
+  purples:  { ar: 'بنفسجي', fr: 'Violets', icon: 'fa-crown' },
+  browns:   { ar: 'بني', fr: 'Marron', icon: 'fa-cube' }
+};
+
+const COLORS_LIBRARY = [
+  /* ───── محايد ───── */
+  { ar:'أبيض',         fr:'Blanc',           hex:'#FFFFFF', cat:'neutrals' },
+  { ar:'أوف وايت',     fr:'Blanc cassé',     hex:'#FAF9F6', cat:'neutrals' },
+  { ar:'كريمي',        fr:'Crème',           hex:'#FFFDD0', cat:'neutrals' },
+  { ar:'بيج',          fr:'Beige',           hex:'#F5F5DC', cat:'neutrals' },
+  { ar:'رمادي فاتح',   fr:'Gris clair',      hex:'#D3D3D3', cat:'neutrals' },
+  { ar:'رمادي',        fr:'Gris',            hex:'#808080', cat:'neutrals' },
+  { ar:'رمادي داكن',   fr:'Gris foncé',      hex:'#404040', cat:'neutrals' },
+  { ar:'فحمي',         fr:'Anthracite',      hex:'#36454F', cat:'neutrals' },
+  { ar:'أسود',         fr:'Noir',            hex:'#000000', cat:'neutrals' },
+  { ar:'فضي',          fr:'Argenté',         hex:'#C0C0C0', cat:'neutrals' },
+
+  /* ───── أحمر ووردي ───── */
+  { ar:'أحمر',         fr:'Rouge',           hex:'#FF0000', cat:'reds' },
+  { ar:'أحمر داكن',    fr:'Rouge foncé',     hex:'#8B0000', cat:'reds' },
+  { ar:'قرمزي',        fr:'Cramoisi',        hex:'#DC143C', cat:'reds' },
+  { ar:'أحمر طماطمي',  fr:'Rouge tomate',    hex:'#FF6347', cat:'reds' },
+  { ar:'عنابي',        fr:'Bordeaux',        hex:'#800020', cat:'reds' },
+  { ar:'خمري',         fr:'Vin',             hex:'#722F37', cat:'reds' },
+  { ar:'وردي',         fr:'Rose',            hex:'#FFC0CB', cat:'reds' },
+  { ar:'وردي فاتح',    fr:'Rose clair',      hex:'#FFB6C1', cat:'reds' },
+  { ar:'وردي فوشيا',   fr:'Fuchsia',         hex:'#FF1493', cat:'reds' },
+  { ar:'وردي داكن',    fr:'Rose foncé',      hex:'#C71585', cat:'reds' },
+  { ar:'مرجاني',       fr:'Corail',          hex:'#FF7F50', cat:'reds' },
+  { ar:'سلموني',       fr:'Saumon',          hex:'#FA8072', cat:'reds' },
+
+  /* ───── برتقالي ───── */
+  { ar:'برتقالي',          fr:'Orange',           hex:'#FFA500', cat:'oranges' },
+  { ar:'برتقالي داكن',     fr:'Orange foncé',     hex:'#FF8C00', cat:'oranges' },
+  { ar:'قرعي',             fr:'Citrouille',       hex:'#FF7518', cat:'oranges' },
+  { ar:'خوخي',             fr:'Pêche',            hex:'#FFDAB9', cat:'oranges' },
+  { ar:'نحاسي',            fr:'Cuivre',           hex:'#B87333', cat:'oranges' },
+  { ar:'برتقالي محروق',    fr:'Orange brûlé',     hex:'#CC5500', cat:'oranges' },
+  { ar:'كهرماني',          fr:'Ambre',            hex:'#FFBF00', cat:'oranges' },
+  { ar:'مرجاني برتقالي',   fr:'Corail orange',    hex:'#F88379', cat:'oranges' },
+
+  /* ───── أصفر وذهبي ───── */
+  { ar:'أصفر',         fr:'Jaune',           hex:'#FFFF00', cat:'yellows' },
+  { ar:'أصفر ذهبي',    fr:'Jaune doré',      hex:'#FFD700', cat:'yellows' },
+  { ar:'ذهبي',         fr:'Doré',            hex:'#D4AF37', cat:'yellows' },
+  { ar:'ذهبي وردي',    fr:'Or rose',         hex:'#B76E79', cat:'yellows' },
+  { ar:'خردلي',        fr:'Moutarde',        hex:'#FFDB58', cat:'yellows' },
+  { ar:'ليموني',       fr:'Citron',          hex:'#FFF44F', cat:'yellows' },
+  { ar:'عسلي',         fr:'Miel',            hex:'#F0C300', cat:'yellows' },
+  { ar:'أصفر فاتح',    fr:'Jaune clair',     hex:'#FFFFE0', cat:'yellows' },
+
+  /* ───── أخضر ───── */
+  { ar:'أخضر',          fr:'Vert',            hex:'#00FF00', cat:'greens' },
+  { ar:'أخضر داكن',     fr:'Vert foncé',      hex:'#006400', cat:'greens' },
+  { ar:'أخضر زيتي',     fr:'Vert olive',      hex:'#808000', cat:'greens' },
+  { ar:'أخضر زمردي',    fr:'Émeraude',        hex:'#50C878', cat:'greens' },
+  { ar:'أخضر نعناعي',   fr:'Menthe',          hex:'#98FF98', cat:'greens' },
+  { ar:'أخضر فاتح',     fr:'Vert clair',      hex:'#90EE90', cat:'greens' },
+  { ar:'أخضر بحري',     fr:'Vert marin',      hex:'#2E8B57', cat:'greens' },
+  { ar:'أخضر تفاحي',    fr:'Vert pomme',      hex:'#8DB600', cat:'greens' },
+  { ar:'أخضر عشبي',     fr:'Vert gazon',      hex:'#7CFC00', cat:'greens' },
+  { ar:'أخضر فيروزي',   fr:'Turquoise',       hex:'#40E0D0', cat:'greens' },
+  { ar:'أخضر باستيل',   fr:'Vert pastel',     hex:'#77DD77', cat:'greens' },
+  { ar:'أخضر كيوي',     fr:'Vert kiwi',       hex:'#8EE53F', cat:'greens' },
+
+  /* ───── أزرق ───── */
+  { ar:'أزرق',          fr:'Bleu',            hex:'#0000FF', cat:'blues' },
+  { ar:'أزرق داكن',     fr:'Bleu foncé',      hex:'#00008B', cat:'blues' },
+  { ar:'أزرق فاتح',     fr:'Bleu clair',      hex:'#ADD8E6', cat:'blues' },
+  { ar:'أزرق سماوي',    fr:'Bleu ciel',       hex:'#87CEEB', cat:'blues' },
+  { ar:'أزرق بحري',     fr:'Bleu marine',     hex:'#000080', cat:'blues' },
+  { ar:'كحلي',          fr:'Bleu nuit',       hex:'#191970', cat:'blues' },
+  { ar:'أزرق ملكي',     fr:'Bleu roi',        hex:'#4169E1', cat:'blues' },
+  { ar:'أزرق تركوازي',  fr:'Turquoise foncé', hex:'#00CED1', cat:'blues' },
+  { ar:'أزرق أزوري',    fr:'Azur',            hex:'#007FFF', cat:'blues' },
+  { ar:'أزرق بترولي',   fr:'Bleu pétrole',    hex:'#1F4E79', cat:'blues' },
+  { ar:'أزرق مخضر',     fr:'Bleu sarcelle',   hex:'#008B8B', cat:'blues' },
+  { ar:'أزرق باستيل',   fr:'Bleu pastel',     hex:'#A7C7E7', cat:'blues' },
+
+  /* ───── بنفسجي ───── */
+  { ar:'بنفسجي',         fr:'Violet',           hex:'#800080', cat:'purples' },
+  { ar:'بنفسجي فاتح',    fr:'Violet clair',     hex:'#D8BFD8', cat:'purples' },
+  { ar:'أرجواني',        fr:'Pourpre',          hex:'#9370DB', cat:'purples' },
+  { ar:'لافندر',         fr:'Lavande',          hex:'#E6E6FA', cat:'purples' },
+  { ar:'بنفسجي داكن',    fr:'Violet foncé',     hex:'#4B0082', cat:'purples' },
+  { ar:'موف',            fr:'Mauve',            hex:'#E0B0FF', cat:'purples' },
+  { ar:'بنفسجي فوشيا',   fr:'Fuchsia violet',   hex:'#EE82EE', cat:'purples' },
+  { ar:'بنفسجي غامق',    fr:'Violet profond',   hex:'#6A0DAD', cat:'purples' },
+
+  /* ───── بني ───── */
+  { ar:'بني',          fr:'Marron',          hex:'#A52A2A', cat:'browns' },
+  { ar:'بني داكن',     fr:'Marron foncé',    hex:'#654321', cat:'browns' },
+  { ar:'بني فاتح',     fr:'Marron clair',    hex:'#C19A6B', cat:'browns' },
+  { ar:'كرمل',         fr:'Caramel',         hex:'#C68E17', cat:'browns' },
+  { ar:'شوكولاتة',     fr:'Chocolat',        hex:'#7B3F00', cat:'browns' },
+  { ar:'قهوي',         fr:'Café',            hex:'#6F4E37', cat:'browns' },
+  { ar:'بيج غامق',     fr:'Taupe',           hex:'#A67B5B', cat:'browns' },
+  { ar:'بني محروق',    fr:'Marron brûlé',    hex:'#8B4513', cat:'browns' }
+];
+
+/* حالة منتقي الألوان */
+let colorPickerTarget = null; /* رقم صف اللون الجاري تعديله */
+
+/* تحديد إذا كان اللون فاتحاً (لضبط علامة ✓) */
+function isLightColor(hex) {
+  if (!hex) return false;
+  const h = hex.replace('#','');
+  if (h.length !== 6) return false;
+  const r = parseInt(h.substr(0,2),16);
+  const g = parseInt(h.substr(2,2),16);
+  const b = parseInt(h.substr(4,2),16);
+  const luminance = (0.299*r + 0.587*g + 0.114*b) / 255;
+  return luminance > 0.75;
+}
+
+/* فتح منتقي الألوان */
+function openColorPicker(index) {
+  colorPickerTarget = index;
+  const modal = $("colorPickerModal");
+  if (!modal) return;
+  renderColorPickerBody();
+  modal.classList.add('show');
+}
+
+/* إغلاق منتقي الألوان */
+function closeColorPicker() {
+  const modal = $("colorPickerModal");
+  if (modal) {
+    modal.classList.remove('show');
+    modal.style.display = 'none';
+    /* إزالة الـ style بعد لحظة حتى لا يتعارض مع الفتح القادم */
+    setTimeout(() => { modal.style.display = ''; }, 120);
+  }
+  colorPickerTarget = null;
+}
+
+/* عرض جسم منتقي الألوان */
+function renderColorPickerBody() {
+  const body = $("colorPickerBody");
+  if (!body || colorPickerTarget === null) return;
+  const current = currentVariants.colors[colorPickerTarget] || {};
+  const currentHex = (current.hex || '').toLowerCase();
+  const lang = window.currentLang || 'ar';
+
+  let html = '<div class="color-picker-groups">';
+  Object.entries(COLOR_CATEGORIES).forEach(([catKey, catInfo]) => {
+    const items = COLORS_LIBRARY.filter(c => c.cat === catKey);
+    if (!items.length) return;
+    const catLabel = lang === 'fr' ? catInfo.fr : catInfo.ar;
+    html += `<div class="color-group">
+      <div class="color-group-title">
+        <i class="fas ${catInfo.icon}"></i>
+        <span>${escapeHtml(catLabel)}</span>
+        <span class="color-group-count">${items.length}</span>
+      </div>
+      <div class="color-swatches-grid">`;
+    items.forEach(item => {
+      const isSelected = currentHex === item.hex.toLowerCase();
+      const light = isLightColor(item.hex) ? ' light-color' : '';
+      html += `<button type="button" class="color-swatch-btn${isSelected ? ' selected' : ''}${light}" style="background:${escapeHtml(item.hex)};" data-pick-color="${escapeHtml(item.hex)}" data-pick-ar="${escapeHtml(item.ar)}" data-pick-fr="${escapeHtml(item.fr)}" title="${escapeHtml(lang === 'fr' ? item.fr : item.ar)}"></button>`;
+    });
+    html += `</div></div>`;
+  });
+  html += '</div>';
+
+  body.innerHTML = html;
+
+  /* ربط أحداث الألوان الجاهزة */
+  body.querySelectorAll('[data-pick-color]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyColorChoice(btn.dataset.pickColor, btn.dataset.pickAr, btn.dataset.pickFr);
+    });
+  });
+}
+/* تطبيق اللون المختار على صف اللون */
+function applyColorChoice(hex, arName, frName, isCustom) {
+  if (colorPickerTarget === null) return;
+  const i = colorPickerTarget;
+  if (!currentVariants.colors[i]) return;
+  
+  currentVariants.colors[i].hex = hex;
+  
+  if (isCustom) {
+    /* لون مخصص: نضع الـ HEX في الاسم (يمكن للمستخدم تعديله يدوياً) */
+    currentVariants.colors[i].name = arName;
+    currentVariants.colors[i].nameFr = arName; /* لا ترجمة، يبقى كما هو */
+  } else {
+    /* لون من المكتبة: نضع الاسم بالعربية والفرنسية */
+    currentVariants.colors[i].name = arName;
+    currentVariants.colors[i].nameFr = frName;
+  }
+  
+  /* 🎯 إغلاق النافذة فوراً (قبل تحديث القوائم) */
+  closeColorPicker();
+  
+  /* ثم تحديث القوائم */
+  renderColorsList();
+  renderSkusTable();
+}
+
+/* ═══ FA Icons ═══ */
 const FA_ICONS = {
   "التوصيل":[{"i":"fa-truck","n":"شاحنة"},{"i":"fa-box","n":"صندوق"},{"i":"fa-boxes","n":"صناديق"},{"i":"fa-home","n":"منزل"},{"i":"fa-building","n":"مبنى"},{"i":"fa-map-marker-alt","n":"موقع"},{"i":"fa-rocket","n":"صاروخ"},{"i":"fa-plane","n":"طائرة"},{"i":"fa-clock","n":"ساعة"},{"i":"fa-route","n":"مسار"},{"i":"fa-warehouse","n":"مخزن"}],
   "الدفع":[{"i":"fa-money-bill","n":"ورقة"},{"i":"fa-money-bill-wave","n":"أموال"},{"i":"fa-credit-card","n":"بطاقة"},{"i":"fa-wallet","n":"محفظة"},{"i":"fa-coins","n":"عملات"},{"i":"fa-receipt","n":"إيصال"},{"i":"fa-file-invoice-dollar","n":"فاتورة"},{"i":"fa-piggy-bank","n":"حصالة"},{"i":"fa-percent","n":"نسبة"},{"i":"fa-tags","n":"تخفيض"},{"i":"fa-tag","n":"بطاقة"},{"i":"fa-gift","n":"هدية"}],
@@ -1183,6 +1850,7 @@ const FA_ICONS = {
 };
 let currentIconCategory = Object.keys(FA_ICONS)[0];
 
+/* ═══ Store Info ═══ */
 function applyStoreInfo() {
   const n = storeInfo.name || "متجري";
   document.title = "لوحة الإدارة | " + n;
@@ -1217,7 +1885,6 @@ onValue(ref(db, 'store/info'), snap => {
 onValue(ref(db, 'store/settings'), snap => {
   const d = snap.val() || {};
   imgbbKey = d.imgbbApiKey || BOOT.imgbbApiKey || "";
-  $("setImgbb").value = imgbbKey;
 });
 
 onValue(ref(db, 'store/features'), snap => {
@@ -1234,8 +1901,10 @@ onValue(ref(db, 'store/features'), snap => {
     serial: d.serial === true,
     activityLog: d.activityLog !== false,
     newProducts: d.newProducts !== false,
-    newProductsDays: Number(d.newProductsDays) || 30,
-    contactWhatsapp: d.contactWhatsapp === true,
+  newProductsDays: Number(d.newProductsDays) || 30,
+  variantsColors: d.variantsColors === true,
+  variantsSizes: d.variantsSizes === true,
+  contactWhatsapp: d.contactWhatsapp === true,
     shareButton: d.shareButton === true,
     socialLinks: d.socialLinks === true,
     contactWhatsappProduct: d.contactWhatsappProduct === true,
@@ -1253,17 +1922,26 @@ onValue(ref(db, 'store/features'), snap => {
   $("featReviews").checked = storeFeatures.reviews;
   $("featShipping").checked = storeFeatures.shipping;
   $("featActivityLog").checked = storeFeatures.activityLog;
-  
-  /* ✅ المنتجات الجديدة */
   const featNP = $("featNewProducts");
   if (featNP) featNP.checked = storeFeatures.newProducts;
   const npBox = $("newProductsDaysBox");
   if (npBox) npBox.style.display = storeFeatures.newProducts ? 'block' : 'none';
   const npDays = $("featNewProductsDays");
-  if (npDays) npDays.value = storeFeatures.newProductsDays;
-  
-  /* ✅ أزرار التواصل والمشاركة (Index) */
-  const featCW = $("featContactWhatsapp");
+if (npDays) npDays.value = storeFeatures.newProductsDays;
+
+/* 🎨 نظام الخيارات — ربط القيم بالـ checkboxes */
+/* 🎨 نظام الخيارات — ربط القيم بالـ checkboxes */
+const featVC = $("featVariantsColors");
+if (featVC) featVC.checked = storeFeatures.variantsColors;
+const featVS = $("featVariantsSizes");
+if (featVS) featVS.checked = storeFeatures.variantsSizes;
+const featSVI = $("featShowVariantsIndex");
+if (featSVI) featSVI.checked = d.showVariantsIndex !== false;
+const featSVS = $("featShowVariantsShowcase");
+if (featSVS) featSVS.checked = d.showVariantsShowcase !== false;
+const featSVP = $("featShowVariantsProduct");
+if (featSVP) featSVP.checked = d.showVariantsProduct !== false;
+const featCW = $("featContactWhatsapp");
   if (featCW) featCW.checked = storeFeatures.contactWhatsapp;
   const featSB = $("featShareButton");
   if (featSB) featSB.checked = storeFeatures.shareButton;
@@ -1273,8 +1951,6 @@ onValue(ref(db, 'store/features'), snap => {
     const mgr = $("socialLinksManager");
     if (mgr) mgr.style.display = storeFeatures.socialLinks ? 'block' : 'none';
   }
-
-  /* ✅ أزرار صفحة المنتج (Product) */
   const featCWP = $("featContactWhatsappProduct");
   if (featCWP) featCWP.checked = storeFeatures.contactWhatsappProduct;
   const featSBP = $("featShareButtonProduct");
@@ -1285,7 +1961,6 @@ onValue(ref(db, 'store/features'), snap => {
     const mgrP = $("socialLinksManagerProduct");
     if (mgrP) mgrP.style.display = storeFeatures.socialLinksProduct ? 'block' : 'none';
   }
-
   applyPermissions();
   if ($("page-inventory") && $("page-inventory").classList.contains('active')) renderInventoryPage();
   if ($("page-landing") && $("page-landing").classList.contains('active')) renderLandingList();
@@ -1296,15 +1971,12 @@ onValue(ref(db, 'store/features'), snap => {
 document.addEventListener('change', async function(e) {
   const inp = e.target;
   if (!inp || !inp.matches || !inp.matches('input[data-feat]')) return;
-
   const key = inp.dataset.feat;
   const value = inp.checked;
-
   if (!can('settings.features') && !can('settings.landingSettings')) {
     inp.checked = !value;
     return showToast(t('notAllowed'));
   }
-
   try {
     await update(ref(db, 'store/features'), { [key]: value });
     showToast(value ? "تم التفعيل" : "تم الإيقاف");
@@ -1371,8 +2043,16 @@ onValue(ref(db, 'store/landing'), snap => {
 onValue(ref(db, 'store/shipping_zones'), snap => {
   const d = snap.val();
   shippingZones = d ? Object.entries(d).map(([id, z]) => ({ id, ...z })) : [];
+  window.shippingZones = shippingZones;
   renderZonesList();
 });
+/* 🆕 Listener لـ Showcase — لدمج منتجاتها في قائمة الصفحات المُفعَّلة */
+onValue(ref(db, 'store/promoted'), snap => {
+  promotedMap = snap.val() || {};
+  window.__promotedMap = promotedMap;
+  renderLandingList();
+  applyFiltersAndRender();
+}, err => console.warn("promoted read:", err));
 
 onValue(familiesRef, snap => {
   const d = snap.val();
@@ -1421,6 +2101,7 @@ onValue(confirmedRef, snap => {
   if ($("page-inventory") && $("page-inventory").classList.contains('active')) renderInventoryPage();
 });
 
+/* ═══ Families ═══ */
 function populateFamilySelect() {
   const s = $("familySelect"); if (!s) return;
   const cur = s.value;
@@ -1431,15 +2112,13 @@ function populateFamilySelect() {
 
 function renderFamilyFilters() {
   const list = $("familyDropdownList"); if (!list) return;
-
   const searchEl = $("familySearchInput");
   const term = searchEl ? (searchEl.value || '').trim().toLowerCase() : '';
-  const filtered = familiesList.filter(f => !term || f.name.toLowerCase().includes(term));
-
-  if (!filtered.length) {
+  const filteredFams = familiesList.filter(f => !term || f.name.toLowerCase().includes(term));
+  if (!filteredFams.length) {
     list.innerHTML = `<div class="family-dropdown-empty">${term ? 'لا توجد نتائج' : 'لا توجد عائلات'}</div>`;
   } else {
-    list.innerHTML = filtered.map(({ name }) => {
+    list.innerHTML = filteredFams.map(({ name }) => {
       const count = Object.values(allProducts).filter(p => !p.hidden && p.family === name).length;
       const isActive = currentFamilyFilter === name;
       return `<div class="family-dropdown-item${isActive ? ' active' : ''}" data-family="${escapeHtml(name)}">
@@ -1449,34 +2128,26 @@ function renderFamilyFilters() {
       </div>`;
     }).join('');
   }
-
   list.querySelectorAll('.family-dropdown-item').forEach(el => {
     el.addEventListener('click', () => {
       filterByFamily(el.dataset.family);
       closeFamilyDropdown();
     });
   });
-
   updateFamilyCounts();
   renderFamiliesPage();
 }
 
 function openFamilyDropdown() {
-  const dd = $("familyDropdown");
-  const btn = $("familyDropdownBtn");
-  const panel = $("familyDropdownPanel");
+  const dd = $("familyDropdown"), btn = $("familyDropdownBtn"), panel = $("familyDropdownPanel");
   if (!dd || !btn || !panel) return;
-  
   const rect = btn.getBoundingClientRect();
-  
   panel.style.position = 'fixed';
   panel.style.top = (rect.bottom + 6) + 'px';
   panel.style.maxHeight = Math.max(200, window.innerHeight - rect.bottom - 20) + 'px';
-  
   const isRTL = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
   const panelWidth = Math.max(240, Math.min(340, window.innerWidth - 24));
   panel.style.width = panelWidth + 'px';
-  
   if (isRTL) {
     let rightPos = window.innerWidth - rect.right;
     if (rect.right - panelWidth < 12) rightPos = 12;
@@ -1485,20 +2156,13 @@ function openFamilyDropdown() {
   } else {
     let leftPos = rect.left;
     if (leftPos + panelWidth > window.innerWidth - 12) {
-      panel.style.left = 'auto';
-      panel.style.right = '12px';
-    } else {
-      panel.style.left = leftPos + 'px';
-      panel.style.right = 'auto';
-    }
+      panel.style.left = 'auto'; panel.style.right = '12px';
+    } else { panel.style.left = leftPos + 'px'; panel.style.right = 'auto'; }
   }
-  
   dd.classList.add('open');
 }
-
 function closeFamilyDropdown() {
-  const dd = $("familyDropdown");
-  if (dd) dd.classList.remove('open');
+  const dd = $("familyDropdown"); if (dd) dd.classList.remove('open');
 }
 
 function renderFamiliesPage() {
@@ -1519,19 +2183,14 @@ function renderFamiliesPage() {
         <p class="family-card-meta">${total} منتج${hiddenCount > 0 ? ` <span style="color:var(--muted);">(منها ${hiddenCount} مخفي)</span>` : ''}</p>
       </div>
       ${canManage ? `<div class="family-card-actions">
-        <button class="family-card-btn edit" data-fam-edit="${key}" title="تعديل">
-          <i class="fas fa-pen"></i> <span>تعديل</span>
-        </button>
-        <button class="family-card-btn delete" data-fam-del="${key}" title="حذف">
-          <i class="fas fa-trash"></i> <span>حذف</span>
-        </button>
+        <button class="family-card-btn edit" data-fam-edit="${key}" title="تعديل"><i class="fas fa-pen"></i> <span>تعديل</span></button>
+        <button class="family-card-btn delete" data-fam-del="${key}" title="حذف"><i class="fas fa-trash"></i> <span>حذف</span></button>
       </div>` : ''}
     </div>`;
   }).join('');
   grid.querySelectorAll('[data-fam-edit]').forEach(b => b.addEventListener('click', () => editFamilyName(b.dataset.famEdit, familiesList.find(f => f.key === b.dataset.famEdit)?.name || '')));
   grid.querySelectorAll('[data-fam-del]').forEach(b => b.addEventListener('click', () => deleteFamily(b.dataset.famDel, familiesList.find(f => f.key === b.dataset.famDel)?.name || '')));
 }
-
 
 async function editFamilyName(key, oldName) {
   if (!can('product.edit')) return showToast(t('notAllowed'));
@@ -1560,12 +2219,12 @@ function updateFamilyCounts() {
   const cntAll = $("countAll"); 
   if (cntAll) cntAll.textContent = Object.values(allProducts).filter(p => !p.hidden).length;
   const cntHidden = $("countHidden");
-if (cntHidden) cntHidden.textContent = Object.values(allProducts).filter(p => p.hidden === true).length;
-const cntNew = $("countNew");
-if (cntNew) {
-  const cutoff = Date.now() - ((storeFeatures.newProductsDays || 30) * 24 * 60 * 60 * 1000);
-  cntNew.textContent = Object.values(allProducts).filter(p => !p.hidden && p.createdAt && p.createdAt >= cutoff).length;
-}
+  if (cntHidden) cntHidden.textContent = Object.values(allProducts).filter(p => p.hidden === true).length;
+  const cntNew = $("countNew");
+  if (cntNew) {
+    const cutoff = Date.now() - ((storeFeatures.newProductsDays || 30) * 24 * 60 * 60 * 1000);
+    cntNew.textContent = Object.values(allProducts).filter(p => !p.hidden && p.createdAt && p.createdAt >= cutoff).length;
+  }
   const cntDiscounts = $("countDiscounts");
   if (cntDiscounts) {
     const now = Date.now();
@@ -1575,24 +2234,21 @@ if (cntNew) {
       return d && d.isActive && (d.unlimited || (d.endDate && new Date(d.endDate).getTime() > now));
     }).length;
   }
-  }
+}
 
 function filterByFamily(f) {
   if (f === "__hidden__" && !can('product.delete')) return showToast(t('notAllowed'));
   if (f === "__discounts__" && !can('product.discount')) return showToast(t('notAllowed'));
   currentFamilyFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.family === f));
-  
   const ddBtn = $("familyDropdownBtn");
   const ddLabel = $("familyDropdownLabel");
   const isFamily = f !== "الكل" && f !== "__new__" && f !== "__discounts__" && f !== "__hidden__";
   if (ddBtn) ddBtn.classList.toggle('active', isFamily);
   if (ddLabel) ddLabel.textContent = isFamily ? f : "العائلات";
-  
   document.querySelectorAll('.family-dropdown-item').forEach(el => {
     el.classList.toggle('active', el.dataset.family === f);
   });
-  
   const clr = $("clearFilterBtn");
   if (f === "الكل") clr.classList.remove('show');
   else {
@@ -1602,6 +2258,7 @@ function filterByFamily(f) {
   }
   applyFiltersAndRender();
 }
+
 document.addEventListener('click', e => {
   const dd = $("familyDropdown");
   if (!dd) return;
@@ -1619,9 +2276,7 @@ document.addEventListener('DOMContentLoaded', () => {
       else openFamilyDropdown();
     });
   }
-  if (searchEl) {
-    searchEl.addEventListener('input', () => renderFamilyFilters());
-  }
+  if (searchEl) searchEl.addEventListener('input', () => renderFamilyFilters());
 });
 
 $("addFamilyMainBtn").addEventListener('click', async () => {
@@ -1630,10 +2285,8 @@ $("addFamilyMainBtn").addEventListener('click', async () => {
   if (!n || !n.trim()) return;
   const name = n.trim();
   if (familiesList.some(f => f.name === name)) return showToast("العائلة موجودة مسبقاً");
-  try {
-    await set(push(familiesRef), name);
-    showToast(`تمت إضافة "${name}"`);
-  } catch (e) { showToast("خطأ: " + e.message); }
+  try { await set(push(familiesRef), name); showToast(`تمت إضافة "${name}"`); }
+  catch (e) { showToast("خطأ: " + e.message); }
 });
 
 $("filterAll").addEventListener('click', () => filterByFamily("الكل"));
@@ -1668,6 +2321,7 @@ function applyFiltersAndRender() {
 }
 $("searchInput").addEventListener('input', applyFiltersAndRender);
 
+/* ═══ Products Render ═══ */
 function renderProducts(page) {
   const c = $("productsContainer"); if (!c) return;
   c.innerHTML = '';
@@ -1684,7 +2338,7 @@ function renderProducts(page) {
   items.forEach(([id, p]) => {
     const d = allDiscounts[id];
     const onSale = canFeature('discounts') && d && d.isActive && (d.unlimited || (d.endDate && new Date(d.endDate).getTime() > Date.now()));
-    const promoted = canFeature('landing') && p.landing && p.landing.enabled === true;
+    const promoted = canFeature('landing') && promotedMap[id] === true;
     const hasBundle = canFeature('landing') && p.landing?.bundle?.enabled && Array.isArray(p.landing.bundle.tiers) && p.landing.bundle.tiers.length > 0;
     const hasFreeShipping = canFeature('landing') && p.landing?.bundle?.freeShipping?.enabled === true;
     const card = document.createElement('div');
@@ -1729,10 +2383,26 @@ function renderProducts(page) {
   c.querySelectorAll('.btn-delete').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); deleteProduct(b.dataset.id); }));
   c.querySelectorAll('.btn-show').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); toggleVisibility(b.dataset.showId); }));
   c.querySelectorAll('.btn-discount').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openDiscountModal(b.dataset.id); }));
-  c.querySelectorAll('.btn-promote').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); openLandingEditModal(b.dataset.id); }));
+  c.querySelectorAll('.btn-promote').forEach(b => b.addEventListener('click', e => {
+  e.stopPropagation();
+  const id = b.dataset.id;
+  if (!allProducts[id]) return;
+  openLandingEditModal(id);
+}));
   renderPagination(total);
 }
-
+async function setPromotion(productId, enabled) {
+  const path = 'store/promoted/' + productId;
+  if (enabled) {
+    await set(ref(db, path), true);
+  } else {
+    await remove(ref(db, path));
+  }
+  /* ✅ مزامنة مع الحقل القديم (يستخدمه السجل و product.html) */
+  try {
+    await update(ref(db, "products/" + productId + "/landing"), { enabled: enabled === true });
+  } catch (e) { /* الحقل قد لا يكون موجوداً، لا مشكلة */ }
+}
 function renderPagination(total) {
   const p = $("pagination"); p.innerHTML = '';
   if (total <= 1) return;
@@ -1752,9 +2422,402 @@ function renderPagination(total) {
   add('›', currentPage + 1, false, currentPage === total);
 }
 
+/* ═══ Product Modal ═══ */
+/* ═══════════════════════════════════════════════════════════
+   🎨 نظام الخيارات (Variants) — دوال الإدارة
+   ═══════════════════════════════════════════════════════════ */
+function genVariantId(prefix) {
+  return prefix + '_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
+}
+
+function renderColorsList() {
+  const c = $("colorsList");
+  if (!c) return;
+  if (!currentVariants.colors.length) {
+    c.innerHTML = `<div class="variants-empty" data-i18n="variantsNoColors">لم تُضف أي لون بعد</div>`;
+    return;
+  }
+  const lang = window.currentLang || 'ar';
+  
+  c.innerHTML = currentVariants.colors.map((col, i) => {
+    const displayName = (lang === 'fr') ? (col.nameFr || col.name || '') : (col.name || '');
+    
+    /* 🎨 توافق مع الألوان القديمة: imageUrl → images */
+    if (!Array.isArray(col.images)) {
+      col.images = col.imageUrl ? [col.imageUrl] : [];
+    }
+    
+    const imagesHtml = col.images.length ?
+      col.images.map((url, imgIdx) => `
+        <div class="color-image-thumb">
+          <img src="${escapeHtml(url)}" alt="" onerror="this.parentElement.style.display='none';">
+          <button type="button" class="rm-img" data-color-img-rm="${i}" data-img-idx="${imgIdx}" title="${lang === 'fr' ? 'Supprimer' : 'حذف'}">
+            <i class="fas fa-times"></i>
+          </button>
+          ${imgIdx === 0 ? `<div class="badge-first">${lang === 'fr' ? 'MAIN' : 'رئيسية'}</div>` : ''}
+        </div>
+      `).join('') :
+      `<div class="color-images-empty">${lang === 'fr' ? 'Aucune image pour cette couleur' : 'لا توجد صور لهذا اللون'}</div>`;
+    
+    const btnState = col.images.length ? '' : ' empty';
+    
+    return `
+    <div class="variant-color-wrapper" data-color-id="${col.id}">
+      <div class="variant-row">
+        <button type="button" class="variant-color-swatch" data-color-pick="${i}" title="${lang === 'fr' ? 'Choisir une couleur' : 'اختر اللون'}" style="background:${escapeHtml(col.hex || '#888888')};"></button>
+        <input type="text" class="variant-name-input" data-color-name="${i}" placeholder="${lang === 'fr' ? 'Nom de la couleur (ex: Noir)' : 'اسم اللون (مثال: أسود)'}" value="${escapeHtml(displayName)}" />
+        <button type="button" class="variant-images-btn${btnState}" data-color-imgs-info="${i}" title="${lang === 'fr' ? 'Images de cette couleur' : 'صور هذا اللون'}">
+          <i class="fas fa-images"></i>
+          <span>${col.images.length}</span>
+        </button>
+        <button type="button" class="variant-remove-btn" data-color-rm="${i}" title="${lang === 'fr' ? 'Supprimer la couleur' : 'حذف اللون'}">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+      <div class="color-images-grid">
+        ${imagesHtml}
+        <button type="button" class="color-image-add" data-color-img-add="${i}" title="${lang === 'fr' ? 'Ajouter des images' : 'إضافة صور'}">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  }).join('');
+  
+  /* 🎨 فتح منتقي اللون */
+  c.querySelectorAll('[data-color-pick]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.colorPick);
+      openColorPicker(i);
+    });
+  });
+  
+  /* ✏️ تعديل الاسم + تحديث الجدول فوراً */
+  c.querySelectorAll('[data-color-name]').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const i = parseInt(inp.dataset.colorName);
+      if (!currentVariants.colors[i]) return;
+      const val = e.target.value;
+      if (lang === 'fr') {
+        currentVariants.colors[i].nameFr = val;
+      } else {
+        currentVariants.colors[i].name = val;
+      }
+      const col = currentVariants.colors[i];
+      updateSkusColorHeader(i, col.name, col.nameFr);
+    });
+  });
+  
+  /* 🖼️ زر رفع الصور */
+  c.querySelectorAll('[data-color-img-add]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.colorImgAdd);
+      openColorImagesPicker(i);
+    });
+  });
+  
+  /* 🗑️ حذف صورة واحدة */
+  c.querySelectorAll('[data-color-img-rm]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.colorImgRm);
+      const imgIdx = parseInt(btn.dataset.imgIdx);
+      if (!currentVariants.colors[i] || !Array.isArray(currentVariants.colors[i].images)) return;
+      if (!confirm(lang === 'fr' ? 'Supprimer cette image ?' : 'حذف هذه الصورة؟')) return;
+      currentVariants.colors[i].images.splice(imgIdx, 1);
+      renderColorsList();
+    });
+  });
+  
+  /* 🗑️ حذف اللون كاملاً */
+  c.querySelectorAll('[data-color-rm]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.colorRm);
+      if (!confirm(lang === 'fr' ? 'Supprimer cette couleur ?' : 'حذف هذا اللون؟')) return;
+      const removedId = currentVariants.colors[i].id;
+      currentVariants.colors.splice(i, 1);
+      Object.keys(currentVariants.skus || {}).forEach(k => {
+        if (k === removedId || k.startsWith(removedId + '__')) delete currentVariants.skus[k];
+      });
+      renderColorsList();
+      renderSizesList();
+    });
+  });
+  
+  renderSkusTable();
+}
+
+function openColorImagesPicker(index) {
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = 'image/*';
+  inp.multiple = true;
+  inp.onchange = async () => {
+    const files = Array.from(inp.files || []);
+    if (!files.length) return;
+    if (!imgbbKey) { showToast("مفتاح ImgBB مفقود"); return; }
+    
+    if (!Array.isArray(currentVariants.colors[index].images)) {
+      currentVariants.colors[index].images = [];
+    }
+    
+    showToast(`جاري رفع ${files.length} صورة...`);
+    let successCount = 0;
+    for (const file of files) {
+      try {
+        const up = await uploadImage(file);
+        currentVariants.colors[index].images.push(up.url);
+        successCount++;
+        renderColorsList();
+      } catch (e) {
+        console.warn('color image upload failed:', e);
+      }
+    }
+    if (successCount > 0) {
+  markProductDirty();
+  showToast(`✅ تم رفع ${successCount} صورة`);
+    } else {
+      showToast("❌ فشل الرفع");
+    }
+  };
+  inp.click();
+}
+
+function renderSizesList() {
+  const c = $("sizesList");
+  if (!c) return;
+  if (!currentVariants.sizes.length) {
+    c.innerHTML = `<div class="variants-empty" data-i18n="variantsNoSizes">لم تُضف أي مقاس بعد</div>`;
+    return;
+  }
+  const lang = window.currentLang || 'ar';
+c.innerHTML = currentVariants.sizes.map((sz, i) => `
+  <div class="variant-row" data-size-id="${sz.id}">
+    <input type="text" class="variant-name-input" data-size-name="${i}" placeholder="${lang === 'fr' ? 'Nom de la taille (ex: S, 1L, 250ml)' : 'اسم المقاس (مثال: S أو 1L أو 250ml)'}" value="${escapeHtml(sz.name || '')}" />
+    <button type="button" class="variant-remove-btn" data-size-rm="${i}" title="${lang === 'fr' ? 'Supprimer' : 'حذف'}">
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
+`).join('');
+  
+  c.querySelectorAll('[data-size-name]').forEach(inp => {
+  inp.addEventListener('input', e => {
+    const i = parseInt(inp.dataset.sizeName);
+    currentVariants.sizes[i].name = e.target.value;
+    /* 🎯 تحديث الجدول فوراً */
+    updateSkusSizeHeader(i, e.target.value);
+  });
+});
+  c.querySelectorAll('[data-size-rm]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.sizeRm);
+      if (!confirm("حذف هذا المقاس؟")) return;
+      const removedId = currentVariants.sizes[i].id;
+      currentVariants.sizes.splice(i, 1);
+      /* حذف الـ SKUs المرتبطة بهذا المقاس */
+      Object.keys(currentVariants.skus || {}).forEach(k => {
+        if (k === removedId || k.endsWith('__' + removedId)) delete currentVariants.skus[k];
+      });
+      renderSizesList();
+      renderColorsList();
+    });
+  });
+  renderSkusTable();
+  }
+
+function addColor() {
+  currentVariants.colors.push({
+    id: genVariantId('c'),
+    name: '',
+    hex: '#888888',
+    imageUrl: null,
+    deleteUrl: null
+  });
+  renderColorsList();
+}
+
+function addSize() {
+  currentVariants.sizes.push({
+    id: genVariantId('s'),
+    name: ''
+  });
+  renderSizesList();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🎨 جدول الكميات (SKUs) — دوال العرض والحفظ
+   ═══════════════════════════════════════════════════════════ */
+
+/* توليد مفتاح التركيبة (لون + مقاس) */
+function getSkuKey(colorId, sizeId) {
+  if (colorId && sizeId) return colorId + '__' + sizeId;
+  if (colorId) return colorId;
+  if (sizeId) return sizeId;
+  return null;
+}
+
+/* عرض جدول الكميات */
+/* عرض جدول الكميات */
+function renderSkusTable() {
+  const c = $("skusTableContainer");
+  if (!c) return;
+  
+  const colors = currentVariants.colors || [];
+  const sizes = currentVariants.sizes || [];
+  const lang = window.currentLang || 'ar';
+  
+  const hasColors = colors.length > 0;
+  const hasSizes = sizes.length > 0;
+  
+  if (!hasColors && !hasSizes) {
+    c.innerHTML = `<div class="variants-empty">${t('variantsSkusEmpty') || 'أضف لوناً أو مقاساً واحداً على الأقل.'}</div>`;
+    return;
+  }
+  
+  const displayColors = hasColors ? colors : [{ id: null, name: '', nameFr: '', hex: '#888888' }];
+  const displaySizes = hasSizes ? sizes : [{ id: null, name: '' }];
+  
+  const noSizeLabel = lang === 'fr' ? 'Sans taille' : 'بدون مقاس';
+  const noColorLabel = lang === 'fr' ? 'Sans couleur' : 'بدون لون';
+  const defaultColorLabel = lang === 'fr' ? 'Couleur' : 'لون';
+  const qtyLabel = lang === 'fr' ? 'Qté' : 'كمية';
+  const priceLabel = lang === 'fr' ? 'Prix' : 'سعر';
+  
+  let html = '<div class="skus-rows">';
+  
+  displayColors.forEach((col, ci) => {
+    let filledCount = 0;
+    displaySizes.forEach(sz => {
+      const k = getSkuKey(col.id, sz.id);
+      if (!k) return;
+      const s = currentVariants.skus[k] || {};
+      const hasQ = s.stockQuantity !== undefined && s.stockQuantity !== null && s.stockQuantity !== '';
+      const hasP = s.price !== undefined && s.price !== null && s.price !== '';
+      if (hasQ || hasP) filledCount++;
+    });
+    
+    const colDisplayName = hasColors ?
+      ((lang === 'fr') ? (col.nameFr || col.name || '') : (col.name || '')) :
+      noColorLabel;
+    const colorHex = col.hex || '#888888';
+    const summaryText = filledCount > 0 ? `${filledCount}/${displaySizes.length}` : '—';
+    
+    html += `<div class="sku-row" data-color-idx="${ci}">
+      <div class="sku-row-header">
+        <span class="sku-color-dot" style="background:${escapeHtml(colorHex)}"></span>
+        <span class="sku-color-name">${escapeHtml(colDisplayName || defaultColorLabel)}</span>
+        <span class="sku-row-summary">${summaryText}</span>
+        <i class="fas fa-chevron-down sku-row-toggle"></i>
+      </div>
+      <div class="sku-row-body">`;
+    
+    displaySizes.forEach((sz, si) => {
+      const k = getSkuKey(col.id, sz.id);
+      if (!k) return;
+      const sku = currentVariants.skus[k] || {};
+      const qty = (sku.stockQuantity !== undefined && sku.stockQuantity !== null) ? sku.stockQuantity : '';
+      const price = (sku.price !== undefined && sku.price !== null) ? sku.price : '';
+      const sizeDisplayName = hasSizes ? (sz.name || '') : noSizeLabel;
+      
+      html += `<div class="sku-size-row">
+        <span class="sku-size-name">${escapeHtml(sizeDisplayName || '—')}</span>
+        <div class="sku-input-group">
+          <span class="sku-label-mini">${qtyLabel}</span>
+          <input type="number" class="sku-input" data-sku-qty="${escapeHtml(k)}" value="${qty}" placeholder="0" min="0" />
+          <span class="sku-label-mini">${priceLabel}</span>
+          <input type="number" class="sku-input sku-price" data-sku-price="${escapeHtml(k)}" value="${price}" placeholder="—" min="0" step="any" />
+        </div>
+      </div>`;
+    });
+    
+    html += `</div></div>`;
+  });
+  
+  html += '</div>';
+  c.innerHTML = html;
+  
+  c.querySelectorAll('.sku-row-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const row = header.parentElement;
+      row.classList.toggle('open');
+    });
+  });
+  
+  c.querySelectorAll('[data-sku-qty]').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const k = inp.dataset.skuQty;
+      if (!currentVariants.skus[k]) currentVariants.skus[k] = {};
+      const val = parseInt(e.target.value);
+      currentVariants.skus[k].stockQuantity = isNaN(val) ? 0 : val;
+      const row = inp.closest('.sku-row');
+      if (row) updateRowSummary(row);
+    });
+  });
+  
+  c.querySelectorAll('[data-sku-price]').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const k = inp.dataset.skuPrice;
+      if (!currentVariants.skus[k]) currentVariants.skus[k] = {};
+      const val = parseFloat(e.target.value);
+      currentVariants.skus[k].price = (isNaN(val) || val <= 0) ? null : val;
+      e.target.classList.toggle('has-value', !isNaN(val) && val > 0);
+      const row = inp.closest('.sku-row');
+      if (row) updateRowSummary(row);
+    });
+  });
+  
+  if (displayColors.length === 1) {
+    const firstRow = c.querySelector('.sku-row');
+    if (firstRow) firstRow.classList.add('open');
+  }
+}
+
+function updateRowSummary(rowEl) {
+  if (!rowEl) return;
+  const summaryEl = rowEl.querySelector('.sku-row-summary');
+  if (!summaryEl) return;
+  const sizeRows = rowEl.querySelectorAll('.sku-size-row');
+  let filled = 0;
+  sizeRows.forEach(r => {
+    const q = r.querySelector('[data-sku-qty]');
+    const p = r.querySelector('[data-sku-price]');
+    const hasQ = q && q.value !== '' && Number(q.value) > 0;
+    const hasP = p && p.value !== '' && Number(p.value) > 0;
+    if (hasQ || hasP) filled++;
+  });
+  summaryEl.textContent = filled > 0 ? `${filled}/${sizeRows.length}` : '—';
+}
+
+function updateSkusColorHeader(idx, name, nameFr) {
+  const rows = document.querySelectorAll('#skusTableContainer .sku-row');
+  const row = rows[idx];
+  if (!row) return;
+  const nameEl = row.querySelector('.sku-color-name');
+  if (!nameEl) return;
+  const lang = window.currentLang || 'ar';
+  const display = (lang === 'fr') ? (nameFr || name || '') : (name || '');
+  const fallback = (lang === 'fr') ? 'Couleur' : 'لون';
+  nameEl.textContent = display || fallback;
+}
+
+function updateSkusSizeHeader(idx, name) {
+  const rows = document.querySelectorAll('#skusTableContainer .sku-row');
+  rows.forEach(row => {
+    const sizeRows = row.querySelectorAll('.sku-size-row');
+    const target = sizeRows[idx];
+    if (!target) return;
+    const nameEl = target.querySelector('.sku-size-name');
+    if (nameEl) nameEl.textContent = name || '—';
+  });
+}
+
+$("addColorBtn").addEventListener('click', addColor);
+$("addSizeBtn").addEventListener('click', addSize);
+
+/* 🎨 تم حذف المفتاح — يظهر القسم تلقائياً حسب مفاتيح الإعدادات */
 $("addProductBtn").addEventListener('click', () => {
   if (!can('product.add')) return showToast(t('notAllowed'));
-  $("productForm").reset(); $("editId").value = "";
+  resetProductDirty();
+$("productForm").reset(); $("editId").value = "";
   $("formTitle").innerText = "إضافة منتج";
   $("toggleVisibilityBtn").style.display = "none";
   $("newFamilyInput").style.display = "none";
@@ -1762,16 +2825,30 @@ $("addProductBtn").addEventListener('click', () => {
   $("addFamilyBtn").style.background = "var(--primary)";
   const _ser = $("serial"); if (_ser) _ser.value = "";
   $("costPrice").value = ""; $("stockQuantity").value = "";
-  applyPermissions();
-  openModal("productModal");
+const _op = $("oldPrice"); if (_op) _op.value = "";
+/* 🎨 تفريغ حالة الخيارات */  currentVariants = { enabled: false, colors: [], sizes: [], skus: {}, sizeChart: { enabled: false, headers: [], rows: [] } };
+  const vSection = $("variantsSection");
+const vEditor = $("variantsEditor");
+if (vSection) vSection.style.display = storeFeatures.variantsColors || storeFeatures.variantsSizes ? 'block' : 'none';
+if (vEditor) vEditor.style.display = 'block';
+const colorsSec = $("colorsSection");
+const sizesSec = $("sizesSectionWrapper");
+if (colorsSec) colorsSec.style.display = storeFeatures.variantsColors ? 'block' : 'none';
+if (sizesSec) sizesSec.style.display = storeFeatures.variantsSizes ? 'block' : 'none';
+renderColorsList();
+renderSizesList();
+applyPermissions();
+openModal("productModal");
 });
 
 function editProduct(id) {
   if (!can('product.edit')) return showToast(t('notAllowed'));
   const p = allProducts[id]; if (!p) return;
-  $("editId").value = id;
+  resetProductDirty();
+$("editId").value = id;
   $("name").value = p.name || ""; $("price").value = p.price || "";
-  $("wholesalePrice").value = p.wholesalePrice || "";
+const _oldPr = $("oldPrice"); if (_oldPr) _oldPr.value = (p.oldPrice !== undefined && p.oldPrice !== null) ? p.oldPrice : "";
+$("wholesalePrice").value = p.wholesalePrice || "";
   $("quantityPerBox").value = p.quantityPerBox || "";
   const _ser = $("serial"); if (_ser) _ser.value = p.serial || "";
   $("costPrice").value = (p.costPrice !== undefined && p.costPrice !== null) ? p.costPrice : "";
@@ -1788,6 +2865,30 @@ function editProduct(id) {
     tb.textContent = p.hidden ? "إظهار" : "إخفاء";
     tb.onclick = () => toggleVisibility(id);
   } else { tb.style.display = "none"; }
+
+  /* 🎨 تحميل حالة الخيارات */
+  const v = p.variants || {};
+  currentVariants = {
+  enabled: v.enabled === true,
+  colors: Array.isArray(v.colors) ? v.colors.map(c => {
+    const imgs = Array.isArray(c.images) ? [...c.images] : (c.imageUrl ? [c.imageUrl] : []);
+    return { ...c, images: imgs };
+  }) : [],
+  sizes: Array.isArray(v.sizes) ? v.sizes.map(s2 => ({ ...s2 })) : [],
+  skus: (v.skus && typeof v.skus === 'object') ? { ...v.skus } : {},
+  sizeChart: (v.sizeChart && typeof v.sizeChart === 'object') ? { ...v.sizeChart } : { enabled: false, headers: [], rows: [] }
+};
+  const vSection = $("variantsSection");
+const vEditor = $("variantsEditor");
+if (vSection) vSection.style.display = storeFeatures.variantsColors || storeFeatures.variantsSizes ? 'block' : 'none';
+if (vEditor) vEditor.style.display = 'block';
+const colorsSec = $("colorsSection");
+const sizesSec = $("sizesSectionWrapper");
+if (colorsSec) colorsSec.style.display = storeFeatures.variantsColors ? 'block' : 'none';
+if (sizesSec) sizesSec.style.display = storeFeatures.variantsSizes ? 'block' : 'none';
+renderColorsList();
+renderSizesList();
+
   applyPermissions();
   openModal("productModal");
 }
@@ -1800,6 +2901,7 @@ async function deleteProduct(id) {
   await remove(ref(db, "discounts/" + id));
   await remove(ref(db, "products/" + id));
   await remove(ref(db, "reviews/" + id));
+  await remove(ref(db, "store/promoted/" + id));
   showToast("تم الحذف");
 }
 
@@ -1841,6 +2943,10 @@ async function uploadImage(file) {
 
 $("productForm").addEventListener('submit', async e => {
   e.preventDefault();
+  const _nameCheck = $("name").value.trim();
+const _priceCheck = parseFloat($("price").value);
+if (!_nameCheck || _nameCheck.length < 2) { showToast("⚠️ اسم المنتج مطلوب (حرفان على الأقل)"); return; }
+if (!_priceCheck || _priceCheck <= 0) { showToast("⚠️ سعر صحيح مطلوب"); return; }
   if (!can('product.add') && !can('product.edit')) return showToast(t('notAllowed'));
   const id = $("editId").value;
   const name = $("name").value.trim();
@@ -1859,30 +2965,85 @@ $("productForm").addEventListener('submit', async e => {
       nImg = up.url; nDel = up.deleteUrl;
     }
     const saveStock = canFeature('inventory') && can('product.viewCost');
-    const saveCost = canFeature('costPrice') && can('product.viewCost');
+const saveCost = canFeature('costPrice') && can('product.viewCost');
+const oldPriceVal = parseFloat($("oldPrice").value) || 0;
     const costPrice = saveCost ? (parseFloat($("costPrice").value) || 0) : null;
     const stockQuantity = saveStock ? (parseInt($("stockQuantity").value) || 0) : null;
     const trackStock = saveStock;
     const serial = canFeature('serial') ? $("serial").value.trim() : (ex?.serial || null);
     const data = { 
-      name, price, 
-      wholesalePrice: canFeature('wholesale') && wh > 0 ? wh : null, 
-      quantityPerBox: canFeature('quantityPerBox') && qb > 0 ? qb : null, 
-      family: fam || "", imageUrl: nImg, deleteUrl: nDel, hidden: ex?.hidden || false,
-      trackStock, costPrice, stockQuantity,
-      serial: serial || null
-    };
+  name, price, 
+  oldPrice: oldPriceVal > 0 ? oldPriceVal : null,
+  wholesalePrice: canFeature('wholesale') && wh > 0 ? wh : null, 
+  quantityPerBox: canFeature('quantityPerBox') && qb > 0 ? qb : null, 
+  family: fam || "", imageUrl: nImg, deleteUrl: nDel, hidden: ex?.hidden || false,
+  trackStock, costPrice, stockQuantity,
+  serial: serial || null
+};
+    
     if (ex?.landing) data.landing = ex.landing;
+
+/* 🎨 حفظ الخيارات (Variants) */
+if (storeFeatures.variantsColors || storeFeatures.variantsSizes) {
+  const cleanColors = currentVariants.colors
+  .filter(c => (c.name || c.nameFr || '').trim())
+  .map(c => {
+    const imgs = Array.isArray(c.images) ?
+      c.images.filter(u => u && typeof u === 'string') :
+      (c.imageUrl ? [c.imageUrl] : []);
+    return {
+      id: c.id,
+      name: (c.name || '').trim(),
+      nameFr: (c.nameFr || '').trim(),
+      hex: c.hex || '#888888',
+      images: imgs,
+      imageUrl: imgs[0] || null
+    };
+  });
+  const cleanSizes = currentVariants.sizes
+    .filter(s => (s.name || '').trim())
+    .map(s => ({ id: s.id, name: (s.name || '').trim() }));
+  
+  /* ✅ تنظيف الـ SKUs: الاحتفاظ فقط بالتركيبات الصحيحة */
+  const validColorIds = new Set(cleanColors.map(c => c.id));
+  const validSizeIds = new Set(cleanSizes.map(s => s.id));
+  const cleanSkus = {};
+  Object.entries(currentVariants.skus || {}).forEach(([key, val]) => {
+    if (!val) return;
+    const parts = key.split('__');
+    const cid = parts[0];
+    const sid = parts[1] || '';
+    if (cid && sid) {
+      if (validColorIds.has(cid) && validSizeIds.has(sid)) cleanSkus[key] = val;
+    } else if (cid) {
+      if (validColorIds.has(cid)) cleanSkus[key] = val;
+    } else if (sid) {
+      if (validSizeIds.has(sid)) cleanSkus[key] = val;
+    }
+  });
+  
+  data.variants = {
+    enabled: currentVariants.enabled === true && (cleanColors.length > 0 || cleanSizes.length > 0),
+    colors: cleanColors,
+    sizes: cleanSizes,
+    skus: cleanSkus,
+    sizeChart: currentVariants.sizeChart || { enabled: false, headers: [], rows: [] }
+  };
+}
+
 if (id) {
   await update(ref(db, "products/" + id), data);
 } else {
   data.createdAt = Date.now();
   await push(productsRef, data);
 }
-    showToast("تم الحفظ"); $("productForm").reset();
+showToast("تم الحفظ");
+resetProductDirty();
+$("productForm").reset();
   } catch (err) { showToast("خطأ: " + err.message); }
 });
 
+/* ═══ Discount ═══ */
 function openDiscountModal(id) {
   if (!can('product.discount') || !canFeature('discounts')) return showToast(t('notAllowed'));
   const p = allProducts[id]; if (!p) return;
@@ -1927,16 +3088,27 @@ $("removeDiscountBtn").addEventListener('click', async () => {
   if (id && confirm("إزالة التخفيض؟")) { await remove(ref(db, `discounts/${id}`)); showToast("تمت الإزالة"); closeModal("discountModal"); }
 });
 
+/* ═══ Landing ═══ */
 function renderLandingList() {
   if (!can('landing.view') || !canFeature('landing')) return;
   const c = $("landingListContainer"); if (!c) return;
-  const items = Object.entries(allProducts).filter(([_, p]) => p.landing && p.landing.enabled === true);
+  
+  /* 🆕 دمج: منتجات Landing المُفعَّلة + منتجات Showcase */
+  /* 🆕 المصدر الوحيد: store/promoted */
+const allIds = Object.keys(promotedMap).filter(id => promotedMap[id] === true && allProducts[id] && !allProducts[id].hidden);
+  const items = allIds
+    .map(id => [id, allProducts[id]])
+    .filter(([_, p]) => p);  /* استثناء المنتجات المحذوفة */
+  
   if (!items.length) {
     c.innerHTML = `<div class="no-data" style="padding:40px 20px;"><i class="fas fa-rocket" style="color:#c4b5fd;"></i><h3 style="color:#7c3aed;font-weight:700;margin:8px 0;font-size:15px;">${t('noLandingPages')}</h3><p style="font-size:13px;">${t('goToProducts')}</p></div>`;
     return;
   }
   const cur = curLbl();
   c.innerHTML = items.map(([id, p]) => {
+    /* 🆕 معرفة المصدر */
+    const hasLanding = promotedMap[id] === true;
+    const inShowcase = hasLanding; /* موحّد الآن */
     const img = p.landing?.logo || p.imageUrl || 'https://via.placeholder.com/64';
     const customPrice = p.landing?.price && Number(p.landing.price) > 0 ? `<span style="color:#0891b2;">${fmt(p.landing.price)} ${cur}</span>` : '';
     const hasBundle = p.landing?.bundle?.enabled && Array.isArray(p.landing.bundle.tiers) && p.landing.bundle.tiers.length > 0;
@@ -1953,7 +3125,15 @@ function renderLandingList() {
           <span><i class="fas fa-coins"></i> ${fmt(p.price)} ${cur}</span>
           ${customPrice}${bundleTag}${freeTag}
         </div>
-        <span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-top:6px;background:#d1fae5;color:#065f46;"><i class="fas fa-check-circle"></i> نشطة</span>
+        ${hasLanding
+? `<span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-top:6px;background:#d1fae5;color:#065f46;"><i class="fas fa-check-circle"></i> نشطة</span>`
+: ''}
+${inShowcase
+? `<span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-top:6px;background:#ede9fe;color:#7c3aed;margin-inline-start:4px;"><i class="fas fa-window-maximize"></i> في Showcase</span>`
+: ''}
+${hasLanding && inShowcase
+? `<span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;margin-top:6px;background:#fef3c7;color:#92400e;margin-inline-start:4px;"><i class="fas fa-star"></i> مُفعَّل بالكامل</span>`
+: ''}
       </div>
       <div class="actions">
         <button class="landing-edit-btn" data-edit="${id}"><i class="fas fa-pen"></i> ${t('edit')}</button>
@@ -1993,8 +3173,8 @@ function renderBundleTiers() {
   const sorted = [...currentBundleTiers].sort((a, b) => (a.qty || 0) - (b.qty || 0));
   c.innerHTML = sorted.map((tier, i) => {
     const perUnit = (tier.totalPrice && tier.qty) ? Math.round(tier.totalPrice / tier.qty) : 0;
-const isFR = (window.currentLang === 'fr') || (localStorage.getItem('store_lang') === 'fr');
-const unitLbl = isFR ? '/pcs' : '/قطعة';
+    const isFR = (window.currentLang === 'fr') || (localStorage.getItem('store_lang') === 'fr');
+    const unitLbl = isFR ? '/pcs' : '/قطعة';
     return `<div class="bundle-tier-row" data-tier-idx="${i}"><div class="tier-index">${i + 1}</div><div class="tier-field"><label>عدد القطع</label><input type="number" min="2" value="${tier.qty || 2}" data-tier-qty="${i}" placeholder="2" /></div><div class="tier-field"><label>إجمالي الحزمة</label><input type="number" min="0" value="${tier.totalPrice || ''}" data-tier-price="${i}" placeholder="20000" /><div class="tier-unit-price">${perUnit > 0 ? '≈ ' + fmt(perUnit) + unitLbl : ''}</div></div><button type="button" class="rm-btn" data-tier-rm="${i}"><i class="fas fa-trash"></i></button></div>`;
   }).join('');
   c.querySelectorAll('[data-tier-qty]').forEach(inp => inp.addEventListener('input', e => {
@@ -2023,17 +3203,15 @@ function renderBundlePreview() {
   const freeMin = parseInt($("landingFreeShippingMinQty").value) || 0;
   const rawLabel = ($("landingFreeShippingLabel").value || '').trim();
   const LANG = localStorage.getItem('store_lang') || window.currentLang || 'ar';
-const isFR = LANG === 'fr';
+  const isFR = LANG === 'fr';
   const isDefault = !rawLabel || rawLabel === 'التوصيل علينا' || rawLabel === 'التوصيل مجاني' || rawLabel === 'Livraison offerte';
   const freeLabel = isDefault ? (isFR ? 'Livraison offerte' : 'التوصيل علينا') : rawLabel;
   if (!hasTiers && !(freeEnabled && freeMin > 0)) { box.style.display = "none"; return; }
   box.style.display = "block";
-  
   const lblPieces = isFR ? 'pièces' : 'قطع';
   const lblPerUnit = isFR ? '/pcs' : '/قطعة';
   const lblShippingFrom = isFR ? 'Livraison offerte à partir de' : 'التوصيل مجاني عند شراء';
   const lblShippingOrMore = isFR ? 'pièces ou plus' : 'قطع أو أكثر';
-  
   let html = '';
   const validTiers = currentBundleTiers.filter(t => t.qty >= 2 && t.totalPrice > 0).sort((a, b) => a.qty - b.qty);
   if (validTiers.length) {
@@ -2066,7 +3244,8 @@ function openLandingEditModal(id) {
   $("landingEditProductId").value = id;
   $("landingEditProductName").textContent = p.name;
   const l = p.landing || {};
-  $("landingEnabled").checked = l.enabled === true;
+/* 🆕 اقرأ من المصدر الموحّد */
+$("landingEnabled").checked = promotedMap[id] === true;
   renderThemePicker(l.theme || 'default');
   $("landingPageName").value = l.pageName || "";
   $("landingProductName").value = l.productName || "";
@@ -2261,15 +3440,20 @@ $("saveLandingBtn").addEventListener('click', async () => {
     bundleData = { enabled: true, tiers: [], maxQty: null, freeShipping: { enabled: true, minQty: parseInt($("landingFreeShippingMinQty").value) || 0, label: ($("landingFreeShippingLabel").value || '').trim() || "التوصيل علينا" } };
   }
   const landingData = { enabled, theme, pageName: pageName || null, productName: productName || null, logo: currentLandingLogo || null, price: (!isNaN(customPrice) && customPrice > 0) ? customPrice : null, announcement: announcement || null, description: description || null, images: images, features: features.length ? features : null, pixelId: pixelId || null, tiktokPixelId: tiktokPixelId || null, showReviews, showVisitors, bundle: bundleData, updatedAt: Date.now() };
-  try { await update(ref(db, "products/" + id), { landing: landingData }); showToast("تم الحفظ"); closeModal("landingEditModal"); }
+  try {
+  await update(ref(db, "products/" + id), { landing: landingData });
+  
+/* 🆕 كتابة حالة الترويج على المسار الموحّد */
+await setPromotion(id, enabled);
+  
+  showToast("تم الحفظ");
+  closeModal("landingEditModal");
+}
   catch (e) { showToast("خطأ: " + e.message); }
 });
 
 async function autoSaveLandingSettings() {
-  if (!can('settings.landingSettings')) {
-    showToast(t('notAllowed'));
-    return false;
-  }
+  if (!can('settings.landingSettings')) { showToast(t('notAllowed')); return false; }
   try {
     const snap = await get(ref(db, 'store/landing'));
     const existing = snap.val() || {};
@@ -2287,26 +3471,17 @@ async function autoSaveLandingSettings() {
     await set(ref(db, "store/landing"), data);
     showToast("تم الحفظ");
     return true;
-  } catch (e) {
-    console.error('autoSaveLandingSettings:', e);
-    showToast("فشل الحفظ");
-    return false;
-  }
+  } catch (e) { console.error('autoSaveLandingSettings:', e); showToast("فشل الحفظ"); return false; }
 }
-
 ["landingEnableReviews", "landingEnableVisitors"].forEach(id => {
   const el = $(id);
   if (!el) return;
   el.addEventListener('change', autoSaveLandingSettings);
 });
-
 const annInput = $("landingAnnouncement");
 if (annInput) {
   let announceTimer = null;
-  annInput.addEventListener('input', () => {
-    clearTimeout(announceTimer);
-    announceTimer = setTimeout(autoSaveLandingSettings, 1500);
-  });
+  annInput.addEventListener('input', () => { clearTimeout(announceTimer); announceTimer = setTimeout(autoSaveLandingSettings, 1500); });
   annInput.addEventListener('blur', autoSaveLandingSettings);
 }
 
@@ -2325,6 +3500,7 @@ $("savePoliciesBtn").addEventListener('click', async () => {
   try { await set(ref(db, "store/landing"), data); showToast("تم الحفظ"); } catch (e) { showToast("فشل الحفظ"); }
 });
 
+/* ═══ Shipping ═══ */
 const WILAYAS = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تيميمون","برج باجي مختار","أولاد جلال","بني عباس","إن صالح","إن قزام","تقرت","جانت","المغير","المنيعة"];
 
 function renderZonesList() {
@@ -2368,38 +3544,32 @@ async function deleteZone(id) {
   try { await remove(ref(db, "store/shipping_zones/" + id)); showToast("تم الحذف"); } catch (e) { showToast("فشل الحذف"); }
 }
 
+/* ═══ Orders ═══ */
 function updateOrdersCounts() {
   const newCount = Object.keys(ordersData).length;
   const confCount = Object.keys(confirmedData).length;
-
   const nc = $("newCount"), cc = $("confirmedCount");
   if (nc) nc.textContent = newCount;
   if (cc) cc.textContent = confCount;
-
   const badge = $("ordersBadge");
   if (badge) {
     if (newCount > 0) { badge.style.display = "inline-block"; badge.textContent = newCount; }
     else badge.style.display = "none";
   }
-
   const banner = document.getElementById('ordersWarningBanner');
   const bannerCount = document.getElementById('ordersWarningCount');
   if (banner) {
     if (confCount >= ORDERS_WARN_LIMIT && currentOrdersFilter === 'confirmed') {
       banner.style.display = 'flex';
       if (bannerCount) bannerCount.textContent = confCount;
-    } else {
-      banner.style.display = 'none';
-    }
+    } else { banner.style.display = 'none'; }
   }
-
   const delBtn = $("deleteAllConfirmedBtn");
   if (delBtn) {
     const shouldShow = currentOrdersFilter === 'confirmed' && can('orders.deleteAll') && confCount > 0;
     delBtn.style.display = shouldShow ? 'inline-flex' : 'none';
   }
 }
-
 
 function renderOrdersList() {
   const c = $("ordersListContainer"); if (!c) return;
@@ -2419,62 +3589,46 @@ function renderOrdersList() {
     const freeTag = hasFreeShip ? `<span style="background:#059669;color:#fff;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block;margin-inline-start:6px;">توصيل مجاني</span>` : '';
     const ts = isNew ? o.timestamp : (o.confirmedAt || o.timestamp);
     const extraInfo = !isNew ? `<div style="font-size:11px;color:var(--muted);margin-top:4px;"><i class="fas fa-check-circle"></i> ${escapeHtml(o.confirmedBy || 'Admin')}</div>` : '';
-
     const actionBtnHtml = isNew
       ? `<button class="order-confirm-btn" data-confirm-key="${key}" type="button"><i class="fas fa-check-circle"></i> ${t('actionConfirmPrint') || 'تأكيد وطباعة'}</button>`
       : `<button class="order-print-btn" data-print-key="${key}" type="button"><i class="fas fa-print"></i> ${t('actionPrint') || 'طباعة'}</button>`;
-
     card.innerHTML = `<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;"><div><span style="font-weight:600;">${escapeHtml(o.customerName || '')}</span> ${srcBadge}${bundleTag}${freeTag}</div><span style="color:${isNew ? '#059669' : '#d97706'};font-weight:700;">${fmt(o.totalPrice)} ${cur}</span></div><div style="font-size:13px;color:var(--text-2);margin-top:6px;"><span><i class="fas fa-phone"></i> ${escapeHtml(o.phone || '')}</span> | <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(shortAddr)}</span></div><div style="font-size:11px;color:var(--muted);margin-top:4px;"><i class="far fa-clock"></i> ${formatDate(ts)}</div>${extraInfo}<div class="order-card-actions">${actionBtnHtml}</div>`;
-
     card.addEventListener('click', (e) => {
       if (e.target.closest('.order-print-btn') || e.target.closest('.order-confirm-btn')) return;
       openOrderDetailModal(o, isNew ? 'whatsapp' : 'confirmed', key);
     });
-
     const printBtn = card.querySelector('.order-print-btn');
     if (printBtn) {
       printBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         const printPayload = { key: key, order: o, type: 'confirmed' };
-        sessionStorage.setItem('printOrder', JSON.stringify(printPayload));
-        window.open('print_admin.html', '_blank');
+        localStorage.setItem('printOrder', JSON.stringify(printPayload));
+window.open('print_admin.html', '_blank');
+});
+}
+    const confirmBtn = card.querySelector('.order-confirm-btn');
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (!can('orders.confirm')) return showToast(t('notAllowed'));
+        showToast('جاري التأكيد...');
+        try {
+          const confirmed = await confirmOrderOnly(key, o);
+          const printPayload = { key: key, order: confirmed, type: 'confirmed' };
+          localStorage.setItem('printOrder', JSON.stringify(printPayload));
+window.open('print_admin.html', '_blank');
+        } catch (err) {
+          console.error('Confirm error:', err);
+          showToast('خطأ: ' + err.message);
+        }
       });
     }
-
-    const confirmBtn = card.querySelector('.order-confirm-btn');
-if (confirmBtn) {
-  confirmBtn.addEventListener('click', async (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (!can('orders.confirm')) return showToast(t('notAllowed'));
-    
-    showToast('جاري التأكيد...');
-    
-    try {
-      const confirmed = await confirmOrderOnly(key, o);
-      
-      const printPayload = {
-        key: key,
-        order: confirmed,
-        type: 'confirmed'
-      };
-      sessionStorage.setItem('printOrder', JSON.stringify(printPayload));
-      
-      window.open('print_admin.html', '_blank');
-    } catch (err) {
-      console.error('Confirm error:', err);
-      showToast('خطأ: ' + err.message);
-    }
-  });
-}
-
     c.appendChild(card);
   });
 }
 
-    
-    
-    document.querySelectorAll('.orders-chip').forEach(chip => {
+document.querySelectorAll('.orders-chip').forEach(chip => {
   chip.addEventListener('click', () => {
     if (chip.parentElement.id === 'invPeriodChips') return;
     const filter = chip.dataset.ofilter;
@@ -2488,6 +3642,7 @@ if (confirmBtn) {
   });
 });
 
+/* ═══ Inventory ═══ */
 let invPeriod = 'today';
 let invSearchTerm = '';
 let currentInvDetail = { type: null, title: '', rows: [], totalLabel: '', totalValue: '' };
@@ -2522,27 +3677,16 @@ document.addEventListener('input', e => {
 });
 
 document.addEventListener('click', e => {
-  if (e.target.closest('#printInvTableBtn')) {
-    printInventoryTableBtn();
-  }
+  if (e.target.closest('#printInvTableBtn')) printInventoryTableBtn();
 });
 
 function printInventoryTableBtn() {
   const canSeeCost = can('product.viewCost') && canFeature('costPrice');
   const lowStockAlert = Number(storeInfo.lowStockAlert) || 5;
-
   let list = Object.entries(allProducts).filter(([_, p]) => p.trackStock === true);
-  if (invSearchTerm) {
-    list = list.filter(([_, p]) => (p.name || '').toLowerCase().includes(invSearchTerm));
-  }
-
-  if (!list.length) {
-    showToast('لا توجد بيانات للطباعة');
-    return;
-  }
-
+  if (invSearchTerm) list = list.filter(([_, p]) => (p.name || '').toLowerCase().includes(invSearchTerm));
+  if (!list.length) { showToast('لا توجد بيانات للطباعة'); return; }
   list.sort((a, b) => (Number(a[1].stockQuantity) || 0) - (Number(b[1].stockQuantity) || 0));
-
   const rows = list.map(([id, p]) => {
     const q = Number(p.stockQuantity) || 0;
     const cp = Number(p.costPrice) || 0;
@@ -2551,20 +3695,12 @@ function printInventoryTableBtn() {
     const status = q === 0 ? 'نفد' : (q <= lowStockAlert ? 'منخفض' : 'متوفر');
     return [p.name, q, lowStockAlert, status, cp, sp, margin];
   });
-
   const totalQty = list.reduce((s, [_, p]) => s + (Number(p.stockQuantity) || 0), 0);
-
   sessionStorage.setItem('printInventory', JSON.stringify({
-    type: 'stock_full',
-    title: 'حالة المخزون',
-    periodLabel: getPeriodLabel(),
-    rows: rows,
-    total: 'إجمالي القطع',
-    totalValue: fmt(totalQty),
-    canSeeCost: canSeeCost,
-    lowStockAlert: lowStockAlert
+    type: 'stock_full', title: 'حالة المخزون', periodLabel: getPeriodLabel(),
+    rows: rows, total: 'إجمالي القطع', totalValue: fmt(totalQty),
+    canSeeCost: canSeeCost, lowStockAlert: lowStockAlert
   }));
-
   window.open('print-inventory.html', '_blank');
 }
 
@@ -2578,12 +3714,10 @@ function getPeriodRange(period) {
   else return { start: 0, end: Infinity };
   return { start: start.getTime(), end: now.getTime() + 86400000 };
 }
-
 function getPeriodLabel() {
   const labels = { today:'اليوم', week:'هذا الأسبوع', month:'هذا الشهر', year:'هذه السنة', all:'كل الفترات' };
   return labels[invPeriod] || '';
 }
-
 function getCostForItem(item) {
   if (item.costPrice !== undefined && item.costPrice !== null && Number(item.costPrice) > 0) return Number(item.costPrice);
   const pid = item.productId;
@@ -2592,7 +3726,6 @@ function getCostForItem(item) {
   if (found && Number(found.costPrice) > 0) return Number(found.costPrice);
   return 0;
 }
-
 function getPeriodOrders() {
   const { start, end } = getPeriodRange(invPeriod);
   const allOrders = [
@@ -2600,6 +3733,18 @@ function getPeriodOrders() {
     ...Object.entries(confirmedData).map(([k, o]) => ({ ...o, _key: k, _type: 'confirmed' }))
   ];
   return allOrders.filter(o => { const ts = o.timestamp || o.confirmedAt || 0; return ts >= start && ts <= end; });
+}
+
+/* ✅ ضبط حجم الخط حسب طول الرقم */
+function setBentoValue(id, text) {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = text;
+  el.classList.remove('len-md', 'len-lg', 'len-xl');
+  const len = String(text).length;
+  if (len > 16) el.classList.add('len-xl');
+  else if (len > 12) el.classList.add('len-lg');
+  else if (len > 9) el.classList.add('len-md');
 }
 
 function renderInventoryPage() {
@@ -2612,10 +3757,10 @@ function renderInventoryPage() {
     (o.items || []).forEach(it => { const q = Number(it.quantity) || 0; cost += getCostForItem(it) * q; });
   });
   const profit = revenue - cost;
-  $("statRevenue").textContent = fmt(revenue) + ' ' + cur;
-  $("statProfit").textContent = fmt(profit) + ' ' + cur;
-  $("statCost").textContent = fmt(cost) + ' ' + cur;
-  $("statOrders").textContent = periodOrders.length;
+  setBentoValue("statRevenue", fmt(revenue) + ' ' + cur);
+  setBentoValue("statProfit", fmt(profit) + ' ' + cur);
+  setBentoValue("statCost", fmt(cost) + ' ' + cur);
+  setBentoValue("statOrders", periodOrders.length);
   let stockValue = 0, stockQty = 0, lowStockCount = 0, outStockCount = 0;
   Object.values(allProducts).forEach(p => {
     if (p.trackStock === true) {
@@ -2627,8 +3772,8 @@ function renderInventoryPage() {
       else if (q <= alert) lowStockCount++;
     }
   });
-  $("statStockValue").textContent = fmt(stockValue) + ' ' + cur;
-  $("statStockQty").textContent = fmt(stockQty);
+  setBentoValue("statStockValue", fmt(stockValue) + ' ' + cur);
+  setBentoValue("statStockQty", fmt(stockQty));
   renderInvAlerts(lowStockCount, outStockCount);
   renderInventoryTable();
   renderTopProducts(periodOrders);
@@ -2636,14 +3781,28 @@ function renderInventoryPage() {
 }
 
 function renderInvAlerts(low, out) {
-  const c = $("invAlertsContainer"); if (!c) return;
+  const c = $("invAlertsContainer");
+  if (!c) return;
+  const isFR = (window.currentLang || 'ar') === 'fr';
   let html = '';
   if (out > 0) {
-    html += `<div class="inv-alert inv-alert-danger" data-open-alert="outStock"><i class="fas fa-exclamation-circle"></i><span>يوجد <b>${out}</b> منتج نفد من المخزون</span><button class="inv-alert-action">${t('view') || 'عرض'}</button></div>`;
+    html = `<div class="bento-card bento-alert danger" data-open-alert="outStock">
+      <div class="bento-alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+      <div class="bento-alert-text">${isFR ? 'Produits épuisés' : 'منتجات نفدت'}</div>
+      <div class="bento-value" style="font-size:1.6rem"><b>${out}</b></div>
+    </div>`;
   } else if (low > 0) {
-    html += `<div class="inv-alert inv-alert-warn" data-open-alert="lowStock"><i class="fas fa-exclamation-triangle"></i><span>يوجد <b>${low}</b> منتج على وشك النفاد</span><button class="inv-alert-action">${t('view') || 'عرض'}</button></div>`;
+    html = `<div class="bento-card bento-alert warning" data-open-alert="lowStock">
+      <div class="bento-alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+      <div class="bento-alert-text">${isFR ? 'Stock faible' : 'على وشك النفاد'}</div>
+      <div class="bento-value" style="font-size:1.6rem"><b>${low}</b></div>
+    </div>`;
   } else {
-    html += `<div class="inv-alert inv-alert-ok"><i class="fas fa-check-circle"></i><span>المخزون بحالة جيدة</span></div>`;
+    html = `<div class="bento-card bento-alert ok">
+      <div class="bento-alert-icon"><i class="fas fa-check-circle"></i></div>
+      <div class="bento-alert-text">${isFR ? 'Stock en bon état' : 'المخزون جيد'}</div>
+      <div class="bento-value" style="font-size:1.6rem"><b>✓</b></div>
+    </div>`;
   }
   c.innerHTML = html;
   c.querySelectorAll('[data-open-alert]').forEach(el => {
@@ -2702,7 +3861,7 @@ function renderTopProducts(periodOrders) {
 }
 
 function bindInvStatCards() {
-  document.querySelectorAll('#page-inventory .inv-stat[data-detail]').forEach(card => {
+  document.querySelectorAll('#page-inventory .bento-card[data-detail]').forEach(card => {
     if (card._bound) return; card._bound = true;
     card.addEventListener('click', () => openInvDrawer(card.dataset.detail));
   });
@@ -2767,17 +3926,11 @@ function buildInvDetail(type) {
 function openInvDrawer(type) {
   const target = $("invDetailContainer");
   if (!target) return;
-  
-  if (target.dataset.currentType === type && target.style.display !== 'none') {
-    closeInvDrawer();
-    return;
-  }
-  
+  if (target.dataset.currentType === type && target.style.display !== 'none') { closeInvDrawer(); return; }
   const data = buildInvDetail(type);
   currentInvDetail = data;
   const cur = curLbl();
   const canSeeCost = data.canSeeCost;
-  
   let tableHtml = '';
   if (!data.rows.length) {
     tableHtml = `<div class="inv-empty" style="padding:40px 20px;"><i class="fas fa-inbox" style="font-size:40px;color:#c9cccf;display:block;margin-bottom:10px;"></i>لا توجد بيانات في هذه الفترة</div>`;
@@ -2791,7 +3944,6 @@ function openInvDrawer(type) {
       thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
     else
       thead = '<tr><th>المنتج</th><th>الكمية</th><th>حد التنبيه</th><th>الحالة</th></tr>';
-    
     tableHtml = `<div style="overflow-x:auto;"><table class="inv-table"><thead>${thead}</thead><tbody>`;
     data.rows.forEach(r => {
       tableHtml += '<tr>' + r.map((cell, i) => {
@@ -2801,43 +3953,30 @@ function openInvDrawer(type) {
       }).join('') + '</tr>';
     });
     tableHtml += '</tbody></table></div>';
-    if (data.total) {
-      tableHtml += `<div class="inv-drawer-total"><span>${data.total}</span><b>${data.totalValue}</b></div>`;
-    }
+    if (data.total) tableHtml += `<div class="inv-drawer-total"><span>${data.total}</span><b>${data.totalValue}</b></div>`;
   }
-  
   target.innerHTML = `
     <div class="inv-section-header">
       <h3><i class="fas fa-chart-bar"></i> ${data.title}</h3>
       <div style="display:flex;gap:8px;">
-        <button class="btn-print-inv" id="invDetailPrint" title="طباعة">
-          <i class="fas fa-print"></i>
-        </button>
-        <button id="invDetailClose" title="إغلاق" style="width:38px;height:38px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--danger);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">
-          <i class="fas fa-times"></i>
-        </button>
+        <button class="btn-print-inv" id="invDetailPrint" title="طباعة"><i class="fas fa-print"></i></button>
+        <button id="invDetailClose" title="إغلاق" style="width:38px;height:38px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;color:var(--danger);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;"><i class="fas fa-times"></i></button>
       </div>
     </div>
     <div class="inv-drawer-subtitle">
       <span><i class="far fa-calendar-alt"></i> الفترة: <b>${data.periodLabel}</b></span>
       <span><i class="far fa-clock"></i> ${formatDate()}</span>
     </div>
-    ${tableHtml}
-  `;
-  
+    ${tableHtml}`;
   target.dataset.currentType = type;
   target.style.display = 'block';
-  
-  document.querySelectorAll('.inv-stat').forEach(el => el.classList.remove('active-detail'));
-  const activeCard = document.querySelector(`.inv-stat[data-detail="${type}"]`);
+  document.querySelectorAll('.bento-card').forEach(el => el.classList.remove('active-detail'));
+const activeCard = document.querySelector(`.bento-card[data-detail="${type}"]`);
   if (activeCard) activeCard.classList.add('active-detail');
-  
   const closeBtn = $("invDetailClose");
   if (closeBtn) closeBtn.addEventListener('click', closeInvDrawer);
-  
   const printBtn = $("invDetailPrint");
   if (printBtn) printBtn.addEventListener('click', printInvDetail);
-  
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -2847,7 +3986,7 @@ function closeInvDrawer() {
   target.style.display = 'none';
   target.innerHTML = '';
   target.dataset.currentType = '';
-  document.querySelectorAll('.inv-stat').forEach(el => el.classList.remove('active-detail'));
+  document.querySelectorAll('.bento-card').forEach(el => el.classList.remove('active-detail'));
 }
 
 function printInvDetail() {
@@ -2860,20 +3999,54 @@ function printInvDetail() {
   }));
   window.open('print-inventory.html', '_blank');
 }
-
 bindInvStatCards();
 
+/* ═══ Order Detail ═══ */
 function openOrderDetailModal(order, type, key) {
   window.__orderForDeletion = order;
-window.__orderForDeletionKey = key;
+  window.__orderForDeletionKey = key;
   const content = $("orderDetailContent");
   const cur = curLbl();
   let itemsHtml = '';
-  (order.items || []).forEach((it, idx) => {
-    const qty = Number(it.quantity || 0), price = Number(it.price || 0);
-    const bundleMark = it.bundleApplied ? ` <span style="background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:20px;font-size:10px;font-weight:600;">عرض</span>` : '';
-    itemsHtml += `<tr><td style="text-align:center;padding:6px;">${idx + 1}</td><td style="text-align:right;font-weight:500;">${escapeHtml(it.name)}${bundleMark}</td><td style="text-align:center;">${qty}</td><td style="text-align:right;">${fmt(price)}</td><td style="text-align:right;">${fmt(qty * price)}</td></tr>`;
+
+  /* 🎨 كشف تلقائي: هل يوجد لون أو مقاس في هذا الطلب؟ */
+  let hasColorCol = false;
+  let hasSizeCol = false;
+  (order.items || []).forEach((it) => {
+    if (it.colorName || it.colorHex) hasColorCol = true;
+    if (it.sizeName) hasSizeCol = true;
   });
+
+  /* 🎨 بناء الصفوف ديناميكياً */
+  (order.items || []).forEach((it, idx) => {
+    const qty = Number(it.quantity || 0);
+    const price = Number(it.price || 0);
+    const lineTotal = qty * price;
+    const bundleMark = it.bundleApplied ? ' <span style="background:#fef3c7;color:#92400e;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:700;">🎁</span>' : '';
+
+    const colorCell = hasColorCol
+      ? `<td style="padding:14px 8px;text-align:center;color:#475569;font-size:12.5px;font-weight:600;">${it.colorName ? escapeHtml(it.colorName) : '—'}</td>`
+      : '';
+    const sizeCell = hasSizeCol
+      ? `<td style="padding:14px 8px;text-align:center;color:#475569;font-size:12.5px;font-weight:600;">${it.sizeName ? escapeHtml(it.sizeName) : '—'}</td>`
+      : '';
+
+    itemsHtml += `<tr style="border-bottom:1px solid #f1f5f9;">
+      <td style="padding:14px 8px;text-align:center;color:#94a3b8;font-weight:700;font-size:11px;">${idx + 1}</td>
+      <td style="padding:14px 10px;text-align:right;font-weight:700;color:#0f172a;font-size:13px;line-height:1.4;">${escapeHtml(it.name)}${bundleMark}</td>
+      ${colorCell}
+      ${sizeCell}
+      <td style="padding:14px 8px;text-align:center;font-weight:700;color:#0f172a;">${qty}</td>
+      <td style="padding:14px 10px;text-align:right;color:#475569;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;">${fmt(price)}</td>
+      <td style="padding:14px 10px;text-align:right;font-weight:800;color:#059669;font-variant-numeric:tabular-nums;white-space:nowrap;">${fmt(lineTotal)}</td>
+    </tr>`;
+  });
+
+  /* 🎨 بناء رؤوس الأعمدة ديناميكياً */
+  const totalCols = 5 + (hasColorCol ? 1 : 0) + (hasSizeCol ? 1 : 0);
+  const colorTh = hasColorCol ? '<th style="padding:12px 8px;text-align:center;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">اللون</th>' : '';
+  const sizeTh = hasSizeCol ? '<th style="padding:12px 8px;text-align:center;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">المقاس</th>' : '';
+
   const isWa = type === 'whatsapp';
   const statusLabel = isWa ? t('orderIncoming') : t('orderConfirmed');
   const statusColor = isWa ? '#25D366' : '#d97706';
@@ -2881,23 +4054,77 @@ window.__orderForDeletionKey = key;
   if (isWa && can('orders.confirm')) actionsArr.push(`<button class="btn-success" data-act="confirm" style="flex:1;margin:0;"><i class="fas fa-check"></i> ${t('actionConfirmPrint')}</button>`);
   if (!isWa && can('orders.confirm')) actionsArr.push(`<button style="background:var(--warning);color:white;border:none;padding:10px 20px;border-radius:var(--radius-sm);cursor:pointer;font-weight:600;flex:1;font-family:var(--font);" data-act="print"><i class="fas fa-print"></i> ${t('actionPrint')}</button>`);
   if (can('orders.delete')) actionsArr.push(`<button class="btn-danger" data-act="${isWa ? 'del-wa' : 'del-conf'}" style="flex:1;margin:0;"><i class="fas fa-trash"></i> ${t('actionDelete')}</button>`);
+
   let shippingRow = '';
-  if (order.freeShippingApplied) shippingRow = `<div style="background:#d1fae5;padding:10px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:12px;color:#065f46;border:1px solid #10b981;font-weight:600;text-align:center;">توصيل مجاني - تم تطبيق العرض</div>`;
-  else if (order.shippingCost !== undefined && order.shippingCost !== null && order.shippingCost > 0) shippingRow = `<div style="background:#fff7ed;padding:10px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:12px;color:#9a3412;border:1px solid #fed7aa;"><strong>الشحن:</strong> ${fmt(order.shippingCost)} ${cur}${order.wilaya ? ` - ${escapeHtml(order.wilaya)}` : ''}${order.deliveryType ? ` - ${escapeHtml(order.deliveryType)}` : ''}</div>`;
+  if (order.freeShippingApplied) {
+    shippingRow = `<div style="background:#d1fae5;padding:10px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:12px;color:#065f46;border:1px solid #10b981;font-weight:600;text-align:center;">توصيل مجاني - تم تطبيق العرض</div>`;
+  } else if (order.shippingCost !== undefined && order.shippingCost !== null && order.shippingCost > 0) {
+    shippingRow = `<div style="background:#fff7ed;padding:10px;border-radius:var(--radius-sm);margin-bottom:12px;font-size:12px;color:#9a3412;border:1px solid #fed7aa;"><strong>الشحن:</strong> ${fmt(order.shippingCost)} ${cur}${order.wilaya ? ` - ${escapeHtml(order.wilaya)}` : ''}${order.deliveryType ? ` - ${escapeHtml(order.deliveryType)}` : ''}</div>`;
+  }
+
   const sourceInfo = order.source === 'landing' ? `<span class="landing-source-badge"><i class="fas fa-rocket"></i> ${t('promotionSourceBadge')}</span>` : '';
-  content.innerHTML = `<h3 style="color:${statusColor};">${statusLabel} ${sourceInfo}</h3><div style="display:flex;margin-bottom:12px;flex-wrap:wrap;gap:8px;"><span style="background:${statusColor};color:white;padding:4px 16px;border-radius:20px;font-weight:600;">${fmt(order.totalPrice)} ${cur}</span></div><div style="background:#fafafa;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;display:grid;gap:6px;font-size:13px;"><div><strong>العميل:</strong> ${escapeHtml(order.customerName || '')}</div><div><strong>الهاتف:</strong> ${escapeHtml(order.phone || '')}</div><div><strong>العنوان:</strong> ${escapeHtml(order.address || '')}</div></div>${shippingRow}<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#fafafa;"><th style="padding:8px;">#</th><th style="padding:8px;">المنتج</th><th style="padding:8px;">الكمية</th><th style="padding:8px;">السعر</th><th style="padding:8px;">المجموع</th></tr></thead><tbody>${itemsHtml || '<tr><td colspan="5" style="text-align:center;padding:12px;">---</td></tr>'}</tbody><tfoot><tr style="font-weight:700;background:#fafafa;"><td colspan="5" style="text-align:right;padding:8px;color:#059669;">الإجمالي: ${fmt(order.totalPrice)} ${cur}</td></tr></tfoot></table></div><div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;">${actionsArr.join('')}</div>`;
+
+  content.innerHTML = `
+    <h3 style="color:${statusColor};">${statusLabel} ${sourceInfo}</h3>
+    <div style="display:flex;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+      <span style="background:${statusColor};color:white;padding:4px 16px;border-radius:20px;font-weight:600;">${fmt(order.totalPrice)} ${cur}</span>
+    </div>
+    <div style="background:#fafafa;padding:12px;border-radius:var(--radius-sm);margin-bottom:12px;display:grid;gap:6px;font-size:13px;">
+      <div><strong>العميل:</strong> ${escapeHtml(order.customerName || '')}</div>
+      <div><strong>الهاتف:</strong> ${escapeHtml(order.phone || '')}</div>
+      <div><strong>العنوان:</strong> ${escapeHtml(order.address || '')}</div>
+    </div>
+    ${shippingRow}
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;border:1px solid #e5e8ec;background:#fff;">
+      <table style="width:100%;border-collapse:collapse;font-size:12.5px;min-width:${hasColorCol || hasSizeCol ? '620px' : '480px'};">
+        <thead>
+          <tr style="background:#f8fafc;">
+            <th style="padding:12px 8px;text-align:center;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">#</th>
+            <th style="padding:12px 10px;text-align:right;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">المنتج</th>
+            ${colorTh}
+            ${sizeTh}
+            <th style="padding:12px 8px;text-align:center;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">الكمية</th>
+            <th style="padding:12px 10px;text-align:right;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">السعر</th>
+            <th style="padding:12px 10px;text-align:right;font-size:11px;color:#64748b;font-weight:800;letter-spacing:.03em;border-bottom:2px solid #e5e8ec;white-space:nowrap;">المجموع</th>
+          </tr>
+        </thead>
+        <tbody>${itemsHtml || `<tr><td colspan="${totalCols}" style="text-align:center;padding:20px;color:#94a3b8;">لا توجد منتجات</td></tr>`}</tbody>
+        <tfoot>
+          <tr style="background:#f8fafc;">
+            <td colspan="${totalCols}" style="text-align:left;padding:14px 12px;font-weight:900;color:#059669;font-size:14px;">
+              <span style="color:#64748b;font-weight:800;font-size:12px;margin-inline-end:6px;">الإجمالي:</span>${fmt(order.totalPrice)} ${cur}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;">${actionsArr.join('')}</div>
+  `;
+
   content.querySelectorAll('[data-act]').forEach(btn => btn.addEventListener('click', async () => {
     const act = btn.dataset.act;
     if (act === 'confirm') {
       if (!can('orders.confirm')) return showToast(t('notAllowed'));
-      const confirmed = await confirmOrderOnly(key, order);
-      printContext = { key, order: confirmed, type: 'confirmed' };
-      openModal('printOptionModal'); closeModal('orderDetailModal');
+      const printWin = window.open('', '_blank');
+      if (!printWin) { alert('⚠️ يرجى السماح بالنوافذ المنبثقة'); return; }
+      printWin.document.write('<html><head><title>...</title></head><body style="font-family:sans-serif;text-align:center;padding:60px;color:#0b6e4f"><h2>⏳ جاري التحضير...</h2></body></html>');
+      try {
+        const confirmed = await confirmOrderOnly(key, order);
+        localStorage.setItem('printOrder', JSON.stringify({ key, order: confirmed, type: 'confirmed' }));
+        printWin.location.href = 'print_admin.html';
+      } catch (err) {
+        console.error('Confirm error:', err);
+        showToast('خطأ: ' + err.message);
+        try { printWin.close(); } catch(e) {}
+      }
+      closeModal('orderDetailModal');
     } else if (act === 'del-wa') {
       if (!can('orders.delete')) return showToast(t('notAllowed'));
       if (confirm("تأكيد الحذف؟")) { await remove(ref(db, `whatsappOrders/${key}`)); showToast("تم الحذف"); closeModal('orderDetailModal'); }
-    } else if (act === 'print') { printContext = { key, order, type: 'confirmed' }; openModal('printOptionModal'); }
-    else if (act === 'del-conf') {
+    } else if (act === 'print') {
+      localStorage.setItem('printOrder', JSON.stringify({ key, order, type: 'confirmed' }));
+      window.open('print_admin.html', '_blank');
+    } else if (act === 'del-conf') {
       if (!can('orders.delete')) return showToast(t('notAllowed'));
       if (confirm("تأكيد الحذف؟")) { await remove(ref(db, `confirmedOrders/${key}`)); showToast("تم الحذف"); closeModal('orderDetailModal'); }
     }
@@ -2932,46 +4159,28 @@ $("deleteAllConfirmedBtn").addEventListener('click', async () => {
 
 async function cleanupOldConfirmedOrders() {
   if (!can('orders.deleteAll')) return showToast(t('notAllowed'));
-
   const cutoff = Date.now() - (CLEANUP_KEEP_DAYS * 24 * 60 * 60 * 1000);
   const toDelete = [];
   let kept = 0;
-
   Object.entries(confirmedData).forEach(([key, order]) => {
     const ts = order.confirmedAt || order.timestamp || 0;
     if (ts < cutoff) toDelete.push(key);
     else kept++;
   });
-
-  if (toDelete.length === 0) {
-    showToast('لا توجد طلبات أقدم من شهر');
-    return;
-  }
-
-  const msg =
-    `سيتم حذف ${toDelete.length} طلب أقدم من شهر.\n` +
-    `سيُحتفظ بـ ${kept} طلب خلال الشهر الأخير.\n\n` +
-    `هل تريد المتابعة؟`;
-
+  if (toDelete.length === 0) { showToast('لا توجد طلبات أقدم من شهر'); return; }
+  const msg = `سيتم حذف ${toDelete.length} طلب أقدم من شهر.\nسيُحتفظ بـ ${kept} طلب خلال الشهر الأخير.\n\nهل تريد المتابعة؟`;
   if (!confirm(msg)) return;
-
   const updates = {};
   toDelete.forEach(k => { updates['confirmedOrders/' + k] = null; });
-
-  try {
-    await update(ref(db), updates);
-    showToast(`تم حذف ${toDelete.length} طلب`);
-  } catch (e) {
-    showToast('خطأ: ' + e.message);
-  }
+  try { await update(ref(db), updates); showToast(`تم حذف ${toDelete.length} طلب`); }
+  catch (e) { showToast('خطأ: ' + e.message); }
 }
 
 document.addEventListener('click', e => {
-  if (e.target.closest('#cleanupOldOrdersBtn')) {
-    cleanupOldConfirmedOrders();
-  }
+  if (e.target.closest('#cleanupOldOrdersBtn')) cleanupOldConfirmedOrders();
 });
 
+/* ═══ Reviews ═══ */
 function updateReviewsBadge() {
   let total = 0;
   Object.values(allReviews).forEach(productReviews => { total += Object.keys(productReviews || {}).length; });
@@ -3017,6 +4226,7 @@ async function deleteReview(productId, reviewKey) {
   } catch (e) { showToast("فشل الحذف"); }
 }
 
+/* ═══ Logo & Cover ═══ */
 function renderStoreLogo() {
   const preview = $("storeLogoPreview"); const empty = $("storeLogoEmpty");
   if (currentStoreLogo) { preview.src = currentStoreLogo; preview.style.display = "block"; empty.style.display = "none"; }
@@ -3025,12 +4235,10 @@ function renderStoreLogo() {
 
 function renderCoverPreview() {
   const shouldShow = currentCoverUrl && currentCoverEnabled;
-
   const box = $("coverBox");
   const preview = $("coverPreview");
   const nameEl = $("adminHeroName");
   const tagEl = $("adminHeroTagline");
-
   if (box && preview) {
     if (currentCoverUrl) {
       preview.src = currentCoverUrl;
@@ -3039,12 +4247,9 @@ function renderCoverPreview() {
       if (nameEl) nameEl.textContent = storeInfo.name || "اسم المتجر";
       if (tagEl) tagEl.textContent = storeInfo.tagline || "";
     } else {
-      preview.src = "";
-      preview.style.display = "none";
-      box.classList.remove("has-image");
+      preview.src = ""; preview.style.display = "none"; box.classList.remove("has-image");
     }
   }
-
   const banner = $("productsHero");
   const bannerImg = $("coverImage");
   const pName = $("productsHeroName");
@@ -3056,10 +4261,7 @@ function renderCoverPreview() {
       if (bannerImg) bannerImg.src = currentCoverUrl;
       if (pName) pName.textContent = storeInfo.name || "";
       if (pTag) pTag.textContent = storeInfo.tagline || "";
-    } else {
-      banner.style.display = "none";
-      banner.classList.remove("has-image");
-    }
+    } else { banner.style.display = "none"; banner.classList.remove("has-image"); }
   }
 }
 
@@ -3070,7 +4272,6 @@ async function handleStoreLogoFile(file) {
   try { const up = await uploadImage(file); currentStoreLogo = up.url; renderStoreLogo(); showToast("تم الرفع"); }
   catch (e) { showToast("خطأ: " + e.message); }
 }
-
 $("btnStoreLogoGallery").addEventListener('click', () => $("storeLogoFile").click());
 $("btnStoreLogoCamera").addEventListener('click', () => $("storeLogoCamera").click());
 $("storeLogoFile").addEventListener('change', e => { handleStoreLogoFile(e.target.files[0]); e.target.value = ""; });
@@ -3101,20 +4302,14 @@ $("btnCoverRemove").addEventListener('click', async () => {
 
 document.addEventListener('change', async e => {
   if (e.target && e.target.id === 'coverEnabled') {
-    if (!can('settings.cover')) {
-      e.target.checked = !e.target.checked;
-      return showToast(t('notAllowed'));
-    }
+    if (!can('settings.cover')) { e.target.checked = !e.target.checked; return showToast(t('notAllowed')); }
     const newVal = e.target.checked;
     try {
       await update(ref(db, 'store/cover'), { enabled: newVal });
       currentCoverEnabled = newVal;
       showToast(newVal ? "تم تفعيل الغلاف" : "تم إخفاء الغلاف");
       renderCoverPreview();
-    } catch (err) {
-      e.target.checked = !newVal;
-      showToast("خطأ: " + err.message);
-    }
+    } catch (err) { e.target.checked = !newVal; showToast("خطأ: " + err.message); }
   }
 }, true);
 
@@ -3130,15 +4325,14 @@ $("saveStoreSettingsBtn").addEventListener('click', async () => {
     tagline: storeInfo.tagline || ""
   };
   if (!data.name) return showToast("اسم المتجر مطلوب");
-  const imgbb = $("setImgbb").value.trim();
   try {
     await set(ref(db, "store/info"), data);
-    if (imgbb) await set(ref(db, "store/settings"), { imgbbApiKey: imgbb });
     $("setWhatsapp").value = data.whatsappNumber;
     showToast("تم الحفظ");
   } catch (e) { showToast("فشل الحفظ"); }
 });
 
+/* ═══ Users ═══ */
 async function loadUsersList() {
   const div = $("usersList"); if (!div) return;
   div.innerHTML = "";
@@ -3185,9 +4379,7 @@ $("saveOwnerBtn").addEventListener('click', async () => {
     localStorage.setItem("user", nn);
     showToast("تم الحفظ، جاري إعادة التحميل...");
     setTimeout(() => location.reload(), 1200);
-  } catch (e) {
-    showToast("فشل الحفظ: " + e.message);
-  }
+  } catch (e) { showToast("فشل الحفظ: " + e.message); }
 });
 
 $("saveWholesaleCodeBtn").addEventListener('click', async () => {
@@ -3202,19 +4394,22 @@ $("btnSetup").addEventListener('click', () => {
   if (!can('settings.advanced')) return showToast(t('notAllowed'));
   window.open('setup.html', '_blank');
 });
-
 $("btnDeleteAllProducts").addEventListener('click', async () => {
   if (!can('settings.advanced')) return showToast(t('notAllowed'));
-  if (confirm("تأكيد حذف الكل؟")) { await remove(productsRef); await remove(discountsRef); showToast("تم الحذف"); }
+  if (confirm("تأكيد حذف الكل؟")) {
+    await remove(productsRef);
+    await remove(discountsRef);
+    await remove(reviewsRef);
+    await remove(ref(db, "store/promoted"));
+    showToast("تم الحذف");
+  }
 });
-
 $("btnExcelImport").addEventListener('click', () => {
   if (!can('settings.advanced')) return showToast(t('notAllowed'));
   window.open('excel-import.html', '_blank');
 });
 
 document.querySelectorAll('.nav-btn').forEach(btn => { btn.addEventListener('click', () => switchPage(btn.dataset.page)); });
-
 document.querySelectorAll('.settings-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     if (!can(tab.getAttribute('data-perm') || '')) return showToast(t('notAllowed'));
@@ -3258,15 +4453,14 @@ function initApp() {
   restoreLastTab();
 }
 
-/* 🆕 استعادة التبويبات المحفوظة */
 function restoreLastTab() {
-  /* استعادة التبويب الرئيسي */
-  const lastPage = loadState(LS_KEYS.mainPage, 'products');
-  if (lastPage && lastPage !== 'products' && can('nav.' + lastPage)) {
+  /* ✅ الافتراضي: المخزون */
+  const lastPage = loadState(LS_KEYS.mainPage, 'inventory');
+  if (lastPage && can('nav.' + lastPage)) {
     switchPage(lastPage, true);
+  } else if (can('nav.inventory')) {
+    switchPage('inventory', true);
   }
-
-  /* استعادة تبويب الطلبات */
   const lastOrdersFilter = loadState(LS_KEYS.ordersFilter, 'new');
   if (lastOrdersFilter === 'confirmed' && can('orders.viewConfirmed')) {
     currentOrdersFilter = 'confirmed';
@@ -3275,8 +4469,6 @@ function restoreLastTab() {
       c.classList.toggle('active', match);
     });
   }
-
-  /* استعادة تبويب المخزون */
   const lastInvTab = loadState(LS_KEYS.invTab, 'overview');
   const invTabEl = Array.from(document.querySelectorAll('.inv-tab')).find(t => t.dataset.itab === lastInvTab);
   if (invTabEl) {
@@ -3286,8 +4478,6 @@ function restoreLastTab() {
     const panel = $('itab-' + lastInvTab);
     if (panel) panel.classList.add('active');
   }
-
-  /* استعادة فترة المخزون */
   const lastInvPeriod = loadState(LS_KEYS.invPeriod, 'today');
   const periodEl = Array.from(document.querySelectorAll('#invPeriodChips .orders-chip')).find(c => c.dataset.period === lastInvPeriod);
   if (periodEl) {
@@ -3306,12 +4496,9 @@ function bootApp() {
   else applyPermissions();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   🌐 مدير أيقونات التواصل الاجتماعي — Index
-   ═══════════════════════════════════════════════════════════ */
+/* ═══ Social Links — Index ═══ */
 let currentSocialLinks = [];
 let socialIconPickerTarget = null;
-
 const SOCIAL_ICONS = [
   { icon: 'fab fa-facebook-f',      label: 'Facebook'    },
   { icon: 'fab fa-instagram',       label: 'Instagram'   },
@@ -3351,11 +4538,7 @@ function renderSocialLinksList() {
       <button type="button" class="rm-btn" data-social-rm="${i}" title="حذف"><i class="fas fa-trash"></i></button>
     </div>
   `).join('');
-
-  c.querySelectorAll('[data-social-icon]').forEach(b => {
-    b.addEventListener('click', () => openSocialIconPicker(parseInt(b.dataset.socialIcon)));
-  });
-
+  c.querySelectorAll('[data-social-icon]').forEach(b => b.addEventListener('click', () => openSocialIconPicker(parseInt(b.dataset.socialIcon))));
   c.querySelectorAll('[data-social-url]').forEach(inp => {
     const save = () => {
       const i = parseInt(inp.dataset.socialUrl);
@@ -3365,12 +4548,8 @@ function renderSocialLinksList() {
     };
     inp.addEventListener('blur', save);
     let timer;
-    inp.addEventListener('input', () => {
-      clearTimeout(timer);
-      timer = setTimeout(save, 1500);
-    });
+    inp.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(save, 1500); });
   });
-
   c.querySelectorAll('[data-social-rm]').forEach(b => {
     b.addEventListener('click', () => {
       if (!confirm('حذف هذه الأيقونة؟')) return;
@@ -3410,27 +4589,16 @@ async function saveSocialLinks() {
   try {
     const data = {};
     currentSocialLinks.forEach((item, i) => {
-      if (item.icon) {
-        data['sl_' + i] = {
-          icon: item.icon,
-          url: (item.url || '').trim(),
-          order: i
-        };
-      }
+      if (item.icon) data['sl_' + i] = { icon: item.icon, url: (item.url || '').trim(), order: i };
     });
     await set(ref(db, 'store/social_links'), data);
     showToast('تم الحفظ');
-  } catch (e) {
-    console.error('social save:', e);
-    showToast('فشل الحفظ');
-  }
+  } catch (e) { console.error('social save:', e); showToast('فشل الحفظ'); }
 }
 
 onValue(ref(db, 'store/social_links'), (snap) => {
   const d = snap.val() || {};
-  currentSocialLinks = Object.entries(d)
-    .map(([k, v]) => ({ ...v }))
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
+  currentSocialLinks = Object.entries(d).map(([k, v]) => ({ ...v })).sort((a, b) => (a.order || 0) - (b.order || 0));
   renderSocialLinksList();
 });
 
@@ -3454,9 +4622,7 @@ document.addEventListener('change', (e) => {
   }
 }, true);
 
-/* ═══════════════════════════════════════════════════════════
-   🌐 مدير أيقونات التواصل — نسخة Product (مستقلة تماماً)
-   ═══════════════════════════════════════════════════════════ */
+/* ═══ Social Links — Product ═══ */
 let currentSocialLinksProduct = [];
 let socialIconPickerTargetProduct = null;
 
@@ -3476,11 +4642,7 @@ function renderSocialLinksListProduct() {
       <button type="button" class="rm-btn" data-social-rm-p="${i}" title="حذف"><i class="fas fa-trash"></i></button>
     </div>
   `).join('');
-
-  c.querySelectorAll('[data-social-icon-p]').forEach(b => {
-    b.addEventListener('click', () => openSocialIconPickerProduct(parseInt(b.dataset.socialIconP)));
-  });
-
+  c.querySelectorAll('[data-social-icon-p]').forEach(b => b.addEventListener('click', () => openSocialIconPickerProduct(parseInt(b.dataset.socialIconP))));
   c.querySelectorAll('[data-social-url-p]').forEach(inp => {
     const save = () => {
       const i = parseInt(inp.dataset.socialUrlP);
@@ -3490,12 +4652,8 @@ function renderSocialLinksListProduct() {
     };
     inp.addEventListener('blur', save);
     let timer;
-    inp.addEventListener('input', () => {
-      clearTimeout(timer);
-      timer = setTimeout(save, 1500);
-    });
+    inp.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(save, 1500); });
   });
-
   c.querySelectorAll('[data-social-rm-p]').forEach(b => {
     b.addEventListener('click', () => {
       if (!confirm('حذف هذه الأيقونة؟')) return;
@@ -3535,27 +4693,16 @@ async function saveSocialLinksProduct() {
   try {
     const data = {};
     currentSocialLinksProduct.forEach((item, i) => {
-      if (item.icon) {
-        data['slp_' + i] = {
-          icon: item.icon,
-          url: (item.url || '').trim(),
-          order: i
-        };
-      }
+      if (item.icon) data['slp_' + i] = { icon: item.icon, url: (item.url || '').trim(), order: i };
     });
     await set(ref(db, 'store/social_links_product'), data);
     showToast('تم الحفظ');
-  } catch (e) {
-    console.error('social save product:', e);
-    showToast('فشل الحفظ');
-  }
+  } catch (e) { console.error('social save product:', e); showToast('فشل الحفظ'); }
 }
 
 onValue(ref(db, 'store/social_links_product'), (snap) => {
   const d = snap.val() || {};
-  currentSocialLinksProduct = Object.entries(d)
-    .map(([k, v]) => ({ ...v }))
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
+  currentSocialLinksProduct = Object.entries(d).map(([k, v]) => ({ ...v })).sort((a, b) => (a.order || 0) - (b.order || 0));
   renderSocialLinksListProduct();
 });
 
@@ -3580,6 +4727,439 @@ document.addEventListener('change', (e) => {
 }, true);
 </script>
 
-<script src="logger.js"></script>
+<!-- ═══════════════════════════════════════════════════
+     🎬 Showcase Logic — Firebase + UI
+     ═══════════════════════════════════════════════════ -->
+<script type="module">
+import { ref, get, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const $sc = id => document.getElementById(id);
+const db = window.__db;
+const t = window.t || ((k) => k);
+
+if (!db) {
+  console.warn("⚠️ Showcase: Firebase not ready");
+} else {
+  let scSettings = {
+    mainTitle: { enabled: true, text: "" },
+    sub1:      { enabled: true, text: "" },
+    sub2:      { enabled: false, text: "" },
+    pagination:{ enabled: true },
+    productIds: []
+  };
+  let scTempSelection = [];
+
+  let scSaveTimer = null;
+function scSave(immediate = false) {
+  if (!db) return;
+  clearTimeout(scSaveTimer);
+  const doSave = async () => {
+    try {
+      /* ✅ لا نحفظ productIds هنا — المصدر الوحيد هو store/promoted */
+      const { productIds, ...settingsOnly } = scSettings;
+      await set(ref(db, "store/showcase"), settingsOnly);
+      if (!immediate && window.showToast) window.showToast("تم حفظ إعدادات Showcase");
+    } catch (e) {
+      console.error("showcase save:", e);
+      if (window.showToast) window.showToast("فشل الحفظ: " + e.message);
+    }
+  };
+  if (immediate) doSave();
+  else scSaveTimer = setTimeout(doSave, 600);
+}
+
+  onValue(ref(db, "store/showcase"), snap => {
+  const d = snap.val() || {};
+  /* ✅ تحديث النصوص فقط، دون فقدان productIds */
+  scSettings.mainTitle = { enabled: d.mainTitle?.enabled !== false, text: d.mainTitle?.text || '' };
+  scSettings.sub1 = { enabled: d.sub1?.enabled !== false, text: d.sub1?.text || '' };
+  scSettings.sub2 = { enabled: d.sub2?.enabled === true, text: d.sub2?.text || '' };
+  scSettings.pagination = { enabled: d.pagination?.enabled !== false };
+  scRenderUI();
+}, err => console.warn("showcase read:", err));
+
+/* 🆕 المصدر الموحّد للترويج */
+onValue(ref(db, "store/promoted"), snap => {
+  const d = snap.val() || {};
+  scSettings.productIds = Object.keys(d).filter(id => d[id] === true);
+  scRenderSelectedList();
+  scRenderUI();
+}, err => console.warn("promoted read:", err));
+
+function scRenderUI() {
+    const mtE = $sc("scMainTitleEnabled"), mtS = $sc("scMainTitleSelect");
+    if (mtE && mtS) { mtE.checked = scSettings.mainTitle.enabled; mtS.value = scSettings.mainTitle.text || ""; mtS.disabled = !scSettings.mainTitle.enabled; }
+    const s1E = $sc("scSub1Enabled"), s1S = $sc("scSub1Select");
+    if (s1E && s1S) { s1E.checked = scSettings.sub1.enabled; s1S.value = scSettings.sub1.text || ""; s1S.disabled = !scSettings.sub1.enabled; }
+    const s2E = $sc("scSub2Enabled"), s2S = $sc("scSub2Select");
+    if (s2E && s2S) { s2E.checked = scSettings.sub2.enabled; s2S.value = scSettings.sub2.text || ""; s2S.disabled = !scSettings.sub2.enabled; }
+    const pE = $sc("scPaginationEnabled");
+    if (pE) pE.checked = scSettings.pagination.enabled;
+  }
+
+  document.addEventListener("change", e => {
+    const id = e.target?.id;
+    if (!id || !id.startsWith("sc")) return;
+    switch (id) {
+      case "scMainTitleEnabled": scSettings.mainTitle.enabled = e.target.checked; $sc("scMainTitleSelect").disabled = !e.target.checked; scSave(); break;
+      case "scMainTitleSelect": scSettings.mainTitle.text = e.target.value; scSave(); break;
+      case "scSub1Enabled": scSettings.sub1.enabled = e.target.checked; $sc("scSub1Select").disabled = !e.target.checked; scSave(); break;
+      case "scSub1Select": scSettings.sub1.text = e.target.value; scSave(); break;
+      case "scSub2Enabled": scSettings.sub2.enabled = e.target.checked; $sc("scSub2Select").disabled = !e.target.checked; scSave(); break;
+      case "scSub2Select": scSettings.sub2.text = e.target.value; scSave(); break;
+      case "scPaginationEnabled": scSettings.pagination.enabled = e.target.checked; scSave(); break;
+    }
+  }, true);
+
+  function scRenderSelectedList() {
+    const c = $sc("scSelectedProductsList");
+    if (!c) return;
+    const products = window.allProducts || {};
+    const valid = scSettings.productIds.filter(id => products[id]);
+    if (!valid.length) {
+      c.innerHTML = `<div class="sc-empty">لم يتم اختيار أي منتج بعد — اضغط "اختيار المنتجات"</div>`;
+      return;
+    }
+    c.innerHTML = valid.map(id => {
+      const p = products[id];
+      const img = p.imageUrl
+        ? `<img src="${p.imageUrl}" alt="" onerror="this.style.display='none'">`
+        : `<div style="width:40px;height:40px;border-radius:8px;background:#f1f3f5;display:flex;align-items:center;justify-content:center;color:#94a3b8;flex-shrink:0;"><i class="fas fa-image"></i></div>`;
+      return `<div class="sc-product-chip">
+        ${img}
+        <div class="info">
+          <div class="nm">${escapeHtmlSc(p.name)}</div>
+          <div class="pr">${Number(p.price || 0).toLocaleString('fr-FR')} ${(window.storeInfo?.currency || 'دج')}</div>
+        </div>
+        <button type="button" class="rm" data-rm-sc="${id}" title="حذف من القائمة"><i class="fas fa-trash"></i></button>
+      </div>`;
+    }).join('');
+    c.querySelectorAll('[data-rm-sc]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+  const id = btn.dataset.rmSc;
+  try {
+    await remove(ref(db, "store/promoted/" + id));
+    if (window.showToast) window.showToast("✅ تم إلغاء الترويج");
+  } catch (err) { console.warn("sync error:", err); }
+});
+});
+  }
+
+  function escapeHtmlSc(s) {
+    return String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  /* ✅ فتح المودال في كل مرة */
+document.addEventListener("click", function(e) {
+  const openBtn = e.target.closest("#scOpenProductsModal");
+  if (!openBtn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  scTempSelection = [...scSettings.productIds];
+  scOpenProductsModal();
+}, true);
+
+  function scOpenProductsModal() {
+    const modal = $sc("scProductsModal");
+    if (!modal) return;
+    $sc("scProductsSearch").value = "";
+    scRenderModalGrid();
+    scUpdateSelectedCount();
+    modal.classList.add("show");
+    setTimeout(() => $sc("scProductsSearch")?.focus(), 150);
+  }
+
+  document.addEventListener("input", e => {
+    if (e.target?.id === "scProductsSearch") scRenderModalGrid();
+  });
+
+  function scRenderModalGrid() {
+    const grid = $sc("scProductsGrid");
+    if (!grid) return;
+    const term = ($sc("scProductsSearch").value || "").trim().toLowerCase();
+    const products = window.allProducts || {};
+    let list = Object.entries(products).map(([id, p]) => ({ id, ...p }));
+    if (term) {
+      list = list.filter(p =>
+        (p.name || "").toLowerCase().includes(term) ||
+        (p.family || "").toLowerCase().includes(term)
+      );
+    }
+    list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    if (!list.length) {
+      grid.innerHTML = `<div class="sc-empty" style="grid-column:1/-1;padding:40px 20px;"><i class="fas fa-inbox" style="font-size:32px;color:#cbd5e1;display:block;margin-bottom:10px;"></i>لا توجد نتائج</div>`;
+      return;
+    }
+    const cur = window.storeInfo?.currency || 'دج';
+    grid.innerHTML = list.map(p => {
+      const selected = scTempSelection.includes(p.id);
+      const img = p.imageUrl
+        ? `<img src="${p.imageUrl}" alt="" onerror="this.style.display='none'">`
+        : `<div style="width:46px;height:46px;border-radius:8px;background:#f1f3f5;display:flex;align-items:center;justify-content:center;color:#94a3b8;flex-shrink:0;"><i class="fas fa-image"></i></div>`;
+      return `<label class="sc-product-item${selected ? ' selected' : ''}" data-sc-pid="${p.id}">
+        <input type="checkbox" ${selected ? 'checked' : ''}>
+        ${img}
+        <div class="info">
+          <div class="nm">${escapeHtmlSc(p.name)}</div>
+          <div class="pr">${Number(p.price || 0).toLocaleString('fr-FR')} ${cur}</div>
+        </div>
+        <span class="check"><i class="fas fa-check"></i></span>
+      </label>`;
+    }).join('');
+    grid.querySelectorAll('[data-sc-pid]').forEach(item => {
+      item.addEventListener('click', ev => {
+        ev.preventDefault();
+        const id = item.dataset.scPid;
+        const idx = scTempSelection.indexOf(id);
+        if (idx > -1) {
+          scTempSelection.splice(idx, 1);
+          item.classList.remove('selected');
+          item.querySelector('input').checked = false;
+        } else {
+          scTempSelection.push(id);
+          item.classList.add('selected');
+          item.querySelector('input').checked = true;
+        }
+        scUpdateSelectedCount();
+      });
+    });
+  }
+
+  function scUpdateSelectedCount() {
+    const el = $sc("scSelectedCount");
+    if (el) el.textContent = scTempSelection.length;
+  }
+  
+  /* ✅ حفظ + إغلاق فوري */
+document.addEventListener("click", function(e) {
+  const saveBtn = e.target.closest("#scSaveProductsBtn");
+  if (!saveBtn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  
+  /* 🆕 اكتب على المسار الموحّد + مزامنة الحقل القديم */
+  const db2 = window.__db;
+  import("https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js").then(({ ref, set, remove, update }) => {
+    const currentIds = Object.keys(scSettings.productIds);
+    const newIds = scTempSelection;
+    /* إضافة الجديد */
+    newIds.forEach(id => {
+      if (!currentIds.includes(id)) {
+        set(ref(db2, "store/promoted/" + id), true).catch(console.warn);
+        update(ref(db2, "products/" + id + "/landing"), { enabled: true }).catch(() => {});
+      }
+    });
+    /* حذف المُزال */
+    currentIds.forEach(id => {
+      if (!newIds.includes(id)) {
+        remove(ref(db2, "store/promoted/" + id)).catch(console.warn);
+        update(ref(db2, "products/" + id + "/landing"), { enabled: false }).catch(() => {});
+      }
+    });
+  });
+  
+  /* إغلاق فوري */
+  closeScModal();
+  
+  /* إشعار */
+  setTimeout(() => {
+    if (window.showToast) window.showToast(`✅ تم حفظ ${scTempSelection.length} منتج`);
+  }, 150);
+}, true);
+
+  setInterval(() => {
+    if ($sc("scSelectedProductsList")) scRenderSelectedList();
+  }, 5000);
+  
+  /* ═══ دالة موحدة لإغلاق المودال ═══ */
+function closeScModal() {
+  const modal = $sc("scProductsModal");
+  if (modal) {
+    modal.classList.remove("show");
+    modal.style.display = "none";
+    setTimeout(() => { modal.style.display = ""; }, 100);
+  }
+  document.body.style.overflow = "";
+}
+  /* ═══ 🎯 تحديد الكل ═══ */
+  document.addEventListener("click", function(e) {
+    const btn = e.target.closest("#scSelectAllBtn");
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const grid = $sc("scProductsGrid");
+    if (!grid) return;
+    
+    /* تحديد كل المنتجات الظاهرة حالياً في الشبكة */
+    grid.querySelectorAll('[data-sc-pid]').forEach(item => {
+      const id = item.dataset.scPid;
+      if (!scTempSelection.includes(id)) {
+        scTempSelection.push(id);
+      }
+      item.classList.add('selected');
+      const cb = item.querySelector('input[type="checkbox"]');
+      if (cb) cb.checked = true;
+    });
+    
+    scUpdateSelectedCount();
+    
+    /* إشعار */
+    if (window.showToast) {
+      window.showToast(`تم تحديد ${scTempSelection.length} منتج`);
+    }
+  }, true);
+  
+  /* ═══ 🎯 إلغاء تحديد الكل ═══ */
+  document.addEventListener("click", function(e) {
+    const btn = e.target.closest("#scDeselectAllBtn");
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const grid = $sc("scProductsGrid");
+    if (!grid) return;
+    
+    /* إلغاء تحديد كل المنتجات الظاهرة حالياً */
+    grid.querySelectorAll('[data-sc-pid]').forEach(item => {
+      const id = item.dataset.scPid;
+      const idx = scTempSelection.indexOf(id);
+      if (idx > -1) scTempSelection.splice(idx, 1);
+      item.classList.remove('selected');
+      const cb = item.querySelector('input[type="checkbox"]');
+      if (cb) cb.checked = false;
+    });
+    
+    scUpdateSelectedCount();
+    
+    /* إشعار */
+    if (window.showToast) {
+      window.showToast('تم إلغاء تحديد الكل');
+    }
+  }, true);
+/* ✅ إغلاق المودال عند الضغط على الخارج */
+document.addEventListener("click", function(e) {
+  const modal = $sc("scProductsModal");
+  if (!modal || !modal.classList.contains("show")) return;
+  if (e.target === modal) closeScModal();
+}, true);
+
+/* ✅ إغلاق المودال بـ Esc */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    const modal = $sc("scProductsModal");
+    if (modal && modal.classList.contains("show")) closeScModal();
+  }
+});
+
+/* ✅ إغلاق المودال بزر X أو إلغاء */
+document.addEventListener("click", function(e) {
+  const closeBtn = e.target.closest('[data-close="scProductsModal"]');
+  if (!closeBtn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  closeScModal();
+}, true);
+  console.log("✅ Showcase logic loaded");
+}
+</script>
+
+<!-- ═══════════════════════════════════════════
+     🎬 Landing Tab — نقل تلقائي للإعدادات
+     (Landing Settings + Pixels + Shipping)
+     ═══════════════════════════════════════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  
+  /* ═══════════════════════════════════════════
+     1. نقل محتوى الـ panels القديمة إلى ltab-*
+     ═══════════════════════════════════════════ */
+  const migrations = [
+  { from: 'stab-landingSettings', to: 'ltab-settings', label: 'إعدادات الترويج' },
+  { from: 'stab-pixels', to: 'ltab-pixels', label: 'البكسل' },
+  { from: 'stab-shipping', to: 'ltab-shipping', label: 'الشحن' },
+  { from: 'stab-policies', to: 'ltab-policies', label: 'السياسات' }
+];
+  
+  migrations.forEach(({ from, to, label }) => {
+    const oldPanel = document.getElementById(from);
+    const newPanel = document.getElementById(to);
+    if (oldPanel && newPanel) {
+      while (oldPanel.firstChild) {
+        newPanel.appendChild(oldPanel.firstChild);
+      }
+      oldPanel.remove();
+      console.log(`✅ تم نقل "${label}" إلى صفحة الترويج`);
+    }
+  });
+
+  /* ═══════════════════════════════════════════
+     2. منطق Sub-Tabs
+     ═══════════════════════════════════════════ */
+  document.querySelectorAll('.landing-subtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.landing-subtab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      document.querySelectorAll('.landing-tab-panel').forEach(p => p.classList.remove('active'));
+      const panelId = 'ltab-' + tab.dataset.ltab;
+      const panel = document.getElementById(panelId);
+      if (panel) panel.classList.add('active');
+      
+      try { localStorage.setItem('admin_last_landing_tab', tab.dataset.ltab); } catch(e) {}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  /* ═══════════════════════════════════════════
+     3. تطبيق الصلاحيات على Sub-Tabs
+     ═══════════════════════════════════════════ */
+  function applySubTabPermissions() {
+    if (typeof window.can !== 'function') return;
+    document.querySelectorAll('.landing-subtab').forEach(tab => {
+      const perm = tab.getAttribute('data-perm');
+      const feat = tab.getAttribute('data-feature');
+      let show = true;
+      if (perm && !window.can(perm)) show = false;
+      if (feat && window.storeFeatures && window.storeFeatures[feat] === false) show = false;
+      tab.style.display = show ? 'inline-flex' : 'none';
+    });
+    
+    /* إذا كان التبويب النشط مخفياً → انتقل للتبويب الأول المرئي */
+    const activeTab = document.querySelector('.landing-subtab.active');
+    if (activeTab && activeTab.style.display === 'none') {
+      const firstVisible = Array.from(document.querySelectorAll('.landing-subtab'))
+        .find(t => t.style.display !== 'none');
+      if (firstVisible) firstVisible.click();
+    }
+  }
+  
+  /* طبقها الآن وبعد تأخيرات مختلفة (حتى تُحمَّل الصلاحيات والميزات) */
+  applySubTabPermissions();
+  setTimeout(applySubTabPermissions, 500);
+  setTimeout(applySubTabPermissions, 1500);
+  setTimeout(applySubTabPermissions, 3000);
+  
+  /* راقب أي تغيير في الصلاحيات (بعد تسجيل الدخول مثلاً) */
+  window.__applySubTabPermissions = applySubTabPermissions;
+
+  /* ═══════════════════════════════════════════
+     4. استعادة آخر تبويب مفتوح
+     ═══════════════════════════════════════════ */
+  try {
+    const savedTab = localStorage.getItem('admin_last_landing_tab');
+    if (savedTab && savedTab !== 'pages') {
+      const tab = document.querySelector(`.landing-subtab[data-ltab="${savedTab}"]`);
+      if (tab && tab.style.display !== 'none') {
+        setTimeout(() => tab.click(), 200);
+      }
+    }
+  } catch(e) {}
+  
+  console.log('✅ Landing Tab system ready');
+});
+</script>
+  
+  <script src="logger.js"></script>
 </body>
 </html>

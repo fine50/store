@@ -1,1806 +1,1187 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>⚙️ معالج إعداد المتجر</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /><style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>⚙️ معالج إعداد المتجر</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TOKENS — نفس admin.css
+   ═══════════════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --primary:#008060;--primary-600:#006b50;--primary-hover:#004c3f;
+  --primary-50:#ecfdf5;--primary-100:#d1fae5;--primary-200:#a7f3d0;
+  --primary-tint:#f1f8f5;--primary-soft:rgba(0,128,96,.10);
+  --success:#10b981;--success-tint:#ecfdf5;
+  --danger:#dc2626;--danger-tint:#fef2f2;
+  --warning:#d97706;--warning-tint:#fffbeb;
+  --info:#2563eb;--info-tint:#eff6ff;
+  --vip:#7c3aed;
+  --bg:#f7f8fa;--bg-2:#f1f3f5;--card:#ffffff;
+  --text:#0f172a;--text-2:#475569;--text-3:#64748b;--muted:#94a3b8;
+  --border:#e5e8ec;--border-2:#eef1f4;--border-strong:#d5dae0;
+  --radius-xs:6px;--radius-sm:8px;--radius:10px;--radius-md:12px;
+  --radius-lg:14px;--radius-xl:18px;--radius-full:9999px;
+  --shadow-xs:0 1px 2px rgba(15,23,42,.04);
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05),0 1px 3px rgba(15,23,42,.04);
+  --shadow-md:0 2px 4px rgba(15,23,42,.04),0 4px 12px rgba(15,23,42,.06);
+  --shadow-lg:0 8px 24px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.04);
+  --shadow-focus:0 0 0 3px var(--primary-soft);
+  --font:'Cairo',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono','Courier New',monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
 }
 
+html,body{direction:rtl;text-align:right}
 body{
-  font-family:'Cairo',sans-serif;
-  background:#f8fafc;
-  color:#0f172a;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  font-size:14px;
+  line-height:1.55;
   min-height:100vh;
-  padding:20px;
-  line-height:1.6
+  padding-bottom:40px;
+  -webkit-font-smoothing:antialiased;
 }
 
-.container{
-  max-width:720px;
-  margin:0 auto;
-  background:#fff;
-  border-radius:24px;
-  padding:32px;
-  box-shadow:0 8px 32px rgba(0,0,0,.06)
-}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:var(--radius-full);border:2px solid var(--bg)}
 
-h1{
-  font-size:1.6rem;
-  font-weight:900;
-  color:#0b6e4f;
-  margin-bottom:8px;
-  text-align:center
-}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea{font-family:inherit;font-size:14px;color:var(--text)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
 
-.subtitle{
-  text-align:center;
-  color:#64748b;
-  font-size:.9rem;
-  margin-bottom:24px
+/* ═══════════════════════════════════════════════════════════
+   HEADER — مثل admin
+   ═══════════════════════════════════════════════════════════ */
+header.setup-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  gap:12px;
 }
-
-.step{
-  background:#f8fafc;
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:20px;
-  border:1px solid #e9edf2
-}
-
-.step h2{
-  font-size:1.1rem;
-  font-weight:800;
-  color:#0b6e4f;
-  margin-bottom:8px;
+.setup-header .brand{
   display:flex;
   align-items:center;
-  gap:8px
+  gap:10px;
+  font-size:1rem;
+  font-weight:800;
+  color:var(--text);
+  min-width:0;
+  letter-spacing:-.01em;
 }
-
-.step p{
-  font-size:.85rem;
-  color:#64748b;
-  margin-bottom:14px
+.setup-header .brand i{
+  width:34px;
+  height:34px;
+  border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--primary),var(--primary-600));
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  flex-shrink:0;
+  box-shadow:0 4px 12px var(--primary-soft);
 }
-
-.step a{
-  color:#0b6e4f;
-  font-weight:700;
-  text-decoration:none
+.setup-header .brand span{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-
-label{
-  display:block;
+.setup-header .actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-shrink:0;
+}
+.hdr-btn{
+  padding:8px 14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:#fff;
+  color:var(--text-2);
+  font-size:13px;
   font-weight:600;
-  font-size:.8rem;
-  margin-bottom:4px;
-  color:#334155;
-  margin-top:10px
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:background .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease);
+}
+.hdr-btn:hover{background:var(--hover,#f3f5f8);color:var(--text);border-color:var(--border-strong)}
+.hdr-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.hdr-btn.primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+.hdr-btn i{font-size:12px}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+.container{
+  max-width:760px;
+  margin:24px auto;
+  padding:0 16px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
 }
 
-input{
-  width:100%;
-  padding:10px 14px;
-  border:1px solid #e2e8f0;
-  border-radius:30px;
+/* ═══════════════════════════════════════════════════════════
+   INTRO CARD
+   ═══════════════════════════════════════════════════════════ */
+.intro-card{
+  background:linear-gradient(135deg,var(--primary-50),var(--primary-tint));
+  border:1px solid var(--primary-100);
+  border-radius:var(--radius-lg);
+  padding:22px 24px;
+  box-shadow:var(--shadow-xs);
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+}
+.intro-card .icon{
+  width:48px;height:48px;
+  border-radius:var(--radius-md);
+  background:linear-gradient(135deg,var(--primary),var(--primary-600));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+  box-shadow:0 6px 16px var(--primary-soft);
+}
+.intro-card .text{flex:1;min-width:0}
+.intro-card h1{
+  font-size:1.15rem;
+  font-weight:800;
+  color:var(--primary-hover);
+  letter-spacing:-.015em;
+  margin-bottom:6px;
+}
+.intro-card p{
+  font-size:.84rem;
+  color:var(--text-2);
+  line-height:1.65;
+}
+.intro-card code{
   background:#fff;
-  font-family:'Cairo',sans-serif;
-  font-size:.9rem;
-  outline:none;
-  transition:.2s
-}
-
-input:focus{
-  border-color:#0b6e4f;
-  box-shadow:0 0 0 3px rgba(11,110,79,.1)
-}
-
-/* صندوق Firebase */
-#firebaseCode{
-  width:100%;
-  min-height:280px;
-  padding:15px;
-  border:1px solid #e2e8f0;
-  border-radius:16px;
-  background:#fff;
-  font-family:monospace;
+  padding:2px 8px;
+  border-radius:var(--radius-xs);
+  font-family:var(--mono);
   font-size:.78rem;
+  color:var(--primary);
+  border:1px solid var(--primary-100);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STATUS BOX
+   ═══════════════════════════════════════════════════════════ */
+.status{
+  padding:14px 18px;
+  border-radius:var(--radius-sm);
+  font-size:.85rem;
+  font-weight:600;
+  display:none;
   line-height:1.6;
+  border:1px solid;
+  align-items:flex-start;
+  gap:10px;
+}
+.status::before{
+  content:'';
+  width:4px;
+  align-self:stretch;
+  border-radius:2px;
+  flex-shrink:0;
+}
+.status.success{display:flex;background:var(--success-tint);border-color:#6ee7b7;color:#065f46}
+.status.success::before{background:var(--success)}
+.status.error{display:flex;background:var(--danger-tint);border-color:#fca5a5;color:#991b1b}
+.status.error::before{background:var(--danger)}
+.status.info{display:flex;background:var(--info-tint);border-color:#93c5fd;color:#1e40af}
+.status.info::before{background:var(--info)}
+.status.warning{display:flex;background:var(--warning-tint);border-color:#fcd34d;color:#92400e}
+.status.warning::before{background:var(--warning)}
+
+/* ═══════════════════════════════════════════════════════════
+   STEP CARD
+   ═══════════════════════════════════════════════════════════ */
+.step{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:20px 22px;
+  box-shadow:var(--shadow-xs);
+  transition:box-shadow .15s var(--ease),border-color .15s var(--ease);
+}
+.step:hover{box-shadow:var(--shadow-sm);border-color:var(--border-strong)}
+
+.step-head{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:14px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.step-num{
+  width:32px;height:32px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--primary-600));
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.88rem;
+  font-weight:800;
+  flex-shrink:0;
+  box-shadow:0 4px 12px var(--primary-soft);
+}
+.step-head .step-title{
+  flex:1;
+  min-width:0;
+}
+.step-head h2{
+  font-size:.98rem;
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:-.01em;
+  margin-bottom:2px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.step-head h2 i{
+  color:var(--primary);
+  font-size:.92rem;
+}
+.step-head .hint{
+  font-size:.76rem;
+  color:var(--text-3);
+  font-weight:600;
+}
+
+.step p.desc{
+  font-size:.84rem;
+  color:var(--text-2);
+  line-height:1.7;
+  margin-bottom:14px;
+}
+.step p.desc a{
+  color:var(--primary);
+  font-weight:700;
+  border-bottom:1px dashed var(--primary);
+  transition:border-color .15s var(--ease);
+}
+.step p.desc a:hover{border-bottom-style:solid}
+.step p.desc b{
+  color:var(--text);
+  font-weight:700;
+  background:var(--bg-2);
+  padding:1px 6px;
+  border-radius:var(--radius-xs);
+  font-size:.8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FIELDS
+   ═══════════════════════════════════════════════════════════ */
+.field{margin-bottom:14px}
+.field:last-of-type{margin-bottom:0}
+.field-label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:.78rem;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.field-label i{
+  color:var(--primary);
+  font-size:.72rem;
+  width:14px;
+  text-align:center;
+}
+.field-input,
+.field-textarea{
+  width:100%;
+  padding:11px 14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:#fff;
+  font-family:var(--font);
+  font-size:.88rem;
+  font-weight:600;
+  color:var(--text);
   outline:none;
+  transition:border-color .15s var(--ease),box-shadow .15s var(--ease);
+}
+.field-input::placeholder,
+.field-textarea::placeholder{color:var(--text-3);font-weight:500}
+.field-input:hover,
+.field-textarea:hover{border-color:var(--border-strong)}
+.field-input:focus,
+.field-textarea:focus{
+  border-color:var(--primary);
+  box-shadow:var(--shadow-focus);
+}
+.field-textarea{
+  font-family:var(--mono);
+  font-size:.78rem;
+  font-weight:500;
+  line-height:1.6;
+  min-height:240px;
   resize:vertical;
   direction:ltr;
   text-align:left;
-  transition:.2s
+}
+.field-textarea#configContent{
+  min-height:200px;
+  background:#f8fafc;
 }
 
-#firebaseCode:focus{
-  border-color:#0b6e4f;
-  box-shadow:0 0 0 3px rgba(11,110,79,.1)
+/* ═══════════════════════════════════════════════════════════
+   HINTS
+   ═══════════════════════════════════════════════════════════ */
+.hint-box{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  padding:10px 14px;
+  background:var(--info-tint);
+  border:1px solid #bfdbfe;
+  border-radius:var(--radius-sm);
+  font-size:.76rem;
+  color:#1e40af;
+  line-height:1.6;
+  margin-top:10px;
 }
+.hint-box i{color:var(--info);font-size:.85rem;margin-top:2px;flex-shrink:0}
 
-.firebase-hint{
-  margin-top:8px;
-  font-size:.75rem;
-  color:#64748b
-}
-
-/* معاينة Firebase */
+/* Firebase Preview */
 #firebasePreview{
   display:none;
   margin-top:12px;
-  padding:12px 14px;
-  border-radius:12px;
+  padding:12px 16px;
+  border-radius:var(--radius-sm);
   font-size:.78rem;
-  line-height:1.8
+  line-height:1.8;
+  border:1px solid;
+  font-weight:600;
 }
-
 #firebasePreview code{
-  direction:ltr;
   display:inline-block;
-  background:#d1fae5;
-  padding:2px 6px;
-  border-radius:5px;
-  font-family:monospace;
-  margin-top:3px
+  background:rgba(0,0,0,.06);
+  padding:2px 8px;
+  border-radius:var(--radius-xs);
+  font-family:var(--mono);
+  font-size:.72rem;
+  margin-top:3px;
+  direction:ltr;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════ */
 .btn-primary{
   width:100%;
-  padding:14px;
+  padding:14px 20px;
   border:none;
-  border-radius:40px;
-  background:linear-gradient(135deg,#0b6e4f,#1a8a6a);
+  border-radius:var(--radius-sm);
+  background:var(--primary);
   color:#fff;
   font-weight:800;
-  font-size:1rem;
+  font-size:.92rem;
+  font-family:var(--font);
   cursor:pointer;
-  font-family:'Cairo',sans-serif;
-  box-shadow:0 6px 20px rgba(11,110,79,.25);
-  transition:.2s;
-  margin-bottom:12px
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 4px 12px var(--primary-soft);
+  transition:background .15s var(--ease),transform .1s var(--ease),box-shadow .15s var(--ease);
+  letter-spacing:-.005em;
 }
+.btn-primary:hover{background:var(--primary-hover);box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 8px 20px var(--primary-soft)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-primary:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn-primary i{font-size:14px}
 
-.btn-primary:hover{
-  transform:translateY(-2px)
-}
-
-.btn-primary:disabled{
-  opacity:.5;
-  cursor:not-allowed
-}
-
-.status{
-  padding:12px 16px;
-  border-radius:14px;
-  margin-bottom:14px;
-  font-weight:600;
+.btn-secondary{
+  padding:11px 18px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  background:#fff;
+  color:var(--text);
+  font-weight:700;
   font-size:.85rem;
-  display:none
+  font-family:var(--font);
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:background .15s var(--ease),border-color .15s var(--ease);
 }
+.btn-secondary:hover{background:#f3f5f8;border-color:var(--border-strong)}
+.btn-secondary i{font-size:12px}
 
-.status.success{
-  background:#d1fae5;
-  color:#065f46;
-  display:block
-}
-
-.status.error{
-  background:#fee2e2;
-  color:#991b1b;
-  display:block
-}
-
-.status.info{
-  background:#dbeafe;
-  color:#1e40af;
-  display:block
-}
-
-.status.warning{
-  background:#fef3c7;
-  color:#92400e;
-  display:block
-}
-
+/* ═══════════════════════════════════════════════════════════
+   MANUAL BOX (config content)
+   ═══════════════════════════════════════════════════════════ */
 #manualBox{
   display:none;
-  margin-top:20px;
-  padding:18px;
-  background:#eff6ff;
-  border:2px solid #3b82f6;
-  border-radius:16px
-}
-
-#manualBox h3{
-  color:#1e40af;
-  font-size:1rem;
-  margin-bottom:8px
-}
-
-#manualBox p{
-  color:#1e3a8a;
-  font-size:.85rem;
-  margin-bottom:12px;
-  line-height:1.6
-}
-
-#configContent{
-  width:100%;
-  min-height:220px;
-  padding:12px;
-  border:1px solid #93c5fd;
-  border-radius:12px;
-  font-family:monospace;
-  font-size:.72rem;
-  line-height:1.5;
   background:#fff;
-  direction:ltr;
-  text-align:left;
-  resize:vertical
+  border:1px solid var(--primary-200);
+  border-radius:var(--radius-md);
+  padding:22px;
+  box-shadow:var(--shadow-sm);
+}
+#manualBox h3{
+  color:var(--primary-hover);
+  font-size:1rem;
+  font-weight:800;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#manualBox h3 i{color:var(--primary)}
+#manualBox p{
+  color:var(--text-2);
+  font-size:.84rem;
+  margin-bottom:14px;
+  line-height:1.7;
+}
+#manualBox p code{
+  background:var(--primary-50);
+  padding:2px 8px;
+  border-radius:var(--radius-xs);
+  font-family:var(--mono);
+  color:var(--primary);
+  font-size:.78rem;
+  border:1px solid var(--primary-100);
+}
+.manual-actions{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+  flex-wrap:wrap;
+}
+.manual-actions .btn-secondary,
+.manual-actions .btn-primary{
+  flex:1;
+  min-width:140px;
 }
 
-.copy-btn{
-  margin-top:10px;
-  padding:10px 20px;
-  border:none;
-  border-radius:40px;
-  background:#3b82f6;
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
-  font-family:'Cairo',sans-serif;
-  font-size:.85rem;
-  margin-left:6px
-}
-
-.copy-btn:hover{
-  background:#2563eb
-}
-
+/* ═══════════════════════════════════════════════════════════
+   SUCCESS NAV
+   ═══════════════════════════════════════════════════════════ */
 #successNav{
   display:none;
-  margin-top:20px;
-  padding:22px;
-  background:#ecfdf5;
-  border:2px solid #10b981;
-  border-radius:16px;
-  text-align:center
+  background:linear-gradient(135deg,var(--success-tint),#f0fdf4);
+  border:1px solid #6ee7b7;
+  border-radius:var(--radius-md);
+  padding:24px 22px;
+  text-align:center;
+  box-shadow:var(--shadow-sm);
 }
-
+#successNav .success-icon{
+  width:64px;height:64px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--success),#059669);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  box-shadow:0 8px 20px rgba(16,185,129,.3);
+}
 #successNav h3{
   color:#065f46;
-  margin-bottom:8px;
-  font-size:1.1rem
+  font-size:1.05rem;
+  font-weight:800;
+  margin-bottom:6px;
 }
-
 #successNav .desc{
   color:#065f46;
   font-size:.85rem;
-  margin-bottom:16px
+  margin-bottom:18px;
+  line-height:1.6;
 }
-
 #successNav .nav-buttons{
   display:flex;
   gap:10px;
-  flex-wrap:wrap;
   justify-content:center;
-  margin-bottom:12px
+  flex-wrap:wrap;
 }
 
-#successNav .nav-btn{
-  padding:12px 24px;
-  border-radius:40px;
+/* ═══════════════════════════════════════════════════════════
+   INSTRUCTIONS
+   ═══════════════════════════════════════════════════════════ */
+.instructions{
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  border:1px solid #fde68a;
+  border-radius:var(--radius-md);
+  padding:20px 22px;
+  box-shadow:var(--shadow-xs);
+}
+.instructions h3{
+  font-size:.94rem;
   font-weight:800;
-  text-decoration:none;
-  display:inline-flex;
+  color:#92400e;
+  margin-bottom:14px;
+  display:flex;
   align-items:center;
   gap:8px;
-  font-size:.9rem
 }
-
-#successNav .nav-btn.primary{
-  background:linear-gradient(135deg,#0b6e4f,#1a8a6a);
-  color:#fff
-}
-
-#successNav .nav-btn.secondary{
-  background:#fff;
-  color:#0f172a;
-  border:2px solid #e2e8f0
-}
-
-.instructions{
-  background:#fffbeb;
-  border:1px solid #fde68a;
-  border-radius:16px;
-  padding:20px;
-  margin-top:24px
-}
-
-.instructions h3{
-  font-size:1rem;
-  font-weight:800;
-  color:#92400e;
-  margin-bottom:12px
-}
-
+.instructions h3 i{color:#d97706}
 .instructions ol{
-  list-style-position:inside;
-  padding-right:8px
+  list-style:none;
+  padding:0;
+  counter-reset:step-counter;
 }
-
 .instructions li{
-  font-size:.85rem;
+  counter-increment:step-counter;
+  font-size:.83rem;
   color:#78350f;
-  margin-bottom:8px
+  padding:10px 0 10px 0;
+  padding-inline-start:36px;
+  position:relative;
+  line-height:1.65;
+  border-bottom:1px dashed rgba(217,119,6,.25);
 }
-
+.instructions li:last-child{border-bottom:none;padding-bottom:0}
+.instructions li::before{
+  content:counter(step-counter);
+  position:absolute;
+  inset-inline-start:0;
+  top:10px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:#d97706;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.72rem;
+  font-weight:800;
+}
 .instructions code{
-  background:#fef3c7;
+  background:rgba(255,255,255,.6);
   padding:2px 8px;
-  border-radius:6px;
-  font-family:monospace;
+  border-radius:var(--radius-xs);
+  font-family:var(--mono);
   color:#92400e;
-  font-size:.8rem
+  font-size:.78rem;
+  border:1px solid rgba(217,119,6,.2);
 }
 
-details{
-  margin-top:16px;
-  font-size:.85rem
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.setup-footer{
+  text-align:center;
+  padding:30px 16px 20px;
+  color:var(--text-3);
+  font-size:.76rem;
+  font-family:var(--mono);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.setup-footer i{color:var(--primary);font-size:.85rem}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media(max-width:640px){
+  .setup-header{padding:12px 14px}
+  .setup-header .brand span{font-size:.88rem;max-width:140px}
+  .setup-header .brand i{width:30px;height:30px;font-size:13px}
+  .hdr-btn{padding:7px 10px;font-size:12px}
+  .hdr-btn span{display:none}
+  .hdr-btn i{font-size:14px}
+
+  .container{margin:16px auto;padding:0 12px;gap:14px}
+  .intro-card{padding:18px;gap:12px}
+  .intro-card .icon{width:42px;height:42px;font-size:17px}
+  .intro-card h1{font-size:1rem}
+  .intro-card p{font-size:.78rem}
+
+  .step{padding:16px 16px;border-radius:var(--radius-sm)}
+  .step-head .step-num{width:28px;height:28px;font-size:.8rem}
+  .step-head h2{font-size:.9rem}
+  .step-head .hint{font-size:.7rem}
+
+  .field-textarea{min-height:200px;font-size:.72rem}
+  .field-textarea#configContent{min-height:160px}
+
+  .manual-actions .btn-secondary,
+  .manual-actions .btn-primary{flex:1 1 100%}
+
+  #successNav{padding:20px 16px}
+  #successNav .nav-buttons{flex-direction:column}
+  #successNav .nav-buttons a,
+  #successNav .nav-buttons button{width:100%;justify-content:center}
 }
 
-details summary{
-  cursor:pointer;
-  font-weight:700;
-  color:#0b6e4f;
-  padding:8px 0
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+</style>
+</head>
+<body>
 
-details div{
-  color:#475569;
-  padding:8px 0;
-  line-height:1.7
-}
+<!-- ═══════════════════════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════════════════════ -->
+<header class="setup-header">
+  <div class="brand">
+    <i class="fas fa-cog"></i>
+    <span data-t="pageTitle">⚙️ معالج إعداد المتجر</span>
+  </div>
+  <div class="actions">
+    <a href="admin.html" class="hdr-btn primary" title="رجوع للوحة الإدارة">
+      <i class="fas fa-arrow-right"></i>
+      <span data-t="backToAdmin">العودة للوحة الإدارة</span>
+    </a>
+    <a href="index.html" class="hdr-btn" title="عرض المتجر">
+      <i class="fas fa-store"></i>
+      <span data-t="viewStore">عرض المتجر</span>
+    </a>
+  </div>
+</header>
 
-details code{
-  background:#f1f5f9;
-  padding:2px 6px;
-  border-radius:4px;
-  font-family:monospace;
-  color:#0b6e4f;
-  font-size:.8rem
-}
+<!-- ═══════════════════════════════════════════════════════════
+     CONTAINER
+     ═══════════════════════════════════════════════════════════ -->
+<div class="container">
 
-@media(max-width:600px){
-  body{
-    padding:10px
-  }
+  <!-- INTRO -->
+  <div class="intro-card">
+    <div class="icon"><i class="fas fa-rocket"></i></div>
+    <div class="text">
+      <h1 data-t="pageTitle">⚙️ معالج إعداد المتجر</h1>
+      <p data-t-html="subtitle">الصق كود Firebase أدناه، وسيتم توليد ملف <code>config.js</code></p>
+    </div>
+  </div>
 
-  .container{
-    padding:20px;
-    border-radius:18px
-  }
+  <!-- STATUS -->
+  <div id="statusBox" class="status"></div>
 
-  h1{
-    font-size:1.35rem
-  }
+  <!-- STEP 1: FIREBASE -->
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-title">
+        <h2><i class="fas fa-fire"></i> <span data-t="step1Title">1) إعداد Firebase</span></h2>
+        <div class="hint">Realtime Database + Authentication</div>
+      </div>
+    </div>
 
-  #firebaseCode{
-    min-height:240px
-  }
-}
-</style></head><body><div class="container">  <!-- أزرار التنقل -->  <div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:16px;
-    flex-wrap:wrap;
-    gap:8px;
-  "><a
-  href="admin.html"
-  style="
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:8px 16px;
-    background:#0b6e4f;
-    color:#fff;
-    text-decoration:none;
-    border-radius:40px;
-    font-weight:700;
-    font-size:.82rem;
-  "
->
-  <i class="fas fa-arrow-right"></i>
-  <span data-t="backToAdmin">العودة للوحة الإدارة</span>
-</a>
+    <p class="desc" data-t-html="step1Desc">
+      اذهب إلى
+      <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a>
+      وأنشئ مشروعاً، ثم:
+      <br>
+      • <b>Build → Realtime Database → Create Database → Test Mode</b>
+      <br>
+      • <b>Build → Authentication → Get Started → Anonymous → Enable</b>
+      <br>
+      • <b>⚙️ Project Settings → Your apps</b>
+      → أيقونة الويب <b>&lt;/&gt;</b>
+      → انسخ كود Firebase بالكامل.
+    </p>
 
-<a
-  href="index.html"
-  style="
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:8px 16px;
-    background:#fff;
-    color:#0f172a;
-    text-decoration:none;
-    border-radius:40px;
-    font-weight:700;
-    font-size:.82rem;
-    border:1px solid #e2e8f0;
-  "
->
-  <i class="fas fa-store"></i>
-  <span data-t="viewStore">عرض المتجر</span>
-</a>
-
-  </div>  <h1 data-t="pageTitle">⚙️ معالج إعداد المتجر</h1>  <p class="subtitle" data-t-html="subtitle">
-    الصق كود Firebase أدناه، وسيتم توليد ملف <code>config.js</code>
-  </p>  <div id="statusBox" class="status"></div>  <!-- ═══════════════════════════════════════════════
-       1) FIREBASE
-       ═══════════════════════════════════════════════ -->  <div class="step"><h2>
-  <i class="fas fa-fire"></i>
-  <span data-t="step1Title">1) إعداد Firebase</span>
-</h2>
-
-<p data-t-html="step1Desc">
-  اذهب إلى
-  <a
-    href="https://console.firebase.google.com"
-    target="_blank"
-    rel="noopener"
-  >Firebase Console</a>
-  وأنشئ مشروعاً، ثم:
-  <br>
-  • <b>Build → Realtime Database → Create Database → Test Mode</b>
-  <br>
-  • <b>Build → Authentication → Get Started → Anonymous → Enable</b>
-  <br>
-  • <b>⚙️ Project Settings → Your apps</b>
-  → أيقونة الويب <b>&lt;/&gt;</b>
-  → انسخ كود Firebase بالكامل.
-</p>
-
-<label data-t="firebaseCodeLabel">
-  كود Firebase بالكامل
-</label>
-
-<textarea
-  id="firebaseCode"
-  placeholder='const firebaseConfig = {
-
-apiKey: "AIzaSy...",
-authDomain: "xxx.firebaseapp.com",
-databaseURL: "https://xxx-default-rtdb.firebaseio.com",
-projectId: "xxx-xxxx",
-storageBucket: "xxx.appspot.com",
-messagingSenderId: "123456789",
-appId: "1:123:web:abc..."
+    <div class="field">
+      <label class="field-label" for="firebaseCode">
+        <i class="fas fa-code"></i>
+        <span data-t="firebaseCodeLabel">كود Firebase بالكامل</span>
+      </label>
+      <textarea
+        id="firebaseCode"
+        class="field-textarea"
+        placeholder='const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "xxx.firebaseapp.com",
+  databaseURL: "https://xxx-default-rtdb.firebaseio.com",
+  projectId: "xxx-xxxx",
+  storageBucket: "xxx.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123:web:abc..."
 };'
-dir="ltr"
-spellcheck="false"
-autocomplete="off"
-></textarea>
+        dir="ltr"
+        spellcheck="false"
+        autocomplete="off"
+      ></textarea>
+    </div>
 
-<div class="firebase-hint" data-t="firebaseHint">
-  💡 الصق الكود كما هو من Firebase Console بدون تعديل.
+    <div class="hint-box">
+      <i class="fas fa-lightbulb"></i>
+      <span data-t="firebaseHint">💡 الصق الكود كما هو من Firebase Console بدون تعديل.</span>
+    </div>
+
+    <div id="firebasePreview"></div>
+  </div>
+
+  <!-- STEP 2: IMGBB -->
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-title">
+        <h2><i class="fas fa-image"></i> <span data-t="step2Title">2) مفتاح ImgBB</span></h2>
+        <div class="hint">لرفع الصور</div>
+      </div>
+    </div>
+
+    <p class="desc" data-t-html="step2Desc">
+      اذهب إلى
+      <a href="https://api.imgbb.com" target="_blank" rel="noopener">api.imgbb.com</a>
+      → اضغط <b>Get API Key</b>
+      → سجّل بحساب Google
+      → انسخ المفتاح.
+    </p>
+
+    <div class="field">
+      <label class="field-label" for="imgbbApiKey">
+        <i class="fas fa-key"></i>
+        <span>ImgBB API Key</span>
+      </label>
+      <input
+        id="imgbbApiKey"
+        class="field-input"
+        placeholder="abc123..."
+        dir="ltr"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+  </div>
+
+  <!-- STEP 3: OWNER -->
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-title">
+        <h2><i class="fas fa-crown"></i> <span data-t="step3Title">3) حساب المالك (للدخول)</span></h2>
+        <div class="hint">أحرف إنجليزية وأرقام فقط</div>
+      </div>
+    </div>
+
+    <p class="desc" data-t="step3Desc">
+      هذا الحساب سيُستخدم للدخول إلى لوحة الإدارة.
+      استخدم أحرفاً إنجليزية وأرقاماً فقط.
+    </p>
+
+    <div class="field">
+      <label class="field-label" for="ownerUser">
+        <i class="fas fa-user"></i>
+        <span data-t="ownerUserLabel">اسم المستخدم</span>
+      </label>
+      <input
+        id="ownerUser"
+        class="field-input"
+        placeholder="admin"
+        dir="ltr"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="ownerPass">
+        <i class="fas fa-lock"></i>
+        <span data-t="ownerPassLabel">كلمة المرور</span>
+      </label>
+      <input
+        id="ownerPass"
+        class="field-input"
+        type="password"
+        placeholder="••••••"
+        dir="ltr"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <!-- GENERATE BUTTON -->
+  <button class="btn-primary" id="generateBtn">
+    <i class="fas fa-cog"></i>
+    <span data-t="generateBtn">توليد config.js</span>
+  </button>
+
+  <!-- MANUAL BOX -->
+  <div id="manualBox">
+    <h3>
+      <i class="fas fa-clipboard-check"></i>
+      <span data-t="manualTitle">📋 خطوة أخيرة: انسخ هذا المحتوى</span>
+    </h3>
+
+    <p data-t-html="manualDesc">
+      اضغط <b>"نسخ المحتوى"</b>، ثم افتح ملف <code>config.js</code>
+      على جهازك والصق فيه المحتوى الجديد (احذف كل القديم أولاً)، ثم احفظ.
+    </p>
+
+    <textarea id="configContent" class="field-textarea" readonly></textarea>
+
+    <div class="manual-actions">
+      <button class="btn-secondary" id="copyBtn">
+        <i class="fas fa-copy"></i>
+        <span data-t="copyBtn">نسخ المحتوى</span>
+      </button>
+      <button class="btn-primary" id="downloadBtn" style="background:var(--primary-600);">
+        <i class="fas fa-download"></i>
+        <span data-t="downloadBtn">تحميل الملف</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SUCCESS NAV -->
+  <div id="successNav">
+    <div class="success-icon"><i class="fas fa-check"></i></div>
+    <h3 data-t="successTitle">🎉 تم بنجاح!</h3>
+    <p class="desc" id="successDesc" data-t="successDesc">
+      تم توليد config.js. اذهب الآن إلى لوحة الإدارة.
+    </p>
+    <div class="nav-buttons">
+      <a href="admin.html" class="btn-primary" style="width:auto;min-width:200px">
+        <i class="fas fa-tools"></i>
+        <span data-t="openAdmin">🛠️ فتح لوحة الإدارة</span>
+      </a>
+      <a href="index.html" class="btn-secondary" style="min-width:160px">
+        <i class="fas fa-store"></i>
+        <span data-t="openStore">🏪 فتح المتجر</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- INSTRUCTIONS -->
+  <div class="instructions">
+    <h3><i class="fas fa-info-circle"></i> <span data-t="instructionsTitle">📌 بعد توليد الملف:</span></h3>
+    <ol>
+      <li data-t-html="instr1">انسخ محتوى <code>config.js</code> من الصندوق الأزرق أعلاه.</li>
+      <li data-t-html="instr2">افتح ملف <code>config.js</code> على جهازك (بالمفكرة أو أي محرر نصوص).</li>
+      <li data-t="instr3">احذف كل محتواه القديم، والصق المحتوى الجديد، ثم احفظ.</li>
+      <li data-t="instr4">ارفع الملف إلى استضافتك (استبدل القديم).</li>
+      <li data-t-html="instr5">افتح <code>admin.html</code> وسجّل الدخول.</li>
+    </ol>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="setup-footer">
+    <i class="fas fa-shield-alt"></i>
+    <span>Setup Wizard · v6</span>
+  </div>
+
 </div>
 
-<div id="firebasePreview"></div>
-
-  </div>  <!-- ═══════════════════════════════════════════════
-       2) IMGBB
-       ═══════════════════════════════════════════════ -->  <div class="step"><h2>
-  <i class="fas fa-image"></i>
-  <span data-t="step2Title">2) مفتاح ImgBB</span>
-</h2>
-
-<p data-t-html="step2Desc">
-  اذهب إلى
-  <a
-    href="https://api.imgbb.com"
-    target="_blank"
-    rel="noopener"
-  >api.imgbb.com</a>
-  → اضغط <b>Get API Key</b>
-  → سجّل بحساب Google
-  → انسخ المفتاح.
-</p>
-
-<label>ImgBB API Key</label>
-
-<input
-  id="imgbbApiKey"
-  placeholder="abc123..."
-  dir="ltr"
-  autocomplete="off"
-  spellcheck="false"
-/>
-
-  </div>  <!-- ═══════════════════════════════════════════════
-       3) OWNER
-       ═══════════════════════════════════════════════ -->  <div class="step"><h2>
-  <i class="fas fa-crown"></i>
-  <span data-t="step3Title">
-    3) حساب المالك (للدخول)
-  </span>
-</h2>
-
-<p data-t="step3Desc">
-  هذا الحساب سيُستخدم للدخول إلى لوحة الإدارة.
-  استخدم أحرفاً إنجليزية وأرقاماً فقط.
-</p>
-
-<label data-t="ownerUserLabel">
-  اسم المستخدم
-</label>
-
-<input
-  id="ownerUser"
-  placeholder="admin"
-  dir="ltr"
-  autocomplete="off"
-  spellcheck="false"
-/>
-
-<label data-t="ownerPassLabel">
-  كلمة المرور
-</label>
-
-<input
-  id="ownerPass"
-  type="password"
-  placeholder="••••••"
-  dir="ltr"
-  autocomplete="off"
-/>
-
-  </div>  <!-- ═══════════════════════════════════════════════
-       GENERATE
-       ═══════════════════════════════════════════════ -->  <button class="btn-primary" id="generateBtn"><i class="fas fa-cog"></i>
-
-<span data-t="generateBtn">
-  توليد config.js
-</span>
-
-  </button>  <!-- ═══════════════════════════════════════════════
-       RESULT
-       ═══════════════════════════════════════════════ -->  <div id="manualBox"><h3 data-t="manualTitle">
-  📋 خطوة أخيرة: انسخ هذا المحتوى
-</h3>
-
-<p data-t-html="manualDesc">
-  اضغط <b>"نسخ المحتوى"</b>، ثم افتح ملف
-  <code>config.js</code>
-  على جهازك والصق فيه المحتوى الجديد
-  (احذف كل القديم أولاً)، ثم احفظ.
-</p>
-
-<textarea
-  id="configContent"
-  readonly
-></textarea>
-
-<button class="copy-btn" id="copyBtn">
-
-  <i class="fas fa-copy"></i>
-
-  <span data-t="copyBtn">
-    نسخ المحتوى
-  </span>
-
-</button>
-
-<button
-  class="copy-btn"
-  id="downloadBtn"
-  style="background:#0b6e4f;"
->
-
-  <i class="fas fa-download"></i>
-
-  <span data-t="downloadBtn">
-    تحميل الملف
-  </span>
-
-</button>
-
-  </div>  <!-- ═══════════════════════════════════════════════
-       SUCCESS
-       ═══════════════════════════════════════════════ -->  <div id="successNav"><h3 data-t="successTitle">
-  🎉 تم بنجاح!
-</h3>
-
-<p
-  class="desc"
-  id="successDesc"
-  data-t="successDesc"
->
-  تم توليد config.js. اذهب الآن إلى لوحة الإدارة.
-</p>
-
-<div class="nav-buttons">
-
-  <a
-    href="admin.html"
-    class="nav-btn primary"
-    data-t="openAdmin"
-  >
-    🛠️ فتح لوحة الإدارة
-  </a>
-
-  <a
-    href="index.html"
-    class="nav-btn secondary"
-    data-t="openStore"
-  >
-    🏪 فتح المتجر
-  </a>
-
-</div>
-
-  </div>  <!-- ═══════════════════════════════════════════════
-       INSTRUCTIONS
-       ═══════════════════════════════════════════════ -->  <div class="instructions"><h3 data-t="instructionsTitle">
-  📌 بعد توليد الملف:
-</h3>
-
-<ol>
-
-  <li data-t-html="instr1">
-    انسخ محتوى <code>config.js</code>
-    من الصندوق الأزرق أعلاه.
-  </li>
-
-  <li data-t-html="instr2">
-    افتح ملف <code>config.js</code>
-    على جهازك (بالمفكرة أو أي محرر نصوص).
-  </li>
-
-  <li data-t="instr3">
-    احذف كل محتواه القديم، والصق المحتوى الجديد، ثم احفظ.
-  </li>
-
-  <li data-t="instr4">
-    ارفع الملف إلى استضافتك (استبدل القديم).
-  </li>
-
-  <li data-t-html="instr5">
-    افتح <code>admin.html</code> وسجّل الدخول.
-  </li>
-
-</ol>
-
-  </div></div><!-- ═══════════════════════════════════════════════════════════════
-     🌐 نظام الترجمة
-     ═══════════════════════════════════════════════════════════════ --><script>
-
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPT 1: TRANSLATIONS (بدون تغيير)
+     ═══════════════════════════════════════════════════════════ -->
+<script>
 const SETUP_I18N = {
-
   ar: {
-
-    backToAdmin:
-      "العودة للوحة الإدارة",
-
-    viewStore:
-      "عرض المتجر",
-
-    pageTitle:
-      "⚙️ معالج إعداد المتجر",
-
-    subtitle:
-      'الصق كود Firebase أدناه، وسيتم توليد ملف <code>config.js</code>',
-
-    step1Title:
-      "1) إعداد Firebase",
-
-    step1Desc:
-      'اذهب إلى <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a> وأنشئ مشروعاً، ثم:<br>• <b>Build → Realtime Database → Create Database → Test Mode</b><br>• <b>Build → Authentication → Get Started → Anonymous → Enable</b><br>• <b>⚙️ Project Settings → Your apps</b> → أيقونة الويب <b>&lt;/&gt;</b> → انسخ كود Firebase بالكامل.',
-
-    firebaseCodeLabel:
-      "كود Firebase بالكامل",
-
-    firebaseHint:
-      "💡 الصق الكود كما هو من Firebase Console بدون تعديل.",
-
-    step2Title:
-      "2) مفتاح ImgBB",
-
-    step2Desc:
-      'اذهب إلى <a href="https://api.imgbb.com" target="_blank" rel="noopener">api.imgbb.com</a> → اضغط <b>Get API Key</b> → سجّل بحساب Google → انسخ المفتاح.',
-
-    step3Title:
-      "3) حساب المالك (للدخول)",
-
-    step3Desc:
-      "هذا الحساب سيُستخدم للدخول إلى لوحة الإدارة. استخدم أحرفاً إنجليزية وأرقاماً فقط.",
-
-    ownerUserLabel:
-      "اسم المستخدم",
-
-    ownerPassLabel:
-      "كلمة المرور",
-
-    generateBtn:
-      "توليد config.js",
-
-    manualTitle:
-      "📋 خطوة أخيرة: انسخ هذا المحتوى",
-
-    manualDesc:
-      'اضغط <b>"نسخ المحتوى"</b>، ثم افتح ملف <code>config.js</code> على جهازك والصق فيه المحتوى الجديد (احذف كل القديم أولاً)، ثم احفظ.',
-
-    copyBtn:
-      "نسخ المحتوى",
-
-    downloadBtn:
-      "تحميل الملف",
-
-    successTitle:
-      "🎉 تم بنجاح!",
-
-    successDesc:
-      "تم توليد config.js. اذهب الآن إلى لوحة الإدارة.",
-
-    openAdmin:
-      "🛠️ فتح لوحة الإدارة",
-
-    openStore:
-      "🏪 فتح المتجر",
-
-    instructionsTitle:
-      "📌 بعد توليد الملف:",
-
-    instr1:
-      'انسخ محتوى <code>config.js</code> من الصندوق الأزرق أعلاه.',
-
-    instr2:
-      'افتح ملف <code>config.js</code> على جهازك (بالمفكرة أو أي محرر نصوص).',
-
-    instr3:
-      "احذف كل محتواه القديم، والصق المحتوى الجديد، ثم احفظ.",
-
-    instr4:
-      "ارفع الملف إلى استضافتك (استبدل القديم).",
-
-    instr5:
-      'افتح <code>admin.html</code> وسجّل الدخول.',
-
-    msgFillFirebase:
-      "⚠️ الصق كود Firebase بالكامل في الخانة المخصصة.",
-
-    msgFirebaseIncomplete:
-      "⚠️ تعذر استخراج جميع بيانات Firebase المطلوبة. تأكد من نسخ كود Firebase بالكامل.",
-
-    msgMissing:
-      "البيانات المفقودة:",
-
-    msgApiKeyError:
-      '⚠️ خطأ في apiKey: يجب أن يبدأ بـ <code>AIzaSy...</code>',
-
-    msgImgbbRequired:
-      "⚠️ أدخل مفتاح ImgBB",
-
-    msgOwnerRequired:
-      "⚠️ أدخل بيانات حساب المالك",
-
-    msgPassTooShort:
-      "⚠️ كلمة المرور يجب أن تكون 4 أحرف على الأقل",
-
-    msgOwnerInvalid:
-      "⚠️ اسم المالك غير صالح. استخدم أحرفاً إنجليزية وأرقاماً فقط.",
-
-    msgOwnerAdjusted:
-      "ℹ️ تم تعديل اسم المالك إلى: ",
-
-    msgOwnerAdjustedEnd:
-      " (الرموز الخاصة غير مسموحة في Firebase)",
-
-    msgConnecting:
-      "⏳ جاري الاتصال بـ Firebase...",
-
-    msgOwnerExists:
-      "⚠️ اسم المالك مستخدم بالفعل. اختر اسماً آخر.",
-
-    msgProcessing:
-      "جاري المعالجة...",
-
-    msgOwnerCreated:
-      "✅ تم إنشاء حساب المالك! الآن انسخ محتوى config.js من الصندوق الأزرق أدناه.",
-
-    msgErrorPrefix:
-      "❌ ",
-
-    msgInvalidToken:
-      "اسم المالك يحتوي على رموز غير مسموحة. استخدم أحرفاً إنجليزية وأرقاماً فقط (مثل: admin).",
-
-    msgDbUrl:
-      "تعذّر الاتصال بـ Firebase. تأكد من صحة databaseURL وأن Realtime Database مُفعَّل (وليس Firestore).",
-
-    msgPermission:
-      "صلاحيات Firebase ترفض الكتابة. تأكد من أن قاعدة البيانات في وضع Test Mode.",
-
-    msgBadApiKey:
-      "مفتاح API غير صحيح. تأكد من نسخه بدقة (يبدأ بـ AIzaSy).",
-
-    msgNoContent:
-      "⚠️ لم يتم توليد المحتوى بعد.",
-
-    msgCopied:
-      "✅ تم نسخ المحتوى! افتح config.js على جهازك والصقه.",
-
-    msgCopiedShort:
-      "✅ تم نسخ المحتوى!",
-
-    msgCopyManual:
-      "⚠️ انسخ يدوياً: اضغط مطوّلاً داخل الصندوق ثم اختر 'تحديد الكل' ثم 'نسخ'.",
-
-    msgDownloading:
-      "📥 جاري تحميل الملف...",
-
-    msgDownloadFailed:
-      "❌ التحميل فشل. استخدم زر النسخ.",
-
-    consoleAutoDlFailed:
-      "تنزيل تلقائي فشل:"
-
+    backToAdmin: "العودة للوحة الإدارة",
+    viewStore: "عرض المتجر",
+    pageTitle: "⚙️ معالج إعداد المتجر",
+    subtitle: 'الصق كود Firebase أدناه، وسيتم توليد ملف <code>config.js</code>',
+    step1Title: "1) إعداد Firebase",
+    step1Desc: 'اذهب إلى <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a> وأنشئ مشروعاً، ثم:<br>• <b>Build → Realtime Database → Create Database → Test Mode</b><br>• <b>Build → Authentication → Get Started → Anonymous → Enable</b><br>• <b>⚙️ Project Settings → Your apps</b> → أيقونة الويب <b>&lt;/&gt;</b> → انسخ كود Firebase بالكامل.',
+    firebaseCodeLabel: "كود Firebase بالكامل",
+    firebaseHint: "💡 الصق الكود كما هو من Firebase Console بدون تعديل.",
+    step2Title: "2) مفتاح ImgBB",
+    step2Desc: 'اذهب إلى <a href="https://api.imgbb.com" target="_blank" rel="noopener">api.imgbb.com</a> → اضغط <b>Get API Key</b> → سجّل بحساب Google → انسخ المفتاح.',
+    step3Title: "3) حساب المالك (للدخول)",
+    step3Desc: "هذا الحساب سيُستخدم للدخول إلى لوحة الإدارة. استخدم أحرفاً إنجليزية وأرقاماً فقط.",
+    ownerUserLabel: "اسم المستخدم",
+    ownerPassLabel: "كلمة المرور",
+    generateBtn: "توليد config.js",
+    manualTitle: "📋 خطوة أخيرة: انسخ هذا المحتوى",
+    manualDesc: 'اضغط <b>"نسخ المحتوى"</b>، ثم افتح ملف <code>config.js</code> على جهازك والصق فيه المحتوى الجديد (احذف كل القديم أولاً)، ثم احفظ.',
+    copyBtn: "نسخ المحتوى",
+    downloadBtn: "تحميل الملف",
+    successTitle: "🎉 تم بنجاح!",
+    successDesc: "تم توليد config.js. اذهب الآن إلى لوحة الإدارة.",
+    openAdmin: "🛠️ فتح لوحة الإدارة",
+    openStore: "🏪 فتح المتجر",
+    instructionsTitle: "📌 بعد توليد الملف:",
+    instr1: 'انسخ محتوى <code>config.js</code> من الصندوق الأزرق أعلاه.',
+    instr2: 'افتح ملف <code>config.js</code> على جهازك (بالمفكرة أو أي محرر نصوص).',
+    instr3: "احذف كل محتواه القديم، والصق المحتوى الجديد، ثم احفظ.",
+    instr4: "ارفع الملف إلى استضافتك (استبدل القديم).",
+    instr5: 'افتح <code>admin.html</code> وسجّل الدخول.',
+    msgFillFirebase: "⚠️ الصق كود Firebase بالكامل في الخانة المخصصة.",
+    msgFirebaseIncomplete: "⚠️ تعذر استخراج جميع بيانات Firebase المطلوبة. تأكد من نسخ كود Firebase بالكامل.",
+    msgMissing: "البيانات المفقودة:",
+    msgApiKeyError: '⚠️ خطأ في apiKey: يجب أن يبدأ بـ <code>AIzaSy...</code>',
+    msgImgbbRequired: "⚠️ أدخل مفتاح ImgBB",
+    msgOwnerRequired: "⚠️ أدخل بيانات حساب المالك",
+    msgPassTooShort: "⚠️ كلمة المرور يجب أن تكون 4 أحرف على الأقل",
+    msgOwnerInvalid: "⚠️ اسم المالك غير صالح. استخدم أحرفاً إنجليزية وأرقاماً فقط.",
+    msgOwnerAdjusted: "ℹ️ تم تعديل اسم المالك إلى: ",
+    msgOwnerAdjustedEnd: " (الرموز الخاصة غير مسموحة في Firebase)",
+    msgConnecting: "⏳ جاري الاتصال بـ Firebase...",
+    msgOwnerExists: "⚠️ اسم المالك مستخدم بالفعل. اختر اسماً آخر.",
+    msgProcessing: "جاري المعالجة...",
+    msgOwnerCreated: "✅ تم إنشاء حساب المالك! الآن انسخ محتوى config.js من الصندوق الأزرق أدناه.",
+    msgErrorPrefix: "❌ ",
+    msgInvalidToken: "اسم المالك يحتوي على رموز غير مسموحة. استخدم أحرفاً إنجليزية وأرقاماً فقط (مثل: admin).",
+    msgDbUrl: "تعذّر الاتصال بـ Firebase. تأكد من صحة databaseURL وأن Realtime Database مُفعَّل (وليس Firestore).",
+    msgPermission: "صلاحيات Firebase ترفض الكتابة. تأكد من أن قاعدة البيانات في وضع Test Mode.",
+    msgBadApiKey: "مفتاح API غير صحيح. تأكد من نسخه بدقة (يبدأ بـ AIzaSy).",
+    msgNoContent: "⚠️ لم يتم توليد المحتوى بعد.",
+    msgCopied: "✅ تم نسخ المحتوى! افتح config.js على جهازك والصقه.",
+    msgCopiedShort: "✅ تم نسخ المحتوى!",
+    msgCopyManual: "⚠️ انسخ يدوياً: اضغط مطوّلاً داخل الصندوق ثم اختر 'تحديد الكل' ثم 'نسخ'.",
+    msgDownloading: "📥 جاري تحميل الملف...",
+    msgDownloadFailed: "❌ التحميل فشل. استخدم زر النسخ.",
+    consoleAutoDlFailed: "تنزيل تلقائي فشل:"
   },
-
-
   fr: {
-
-    backToAdmin:
-      "Retour au panneau d'admin",
-
-    viewStore:
-      "Voir la boutique",
-
-    pageTitle:
-      "⚙️ Assistant de configuration",
-
-    subtitle:
-      'Collez le code Firebase ci-dessous pour générer le fichier <code>config.js</code>',
-
-    step1Title:
-      "1) Configuration Firebase",
-
-    step1Desc:
-      'Allez sur <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a> et créez un projet, puis :<br>• <b>Build → Realtime Database → Create Database → Test Mode</b><br>• <b>Build → Authentication → Get Started → Anonymous → Enable</b><br>• <b>⚙️ Project Settings → Your apps</b> → icône Web <b>&lt;/&gt;</b> → copiez le code Firebase complet.',
-
-    firebaseCodeLabel:
-      "Code Firebase complet",
-
-    firebaseHint:
-      "💡 Collez le code directement depuis Firebase Console sans le modifier.",
-
-    step2Title:
-      "2) Clé ImgBB",
-
-    step2Desc:
-      'Allez sur <a href="https://api.imgbb.com" target="_blank" rel="noopener">api.imgbb.com</a> → cliquez <b>Get API Key</b> → connectez-vous avec Google → copiez la clé.',
-
-    step3Title:
-      "3) Compte propriétaire (connexion)",
-
-    step3Desc:
-      "Ce compte servira à accéder au panneau d'administration. Utilisez uniquement des lettres anglaises et des chiffres.",
-
-    ownerUserLabel:
-      "Nom d'utilisateur",
-
-    ownerPassLabel:
-      "Mot de passe",
-
-    generateBtn:
-      "Générer config.js",
-
-    manualTitle:
-      "📋 Dernière étape : copiez ce contenu",
-
-    manualDesc:
-      'Cliquez sur <b>"Copier"</b>, puis ouvrez <code>config.js</code> sur votre appareil et collez le nouveau contenu.',
-
-    copyBtn:
-      "Copier",
-
-    downloadBtn:
-      "Télécharger",
-
-    successTitle:
-      "🎉 Succès !",
-
-    successDesc:
-      "config.js a été généré. Allez maintenant au panneau d'administration.",
-
-    openAdmin:
-      "🛠️ Ouvrir l'admin",
-
-    openStore:
-      "🏪 Ouvrir la boutique",
-
-    instructionsTitle:
-      "📌 Après la génération :",
-
-    instr1:
-      'Copiez le contenu de <code>config.js</code> depuis le cadre bleu ci-dessus.',
-
-    instr2:
-      'Ouvrez <code>config.js</code> sur votre appareil.',
-
-    instr3:
-      "Supprimez tout l'ancien contenu, collez le nouveau, puis enregistrez.",
-
-    instr4:
-      "Téléchargez le fichier sur votre hébergement (remplacez l'ancien).",
-
-    instr5:
-      'Ouvrez <code>admin.html</code> et connectez-vous.',
-
-    msgFillFirebase:
-      "⚠️ Collez le code Firebase complet dans la zone prévue.",
-
-    msgFirebaseIncomplete:
-      "⚠️ Impossible d'extraire toutes les données Firebase nécessaires. Vérifiez que vous avez copié le code complet.",
-
-    msgMissing:
-      "Données manquantes :",
-
-    msgApiKeyError:
-      '⚠️ Erreur apiKey : elle doit commencer par <code>AIzaSy...</code>',
-
-    msgImgbbRequired:
-      "⚠️ Entrez la clé ImgBB",
-
-    msgOwnerRequired:
-      "⚠️ Entrez les identifiants du propriétaire",
-
-    msgPassTooShort:
-      "⚠️ Le mot de passe doit contenir au moins 4 caractères",
-
-    msgOwnerInvalid:
-      "⚠️ Nom de propriétaire invalide. Utilisez uniquement des lettres anglaises et des chiffres.",
-
-    msgOwnerAdjusted:
-      "ℹ️ Nom de propriétaire ajusté à : ",
-
-    msgOwnerAdjustedEnd:
-      " (les symboles spéciaux ne sont pas autorisés dans Firebase)",
-
-    msgConnecting:
-      "⏳ Connexion à Firebase...",
-
-    msgOwnerExists:
-      "⚠️ Ce nom de propriétaire est déjà utilisé. Choisissez-en un autre.",
-
-    msgProcessing:
-      "Traitement...",
-
-    msgOwnerCreated:
-      "✅ Compte propriétaire créé ! Copiez maintenant le contenu config.js depuis le cadre bleu ci-dessous.",
-
-    msgErrorPrefix:
-      "❌ ",
-
-    msgInvalidToken:
-      "Le nom du propriétaire contient des caractères non autorisés. Utilisez uniquement lettres anglaises et chiffres (ex : admin).",
-
-    msgDbUrl:
-      "Impossible de se connecter à Firebase. Vérifiez databaseURL et que Realtime Database est activée.",
-
-    msgPermission:
-      "Les permissions Firebase refusent l'écriture. Assurez-vous que la base est en Test Mode.",
-
-    msgBadApiKey:
-      "Clé API incorrecte. Vérifiez la copie (commence par AIzaSy).",
-
-    msgNoContent:
-      "⚠️ Le contenu n'a pas encore été généré.",
-
-    msgCopied:
-      "✅ Contenu copié ! Ouvrez config.js et collez-le.",
-
-    msgCopiedShort:
-      "✅ Contenu copié !",
-
-    msgCopyManual:
-      "⚠️ Copie manuelle : sélectionnez tout le contenu puis copiez-le.",
-
-    msgDownloading:
-      "📥 Téléchargement en cours...",
-
-    msgDownloadFailed:
-      "❌ Échec du téléchargement. Utilisez le bouton Copier.",
-
-    consoleAutoDlFailed:
-      "Téléchargement automatique échoué :"
-
+    backToAdmin: "Retour au panneau d'admin",
+    viewStore: "Voir la boutique",
+    pageTitle: "⚙️ Assistant de configuration",
+    subtitle: 'Collez le code Firebase ci-dessous pour générer le fichier <code>config.js</code>',
+    step1Title: "1) Configuration Firebase",
+    step1Desc: 'Allez sur <a href="https://console.firebase.google.com" target="_blank" rel="noopener">Firebase Console</a> et créez un projet, puis :<br>• <b>Build → Realtime Database → Create Database → Test Mode</b><br>• <b>Build → Authentication → Get Started → Anonymous → Enable</b><br>• <b>⚙️ Project Settings → Your apps</b> → icône Web <b>&lt;/&gt;</b> → copiez le code Firebase complet.',
+    firebaseCodeLabel: "Code Firebase complet",
+    firebaseHint: "💡 Collez le code directement depuis Firebase Console sans le modifier.",
+    step2Title: "2) Clé ImgBB",
+    step2Desc: 'Allez sur <a href="https://api.imgbb.com" target="_blank" rel="noopener">api.imgbb.com</a> → cliquez <b>Get API Key</b> → connectez-vous avec Google → copiez la clé.',
+    step3Title: "3) Compte propriétaire (connexion)",
+    step3Desc: "Ce compte servira à accéder au panneau d'administration. Utilisez uniquement des lettres anglaises et des chiffres.",
+    ownerUserLabel: "Nom d'utilisateur",
+    ownerPassLabel: "Mot de passe",
+    generateBtn: "Générer config.js",
+    manualTitle: "📋 Dernière étape : copiez ce contenu",
+    manualDesc: 'Cliquez sur <b>"Copier"</b>, puis ouvrez <code>config.js</code> sur votre appareil et collez le nouveau contenu.',
+    copyBtn: "Copier",
+    downloadBtn: "Télécharger",
+    successTitle: "🎉 Succès !",
+    successDesc: "config.js a été généré. Allez maintenant au panneau d'administration.",
+    openAdmin: "🛠️ Ouvrir l'admin",
+    openStore: "🏪 Ouvrir la boutique",
+    instructionsTitle: "📌 Après la génération :",
+    instr1: 'Copiez le contenu de <code>config.js</code> depuis le cadre bleu ci-dessus.',
+    instr2: 'Ouvrez <code>config.js</code> sur votre appareil.',
+    instr3: "Supprimez tout l'ancien contenu, collez le nouveau, puis enregistrez.",
+    instr4: "Téléchargez le fichier sur votre hébergement (remplacez l'ancien).",
+    instr5: 'Ouvrez <code>admin.html</code> et connectez-vous.',
+    msgFillFirebase: "⚠️ Collez le code Firebase complet dans la zone prévue.",
+    msgFirebaseIncomplete: "⚠️ Impossible d'extraire toutes les données Firebase nécessaires. Vérifiez que vous avez copié le code complet.",
+    msgMissing: "Données manquantes :",
+    msgApiKeyError: '⚠️ Erreur apiKey : elle doit commencer par <code>AIzaSy...</code>',
+    msgImgbbRequired: "⚠️ Entrez la clé ImgBB",
+    msgOwnerRequired: "⚠️ Entrez les identifiants du propriétaire",
+    msgPassTooShort: "⚠️ Le mot de passe doit contenir au moins 4 caractères",
+    msgOwnerInvalid: "⚠️ Nom de propriétaire invalide. Utilisez uniquement des lettres anglaises et des chiffres.",
+    msgOwnerAdjusted: "ℹ️ Nom de propriétaire ajusté à : ",
+    msgOwnerAdjustedEnd: " (les symboles spéciaux ne sont pas autorisés dans Firebase)",
+    msgConnecting: "⏳ Connexion à Firebase...",
+    msgOwnerExists: "⚠️ Ce nom de propriétaire est déjà utilisé. Choisissez-en un autre.",
+    msgProcessing: "Traitement...",
+    msgOwnerCreated: "✅ Compte propriétaire créé ! Copiez maintenant le contenu config.js depuis le cadre bleu ci-dessous.",
+    msgErrorPrefix: "❌ ",
+    msgInvalidToken: "Le nom du propriétaire contient des caractères non autorisés. Utilisez uniquement lettres anglaises et chiffres (ex : admin).",
+    msgDbUrl: "Impossible de se connecter à Firebase. Vérifiez databaseURL et que Realtime Database est activée.",
+    msgPermission: "Les permissions Firebase refusent l'écriture. Assurez-vous que la base est en Test Mode.",
+    msgBadApiKey: "Clé API incorrecte. Vérifiez la copie (commence par AIzaSy).",
+    msgNoContent: "⚠️ Le contenu n'a pas encore été généré.",
+    msgCopied: "✅ Contenu copié ! Ouvrez config.js et collez-le.",
+    msgCopiedShort: "✅ Contenu copié !",
+    msgCopyManual: "⚠️ Copie manuelle : sélectionnez tout le contenu puis copiez-le.",
+    msgDownloading: "📥 Téléchargement en cours...",
+    msgDownloadFailed: "❌ Échec du téléchargement. Utilisez le bouton Copier.",
+    consoleAutoDlFailed: "Téléchargement automatique échoué :"
   }
-
 };
 
-
-/* ═══════════════════════════════════════════════════════════════
-   LANGUAGE
-   ═══════════════════════════════════════════════════════════════ */
-
-let SETUP_LANG =
-  localStorage.getItem('store_lang') || 'ar';
-
+let SETUP_LANG = localStorage.getItem('store_lang') || 'ar';
 window.SETUP_LANG = SETUP_LANG;
 
-
 function T(key){
-
-  return (
-    SETUP_I18N[SETUP_LANG] &&
-    SETUP_I18N[SETUP_LANG][key]
-  )
-  ||
-  SETUP_I18N.ar[key]
-  ||
-  key;
-
+  return (SETUP_I18N[SETUP_LANG] && SETUP_I18N[SETUP_LANG][key]) || SETUP_I18N.ar[key] || key;
 }
-
-
 window.T = T;
 
-
 function applySetupTranslations(){
-
-  document.querySelectorAll('[data-t]')
-    .forEach(el => {
-
-      const key =
-        el.getAttribute('data-t');
-
-      const val =
-        SETUP_I18N[SETUP_LANG][key];
-
-      if(val){
-        el.textContent = val;
-      }
-
-    });
-
-
-  document.querySelectorAll('[data-t-html]')
-    .forEach(el => {
-
-      const key =
-        el.getAttribute('data-t-html');
-
-      const val =
-        SETUP_I18N[SETUP_LANG][key];
-
-      if(val){
-        el.innerHTML = val;
-      }
-
-    });
-
-
-  document.title =
-    SETUP_LANG === 'fr'
-      ? "⚙️ Assistant de configuration"
-      : "⚙️ معالج إعداد المتجر";
-
-}
-
-
-window.applySetupTranslations =
-  applySetupTranslations;
-
-
-applySetupTranslations();
-
-</script><!-- ═══════════════════════════════════════════════════════════════
-     🔥 FIREBASE + GENERATOR
-     ═══════════════════════════════════════════════════════════════ --><script type="module">
-
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-
-import {
-  getDatabase,
-  ref,
-  set,
-  get
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
-
-/* ═══════════════════════════════════════════════════════════════
-   BASIC
-   ═══════════════════════════════════════════════════════════════ */
-
-const $ = id =>
-  document.getElementById(id);
-
-
-const statusBox =
-  $("statusBox");
-
-
-const FIELDS = [
-  "firebaseCode",
-  "imgbbApiKey",
-  "ownerUser"
-];
-
-
-const STORAGE_KEY =
-  "setup_form_values_v2";
-
-
-/* ═══════════════════════════════════════════════════════════════
-   STATUS
-   ═══════════════════════════════════════════════════════════════ */
-
-function showStatus(
-  msg,
-  type = "info"
-){
-
-  statusBox.className =
-    "status " + type;
-
-  statusBox.innerHTML =
-    msg;
-
-  statusBox.scrollIntoView({
-    behavior:"smooth",
-    block:"center"
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    const val = SETUP_I18N[SETUP_LANG][key];
+    if (val) el.textContent = val;
   });
-
+  document.querySelectorAll('[data-t-html]').forEach(el => {
+    const key = el.getAttribute('data-t-html');
+    const val = SETUP_I18N[SETUP_LANG][key];
+    if (val) el.innerHTML = val;
+  });
+  document.title = SETUP_LANG === 'fr' ? "⚙️ Assistant de configuration" : "⚙️ معالج إعداد المتجر";
+  document.documentElement.lang = SETUP_LANG === 'fr' ? 'fr' : 'ar';
+  document.documentElement.dir = SETUP_LANG === 'fr' ? 'ltr' : 'rtl';
+  document.body.dir = SETUP_LANG === 'fr' ? 'ltr' : 'rtl';
 }
+window.applySetupTranslations = applySetupTranslations;
+applySetupTranslations();
+</script>
 
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPT 2: FIREBASE + GENERATOR (بدون تغيير)
+     ═══════════════════════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-/* ═══════════════════════════════════════════════════════════════
-   SAVE FORM
-   ═══════════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const statusBox = $("statusBox");
+const FIELDS = ["firebaseCode", "imgbbApiKey", "ownerUser"];
+const STORAGE_KEY = "setup_form_values_v2";
+
+function showStatus(msg, type = "info"){
+  statusBox.className = "status " + type;
+  statusBox.innerHTML = msg;
+  statusBox.scrollIntoView({ behavior:"smooth", block:"center" });
+}
 
 function saveForm(){
-
   const data = {};
-
-  FIELDS.forEach(id => {
-
-    const el = $(id);
-
-    if(el){
-      data[id] =
-        el.value;
-    }
-
-  });
-
-  try{
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(data)
-    );
-
-  }catch(e){}
-
+  FIELDS.forEach(id => { const el = $(id); if (el) data[id] = el.value; });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e){}
 }
-
-
-/* ═══════════════════════════════════════════════════════════════
-   LOAD FORM
-   ═══════════════════════════════════════════════════════════════ */
 
 function loadForm(){
-
-  try{
-
-    const saved =
-      localStorage.getItem(
-        STORAGE_KEY
-      );
-
-    if(!saved)
-      return;
-
-    const data =
-      JSON.parse(saved);
-
-    FIELDS.forEach(id => {
-
-      const el =
-        $(id);
-
-      if(
-        el &&
-        data[id]
-      ){
-
-        el.value =
-          data[id];
-
-      }
-
-    });
-
-  }catch(e){}
-
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const data = JSON.parse(saved);
+    FIELDS.forEach(id => { const el = $(id); if (el && data[id]) el.value = data[id]; });
+  } catch(e){}
 }
 
-
 FIELDS.forEach(id => {
-
-  const el =
-    $(id);
-
-  if(el){
-
-    el.addEventListener(
-      "input",
-      saveForm
-    );
-
-  }
-
+  const el = $(id);
+  if (el) el.addEventListener("input", saveForm);
 });
-
 
 loadForm();
 
-
-/* ═══════════════════════════════════════════════════════════════
-   FIREBASE CONFIG EXTRACTION
-   ═══════════════════════════════════════════════════════════════ */
-
 function extractFirebaseConfig(code){
-
   const config = {};
-
-  const fields = [
-    "apiKey",
-    "authDomain",
-    "databaseURL",
-    "projectId",
-    "storageBucket",
-    "messagingSenderId",
-    "appId"
-  ];
-
-
+  const fields = ["apiKey","authDomain","databaseURL","projectId","storageBucket","messagingSenderId","appId"];
   fields.forEach(field => {
-
-    /*
-      يدعم:
-
-      apiKey: "xxx"
-
-      apiKey = "xxx"
-
-      apiKey: 'xxx'
-
-      apiKey: `xxx`
-    */
-
-    const regex =
-      new RegExp(
-        field +
-        "\\s*[:=]\\s*[\"'`]([^\"'`]+)[\"'`]",
-        "i"
-      );
-
-
-    const match =
-      code.match(regex);
-
-
-    if(match){
-
-      config[field] =
-        match[1].trim();
-
-    }
-
+    const regex = new RegExp(field + "\\s*[:=]\\s*[\"'`]([^\"'`]+)[\"'`]", "i");
+    const match = code.match(regex);
+    if (match) config[field] = match[1].trim();
   });
-
-
   return config;
-
 }
 
-
-/* ═══════════════════════════════════════════════════════════════
-   FIREBASE LIVE PREVIEW
-   ═══════════════════════════════════════════════════════════════ */
-
-$("firebaseCode")
-  .addEventListener(
-    "input",
-    function(){
-
-      saveForm();
-
-      const code =
-        this.value.trim();
-
-      const preview =
-        $("firebasePreview");
-
-
-      if(!code){
-
-        preview.style.display =
-          "none";
-
-        return;
-
-      }
-
-
-      const cfg =
-        extractFirebaseConfig(
-          code
-        );
-
-
-      const required = [
-        "apiKey",
-        "authDomain",
-        "databaseURL",
-        "projectId",
-        "appId"
-      ];
-
-
-      const missing =
-        required.filter(
-          key => !cfg[key]
-        );
-
-
-      if(missing.length){
-
-        preview.style.display =
-          "block";
-
-        preview.style.background =
-          "#fef2f2";
-
-        preview.style.border =
-          "1px solid #ef4444";
-
-        preview.style.color =
-          "#991b1b";
-
-        preview.innerHTML =
-          "⚠️ " +
-          T("msgFirebaseIncomplete") +
-          "<br><b>" +
-          T("msgMissing") +
-          "</b> " +
-          missing.join(", ");
-
-        return;
-
-      }
-
-
-      preview.style.display =
-        "block";
-
-      preview.style.background =
-        "#ecfdf5";
-
-      preview.style.border =
-        "1px solid #10b981";
-
-      preview.style.color =
-        "#065f46";
-
-
-      preview.innerHTML =
-        "✅ تم التعرف على إعدادات Firebase بنجاح" +
-        "<br>" +
-        "<code>projectId: " +
-        escapeHtml(cfg.projectId) +
-        "</code>" +
-        "<br>" +
-        "<code>databaseURL: " +
-        escapeHtml(cfg.databaseURL) +
-        "</code>";
-
-    }
-  );
-
-
-/* ═══════════════════════════════════════════════════════════════
-   HTML ESCAPE
-   ═══════════════════════════════════════════════════════════════ */
+$("firebaseCode").addEventListener("input", function(){
+  saveForm();
+  const code = this.value.trim();
+  const preview = $("firebasePreview");
+  if (!code){ preview.style.display = "none"; return; }
+  const cfg = extractFirebaseConfig(code);
+  const required = ["apiKey","authDomain","databaseURL","projectId","appId"];
+  const missing = required.filter(key => !cfg[key]);
+  if (missing.length){
+    preview.style.display = "block";
+    preview.style.background = "#fef2f2";
+    preview.style.borderColor = "#ef4444";
+    preview.style.color = "#991b1b";
+    preview.innerHTML = "⚠️ " + T("msgFirebaseIncomplete") + "<br><b>" + T("msgMissing") + "</b> " + missing.join(", ");
+    return;
+  }
+  preview.style.display = "block";
+  preview.style.background = "#ecfdf5";
+  preview.style.borderColor = "#10b981";
+  preview.style.color = "#065f46";
+  preview.innerHTML = "✅ تم التعرف على إعدادات Firebase بنجاح<br>" +
+    "<code>projectId: " + escapeHtml(cfg.projectId) + "</code><br>" +
+    "<code>databaseURL: " + escapeHtml(cfg.databaseURL) + "</code>";
+});
 
 function escapeHtml(value){
-
   return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
-
 }
 
-
-/* ═══════════════════════════════════════════════════════════════
-   GENERATE BUTTON
-   ═══════════════════════════════════════════════════════════════ */
-
-$("generateBtn")
-  .addEventListener(
-    "click",
-    async () => {
-
-
-      /* ═══════════════════════════════
-         READ FIREBASE CODE
-         ═══════════════════════════════ */
-
-      const firebaseCode =
-        $("firebaseCode")
-          .value
-          .trim();
-
-
-      const cfgExtracted =
-        extractFirebaseConfig(
-          firebaseCode
-        );
-
-
-      const apiKey =
-        cfgExtracted.apiKey ||
-        "";
-
-      const authDomain =
-        cfgExtracted.authDomain ||
-        "";
-
-      const databaseURL =
-        cfgExtracted.databaseURL ||
-        "";
-
-      const projectId =
-        cfgExtracted.projectId ||
-        "";
-
-      const storageBucket =
-        cfgExtracted.storageBucket ||
-        "";
-
-      const messagingSenderId =
-        cfgExtracted.messagingSenderId ||
-        "";
-
-      const appId =
-        cfgExtracted.appId ||
-        "";
-
-
-      /* ═══════════════════════════════
-         OTHER FIELDS
-         ═══════════════════════════════ */
-
-      const imgbbApiKey =
-        $("imgbbApiKey")
-          .value
-          .trim();
-
-
-      const ownerUserRaw =
-        $("ownerUser")
-          .value
-          .trim();
-
-
-      const ownerPass =
-        $("ownerPass")
-          .value
-          .trim();
-
-
-      /* ═══════════════════════════════
-         VALIDATION
-         ═══════════════════════════════ */
-
-      if(!firebaseCode){
-
-        return showStatus(
-          T("msgFillFirebase"),
-          "error"
-        );
-
-      }
-
-
-      const requiredFirebase = [
-        "apiKey",
-        "authDomain",
-        "databaseURL",
-        "projectId",
-        "appId"
-      ];
-
-
-      const missingFirebase =
-        requiredFirebase.filter(
-          key => !cfgExtracted[key]
-        );
-
-
-      if(missingFirebase.length){
-
-        return showStatus(
-          T("msgFirebaseIncomplete") +
-          "<br><b>" +
-          T("msgMissing") +
-          "</b> " +
-          missingFirebase.join(", "),
-          "error"
-        );
-
-      }
-
-
-      /* ═══════════════════════════════
-         API KEY VALIDATION
-         ═══════════════════════════════ */
-
-      if(
-        !apiKey.startsWith("AIzaSy")
-      ){
-
-        return showStatus(
-          T("msgApiKeyError"),
-          "error"
-        );
-
-      }
-
-
-      /* ═══════════════════════════════
-         IMGBB
-         ═══════════════════════════════ */
-
-      if(!imgbbApiKey){
-
-        return showStatus(
-          T("msgImgbbRequired"),
-          "error"
-        );
-
-      }
-
-
-      /* ═══════════════════════════════
-         OWNER
-         ═══════════════════════════════ */
-
-      if(
-        !ownerUserRaw ||
-        !ownerPass
-      ){
-
-        return showStatus(
-          T("msgOwnerRequired"),
-          "error"
-        );
-
-      }
-
-
-      if(
-        ownerPass.length < 4
-      ){
-
-        return showStatus(
-          T("msgPassTooShort"),
-          "error"
-        );
-
-      }
-
-
-      /* ═══════════════════════════════
-         CLEAN OWNER NAME
-         ═══════════════════════════════ */
-
-      const ownerUser =
-        String(ownerUserRaw)
-          .replace(
-            /[.#$\[\]\/\s]/g,
-            "_"
-          )
-          .trim();
-
-
-      if(
-        !ownerUser ||
-        ownerUser.length < 2
-      ){
-
-        return showStatus(
-          T("msgOwnerInvalid"),
-          "error"
-        );
-
-      }
-
-
-      if(
-        ownerUser !== ownerUserRaw
-      ){
-
-        showStatus(
-          T("msgOwnerAdjusted") +
-          "<b>" +
-          escapeHtml(ownerUser) +
-          "</b>" +
-          T("msgOwnerAdjustedEnd"),
-          "warning"
-        );
-
-      }
-
-
-      /* ═══════════════════════════════
-         BUTTON
-         ═══════════════════════════════ */
-
-      const btn =
-        $("generateBtn");
-
-
-      btn.disabled =
-        true;
-
-
-      btn.innerHTML =
-        '<i class="fas fa-spinner fa-spin"></i> ' +
-        T("msgProcessing");
-
-
-      if(
-        ownerUser === ownerUserRaw
-      ){
-
-        showStatus(
-          T("msgConnecting"),
-          "info"
-        );
-
-      }
-
-
-      try{
-
-        /* ═══════════════════════════
-           FIREBASE CONFIG
-           ═══════════════════════════ */
-
-        const cfg = {
-
-          apiKey:
-            apiKey,
-
-          authDomain:
-            authDomain,
-
-          databaseURL:
-            databaseURL,
-
-          projectId:
-            projectId,
-
-          storageBucket:
-            storageBucket,
-
-          messagingSenderId:
-            messagingSenderId,
-
-          appId:
-            appId
-
-        };
-
-
-        /* ═══════════════════════════
-           TEMP APP
-           ═══════════════════════════ */
-
-        const tempAppName =
-          "setup_" +
-          Date.now();
-
-
-        const tempApp =
-          initializeApp(
-            cfg,
-            tempAppName
-          );
-
-
-        const tempDb =
-          getDatabase(
-            tempApp
-          );
-
-
-        /* ═══════════════════════════
-           OWNER REFERENCE
-           ═══════════════════════════ */
-
-        const ownerRef =
-          ref(
-            tempDb,
-            `users/owner/${ownerUser}`
-          );
-
-
-        /* ═══════════════════════════
-           CHECK EXISTING USER
-           ═══════════════════════════ */
-
-        const existing =
-          await get(
-            ownerRef
-          );
-
-
-        if(existing.exists()){
-
-          showStatus(
-            T("msgOwnerExists"),
-            "error"
-          );
-
-          btn.disabled =
-            false;
-
-          btn.innerHTML =
-            '<i class="fas fa-cog"></i> ' +
-            T("generateBtn");
-
-          return;
-
-        }
-
-
-        /* ═══════════════════════════
-           CREATE OWNER
-           ═══════════════════════════ */
-
-        await set(
-          ownerRef,
-          {
-            password:
-              ownerPass,
-
-            role:
-              "owner",
-
-            createdAt:
-              Date.now()
-          }
-        );
-
-
-        /* ═══════════════════════════
-           CONFIG.JS CONTENT
-           ═══════════════════════════ */
-
-        const configContent = `/**
+$("generateBtn").addEventListener("click", async () => {
+  const firebaseCode = $("firebaseCode").value.trim();
+  const cfgExtracted = extractFirebaseConfig(firebaseCode);
+  const apiKey = cfgExtracted.apiKey || "";
+  const authDomain = cfgExtracted.authDomain || "";
+  const databaseURL = cfgExtracted.databaseURL || "";
+  const projectId = cfgExtracted.projectId || "";
+  const storageBucket = cfgExtracted.storageBucket || "";
+  const messagingSenderId = cfgExtracted.messagingSenderId || "";
+  const appId = cfgExtracted.appId || "";
+  const imgbbApiKey = $("imgbbApiKey").value.trim();
+  const ownerUserRaw = $("ownerUser").value.trim();
+  const ownerPass = $("ownerPass").value.trim();
+
+  if (!firebaseCode) return showStatus(T("msgFillFirebase"), "error");
+
+  const requiredFirebase = ["apiKey","authDomain","databaseURL","projectId","appId"];
+  const missingFirebase = requiredFirebase.filter(key => !cfgExtracted[key]);
+  if (missingFirebase.length){
+    return showStatus(T("msgFirebaseIncomplete") + "<br><b>" + T("msgMissing") + "</b> " + missingFirebase.join(", "), "error");
+  }
+  if (!apiKey.startsWith("AIzaSy")) return showStatus(T("msgApiKeyError"), "error");
+  if (!imgbbApiKey) return showStatus(T("msgImgbbRequired"), "error");
+  if (!ownerUserRaw || !ownerPass) return showStatus(T("msgOwnerRequired"), "error");
+  if (ownerPass.length < 4) return showStatus(T("msgPassTooShort"), "error");
+
+  const ownerUser = String(ownerUserRaw).replace(/[.#$\[\]\/\s]/g, "_").trim();
+  if (!ownerUser || ownerUser.length < 2) return showStatus(T("msgOwnerInvalid"), "error");
+  if (ownerUser !== ownerUserRaw){
+    showStatus(T("msgOwnerAdjusted") + "<b>" + escapeHtml(ownerUser) + "</b>" + T("msgOwnerAdjustedEnd"), "warning");
+  }
+
+  const btn = $("generateBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + T("msgProcessing");
+  if (ownerUser === ownerUserRaw) showStatus(T("msgConnecting"), "info");
+
+  try {
+    const cfg = { apiKey, authDomain, databaseURL, projectId, storageBucket, messagingSenderId, appId };
+    const tempAppName = "setup_" + Date.now();
+    const tempApp = initializeApp(cfg, tempAppName);
+    const tempDb = getDatabase(tempApp);
+    const ownerRef = ref(tempDb, `users/owner/${ownerUser}`);
+    const existing = await get(ownerRef);
+
+    if (existing.exists()){
+      showStatus(T("msgOwnerExists"), "error");
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-cog"></i> ' + T("generateBtn");
+      return;
+    }
+
+    await set(ownerRef, { password: ownerPass, role: "owner", createdAt: Date.now() });
+
+    const configContent = `/**
  * ═══════════════════════════════════════════════════════════════════
  *  ⚙️  ملف إعدادات المتجر — تم توليده بواسطة setup.html
  * ═══════════════════════════════════════════════════════════════════
@@ -1823,416 +1204,83 @@ window.STORE_BOOTSTRAP = {
 };
 `;
 
-
-        /* ═══════════════════════════
-           SHOW RESULT
-           ═══════════════════════════ */
-
-        $("configContent")
-          .value =
-          configContent;
-
-
-        $("manualBox")
-          .style.display =
-          "block";
-
-
-        /* ═══════════════════════════
-           AUTO DOWNLOAD
-           ═══════════════════════════ */
-
-        try{
-
-          const blob =
-            new Blob(
-              [configContent],
-              {
-                type:
-                  "application/javascript;charset=utf-8"
-              }
-            );
-
-
-          const url =
-            URL.createObjectURL(
-              blob
-            );
-
-
-          const a =
-            document.createElement(
-              "a"
-            );
-
-
-          a.href =
-            url;
-
-
-          a.download =
-            "config.js";
-
-
-          document.body.appendChild(
-            a
-          );
-
-
-          a.click();
-
-
-          document.body.removeChild(
-            a
-          );
-
-
-          setTimeout(
-            () =>
-              URL.revokeObjectURL(url),
-            1000
-          );
-
-
-        }catch(e){
-
-          console.warn(
-            T("consoleAutoDlFailed"),
-            e
-          );
-
-        }
-
-
-        /* ═══════════════════════════
-           CLEAR PASSWORD
-           ═══════════════════════════ */
-
-        $("ownerPass")
-          .value =
-          "";
-
-
-        /* ═══════════════════════════
-           SUCCESS
-           ═══════════════════════════ */
-
-        showStatus(
-          T("msgOwnerCreated"),
-          "success"
-        );
-
-
-        setTimeout(
-          () => {
-
-            $("manualBox")
-              .scrollIntoView({
-                behavior:
-                  "smooth",
-
-                block:
-                  "center"
-              });
-
-          },
-          400
-        );
-
-
-        $("successNav")
-          .style.display =
-          "block";
-
-
-      }catch(err){
-
-        console.error(
-          err
-        );
-
-
-        let msg =
-          err.message ||
-          "Error";
-
-
-        if(
-          msg.includes(
-            "Invalid token in path"
-          )
-        ){
-
-          msg =
-            T("msgInvalidToken");
-
-        }else if(
-          msg.includes(
-            "databaseURL"
-          ) ||
-          msg.includes(
-            "Failed to get document"
-          )
-        ){
-
-          msg =
-            T("msgDbUrl");
-
-        }else if(
-          msg.toLowerCase()
-            .includes(
-              "permission"
-            )
-        ){
-
-          msg =
-            T("msgPermission");
-
-        }else if(
-          msg.includes(
-            "api-key"
-          ) ||
-          msg.includes(
-            "API key"
-          )
-        ){
-
-          msg =
-            T("msgBadApiKey");
-
-        }
-
-
-        showStatus(
-          T("msgErrorPrefix") +
-          msg,
-          "error"
-        );
-
-
-      }finally{
-
-        btn.disabled =
-          false;
-
-
-        btn.innerHTML =
-          '<i class="fas fa-cog"></i> ' +
-          T("generateBtn");
-
-      }
-
+    $("configContent").value = configContent;
+    $("manualBox").style.display = "block";
+
+    try {
+      const blob = new Blob([configContent], { type: "application/javascript;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "config.js";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch(e){ console.warn(T("consoleAutoDlFailed"), e); }
+
+    $("ownerPass").value = "";
+    showStatus(T("msgOwnerCreated"), "success");
+    setTimeout(() => { $("manualBox").scrollIntoView({ behavior:"smooth", block:"center" }); }, 400);
+    $("successNav").style.display = "block";
+
+  } catch(err){
+    console.error(err);
+    let msg = err.message || "Error";
+    if (msg.includes("Invalid token in path")) msg = T("msgInvalidToken");
+    else if (msg.includes("databaseURL") || msg.includes("Failed to get document")) msg = T("msgDbUrl");
+    else if (msg.toLowerCase().includes("permission")) msg = T("msgPermission");
+    else if (msg.includes("api-key") || msg.includes("API key")) msg = T("msgBadApiKey");
+    showStatus(T("msgErrorPrefix") + msg, "error");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-cog"></i> ' + T("generateBtn");
+  }
+});
+
+$("copyBtn").addEventListener("click", async () => {
+  const content = $("configContent").value;
+  if (!content) return showStatus(T("msgNoContent"), "error");
+  try {
+    if (navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(content);
+      showStatus(T("msgCopied"), "success");
+    } else {
+      const ta = $("configContent");
+      ta.removeAttribute("readonly");
+      ta.select();
+      ta.setSelectionRange(0, 99999);
+      const ok = document.execCommand("copy");
+      ta.setAttribute("readonly", "");
+      if (ok) showStatus(T("msgCopiedShort"), "success");
+      else throw new Error("execCommand failed");
     }
-  );
-
-
-/* ═══════════════════════════════════════════════════════════════
-   COPY BUTTON
-   ═══════════════════════════════════════════════════════════════ */
-
-$("copyBtn")
-  .addEventListener(
-    "click",
-    async () => {
-
-      const content =
-        $("configContent")
-          .value;
-
-
-      if(!content){
-
-        return showStatus(
-          T("msgNoContent"),
-          "error"
-        );
-
-      }
-
-
-      try{
-
-        if(
-          navigator.clipboard &&
-          window.isSecureContext
-        ){
-
-          await navigator.clipboard
-            .writeText(
-              content
-            );
-
-
-          showStatus(
-            T("msgCopied"),
-            "success"
-          );
-
-
-        }else{
-
-          const ta =
-            $("configContent");
-
-
-          ta.removeAttribute(
-            "readonly"
-          );
-
-
-          ta.select();
-
-
-          ta.setSelectionRange(
-            0,
-            99999
-          );
-
-
-          const ok =
-            document.execCommand(
-              "copy"
-            );
-
-
-          ta.setAttribute(
-            "readonly",
-            ""
-          );
-
-
-          if(ok){
-
-            showStatus(
-              T("msgCopiedShort"),
-              "success"
-            );
-
-          }else{
-
-            throw new Error(
-              "execCommand failed"
-            );
-
-          }
-
-        }
-
-
-      }catch(e){
-
-        $("configContent")
-          .focus();
-
-
-        $("configContent")
-          .select();
-
-
-        showStatus(
-          T("msgCopyManual"),
-          "info"
-        );
-
-      }
-
-    }
-  );
-
-
-/* ═══════════════════════════════════════════════════════════════
-   DOWNLOAD BUTTON
-   ═══════════════════════════════════════════════════════════════ */
-
-$("downloadBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      const content =
-        $("configContent")
-          .value;
-
-
-      if(!content){
-
-        return showStatus(
-          T("msgNoContent"),
-          "error"
-        );
-
-      }
-
-
-      try{
-
-        const blob =
-          new Blob(
-            [content],
-            {
-              type:
-                "application/javascript;charset=utf-8"
-            }
-          );
-
-
-        const url =
-          URL.createObjectURL(
-            blob
-          );
-
-
-        const a =
-          document.createElement(
-            "a"
-          );
-
-
-        a.href =
-          url;
-
-
-        a.download =
-          "config.js";
-
-
-        document.body.appendChild(
-          a
-        );
-
-
-        a.click();
-
-
-        document.body.removeChild(
-          a
-        );
-
-
-        setTimeout(
-          () =>
-            URL.revokeObjectURL(url),
-          1000
-        );
-
-
-        showStatus(
-          T("msgDownloading"),
-          "info"
-        );
-
-
-      }catch(e){
-
-        showStatus(
-          T("msgDownloadFailed"),
-          "error"
-        );
-
-      }
-
-    }
-  );
-
-</script></body>
+  } catch(e){
+    $("configContent").focus();
+    $("configContent").select();
+    showStatus(T("msgCopyManual"), "info");
+  }
+});
+
+$("downloadBtn").addEventListener("click", () => {
+  const content = $("configContent").value;
+  if (!content) return showStatus(T("msgNoContent"), "error");
+  try {
+    const blob = new Blob([content], { type: "application/javascript;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "config.js";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showStatus(T("msgDownloading"), "info");
+  } catch(e){
+    showStatus(T("msgDownloadFailed"), "error");
+  }
+});
+</script>
+
+</body>
 </html>

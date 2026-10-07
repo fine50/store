@@ -239,7 +239,7 @@ async function init(){
 
   document.title = storeInfo.name ? ("Impression - " + storeInfo.name) : "Impression";
 
-  const stored = sessionStorage.getItem('printOrder');
+  const stored = localStorage.getItem('printOrder');
   if (!stored) {
     $("loading").style.display = "none";
     $("notice").style.display = "block";
@@ -256,7 +256,7 @@ async function init(){
     $("notice").textContent = "Erreur dans les données de commande";
     return;
   }
-  sessionStorage.removeItem('printOrder');
+  localStorage.removeItem('printOrder');
 
   const order = data.order || data;
   const type = data.type || 'confirmed';
@@ -285,28 +285,57 @@ function renderInvoice(order, type, storeInfo){
   const cleanOrderAddress = stripUrls(order.address);
 
   let rows = '';
-  let totalQte = 0;
-  let itemIndex = 1;
+let totalQte = 0;
+let itemIndex = 1;
 
-  if (order.items && Array.isArray(order.items)) {
-    order.items.forEach((it) => {
-      const qty = Number(it.quantity || 0);
-      const price = Number(it.price || 0);
-      const total = qty * price;
-      totalQte += qty;
-      const bundleMark = it.bundleApplied ? ' [Offre]' : '';
-      rows += `
-        <tr>
-          <td style="text-align:center; border:1px solid #000; padding:2px 4px;">${itemIndex}</td>
-          <td style="border:1px solid #000; padding:2px 4px; text-align:left; direction:ltr; font-weight:600;">${esc(it.name)}${bundleMark}</td>
-          <td style="text-align:center; border:1px solid #000; padding:2px 4px;">${qty}</td>
-          <td style="text-align:right; border:1px solid #000; padding:2px 4px; direction:ltr;">${fmt(price)} ${esc(cur)}</td>
-          <td style="text-align:right; border:1px solid #000; padding:2px 4px; direction:ltr;">${fmt(total)} ${esc(cur)}</td>
-        </tr>
-      `;
-      itemIndex++;
-    });
-  }
+/* 🎨 كشف تلقائي: هل يوجد لون أو مقاس في هذا الطلب؟ */
+let hasColorCol = false;
+let hasSizeCol = false;
+if (order.items && Array.isArray(order.items)) {
+  order.items.forEach((it) => {
+    if (it.colorName || it.colorHex) hasColorCol = true;
+    if (it.sizeName) hasSizeCol = true;
+  });
+}
+
+if (order.items && Array.isArray(order.items)) {
+  order.items.forEach((it) => {
+    const qty = Number(it.quantity || 0);
+    const price = Number(it.price || 0);
+    const total = qty * price;
+    totalQte += qty;
+    const bundleMark = it.bundleApplied ? ' [Offre]' : '';
+    
+    /* 🎨 خلية اللون — تظهر فقط إذا كان الطلب فيه ألوان */
+    const colorCell = hasColorCol ?
+      `<td style="text-align:center; border:1px solid #000; padding:3px 5px; font-size:11px; font-weight:600;">${(it.colorNameFr || it.colorName) ? esc(it.colorNameFr || it.colorName) : '—'}</td>` :
+      '';
+    
+    /* 🎨 خلية المقاس — تظهر فقط إذا كان الطلب فيه مقاسات */
+    const sizeCell = hasSizeCol ?
+      `<td style="text-align:center; border:1px solid #000; padding:3px 5px; font-size:11px; font-weight:600;">${it.sizeName ? esc(it.sizeName) : '—'}</td>` :
+      '';
+    
+    rows += `
+      <tr>
+        <td style="text-align:center; border:1px solid #000; padding:3px 5px;">${itemIndex}</td>
+        <td style="border:1px solid #000; padding:3px 5px; text-align:left; direction:ltr; font-weight:600;">${esc(it.name)}${bundleMark}</td>
+        ${colorCell}
+        ${sizeCell}
+        <td style="text-align:center; border:1px solid #000; padding:3px 5px; font-weight:700;">${qty}</td>
+        <td style="text-align:right; border:1px solid #000; padding:3px 5px; direction:ltr; white-space:nowrap;">${fmt(price)} ${esc(cur)}</td>
+        <td style="text-align:right; border:1px solid #000; padding:3px 5px; direction:ltr; white-space:nowrap;">${fmt(total)} ${esc(cur)}</td>
+      </tr>
+    `;
+    itemIndex++;
+  });
+}
+
+/* 🎨 بناء رؤوس الأعمدة ديناميكياً */
+const totalCols = 5 + (hasColorCol ? 1 : 0) + (hasSizeCol ? 1 : 0);
+const desigWidth = (hasColorCol || hasSizeCol) ? '38%' : '55%';
+const colorTh = hasColorCol ? '<th style="width:11%">Couleur</th>' : '';
+const sizeTh = hasSizeCol ? '<th style="width:9%">Taille</th>' : '';
 
   const totalPrice = order.totalPrice || 0;
   const nbreProduit = order.items ? order.items.length : 0;
@@ -368,17 +397,19 @@ function renderInvoice(order, type, storeInfo){
     </div>
 
     <table>
-      <thead>
-        <tr>
-          <th style="width:5%">N°</th>
-          <th style="width:55%">DESIGNATION</th>
-          <th style="width:8%">QTE</th>
-          <th style="width:16%">Prix u</th>
-          <th style="width:16%">Total</th>
-        </tr>
-      </thead>
-      <tbody>${rows || `<tr><td colspan="5" style="text-align:center;padding:10px;">Aucun produit</td></tr>`}</tbody>
-    </table>
+  <thead>
+    <tr>
+      <th style="width:5%">N°</th>
+      <th style="width:${desigWidth}">DESIGNATION</th>
+      ${colorTh}
+      ${sizeTh}
+      <th style="width:9%">QTE</th>
+      <th style="width:14%">Prix u</th>
+      <th style="width:14%">Total</th>
+    </tr>
+  </thead>
+  <tbody>${rows || `<tr><td colspan="${totalCols}" style="text-align:center;padding:10px;">Aucun produit</td></tr>`}</tbody>
+</table>
 
     <div class="summary-line">Nbre Produit : ${nbreProduit} &nbsp;&nbsp;&nbsp; Tot Qté : ${totalQte}</div>
     ${hasBundle ? `<div class="summary-line" style="font-size:10px;">Dont articles avec offre quantité</div>` : ''}

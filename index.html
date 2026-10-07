@@ -1905,7 +1905,7 @@ if (!fc.apiKey || fc.apiKey.includes("YOUR_")) {
 const app = initializeApp(fc);
 const db = getDatabase(app);
 const auth = getAuth(app);
-signInAnonymously(auth).catch(err => console.warn("Auth:", err.message));
+/* signInAnonymously معطّل */
 
 let storeInfo = {
   name: "", logoUrl: "", phoneInvoice: "", address: "",
