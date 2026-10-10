@@ -2008,11 +2008,16 @@ body.admin-dark .checkout-heading .title-row i { color: #34d399; }
 /* ═══ Field Group ═══ */
 body.admin-dark .field-group label { color: var(--text); }
 body.admin-dark .field-group input,
-body.admin-dark .field-group select { background: var(--bg-2); color: var(--text); border-color: var(--border); }
+body.admin-dark .field-group select { background-color: var(--bg-2); color: var(--text); border-color: var(--border); }
 body.admin-dark .field-group input:focus,
 body.admin-dark .field-group select:focus { background: var(--card); border-color: var(--primary); }
 body.admin-dark .field-group input::placeholder { color: var(--text-3); }
-body.admin-dark .field-group select { background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8L0 0h12z' fill='%2334d399'/%3E%3C/svg%3E"); }
+body.admin-dark .field-group select {
+  background-color: var(--bg-2);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8L0 0h12z' fill='%2334d399'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 18px center;
+}
 
 /* ═══ Delivery Options ═══ */
 body.admin-dark .delivery-option { background: var(--bg-2); border-color: var(--border); color: var(--text-2); }
@@ -2610,6 +2615,12 @@ let presenceHeartbeat = null;
 
 const esc = s => !s ? '' : String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const fmt = n => Number(n || 0).toLocaleString('fr-FR');
+function curLbl() {
+  const c = storeInfo.currency || 'دج';
+  const isFR = (window.currentLang || localStorage.getItem('store_lang') || 'ar') === 'fr';
+  if (isFR && (c === 'دج' || c === 'DZD' || c === 'دينار' || c === 'DA')) return 'DA';
+  return c;
+}
 
 const WILAYAS = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تيميمون","برج باجي مختار","أولاد جلال","بني عباس","إن صالح","إن قزام","تقرت","جانت","المغير","المنيعة"];
 
@@ -2925,8 +2936,8 @@ function renderBundleBox() {
         <div class="bundle-tier-card ${isSelected ? 'selected' : ''}" data-tier-qty="${tier.qty}">
           ${isBest ? '<div class="best-badge"><i class="fas fa-star"></i> الأفضل</div>' : ''}
           <div class="tier-qty"><i class="fas fa-gift"></i> ${getQtyLabel(tier.qty)}</div>
-          <div class="tier-price">${fmt(tier.totalPrice)}<small> ${storeInfo.currency}</small></div>
-          <div class="tier-per-unit">${fmt(perUnit)} ${storeInfo.currency}/قطعة</div>
+          <div class="tier-price">${fmt(tier.totalPrice)}<small> ${curLbl()}</small></div>
+          <div class="tier-per-unit">${fmt(perUnit)} ${curLbl()}/قطعة</div>
           ${savings > 0 ? `<div class="tier-savings"><i class="fas fa-piggy-bank"></i> وفّر ${fmt(savings)}</div>` : ''}
         </div>
       `;
@@ -3072,12 +3083,12 @@ function renderPage(landingSettings) {
 
   $("productTitle").textContent = productName;
   $("currentPrice").textContent = fmt(baseUnitPrice);
-  $("currencyLabel").textContent = storeInfo.currency;
+  $("currencyLabel").textContent = curLbl();
 
   /* 🎯 السعر المشطوب: نُظهره فقط إذا أدخله المالك يدوياً */
 const manualOldPrice = (product.oldPrice !== undefined && product.oldPrice !== null && Number(product.oldPrice) > 0) ? Number(product.oldPrice) : null;
 if (manualOldPrice !== null && manualOldPrice > finalBasePrice) {
-  $("oldPrice").textContent = fmt(manualOldPrice) + " " + storeInfo.currency;
+  $("oldPrice").textContent = fmt(manualOldPrice) + " " + curLbl();
   $("oldPrice").style.display = "inline";
 } else {
   $("oldPrice").textContent = '';
@@ -3241,7 +3252,7 @@ function updateTotals() {
   const total = subtotal + activeShippingCost;
 
   $("brQty").textContent = currentQty;
-  $("brSubtotal").textContent = fmt(subtotal) + " " + storeInfo.currency;
+  $("brSubtotal").textContent = fmt(subtotal) + " " + curLbl();
 
   const brShipEl = $("brShipping");
   if (!storeFeatures.shipping) {
@@ -3251,15 +3262,15 @@ function updateTotals() {
   } else if (!wilaya) {
     brShipEl.innerHTML = '<span style="color:#94a3b8;">اختر الولاية</span>';
   } else if (baseShipping > 0) {
-    brShipEl.textContent = fmt(baseShipping) + " " + storeInfo.currency;
+    brShipEl.textContent = fmt(baseShipping) + " " + curLbl();
   } else {
     brShipEl.innerHTML = '<span style="color:#f59e0b;">غير متاح</span>';
   }
 
   $("grandTotal").textContent = fmt(total);
-  $("grandTotalCurrency").textContent = storeInfo.currency;
+  $("grandTotalCurrency").textContent = curLbl();
   $("floatingPrice").textContent = fmt(total);
-  $("floatingCurrency").textContent = storeInfo.currency;
+  $("floatingCurrency").textContent = curLbl();
 
   const cp = $("currentPrice");
 /* 🎯 الأولوية: سعر التركيبة → سعر الحزمة → السعر الأساسي */
@@ -3303,7 +3314,7 @@ if (skuPriceNow !== baseUnitPrice) {
       const willHaveFreeShipping = storeFeatures.shipping && bundleConfig.freeShipping?.enabled
         && nextTier.qty >= bundleConfig.freeShipping.minQty;
 
-      let html = `<i class="fas fa-box inline-ico"></i> أضف <strong>${remainText}</strong> أخرى للاستفادة من سعر <strong>${fmt(perUnit)} ${storeInfo.currency}</strong> للقطعة الواحدة`;
+      let html = `<i class="fas fa-box inline-ico"></i> أضف <strong>${remainText}</strong> أخرى للاستفادة من سعر <strong>${fmt(perUnit)} ${curLbl()}</strong> للقطعة الواحدة`;
 
       if (willHaveFreeShipping) {
         html += `<span class="free-hint"><i class="fas fa-gift"></i> مع ${esc(bundleConfig.freeShipping.label)}</span>`;
@@ -3312,7 +3323,7 @@ if (skuPriceNow !== baseUnitPrice) {
       prog.innerHTML = html;
     } else if (tierUsed && tierUsed.perUnit < baseUnitPrice) {
       prog.className = "bundle-progress success";
-      prog.innerHTML = `<i class="fas fa-check-circle inline-ico"></i> لقد حصلت على <strong>أفضل عرض متاح</strong> — سعر <strong>${fmt(Math.floor(tierUsed.perUnit))} ${storeInfo.currency}</strong> للقطعة`;
+      prog.innerHTML = `<i class="fas fa-check-circle inline-ico"></i> لقد حصلت على <strong>أفضل عرض متاح</strong> — سعر <strong>${fmt(Math.floor(tierUsed.perUnit))} ${curLbl()}</strong> للقطعة`;
     } else {
       prog.style.display = "none";
     }
@@ -3588,7 +3599,7 @@ function updateVariantPrice() {
   
   /* السعر المشطوب: نُظهره فقط إذا أدخله المالك يدوياً وكان أكبر من السعر الحالي */
   if (manualOld !== null && manualOld > newPrice) {
-    oldPriceEl.textContent = fmt(manualOld) + " " + storeInfo.currency;
+    oldPriceEl.textContent = fmt(manualOld) + " " + curLbl();
     oldPriceEl.style.display = "inline";
   } else {
     oldPriceEl.textContent = '';
