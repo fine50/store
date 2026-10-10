@@ -24,6 +24,9 @@
   </div>
   <div class="user-info">
     <span class="username" id="userNameDisplay"></span>
+    <button class="hdr-menu-btn" id="hdrMenuBtn" type="button" title="القائمة">
+  <i class="fas fa-ellipsis-v"></i>
+</button>
     <a href="index.html" target="_blank" class="hdr-store-btn" title="عرض المتجر">
   <i class="fas fa-store"></i>
   <span>عرض المتجر</span>
@@ -36,6 +39,9 @@
       <i class="fas fa-globe"></i>
       <span id="langBtnLabel">FR</span>
     </button>
+    <button class="theme-toggle-btn" id="themeToggleBtn" type="button" title="ليل/نهار">
+  <i class="fas fa-moon" id="themeToggleIcon"></i>
+</button>
     <button class="logout-btn" id="logoutBtn" type="button" title="تسجيل الخروج">
       <i class="fas fa-sign-out-alt"></i>
     </button>
@@ -1236,7 +1242,17 @@
     </div>
   </div>
 </div>
-
+<!-- 📱 القائمة المنسدلة للجوال -->
+<div class="hdr-dropdown" id="hdrDropdown">
+  <a href="index.html" target="_blank">
+    <i class="fas fa-store"></i>
+    <span data-i18n="عرض المتجر">عرض المتجر</span>
+  </a>
+  <a href="showcase.html" target="_blank">
+    <i class="fas fa-rocket"></i>
+    <span data-i18n="صفحة العرض">صفحة العرض</span>
+  </a>
+</div>
 <div class="toast" id="toastMessage"></div>
 
 <footer><p><span id="footerStoreName"></span> &copy; <span id="footerYear"></span></p></footer>
@@ -3646,6 +3662,12 @@ document.querySelectorAll('.orders-chip').forEach(chip => {
 let invPeriod = 'today';
 let invSearchTerm = '';
 let currentInvDetail = { type: null, title: '', rows: [], totalLabel: '', totalValue: '' };
+let invDetailPage = 1;
+const INV_DETAIL_PER_PAGE = 20;
+let invTablePage = 1;
+let topProductsPage = 1;
+const INV_TABLE_PER_PAGE = 20;
+const TOP_PRODUCTS_PER_PAGE = 20;
 
 document.querySelectorAll('#invPeriodChips .orders-chip').forEach(chip => {
   chip.addEventListener('click', () => {
@@ -3821,8 +3843,13 @@ function renderInventoryTable() {
     return;
   }
   list.sort((a, b) => (Number(a[1].stockQuantity) || 0) - (Number(b[1].stockQuantity) || 0));
+  const totalRows = list.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / INV_TABLE_PER_PAGE));
+  if (invTablePage > totalPages) invTablePage = totalPages;
+  const start = (invTablePage - 1) * INV_TABLE_PER_PAGE;
+  const pageItems = list.slice(start, start + INV_TABLE_PER_PAGE);
   let html = `<div style="overflow-x:auto;"><table class="inv-table"><thead><tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th>' : ''}<th>سعر البيع</th>${canSeeCost ? '<th>الفائدة/قطعة</th>' : ''}<th>الحالة</th></tr></thead><tbody>`;
-  list.forEach(([id, p]) => {
+  pageItems.forEach(([id, p]) => {
     const q = Number(p.stockQuantity) || 0;
     const alert = Number(storeInfo.lowStockAlert) || 5;
     const cp = Number(p.costPrice) || 0;
@@ -3833,7 +3860,18 @@ function renderInventoryTable() {
     html += `<tr><td style="font-weight:600;">${escapeHtml(p.name)}</td><td><strong style="font-size:14px;color:${q === 0 ? '#dc2626' : q <= alert ? '#d97706' : '#059669'};">${q}</strong></td>${canSeeCost ? `<td>${fmt(cp)} ${cur}</td>` : ''}<td>${fmt(sp)} ${cur}</td>${canSeeCost ? `<td>${marginPill}</td>` : ''}<td>${statusPill}</td></tr>`;
   });
   html += '</tbody></table></div>';
-  c.innerHTML = html;
+c.innerHTML = buildSimplePager('invTable', invTablePage, totalPages) +
+  buildInvPageInfo('invTable', start, INV_TABLE_PER_PAGE, totalRows) +
+  html;
+  c.querySelectorAll('[data-pager="invTable"]').forEach(b => {
+    b.addEventListener('click', () => {
+      const p = parseInt(b.dataset.page);
+      if (!p || p === invTablePage) return;
+      invTablePage = p;
+      renderInventoryTable();
+      c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 }
 
 function renderTopProducts(periodOrders) {
@@ -3846,18 +3884,37 @@ function renderTopProducts(periodOrders) {
       const pid = it.productId || it.name;
       if (!map[pid]) map[pid] = { name: it.name, qty: 0, revenue: 0, cost: 0 };
       const q = Number(it.quantity) || 0;
-      map[pid].qty += q; map[pid].revenue += q * (Number(it.price) || 0); map[pid].cost += q * getCostForItem(it);
+      map[pid].qty += q;
+      map[pid].revenue += q * (Number(it.price) || 0);
+      map[pid].cost += q * getCostForItem(it);
     });
   });
-  const arr = Object.values(map).sort((a, b) => b.qty - a.qty).slice(0, 10);
+  const arr = Object.values(map).sort((a, b) => b.qty - a.qty);
   if (!arr.length) { c.innerHTML = `<div class="inv-empty">لا توجد مبيعات في هذه الفترة</div>`; return; }
+  const totalRows = arr.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / TOP_PRODUCTS_PER_PAGE));
+  if (topProductsPage > totalPages) topProductsPage = totalPages;
+  const start = (topProductsPage - 1) * TOP_PRODUCTS_PER_PAGE;
+  const pageItems = arr.slice(start, start + TOP_PRODUCTS_PER_PAGE);
   let html = `<div style="overflow-x:auto;"><table class="inv-table"><thead><tr><th>#</th><th>المنتج</th><th>الكمية المباعة</th><th>المبيعات</th>${canSeeCost ? '<th>الربح</th>' : ''}</tr></thead><tbody>`;
-  arr.forEach((p, i) => {
+  pageItems.forEach((p, i) => {
     const profit = p.revenue - p.cost;
-    html += `<tr><td>${i + 1}</td><td style="font-weight:600;">${escapeHtml(p.name)}</td><td><strong>${p.qty}</strong></td><td>${fmt(p.revenue)} ${cur}</td>${canSeeCost ? `<td>${profit >= 0 ? `<span class="profit-pill">+${fmt(profit)} ${cur}</span>` : `<span class="loss-pill">${fmt(profit)} ${cur}</span>`}</td>` : ''}</tr>`;
+    const rank = start + i + 1;
+    html += `<tr><td>${rank}</td><td style="font-weight:600;">${escapeHtml(p.name)}</td><td><strong>${p.qty}</strong></td><td>${fmt(p.revenue)} ${cur}</td>${canSeeCost ? `<td>${profit >= 0 ? `<span class="profit-pill">+${fmt(profit)} ${cur}</span>` : `<span class="loss-pill">${fmt(profit)} ${cur}</span>`}</td>` : ''}</tr>`;
   });
   html += '</tbody></table></div>';
-  c.innerHTML = html;
+c.innerHTML = buildSimplePager('topProducts', topProductsPage, totalPages) +
+  buildInvPageInfo('topProducts', start, TOP_PRODUCTS_PER_PAGE, totalRows) +
+  html;
+  c.querySelectorAll('[data-pager="topProducts"]').forEach(b => {
+    b.addEventListener('click', () => {
+      const p = parseInt(b.dataset.page);
+      if (!p || p === topProductsPage) return;
+      topProductsPage = p;
+      renderTopProducts(periodOrders);
+      c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 }
 
 function bindInvStatCards() {
@@ -3896,17 +3953,31 @@ function buildInvDetail(type) {
       rows.push([p.name, p.qty, fmt(p.revenue) + ' ' + cur, fmt(p.cost) + ' ' + cur, (profit >= 0 ? '+' : '') + fmt(profit) + ' ' + cur]);
     });
     if (rows.length) { total = 'الإجمالي'; totalValue = fmt(totRev) + ' ' + cur; }
-  } else if (type === 'stockValue' || type === 'stockQty') {
-    title = type === 'stockValue' ? 'تفاصيل قيمة المخزون' : 'تفاصيل الكميات';
+  } else if (type === 'stockValue') {
+    title = 'تفاصيل قيمة المخزون';
     let sum = 0;
+    const temp = [];
     Object.entries(allProducts).filter(([_, p]) => p.trackStock === true).forEach(([_, p]) => {
       const q = Number(p.stockQuantity) || 0;
       const c = Number(p.costPrice) || 0;
-      sum += q * c;
-      rows.push([p.name, q, fmt(c) + ' ' + cur, fmt(q * c) + ' ' + cur]);
+      const val = q * c;
+      sum += val;
+      temp.push({ row: [p.name, q, fmt(c) + ' ' + cur, fmt(val) + ' ' + cur], val });
     });
-    if (rows.length) { total = 'الإجمالي'; totalValue = (type === 'stockValue' ? fmt(sum) + ' ' + cur : fmt(rows.reduce((s, r) => s + r[1], 0))); }
-  } else if (type === 'lowStock' || type === 'outStock') {
+    temp.sort((a, b) => b.val - a.val);
+    rows = temp.map(x => x.row);
+    if (rows.length) { total = 'الإجمالي'; totalValue = fmt(sum) + ' ' + cur; }
+  } else if (type === 'stockQty') {
+    title = 'تفاصيل الكميات';
+    const temp = [];
+    Object.entries(allProducts).filter(([_, p]) => p.trackStock === true).forEach(([_, p]) => {
+      const q = Number(p.stockQuantity) || 0;
+      temp.push({ row: [p.name, q, p.family || '-'], qty: q });
+    });
+    temp.sort((a, b) => b.qty - a.qty);
+    rows = temp.map(x => x.row);
+    if (rows.length) { total = 'إجمالي القطع'; totalValue = fmt(rows.reduce((s, r) => s + r[1], 0)); }
+} else if (type === 'lowStock' || type === 'outStock') {
     title = type === 'lowStock' ? 'منتجات على وشك النفاد' : 'منتجات نفدت';
     Object.entries(allProducts).filter(([_, p]) => {
       if (p.trackStock !== true) return false;
@@ -3922,17 +3993,67 @@ function buildInvDetail(type) {
   }
   return { type, title, rows, total, totalValue, periodLabel, canSeeCost };
 }
+function buildSimplePager(pagerKey, current, total) {
+  if (total <= 1) return '';
+  const btn = (label, page, opts = {}) => {
+    const cls = opts.active ? 'active-page' : '';
+    const dis = opts.disabled ? 'disabled' : '';
+    return `<button class="inv-page-btn ${cls}" ${dis} data-pager="${pagerKey}" data-page="${page}">${label}</button>`;
+  };
+  let inner = '';
+  inner += btn('‹', current - 1, { disabled: current === 1 });
+  const range = new Set([1, total]);
+  for (let i = current - 1; i <= current + 1; i++) if (i > 1 && i < total) range.add(i);
+  const sorted = [...range].sort((a, b) => a - b);
+  let last = 0;
+  sorted.forEach(n => {
+    if (n - last > 1) inner += `<span class="inv-page-sep">…</span>`;
+    inner += btn(n, n, { active: n === current });
+    last = n;
+  });
+  inner += btn('›', current + 1, { disabled: current === total });
+  return `<div class="inv-pagination">${inner}</div>`;
+}
 
+function buildInvPageInfo(pagerKey, start, perPage, total) {
+  if (total === 0) return '';
+  const tpl = (typeof window.t === 'function') ? window.t('invPageInfo') : 'عرض {from} - {to} من {total}';
+  const msg = String(tpl)
+    .replace('{from}', start + 1)
+    .replace('{to}', Math.min(start + perPage, total))
+    .replace('{total}', total);
+  return `<div class="inv-page-info">${msg}</div>`;
+}
 function openInvDrawer(type) {
   const target = $("invDetailContainer");
   if (!target) return;
   if (target.dataset.currentType === type && target.style.display !== 'none') { closeInvDrawer(); return; }
   const data = buildInvDetail(type);
   currentInvDetail = data;
-  const cur = curLbl();
+  invDetailPage = 1;
+  target.dataset.currentType = type;
+  target.style.display = 'block';
+  document.querySelectorAll('.bento-card').forEach(el => el.classList.remove('active-detail'));
+  const activeCard = document.querySelector(`.bento-card[data-detail="${type}"]`);
+  if (activeCard) activeCard.classList.add('active-detail');
+  renderInvDrawerContent();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function renderInvDrawerContent() {
+  const target = $("invDetailContainer");
+  const data = currentInvDetail;
+  if (!target || !data) return;
   const canSeeCost = data.canSeeCost;
+  const type = data.type;
+  const totalRows = data.rows.length;
+  const totalPages = Math.max(1, Math.ceil(totalRows / INV_DETAIL_PER_PAGE));
+  if (invDetailPage > totalPages) invDetailPage = totalPages;
+  const start = (invDetailPage - 1) * INV_DETAIL_PER_PAGE;
+  const pageRows = data.rows.slice(start, start + INV_DETAIL_PER_PAGE);
+
   let tableHtml = '';
-  if (!data.rows.length) {
+  if (!totalRows) {
     tableHtml = `<div class="inv-empty" style="padding:40px 20px;"><i class="fas fa-inbox" style="font-size:40px;color:#c9cccf;display:block;margin-bottom:10px;"></i>لا توجد بيانات في هذه الفترة</div>`;
   } else {
     let thead = '';
@@ -3940,12 +4061,15 @@ function openInvDrawer(type) {
       thead = '<tr><th>العميل</th><th>الهاتف</th><th>المبلغ</th><th>التاريخ</th></tr>';
     else if (type === 'profit' || type === 'cost')
       thead = `<tr><th>المنتج</th><th>الكمية</th><th>المبيعات</th>${canSeeCost ? '<th>التكلفة</th><th>الربح</th>' : ''}</tr>`;
-    else if (type === 'stockValue' || type === 'stockQty')
-      thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
+    else if (type === 'stockValue')
+  thead = `<tr><th>المنتج</th><th>الكمية</th>${canSeeCost ? '<th>ثمن الشراء</th><th>القيمة</th>' : ''}</tr>`;
+else if (type === 'stockQty')
+  thead = '<tr><th>المنتج</th><th>الكمية</th><th>العائلة</th></tr>';
     else
       thead = '<tr><th>المنتج</th><th>الكمية</th><th>حد التنبيه</th><th>الحالة</th></tr>';
+
     tableHtml = `<div style="overflow-x:auto;"><table class="inv-table"><thead>${thead}</thead><tbody>`;
-    data.rows.forEach(r => {
+    pageRows.forEach(r => {
       tableHtml += '<tr>' + r.map((cell, i) => {
         let style = '';
         if (typeof cell === 'string' && cell.match(/^\d|^\+|^-/)) style = 'font-weight:700;';
@@ -3955,6 +4079,40 @@ function openInvDrawer(type) {
     tableHtml += '</tbody></table></div>';
     if (data.total) tableHtml += `<div class="inv-drawer-total"><span>${data.total}</span><b>${data.totalValue}</b></div>`;
   }
+
+  /* ═══ أزرار التنقل بين الصفحات ═══ */
+  let pagerHtml = '';
+  if (totalPages > 1) {
+    const btn = (label, page, opts = {}) => {
+      const cls = opts.active ? 'active-page' : '';
+      const dis = opts.disabled ? 'disabled' : '';
+      return `<button class="inv-page-btn ${cls}" ${dis} data-inv-page="${page}">${label}</button>`;
+    };
+    let inner = '';
+    inner += btn('‹', invDetailPage - 1, { disabled: invDetailPage === 1 });
+    const range = new Set([1, totalPages]);
+    for (let i = invDetailPage - 1; i <= invDetailPage + 1; i++) if (i > 1 && i < totalPages) range.add(i);
+    const sorted = [...range].sort((a, b) => a - b);
+    let last = 0;
+    sorted.forEach(n => {
+      if (n - last > 1) inner += `<span class="inv-page-sep">…</span>`;
+      inner += btn(n, n, { active: n === invDetailPage });
+      last = n;
+    });
+    inner += btn('›', invDetailPage + 1, { disabled: invDetailPage === totalPages });
+    pagerHtml = `<div class="inv-pagination">${inner}</div>`;
+  }
+
+  let countHtml = '';
+if (totalRows > 0) {
+  const _tpl = (typeof window.t === 'function') ? window.t('invPageInfo') : 'عرض {from} - {to} من {total}';
+  const _msg = String(_tpl)
+    .replace('{from}', start + 1)
+    .replace('{to}', Math.min(start + INV_DETAIL_PER_PAGE, totalRows))
+    .replace('{total}', totalRows);
+  countHtml = `<div class="inv-page-info">${_msg}</div>`;
+}
+
   target.innerHTML = `
     <div class="inv-section-header">
       <h3><i class="fas fa-chart-bar"></i> ${data.title}</h3>
@@ -3967,17 +4125,23 @@ function openInvDrawer(type) {
       <span><i class="far fa-calendar-alt"></i> الفترة: <b>${data.periodLabel}</b></span>
       <span><i class="far fa-clock"></i> ${formatDate()}</span>
     </div>
+    ${pagerHtml}
+    ${countHtml}
     ${tableHtml}`;
-  target.dataset.currentType = type;
-  target.style.display = 'block';
-  document.querySelectorAll('.bento-card').forEach(el => el.classList.remove('active-detail'));
-const activeCard = document.querySelector(`.bento-card[data-detail="${type}"]`);
-  if (activeCard) activeCard.classList.add('active-detail');
+
   const closeBtn = $("invDetailClose");
   if (closeBtn) closeBtn.addEventListener('click', closeInvDrawer);
   const printBtn = $("invDetailPrint");
   if (printBtn) printBtn.addEventListener('click', printInvDetail);
-  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  target.querySelectorAll('[data-inv-page]').forEach(b => {
+    b.addEventListener('click', () => {
+      const p = parseInt(b.dataset.invPage);
+      if (!p || p === invDetailPage) return;
+      invDetailPage = p;
+      renderInvDrawerContent();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 }
 
 function closeInvDrawer() {
@@ -3986,6 +4150,7 @@ function closeInvDrawer() {
   target.style.display = 'none';
   target.innerHTML = '';
   target.dataset.currentType = '';
+  invDetailPage = 1;
   document.querySelectorAll('.bento-card').forEach(el => el.classList.remove('active-detail'));
 }
 
@@ -5159,7 +5324,92 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('✅ Landing Tab system ready');
 });
 </script>
-  
+  <script>
+  (function() {
+    'use strict';
+    
+    const KEY = 'admin_theme';
+    
+    function applyTheme(theme) {
+      const body = document.body;
+      if (!body) return;
+      const icon = document.getElementById('themeToggleIcon');
+      if (theme === 'dark') {
+        body.classList.add('admin-dark');
+        if (icon) icon.className = 'fas fa-sun';
+      } else {
+        body.classList.remove('admin-dark');
+        if (icon) icon.className = 'fas fa-moon';
+      }
+    }
+    
+    // تطبيق فوري
+    const savedTheme = localStorage.getItem(KEY) || 'light';
+    if (document.body) applyTheme(savedTheme);
+    else document.addEventListener('DOMContentLoaded', () => applyTheme(savedTheme));
+    
+    // 🎯 مستمع نقر على مستوى المستند — يعمل مع أي زر يُنشأ لاحقاً
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('#themeToggleBtn');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isDark = document.body.classList.contains('admin-dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem(KEY, newTheme);
+      applyTheme(newTheme);
+      console.log('🎨 Theme changed to:', newTheme);
+    }, true);
+    
+    // إعادة تطبيق بعد تحميل الصفحة (admin يحمّل تدريجياً)
+    window.addEventListener('load', () => {
+      applyTheme(localStorage.getItem(KEY) || 'light');
+    });
+    
+  })();
+</script>
+<script>
+  /* 📱 قائمة الجوال المنسدلة */
+  (function() {
+    function bindMenu() {
+      const btn = document.getElementById('hdrMenuBtn');
+      const dd = document.getElementById('hdrDropdown');
+      if (!btn || !dd || btn._menuBound) return;
+      btn._menuBound = true;
+      
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dd.classList.toggle('show');
+        const rect = btn.getBoundingClientRect();
+        dd.style.top = (rect.bottom + 6) + 'px';
+        if (document.documentElement.dir === 'rtl') {
+          dd.style.insetInlineEnd = '8px';
+          dd.style.insetInlineStart = 'auto';
+        } else {
+          dd.style.insetInlineStart = '8px';
+          dd.style.insetInlineEnd = 'auto';
+        }
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (!dd.contains(e.target) && !btn.contains(e.target)) {
+          dd.classList.remove('show');
+        }
+      });
+      
+      dd.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => dd.classList.remove('show'));
+      });
+    }
+    
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindMenu);
+    else bindMenu();
+    setTimeout(bindMenu, 500);
+    setTimeout(bindMenu, 1500);
+  })();
+</script>
   <script src="logger.js"></script>
 </body>
 </html>

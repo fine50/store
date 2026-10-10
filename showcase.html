@@ -367,6 +367,215 @@ select.field-input{cursor:pointer;-webkit-appearance:none;appearance:none;backgr
 @media(max-width:640px){.footer{padding:26px 14px 18px}.footer-action-btn,.footer-socials a{width:36px;height:36px;font-size:14px}}
 
 .pc-variants{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;width:100%;margin-top:3px}.pc-color-mini{width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);box-shadow:0 1px 3px rgba(0,0,0,.4);cursor:pointer;flex-shrink:0;padding:0;background-clip:content-box;transition:transform .15s var(--ease)}.pc-color-mini:hover{transform:scale(1.3)}.pc-color-mini.light-color{border-color:rgba(0,0,0,.18)}.pc-size-mini{font-size:9px;font-weight:800;padding:1px 7px;border-radius:var(--radius-full);background:rgba(255,255,255,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.3);line-height:1.5;cursor:pointer;flex-shrink:0;white-space:nowrap;font-family:var(--font);transition:background .15s var(--ease)}.pc-size-mini:hover{background:rgba(255,255,255,.42)}.pc-variants-more{font-size:9px;font-weight:800;color:rgba(255,255,255,.85);padding:0 3px;line-height:1.5}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.15s !important}.pc:hover{transform:none}}
+/* ═══════════════════════════════════════════════════════════
+   🌙 الوضع الداكن — شامل لـ showcase.html
+   ═══════════════════════════════════════════════════════════ */
+body.admin-dark {
+  --bg: #0f172a;
+  --bg-2: #1e293b;
+  --card: #1e293b;
+  --text: #f1f5f9;
+  --text-2: #cbd5e1;
+  --text-3: #94a3b8;
+  --muted: #64748b;
+  --border: #334155;
+  --border-2: #293548;
+  --border-strong: #475569;
+  --hover: #334155;
+  --primary-50: #132b24;
+  --primary-100: #164e3e;
+  --primary-200: #34d399;
+  --primary-tint: rgba(0, 128, 96, .18);
+  --primary-soft: rgba(0, 128, 96, .25);
+  --success-tint: rgba(16, 185, 129, .15);
+  --danger-tint: rgba(220, 38, 38, .15);
+  --warning-tint: rgba(217, 119, 6, .15);
+  --info-tint: rgba(37, 99, 235, .15);
+  --vip-tint: rgba(124, 58, 237, .15);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, .3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .4);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, .5);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, .6);
+  color-scheme: dark;
+}
+body.admin-dark, body.admin-dark #app { background: var(--bg); color: var(--text); }
+
+/* ═══ Header ═══ */
+body.admin-dark .header { background: rgba(15, 23, 42, .92); border-color: var(--border); }
+body.admin-dark .brand { color: var(--text); }
+body.admin-dark .brand-logo { border-color: var(--border); }
+body.admin-dark .icon-btn { background: var(--card); color: var(--text-2); border-color: var(--border); }
+body.admin-dark .icon-btn:hover { background: var(--hover); color: var(--text); border-color: var(--border-strong); }
+body.admin-dark .icon-btn.cart { background: var(--primary); color: #fff; border-color: var(--primary); }
+body.admin-dark .icon-btn.cart:hover { background: var(--primary-hover); }
+body.admin-dark .icon-btn .badge { background: #dc2626; border-color: var(--card); }
+body.admin-dark .icon-btn.cart .badge { background: #fff; color: var(--primary); }
+body.admin-dark .search-overlay { background: var(--card); border-color: var(--border); }
+body.admin-dark .search-input { background: var(--bg-2); color: var(--text); border-color: var(--border); }
+body.admin-dark .search-input:focus { background: var(--card); border-color: var(--primary); }
+
+/* ═══ زر الليل/النهار ═══ */
+.theme-toggle-btn { position: relative; }
+body.admin-dark #themeToggleIcon { color: #fbbf24; }
+
+/* ═══ Announcement ═══ */
+body.admin-dark .announcement { background: linear-gradient(135deg, #064e3b, #0b6e4f); }
+
+/* ═══ Hero ═══ */
+body.admin-dark .hero-stage { background: var(--bg-2); border-color: var(--border); }
+body.admin-dark .hero-nav { background: rgba(30, 41, 59, .6); border-color: rgba(255, 255, 255, .15); }
+body.admin-dark .hero-nav:hover { background: var(--card); color: var(--primary-200); }
+body.admin-dark .hero-dots { background: rgba(0, 0, 0, .5); }
+
+/* ═══ Showcase Text ═══ */
+body.admin-dark .sc-hero-text h1 { color: var(--text); }
+body.admin-dark .sc-hero-text .sub1 { color: var(--text-2); }
+body.admin-dark .sc-hero-text .sub2 { background: var(--primary-tint); color: var(--primary-200); }
+
+/* ═══ Section Head (Counter + Sort) ═══ */
+body.admin-dark .sec-counter { background: var(--card); border-color: var(--border); color: var(--text-2); }
+body.admin-dark .sec-counter b { color: var(--text); }
+body.admin-dark .sec-counter i { color: var(--primary-200); }
+body.admin-dark .sort-btn { background: var(--card); border-color: var(--border); color: var(--text-2); }
+body.admin-dark .sort-btn:hover { border-color: var(--border-strong); color: var(--text); }
+body.admin-dark .sort-menu { background: var(--card); border-color: var(--border); }
+body.admin-dark .sort-opt { color: var(--text-2); }
+body.admin-dark .sort-opt:hover { background: var(--hover); color: var(--text); }
+body.admin-dark .sort-opt.on { background: var(--primary-tint); color: var(--primary-200); }
+
+/* ═══ Family Bar ═══ */
+body.admin-dark .fam-chip { background: var(--card); border-color: var(--border); color: var(--text-2); }
+body.admin-dark .fam-chip:hover { border-color: var(--border-strong); color: var(--text); }
+body.admin-dark .fam-chip.active { background: var(--text); border-color: var(--text); color: var(--bg); }
+body.admin-dark .fam-chip .n { background: rgba(255, 255, 255, .08); color: inherit; }
+body.admin-dark .fam-chip.c-new { color: #60a5fa; border-color: #1e40af; }
+body.admin-dark .fam-chip.c-new.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+body.admin-dark .fam-chip.c-sale { color: #f87171; border-color: #7f1d1d; }
+body.admin-dark .fam-chip.c-sale.active { background: #dc2626; border-color: #dc2626; color: #fff; }
+body.admin-dark .fam-chip.c-fav { color: var(--primary-200); border-color: var(--primary-200); }
+body.admin-dark .fam-chip.c-fav.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+body.admin-dark .fam-chip.c-clear { background: var(--danger-tint); color: #f87171; border-color: #7f1d1d; }
+body.admin-dark .fam-chip.fam-toggle { color: var(--primary-200); border-color: var(--primary-200); }
+body.admin-dark .fam-chip.fam-toggle.open,
+body.admin-dark .fam-chip.fam-toggle.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ═══ Family Panel ═══ */
+body.admin-dark .fam-panel { background: var(--card); border-color: var(--border); }
+body.admin-dark .fam-panel-search { background: var(--bg-2); }
+body.admin-dark .fam-panel-search input { color: var(--text); }
+body.admin-dark .fam-panel-search input::placeholder { color: var(--text-3); }
+body.admin-dark .fam-panel-item { color: var(--text-2); }
+body.admin-dark .fam-panel-item:hover { background: var(--hover); color: var(--text); }
+body.admin-dark .fam-panel-item.active { background: var(--primary); color: #fff; }
+body.admin-dark .fam-panel-item .ct { background: rgba(255, 255, 255, .08); }
+body.admin-dark .fam-panel-item.active .ct { background: rgba(255, 255, 255, .22); color: #fff; }
+body.admin-dark .fam-panel-empty { color: var(--text-3); }
+
+/* ═══ Product Cards ═══ */
+body.admin-dark .pc { background: var(--bg-2); box-shadow: 0 4px 12px rgba(0, 0, 0, .4); }
+body.admin-dark .pc:hover { box-shadow: 0 12px 32px rgba(0, 0, 0, .5); }
+body.admin-dark .pc-media .no-img { background: var(--bg-2); color: var(--border-strong); }
+body.admin-dark .pc-fav { background: rgba(30, 41, 59, .95); color: var(--text-2); }
+body.admin-dark .pc-fav:hover { background: #dc2626; color: #fff; }
+body.admin-dark .pc-fav.on { background: #dc2626; color: #fff; }
+body.admin-dark .pc-add { background: var(--primary); }
+body.admin-dark .pc-add:hover { background: var(--primary-hover); }
+
+/* ═══ Pager ═══ */
+body.admin-dark .pager button { background: var(--card); color: var(--text-2); border-color: var(--border); }
+body.admin-dark .pager button:hover:not(:disabled) { background: var(--hover); color: var(--text); }
+body.admin-dark .pager button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+body.admin-dark .pager .sep { color: var(--text-3); }
+
+/* ═══ Empty State ═══ */
+body.admin-dark .empty .ic { background: var(--card); border-color: var(--border); }
+body.admin-dark .empty h3 { color: var(--text); }
+body.admin-dark .empty p { color: var(--text-2); }
+
+/* ═══ Cart Drawer ═══ */
+body.admin-dark .drawer { background: var(--card); box-shadow: -20px 0 60px rgba(0, 0, 0, .4); }
+body.admin-dark .drawer-head { border-color: var(--border); }
+body.admin-dark .drawer-title { color: var(--text); }
+body.admin-dark .drawer-title .cnt { background: var(--primary-tint); color: var(--primary-200); }
+body.admin-dark .drawer-close { background: var(--bg-2); color: var(--text-2); }
+body.admin-dark .drawer-close:hover { background: #dc2626; color: #fff; }
+body.admin-dark .cart-row { border-color: var(--border); }
+body.admin-dark .cart-thumb { background: var(--bg-2); border-color: var(--border); }
+body.admin-dark .cart-name { color: var(--text); }
+body.admin-dark .cart-line .lbl { color: var(--text-3); }
+body.admin-dark .cart-line .vl { color: var(--text); }
+body.admin-dark .cart-line.total-line .vl { color: var(--primary-200); }
+body.admin-dark .qty-btn { background: var(--bg-2); border-color: var(--border); color: var(--text); }
+body.admin-dark .qty-btn:hover:not(:disabled) { background: var(--primary); border-color: var(--primary); }
+body.admin-dark .qty-val { color: var(--text); }
+body.admin-dark .cart-remove { color: var(--text-3); }
+body.admin-dark .cart-remove:hover { background: var(--danger-tint); color: #f87171; }
+body.admin-dark .cart-empty { color: var(--text-3); }
+body.admin-dark .cart-empty i { color: var(--border-strong); }
+body.admin-dark .cart-empty h4 { color: var(--text); }
+body.admin-dark .drawer-foot { background: var(--bg); border-color: var(--border); }
+body.admin-dark .cart-tot { color: var(--text); }
+body.admin-dark .cart-tot b { color: var(--primary-200); }
+body.admin-dark .btn-checkout { background: var(--primary); }
+
+/* ═══ FAB Cart ═══ */
+body.admin-dark .fab-cart { background: var(--primary); box-shadow: 0 8px 24px rgba(0, 128, 96, .5); }
+body.admin-dark .fab-cart:hover { background: var(--primary-hover); }
+
+/* ═══ Modals / Masks ═══ */
+body.admin-dark .mask { background: rgba(0, 0, 0, .7); }
+body.admin-dark .dialog { background: var(--card); border-color: var(--border); box-shadow: 0 24px 48px rgba(0, 0, 0, .5); }
+body.admin-dark .dialog h3 { color: var(--text); border-color: var(--border); }
+body.admin-dark .dialog .close-x { background: var(--bg-2); color: var(--text-2); }
+body.admin-dark .dialog .close-x:hover { background: #dc2626; color: #fff; }
+body.admin-dark .field-label { color: var(--text-2); }
+body.admin-dark .field-input { background: var(--bg-2); color: var(--text); border-color: var(--border); }
+body.admin-dark .field-input:focus { background: var(--card); border-color: var(--primary); }
+body.admin-dark .field-input::placeholder { color: var(--text-3); }
+body.admin-dark .delivery-opt { background: var(--bg-2); border-color: var(--border); color: var(--text-2); }
+body.admin-dark .delivery-opt:hover { border-color: var(--primary-200); }
+body.admin-dark .delivery-opt.active { background: var(--primary-tint); border-color: var(--primary); color: var(--primary-200); }
+body.admin-dark .order-summary { background: var(--bg); border-color: var(--border); }
+body.admin-dark .os-row { color: var(--text-2); }
+body.admin-dark .os-row .nm { color: var(--text); }
+body.admin-dark .os-row .pr { color: var(--primary-200); }
+body.admin-dark .checkout-summary { background: var(--primary-tint); border-color: var(--primary-200); }
+body.admin-dark .cs-row { color: var(--text-2); }
+body.admin-dark .cs-row + .cs-row { border-color: rgba(255, 255, 255, .1); }
+body.admin-dark .cs-row .val { color: var(--text); }
+body.admin-dark .cs-row.cs-total { border-color: var(--primary-200); }
+body.admin-dark .cs-row.cs-total span:first-child { color: var(--primary-200); }
+body.admin-dark .cs-row.cs-total .val { color: var(--primary-200); }
+body.admin-dark .dialog .hint { color: var(--text-3); }
+body.admin-dark #viewer .dialog { background: transparent; }
+
+/* ═══ Success Modal ═══ */
+body.admin-dark .success-modal .dialog { background: var(--card); }
+body.admin-dark .success-modal .success-icon { background: linear-gradient(135deg, var(--primary-tint), var(--primary-50)); }
+body.admin-dark .success-modal h2 { color: var(--primary-200); }
+body.admin-dark .success-modal .thank-msg { color: var(--text-2); }
+body.admin-dark .success-modal .thank-msg strong { color: var(--primary-200); }
+body.admin-dark .success-modal .btn-modal-close { background: linear-gradient(135deg, var(--primary), var(--primary-600)); }
+
+/* ═══ Toast ═══ */
+body.admin-dark .toast { background: #f1f5f9; color: #0f172a; }
+body.admin-dark .toast.success { background: #10b981; color: #fff; }
+body.admin-dark .toast.error { background: #dc2626; color: #fff; }
+
+/* ═══ Footer ═══ */
+body.admin-dark .footer { background: var(--card); border-color: var(--border); }
+body.admin-dark .footer-brand { color: var(--text); }
+body.admin-dark .footer-action-btn,
+body.admin-dark .footer-socials a { background: var(--bg-2); color: var(--primary-200); border-color: var(--border); }
+body.admin-dark .footer-action-btn:hover,
+body.admin-dark .footer-socials a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+body.admin-dark .footer-phone { background: var(--bg); border-color: var(--border); color: var(--text-2); }
+body.admin-dark .footer-phone a { color: var(--primary-200); }
+body.admin-dark .footer-copy { color: var(--text-3); }
+
+/* ═══ Scrollbar ═══ */
+body.admin-dark ::-webkit-scrollbar-thumb { background: #475569; border-color: var(--bg); }
 </style>
 </head>
 <body>
@@ -401,6 +610,7 @@ select.field-input{cursor:pointer;-webkit-appearance:none;appearance:none;backgr
           <span class="badge" id="cartBadge" style="display:none;">0</span>
         </button>
         <button class="icon-btn" id="langBtn" type="button" title="Français / العربية"><i class="fas fa-globe"></i></button>
+        <button class="icon-btn" id="themeToggleBtn" type="button" title="ليل/نهار"><i class="fas fa-moon" id="themeToggleIcon"></i></button>
       </div>
     </div>
     <div class="search-overlay" id="searchOverlay">
@@ -594,6 +804,42 @@ select.field-input{cursor:pointer;-webkit-appearance:none;appearance:none;backgr
 <div class="toast" id="toast"></div>
 
 <script src="i18n.js"></script>
+<script>
+  (function() {
+    'use strict';
+    const KEY = 'admin_theme';
+    
+    function applyTheme(theme) {
+      const body = document.body;
+      if (!body) return;
+      const icon = document.getElementById('themeToggleIcon');
+      if (theme === 'dark') {
+        body.classList.add('admin-dark');
+        if (icon) icon.className = 'fas fa-sun';
+      } else {
+        body.classList.remove('admin-dark');
+        if (icon) icon.className = 'fas fa-moon';
+      }
+    }
+    
+    const saved = localStorage.getItem(KEY) || 'light';
+    if (document.body) applyTheme(saved);
+    else document.addEventListener('DOMContentLoaded', () => applyTheme(saved));
+    
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('#themeToggleBtn');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const isDark = document.body.classList.contains('admin-dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      localStorage.setItem(KEY, newTheme);
+      applyTheme(newTheme);
+    }, true);
+    
+    window.addEventListener('load', () => applyTheme(localStorage.getItem(KEY) || 'light'));
+  })();
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getDatabase, ref, onValue, push, update, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";

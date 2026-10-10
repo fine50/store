@@ -9,7 +9,10 @@
       /* ═══════════════════════════════════════════
          عام / مشترك
          ═══════════════════════════════════════════ */
-      loading:"جاري التحميل...", notAllowed:"غير مسموح", noOrders:"لا توجد طلبات",
+      loading:"جاري التحميل...",
+      invPageInfo:"عرض {from} - {to} من {total}",
+      invPageInfo:"عرض {from} - {to} من {total}",
+      notAllowed:"غير مسموح", noOrders:"لا توجد طلبات",
       noConfirmed:"لا توجد طلبات مؤكدة", noProducts:"لا توجد منتجات", noReviews:"لا توجد تقييمات بعد",
       noZones:"لا توجد مناطق", noUsers:"لا يوجد", noLandingPages:"لا توجد صفحات ترويج بعد",
       goToProducts:"اذهب إلى المنتجات واضغط على الزر.", noHiddenProducts:"لا توجد منتجات مخفية",
@@ -305,6 +308,7 @@
       "لا توجد نتائج":"لا توجد نتائج",
       "تم حفظ":"تم حفظ",
       "تم حفظ إعدادات Showcase":"تم حفظ إعدادات Showcase",
+      "إظهار التقييمات":"إظهار التقييمات",
       "إظهار التقييمات في صفحات الترويج":"إظهار التقييمات في صفحات الترويج",
       "يتطلب تفعيل التقييمات بالأعلى.":"يتطلب تفعيل التقييمات بالأعلى.",
       "إظهار عداد الزوار":"إظهار عداد الزوار",
@@ -645,6 +649,7 @@
       "اطلب الآن":"اطلب الآن",
       "الاسم واللقب":"الاسم واللقب",
       "الولاية":"الولاية",
+      "طريقة التوصيل":"طريقة التوصيل",
       "توصيل للمنزل":"توصيل للمنزل",
       "استلام من المكتب":"استلام من المكتب",
       "ملخّص الطلب":"ملخّص الطلب",
@@ -828,7 +833,10 @@
       /* ═══════════════════════════════════════════
          عام / مشترك
          ═══════════════════════════════════════════ */
-      loading:"Chargement...", notAllowed:"Non autorisé", noOrders:"Aucune commande",
+      loading:"Chargement...",
+      invPageInfo:"Affichage {from} - {to} sur {total}",
+      invPageInfo:"Affichage {from} - {to} sur {total}",
+      notAllowed:"Non autorisé", noOrders:"Aucune commande",
       noConfirmed:"Aucune commande confirmée", noProducts:"Aucun produit", noReviews:"Aucun avis",
       noZones:"Aucune zone", noUsers:"Aucun", noLandingPages:"Aucune page promo",
       goToProducts:"Allez dans Produits et cliquez sur le bouton.", noHiddenProducts:"Aucun produit masqué",
@@ -1128,6 +1136,7 @@
       "لا توجد نتائج":"Aucun résultat",
       "تم حفظ":"Enregistré",
       "تم حفظ إعدادات Showcase":"Paramètres Showcase enregistrés",
+      "إظهار التقييمات":"Afficher les avis",
       "إظهار التقييمات في صفحات الترويج":"Afficher les avis sur les pages promotionnelles",
       "يتطلب تفعيل التقييمات بالأعلى.":"Nécessite l'activation des avis ci-dessus.",
       "إظهار عداد الزوار":"Afficher le compteur visiteurs",
@@ -1475,6 +1484,7 @@
       "اطلب الآن":"Commander maintenant",
       "الاسم واللقب":"Nom et prénom",
       "الولاية":"Wilaya",
+      "طريقة التوصيل":"Mode de livraison",
       "توصيل للمنزل":"Livraison à domicile",
       "استلام من المكتب":"Retrait au bureau",
       "ملخّص الطلب":"Résumé de la commande",
@@ -1710,6 +1720,7 @@
     { regex: /^تمت إضافة "(.+)"$/, fn:(m,p)=>`« ${p} » a été ajoutée` },
     { regex: /^وفّر (\d+)$/, fn:(m,n)=>`Économisez ${n}` },
     { regex: /^أضف (\d+) أخرى للاستفادة من سعر (.+) للقطعة الواحدة$/, fn:(m,n,p)=>`Ajoutez ${n} de plus pour bénéficier du prix ${p} par pièce` }
+    
   ];
 
   const EMOJI_RE = /^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{1F1E6}-\u{1F1FF}]+\s*/u;
